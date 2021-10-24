@@ -21,7 +21,7 @@ directory. After compilation, access ``docs/build/html/index.html``.
 Testing
 -------
 
-Use `tox <https://tox.readthedocs.org/>`_ to run tests in Python
+Use `tox <https://tox.readthedocs.org/>`_ to run tests in Python.
 To install, use :code:`pip3 install tox`. Once installed, run `tox` from the project root directory.
 
 .. code-block:: console
