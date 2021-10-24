@@ -5,9 +5,16 @@ Getting Started
 A Python SDK implementing the Segment app configuration management public API (PAPI).
 Compatible with Python 3.8 or higher.
 
+Installing Library Dependencies
+-------------------------------
+
+.. code-block:: console
+
+   $ pip3 install -r requirements.txt
+
 Importing the Library
 ---------------------
-To get started, open a Python console:
+To get started, access the project directory and open a Python console:
 
 .. code-block:: python
 
@@ -31,7 +38,7 @@ Logging
 Log messages are printed to standard output, unless you choose to redirect them to a file.
 The default log severity is set to ``logging.INFO``. To turn on verbose logging, change the log severity to ``logging.DEBUG``
 
-* Changing the log severity: Logger.instance().level = logging.DEBUG
+* Changing the log severity: ``Logger.instance().level = logging.DEBUG``
 * Redirecting logs to a file: ``export SEGMENT_PAPI_LOG_FILE=${pwd}/papi.log``
 
 Building Documentation
