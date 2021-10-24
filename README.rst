@@ -12,6 +12,27 @@ To get started, open a Python console:
 .. code-block:: python
 
    >>> from papi import *
+   >>> workspace = Segment.workspace('<api-token>', segment_enum.Region.euw1)  # access a Segment workspace in eu-west-1
+   >>> print(workspace.info)
+   >>> for source in workspace.connections.sources.all():
+   ...     print(source.id, source.slug, source.name)
+
+Modules
+-------
+By importing the library, you gain access to the following modules:
+
+1. **segment_enum** - Enumerator objects (e.g. Region, FunctionType, etc.)
+2. **segment_types** - Classes, builders and named-tuples (e.g. Label, Connection, FunctionSettingsBuilder, etc.)
+3. **segment_bunch** - Easy way to build key-value Python objects passed as function arguments
+4. **segment_settings** - Advanced system settings
+
+Logging
+-------
+Log messages are printed to standard output, unless you choose to redirect them to a file.
+The default log severity is set to ``logging.INFO``. To turn on verbose logging, change the log severity to ``logging.DEBUG``
+
+* Changing the log severity: Logger.instance().level = logging.DEBUG
+* Redirecting logs to a file: ``export SEGMENT_PAPI_LOG_FILE=${pwd}/papi.log``
 
 Building Documentation
 ----------------------
