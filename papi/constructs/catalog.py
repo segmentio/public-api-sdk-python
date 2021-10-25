@@ -1,3 +1,4 @@
+import logging
 from ..lib import utils
 from ..errors import errors
 from .construct import Construct
@@ -61,9 +62,7 @@ class Catalog(Construct):
         :rtype: papi.common.common.Object
         """
         sources = self.get_sources([slug], from_cache)
-        if not sources:
-            raise errors.ResourceNotFound(slug=slug, type='source')
-        return sources[0]
+        return Catalog._fetch_first(sources, slug, 'source')
 
     def show_source_options(self, slug, from_cache=True):
         """
@@ -96,9 +95,7 @@ class Catalog(Construct):
         :rtype: papi.common.common.Object
         """
         destinations = self.get_destinations([slug], from_cache)
-        if not destinations:
-            raise errors.ResourceNotFound(slug=slug, type='destination')
-        return destinations[0]
+        return Catalog._fetch_first(destinations, slug, 'destination')
 
     def show_destination_options(self, slug, from_cache=True):
         """
@@ -131,9 +128,7 @@ class Catalog(Construct):
         :rtype: papi.common.common.Object
         """
         warehouses = self.get_warehouses([slug], from_cache)
-        if not warehouses:
-            raise errors.ResourceNotFound(slug=slug, type='warehouse')
-        return warehouses[0]
+        return Catalog._fetch_first(warehouses, slug, 'warehouse')
 
     def show_warehouse_options(self, slug, from_cache=True):
         """
@@ -143,6 +138,16 @@ class Catalog(Construct):
         :param bool,optional from_cache: Get results from cache, defaults to ``True``
         """
         Catalog._show_catalog_options(self.get_warehouse, slug, from_cache)
+
+    @staticmethod
+    def _fetch_first(array, slug, ctype):
+        if not array:
+            error_message = f'Could not find {slug} in {ctype}s catalog. ' \
+                            'This error may occur when the slug is incorrect or the slug is associated with a ' \
+                            'function that does exist.'
+            logging.getLogger().error(error_message)
+            raise errors.ResourceNotFound(slug=slug, type=ctype, overview=error_message)
+        return array[0]
 
     @staticmethod
     def _filter_catalog(catalog, slugs):
