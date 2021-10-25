@@ -24,6 +24,9 @@ To get started, access the project directory and open a Python console:
    >>> for source in workspace.connections.sources.all():
    ...     print(source.id, source.slug, source.name)
 
+Once you have instantiated a workspace object, review the **User Guides** and the various modules.
+To build the docs, see **Building Documentation** below.
+
 Modules
 -------
 By importing the library, you gain access to the following modules:

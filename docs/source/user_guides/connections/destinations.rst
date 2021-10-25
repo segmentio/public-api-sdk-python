@@ -35,6 +35,8 @@ Destinations
 .. automethod:: papi.constructs.destinations.Destinations.delete
    :noindex:
 
+.. code-block:: python
+
    """Delete all destinations"""
    for destination in workspace.connections.destinations.all():
        workspace.connections.destinations.delete(destination.id)
