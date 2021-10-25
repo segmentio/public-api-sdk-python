@@ -19,8 +19,14 @@ class Sources(Construct):
         self.mtu = common.bunch(daily=Command(self.daily, 'mtu', 'dailyPerSourceMTUUsage'))
 
     def daily(self, metric, attr, period):
-        print(period)
-        return self._segment.iterator(f'/usage/{metric}/sources/daily', attr)
+        """
+        Get daily cumulative per-source counts for a usage period
+
+        :param str period: The start of the usage month, formatted as %Y-%m-%d
+        :return: Usage counts object
+        :rtype: papi.common.common.Object
+        """
+        return self._segment.iterator(f'/usage/{metric}/sources/daily', attr, {'period': period})
 
 
 class Workspace(Construct):
@@ -31,5 +37,11 @@ class Workspace(Construct):
         self.mtu = common.bunch(daily=Command(self.daily, 'mtu', 'dailyWorkspaceMTUUsage'))
 
     def daily(self, metric, attr, period):
-        print(period)
-        return self._segment.iterator(f'/usage/{metric}/daily', attr)
+        """
+        Get daily cumulative counts for a usage period
+
+        :param str period: The start of the usage month, formatted as %Y-%m-%d
+        :return: Usage counts object
+        :rtype: papi.common.common.Object
+        """
+        return self._segment.iterator(f'/usage/{metric}/daily', attr, {'period': period})

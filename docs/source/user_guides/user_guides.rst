@@ -32,6 +32,12 @@ User Guides
    regulation/regulation
 
 .. toctree::
+   :caption: Usage
+   :maxdepth: 2
+
+   usage/usage
+
+.. toctree::
    :caption: Testing
    :maxdepth: 2
 

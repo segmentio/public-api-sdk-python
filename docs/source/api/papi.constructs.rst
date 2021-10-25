@@ -26,5 +26,6 @@ Submodules
    papi.constructs.roles
    papi.constructs.settings
    papi.constructs.sources
+   papi.constructs.usage
    papi.constructs.users
    papi.constructs.warehouses
