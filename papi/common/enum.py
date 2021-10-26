@@ -59,6 +59,25 @@ class TrackingPlanType:
     TEMPLATE = 'TEMPLATE'
 
 
+class TrackingPlanRuleType:
+    """
+    Tracking Plan Rule Type
+
+    :ivar str COMMON: Common
+    :ivar str GROUP: Group
+    :ivar str IDENTIFY: Identify
+    :ivar str PAGE: Page
+    :ivar str SCREEN: Screen
+    :ivar str TRACK: Track
+    """
+    COMMON = 'COMMON'
+    GROUP = 'GROUP'
+    IDENTIFY = 'IDENTIFY'
+    PAGE = 'PAGE'
+    SCREEN = 'SCREEN'
+    TRACK = 'TRACK'
+
+
 class RegulationType:
     """
     Regulation Type
@@ -110,6 +129,32 @@ class Region:
     """
     euw1 = 'eu1'
     usw2 = ''
+
+
+class EventGranularity:
+    """
+    Event Granularity
+
+    :ivar str DAY: Day
+    :ivar str HOUR: Hour
+    :ivar str MINUTE: Minute
+    """
+    DAY = 'day'
+    HOUR = 'hour'
+    MINUTE = 'minute'
+
+
+class EventGroupBy:
+    """
+    Event Group By
+
+    :ivar str DAY: Day
+    :ivar str HOUR: Hour
+    :ivar str MINUTE: Minute
+    """
+    EVENT_NAME = 'eventName'
+    EVENT_TYPE = 'eventType'
+    SOURCE = 'source'
 
 
 def validate_enum_option(enum, option):

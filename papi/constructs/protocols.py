@@ -1,3 +1,5 @@
+import logging
+
 from ..common import common, enum
 from .construct import Construct
 
@@ -40,7 +42,10 @@ class TrackingPlans(Construct):
         tracking_plan = common.bunch(name=name, type=tracking_plan_type)
         if description:
             tracking_plan.description = description
-        return self._segment.post('/tracking-plans', tracking_plan)
+        logging.getLogger().debug('Adding tracking plan. %s', {'type': tracking_plan_type})
+        response = self._segment.post('/tracking-plans', tracking_plan)
+        logging.getLogger().debug('Tracking plan added. %s', {'type': tracking_plan_type})
+        return response
 
     def all(self, tracking_plan_type):
         """
@@ -61,7 +66,10 @@ class TrackingPlans(Construct):
         :return: Object indicating whether the deletion was successful or not
         :rtype: papi.common.common.Object
         """
-        return self._segment.delete(f'/tracking-plans/{tracking_plan_id}', {'trackingPlanId': tracking_plan_id})
+        logging.getLogger().debug('Deleting tracking plan. %s', {'id': tracking_plan_id})
+        response = self._segment.delete(f'/tracking-plans/{tracking_plan_id}', {'trackingPlanId': tracking_plan_id})
+        logging.getLogger().debug('Tracking plan deleted. %s', {'id': tracking_plan_id})
+        return response
 
     def get(self, tracking_plan_id):
         """
@@ -88,7 +96,10 @@ class TrackingPlans(Construct):
             updates.name = name
         if description:
             updates.description = description
-        return self._segment.patch(f'/tracking-plans/{tracking_plan_id}', updates)
+        logging.getLogger().debug('Updating tracking plan. %s', {'id': tracking_plan_id})
+        response = self._segment.patch(f'/tracking-plans/{tracking_plan_id}', updates)
+        logging.getLogger().debug('Tracking plan updated. %s', {'id': tracking_plan_id})
+        return response
 
 
 class Sources(Construct):
@@ -106,7 +117,10 @@ class Sources(Construct):
         :rtype: papi.common.common.Object
         """
         source = common.bunch(trackingPlanId=tracking_plan_id, sourceId=source_id)
-        return self._segment.post(f'/tracking-plans/{tracking_plan_id}/sources', source)
+        logging.getLogger().debug('Connecting source to tracking plan. %s', {'tracking_plan_id': tracking_plan_id, 'source_id': source_id})
+        response = self._segment.post(f'/tracking-plans/{tracking_plan_id}/sources', source)
+        logging.getLogger().debug('Connected source to tracking plan. %s', {'tracking_plan_id': tracking_plan_id, 'source_id': source_id})
+        return response
 
     def all(self, tracking_plan_id):
         """
@@ -127,8 +141,11 @@ class Sources(Construct):
         :return: Status object indicating whether if the operation was successful
         :rtype: papi.common.common.Object
         """
-        return self._segment.delete(f'/tracking-plans/{tracking_plan_id}/sources',
-                                    common.bunch(trackingPlanId=tracking_plan_id, sourceId=source_id))
+        logging.getLogger().debug('Disconnecting source from tracking plan. %s', {'tracking_plan_id': tracking_plan_id, 'source_id': source_id})
+        response = self._segment.delete(f'/tracking-plans/{tracking_plan_id}/sources',
+                                        common.bunch(trackingPlanId=tracking_plan_id, sourceId=source_id))
+        logging.getLogger().debug('Disconnected source from tracking plan. %s', {'tracking_plan_id': tracking_plan_id, 'source_id': source_id})
+        return response
 
 
 class Rules(Construct):
@@ -146,10 +163,34 @@ class Rules(Construct):
         """
         return self._segment.iterator(f'/tracking-plans/{tracking_plan_id}/rules', 'rules')
 
-    # https://api.segmentapis.com/docs/protocols/tracking-plans/rules/#remove-rules-from-tracking-plan
     def remove(self, tracking_plan_id, rules):
-        pass
+        """
+        Delete rules belonging to a tracking plan.
 
-    # https://api.segmentapis.com/docs/protocols/tracking-plans/rules/#update-rules-in-tracking-plan
-    def update(self):
-        pass
+        :param str tracking_plan_id: Tracking Plan identifier
+        :param list[papi.common.common.Object] rules: List of rules to delete.
+         Use `papi.common.types.RemoveRuleBuilder` to generate rule objects.
+        :return: Object indicating whether the deletion was successful or not
+        :rtype: papi.common.common.Object
+        """
+        param = common.bunch(trackingPlanId=tracking_plan_id, rules=rules)
+        logging.getLogger().debug('Removing rules from tracking plan. %s', {'id': tracking_plan_id})
+        response = self._segment.delete(f'/tracking-plans/{tracking_plan_id}/rules', param)
+        logging.getLogger().debug('Rules removed from tracking plan. %s', {'id': tracking_plan_id})
+        return response
+
+    def update(self, tracking_plan_id, rules):
+        """
+        Update rules in a tracking plan.
+
+        :param str tracking_plan_id: Tracking Plan identifier
+        :param list[papi.common.common.Object] rules: List of rules to delete.
+         Use `papi.common.types.UpsertRuleBuilder` to generate rule objects.
+        :return: Object indicating whether the update was successful or not
+        :rtype: papi.common.common.Object
+        """
+        param = common.bunch(trackingPlanId=tracking_plan_id, rules=rules)
+        logging.getLogger().debug('Updating rules in tracking plan. %s', {'id': tracking_plan_id})
+        response = self._segment.patch(f'/tracking-plans/{tracking_plan_id}/rules', param)
+        logging.getLogger().debug('Tracking plan rules updated. %s', {'id': tracking_plan_id})
+        return response

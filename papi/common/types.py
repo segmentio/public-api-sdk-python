@@ -151,3 +151,151 @@ class FunctionSettingsBuilder:
             required=self._required,
             sensitive=self._sensitive
         )
+
+
+class RuleBuilder:
+    """
+    Base builder class for managing Tracking Plan Rules
+    """
+
+    def __init__(self):
+        self._type = None
+        self._key = None
+        self._version = None
+
+    def rtype(self, rtype):
+        """
+        Set rule type.
+
+        :param papi.common.enum.TrackingPlanRuleType rtype: Rule type
+        :return: Self, the builder object
+        :rtype: papi.common.types.RuleBuilder
+        """
+        self._type = rtype
+        return self
+
+    def key(self, key):
+        """
+        Set key.
+
+        :param str key: Key
+        :return: Self, the builder object
+        :rtype: papi.common.types.RuleBuilder
+        """
+        self._key = key
+        return self
+
+    def version(self, version):
+        """
+        Set version.
+
+        :param int version: Version
+        :return: Self, the builder object
+        :rtype: papi.common.types.RuleBuilder
+        """
+        self._version = version
+        return self
+
+    def to_server_object(self):
+        """
+        Convert to a server object.
+
+        :return: Remove rule object
+        :rtype: papi.common.common.Object
+        """
+        param = common.bunch(
+            type=self._type,
+            version=self._verion
+        )
+        if self._key:
+            param.key = self._key
+        return param
+
+
+class RemoveRuleBuilder(RuleBuilder):
+    pass
+
+
+class UpsertRules(RuleBuilder):
+
+    def __init__(self):
+        super().__init__()
+        self._new_key = None
+        self._json_schema = None
+        self._created_at = None
+        self._updated_at = None
+        self._deprecated_at = None
+
+    def new_key(self, new_key):
+        """
+        Set new key.
+
+        :param str new_key: New key
+        :return: Self, the builder object
+        :rtype: papi.common.types.UpsertRules
+        """
+        self._new_key = new_key
+        return self
+
+    def json_schema(self, json_schema):
+        """
+        Set JSON schema.
+
+        :param str json_schema: JSON schema
+        :return: Self, the builder object
+        :rtype: papi.common.types.UpsertRules
+        """
+        self._json_schema = json_schema
+        return self
+
+    def created_at(self, created_at):
+        """
+        Set created at.
+
+        :param str created_at: Created at
+        :return: Self, the builder object
+        :rtype: papi.common.types.UpsertRules
+        """
+        self._created_at = created_at
+        return self
+
+    def updated_at(self, updated_at):
+        """
+        Set updated at.
+
+        :param str updated_at: Updated at
+        :return: Self, the builder object
+        :rtype: papi.common.types.UpsertRules
+        """
+        self._updated_at = updated_at
+        return self
+
+    def deprecated_at(self, deprecated_at):
+        """
+        Set deprecated at.
+
+        :param str deprecated_at: Deprecated at
+        :return: Self, the builder object
+        :rtype: papi.common.types.UpsertRules
+        """
+        self._deprecated_at = deprecated_at
+        return self
+
+    def to_server_object(self):
+        """
+        Convert to a server object.
+
+        :return: Upsert rule object
+        :rtype: papi.common.common.Object
+        """
+        param = super().to_server_object()
+        param.jsonSchema = self._json_schema
+        if self._new_key:
+            param.newKey = self._new_key
+        if self._created_at:
+            param.createdAt = self._created_at
+        if self._updated_at:
+            param.updatedAt = self._updated_at
+        if self._deprecated_at:
+            param.deprecatedAt = self._deprecated_at
+        return param

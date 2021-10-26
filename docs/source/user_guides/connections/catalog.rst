@@ -77,6 +77,8 @@ Destinations
 .. automethod:: papi.constructs.catalog.Catalog.get_destination_metadata
    :noindex:
 
+.. code-block:: python
+
    aws_s3 = workspace.connections.catalog.get_destination('aws-s3')
    aws_s3_metadata = workspace.connections.catalog.get_destination_metadata(aws_s3.id)
 

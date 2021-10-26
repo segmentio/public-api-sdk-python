@@ -9,3 +9,4 @@ Connections
    sources
    destinations
    warehouses
+   events
