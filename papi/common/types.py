@@ -205,7 +205,7 @@ class RuleBuilder:
         """
         param = common.bunch(
             type=self._type,
-            version=self._verion
+            version=self._version
         )
         if self._key:
             param.key = self._key
@@ -216,7 +216,7 @@ class RemoveRuleBuilder(RuleBuilder):
     pass
 
 
-class UpsertRules(RuleBuilder):
+class UpsertRuleBuilder(RuleBuilder):
 
     def __init__(self):
         super().__init__()
