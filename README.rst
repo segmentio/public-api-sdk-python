@@ -12,6 +12,12 @@ Installing Library Dependencies
 
    $ pip3 install -r requirements.txt
 
+If you prefer to not install Python dependencies on your machine just yet, use Docker and the Makefile to try things out:
+
+.. code-block:: console
+
+   $ make build test console
+
 Importing the Library
 ---------------------
 To get started, access the project directory and open a Python console:
