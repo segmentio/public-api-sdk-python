@@ -12,6 +12,8 @@ class Warehouses(Construct):
     def __init__(self, segment):
         super().__init__(segment)
         self.sources = Sources(segment)
+        self.sync_schedule = SyncSchedule(segment)
+        self.sync_config = SyncConfig(segment)
 
     def add(self, catalog_slug, name, enabled=False, options=None):
         """
@@ -133,3 +135,96 @@ class Sources(Construct):
         :rtype: papi.common.common.Object
         """
         return self._segment.delete(f'/warehouses/{warehouse_id}/connected-sources/{source_id}')
+
+
+class SyncSchedule(Construct):
+    """
+    Class for managing Warehouse selective synchronization schedule
+    """
+
+    def get(self, warehouse_id):
+        """
+        Get advanced sync schedule for a warehouse
+
+        :param str warehouse_id: Warehouse identifier
+        :return: Warehouse synchronization schedule
+        :rtype: papi.common.common.Object
+        """
+        # https://api.segmentapis.com/docs/connections/warehouses/selective-sync-schedule/#get-advanced-sync-schedule-from-warehouse
+        return self._segment.get(f'/warehouses/{warehouse_id}/advanced-sync-schedule')
+
+    def replace(self, warehouse_id, enabled, schedule=None):
+        """
+        Update a warehouse sync schedule
+
+        :param str warehouse_id: Warehouse identifier
+        :param bool enabled: Turn on an advanced sync schedule for the warehouse
+        :param papi.common.common.Object,optional schedule: Synchronization schedule
+        :return: Warehouse synchronization schedule
+        :rtype: papi.common.common.Object
+        """
+        # https://api.segmentapis.com/docs/connections/warehouses/selective-sync-schedule/#replace-advanced-sync-schedule-for-warehouse
+        param = common.bunch(
+            warehouseId=warehouse_id,
+            enabled=enabled
+        )
+        if schedule:
+            param.schedule = schedule
+        return self._segment.put(f'/warehouses/{warehouse_id}/advanced-sync-schedule', param)
+
+
+class SyncConfig(Construct):
+    """
+    Class for managing Warehouse selective synchronization configuration
+    """
+
+    def get_schema(self, warehouse_id, source_id):
+        """
+        Get warehouse schema for a given source
+
+        :param str warehouse_id: Warehouse identifier
+        :param str source_id: Source identifier
+        :return: Warehouse schema
+        :rtype: papi.common.common.Object
+        """
+        # https://api.segmentapis.com/docs/connections/warehouses/selective-sync-config/#list-selective-syncs-from-warehouse-and-source
+        return self._segment.iterator(f'/warehouses/{warehouse_id}/connected-sources/{source_id}/selective-syncs', 'items')
+
+    def syncs(self, warehouse_id):
+        """
+        Get latest syncs for all sources connected to a warehouse
+
+        :param str warehouse_id: Warehouse identifier
+        :return: Latest syncs for the specfied warehouse
+        :rtype: papi.common.common.Object
+        """
+        # https://api.segmentapis.com/docs/connections/warehouses/selective-sync-config/#list-syncs-from-warehouse
+        return self._segment.iterator(f'/warehouses/{warehouse_id}/syncs', 'reports')
+
+    def source_syncs(self, warehouse_id, source_id):
+        """
+        Get latest syncs of a source connected to a warehouse
+
+        :param str warehouse_id: Warehouse identifier
+        :param str source_id: Source identifier
+        :return: Latest syncs for the specfied warehouse-source pair
+        :rtype: papi.common.common.Object
+        """
+        # https://api.segmentapis.com/docs/connections/warehouses/selective-sync-config/#list-syncs-from-warehouse-and-source
+        return self._segment.iterator(f'/warehouses/{warehouse_id}/connected-sources/{source_id}/syncs', 'reports')
+
+    def update_schema(self, warehouse_id, sync_overrides):
+        """
+        Configure a warehouse schema
+
+        :param str warehouse_id: Warehouse identifier
+        :param str sync_overrides: List of sync schema overrides to apply to this warehouse
+        :return: Object indicating whether the update was successfull and any associated warnings
+        :rtype: papi.common.common.Object
+        """
+        # https://api.segmentapis.com/docs/connections/warehouses/selective-sync-config/#update-selective-sync-for-warehouse
+        param = common.bunch(
+            warehouseId=warehouse_id,
+            syncOverrides=sync_overrides
+        )
+        return self._segment.patch(f'/warehouses/{warehouse_id}/selective-sync', param)

@@ -31,3 +31,28 @@ Warehouse Sources
 
 .. automethod:: papi.constructs.warehouses.Sources.remove
    :noindex:
+
+
+Selective Sync Schedule
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. automethod:: papi.constructs.warehouses.SyncSchedule.get
+   :noindex:
+
+.. automethod:: papi.constructs.warehouses.SyncSchedule.replace
+   :noindex:
+
+Selective Sync Config
+^^^^^^^^^^^^^^^^^^^^^
+
+.. automethod:: papi.constructs.warehouses.SyncConfig.get_schema
+   :noindex:
+
+.. automethod:: papi.constructs.warehouses.SyncConfig.syncs
+   :noindex:
+
+.. automethod:: papi.constructs.warehouses.SyncConfig.source_syncs
+   :noindex:
+
+.. automethod:: papi.constructs.warehouses.SyncConfig.update_schema
+   :noindex:
