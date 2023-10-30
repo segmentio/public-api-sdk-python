@@ -30,9 +30,8 @@ class UpdateFunctionV1Input(BaseModel):
     code: Optional[StrictStr] = Field(None, description="The Function code.")
     settings: Optional[conlist(FunctionSettingV1)] = Field(None, description="The list of settings for this Function.")
     display_name: Optional[StrictStr] = Field(None, alias="displayName", description="A display name for this Function.")
-    logo_url: Optional[StrictStr] = Field(None, alias="logoUrl", description="A logo for this Function.")
     description: Optional[StrictStr] = Field(None, description="A description for this Function.")
-    __properties = ["code", "settings", "displayName", "logoUrl", "description"]
+    __properties = ["code", "settings", "displayName", "description"]
 
     class Config:
         """Pydantic configuration"""
@@ -80,7 +79,6 @@ class UpdateFunctionV1Input(BaseModel):
             "code": obj.get("code"),
             "settings": [FunctionSettingV1.from_dict(_item) for _item in obj.get("settings")] if obj.get("settings") is not None else None,
             "display_name": obj.get("displayName"),
-            "logo_url": obj.get("logoUrl"),
             "description": obj.get("description")
         })
         return _obj

@@ -30,10 +30,9 @@ class CreateFunctionV1Input(BaseModel):
     code: StrictStr = Field(..., description="The Function code.")
     settings: Optional[conlist(FunctionSettingV1)] = Field(None, description="The list of settings for this Function.")
     display_name: StrictStr = Field(..., alias="displayName", description="A display name for this Function.  Note that Destination Functions append the Workspace to the display name.")
-    logo_url: Optional[StrictStr] = Field(None, alias="logoUrl", description="The URL of the logo for this Function.")
     resource_type: StrictStr = Field(..., alias="resourceType", description="The Function type.  Config API note: equal to `type`.")
     description: Optional[StrictStr] = Field(None, description="A description for this Function.")
-    __properties = ["code", "settings", "displayName", "logoUrl", "resourceType", "description"]
+    __properties = ["code", "settings", "displayName", "resourceType", "description"]
 
     @validator('resource_type')
     def resource_type_validate_enum(cls, value):
@@ -88,7 +87,6 @@ class CreateFunctionV1Input(BaseModel):
             "code": obj.get("code"),
             "settings": [FunctionSettingV1.from_dict(_item) for _item in obj.get("settings")] if obj.get("settings") is not None else None,
             "display_name": obj.get("displayName"),
-            "logo_url": obj.get("logoUrl"),
             "resource_type": obj.get("resourceType"),
             "description": obj.get("description")
         })
