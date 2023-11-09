@@ -79,16 +79,16 @@ with segment_public_api.ApiClient(configuration) as api_client:
         print("Exception when calling WorkspacesApi->get_workspace: %s\n" % e)
 
     source_api_instance = segment_public_api.SourcesApi(api_client)
-    next = None
+    cursor = None
     while True:
         try:
             # Get Sources
-            pagination = segment_public_api.PaginationInput(count=50, cursor= next)
+            pagination = segment_public_api.PaginationInput(count=50, cursor= cursor)
             api_response = source_api_instance.list_sources(pagination)
             print("The response of SourcesApi->list_sources:\n")
             pprint(api_response)
-            next = api_response.data.pagination.next
-            if api_response.data.pagination.next == None:
+            cursor = api_response.data.pagination.next
+            if api_response.data.pagination.next is None:
                 break
         except ApiException as e:
             print("Exception when calling SourcesApi->list_sources: %s\n" % e)
