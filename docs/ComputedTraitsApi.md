@@ -118,7 +118,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.ComputedTraitsApi(api_client)
     space_id = 'spaceId' # str | 
-    pagination = segment_public_api.PaginationInput() # PaginationInput | Information about the pagination of this response.  This parameter exists in alpha.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Information about the pagination of this response.  This parameter exists in alpha.
 
     try:
         # List Computed Traits

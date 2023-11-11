@@ -419,7 +419,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.DeletionAndSuppressionApi(api_client)
     source_id = 'qQEHquLrjRDN9j1ByrChyn' # str | 
-    pagination = segment_public_api.PaginationInput() # PaginationInput | Pagination parameters.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination parameters.  This parameter exists in v1.
     status = 'status_example' # str | The status on which to filter returned regulations.  This parameter exists in v1. (optional)
     regulation_types = ['regulation_types_example'] # List[str] | The regulation types on which to filter returned regulations.  This parameter exists in v1. (optional)
 
@@ -498,7 +498,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.DeletionAndSuppressionApi(api_client)
-    pagination = segment_public_api.PaginationInput() # PaginationInput | Pagination parameters.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination parameters.  This parameter exists in v1.
 
     try:
         # List Suppressions
@@ -572,7 +572,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.DeletionAndSuppressionApi(api_client)
-    pagination = segment_public_api.PaginationInput() # PaginationInput | Pagination parameters.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination parameters.  This parameter exists in v1.
     status = 'status_example' # str | The status on which to filter the returned regulations.  This parameter exists in v1. (optional)
     regulation_types = ['regulation_types_example'] # List[str] | The regulation types on which to filter returned regulations.  This parameter exists in v1. (optional)
 

@@ -117,7 +117,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.CatalogApi(api_client)
-    pagination = segment_public_api.PaginationInput() # PaginationInput | Required pagination parameters used to filter the Destinations catalog.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Required pagination parameters used to filter the Destinations catalog.  This parameter exists in v1.
 
     try:
         # Get Destinations Catalog
@@ -264,7 +264,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.CatalogApi(api_client)
-    pagination = segment_public_api.PaginationInput() # PaginationInput | Defines the pagination parameters.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Defines the pagination parameters.  This parameter exists in v1.
 
     try:
         # Get Sources Catalog
@@ -411,7 +411,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.CatalogApi(api_client)
-    pagination = segment_public_api.PaginationInput() # PaginationInput | Required pagination params used to filter the Warehouses catalog.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Required pagination params used to filter the Warehouses catalog.  This parameter exists in v1.
 
     try:
         # Get Warehouses Catalog

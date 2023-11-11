@@ -119,7 +119,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     api_instance = segment_public_api.SelectiveSyncApi(api_client)
     warehouse_id = 'kjU72LCJexvrqL7G4TMHHN' # str | 
     source_id = 'rh5BDZp6QDHvXFCkibm1pR' # str | 
-    pagination = segment_public_api.PaginationInput() # PaginationInput | Defines the pagination parameters.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Defines the pagination parameters.  This parameter exists in v1.
 
     try:
         # List Selective Syncs from Warehouse And Source
@@ -196,7 +196,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.SelectiveSyncApi(api_client)
     warehouse_id = 'kjU72LCJexvrqL7G4TMHHN' # str | 
-    pagination = segment_public_api.PaginationInput() # PaginationInput | Defines the pagination parameters.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Defines the pagination parameters.  This parameter exists in v1.
 
     try:
         # List Syncs from Warehouse
@@ -273,7 +273,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     api_instance = segment_public_api.SelectiveSyncApi(api_client)
     warehouse_id = 'kjU72LCJexvrqL7G4TMHHN' # str | 
     source_id = 'rh5BDZp6QDHvXFCkibm1pR' # str | 
-    pagination = segment_public_api.PaginationInput() # PaginationInput | Defines the pagination parameters.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Defines the pagination parameters.  This parameter exists in v1.
 
     try:
         # List Syncs from Warehouse And Source

@@ -416,7 +416,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.IAMUsersApi(api_client)
-    pagination = segment_public_api.PaginationInput() # PaginationInput | Defines the pagination parameters.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Defines the pagination parameters.  This parameter exists in v1.
 
     try:
         # List Invites
@@ -491,7 +491,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.IAMUsersApi(api_client)
     user_id = 'sgJDWk3K21k6LE3tLU9nRK' # str | 
-    pagination = segment_public_api.PaginationInput() # PaginationInput | Pagination for groups.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination for groups.  This parameter exists in v1.
 
     try:
         # List User Groups from User
@@ -566,7 +566,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.IAMUsersApi(api_client)
-    pagination = segment_public_api.PaginationInput() # PaginationInput | Pagination for users.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination for users.  This parameter exists in v1.
 
     try:
         # List Users

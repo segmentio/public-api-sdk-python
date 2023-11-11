@@ -263,7 +263,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.ReverseETLApi(api_client)
-    pagination = segment_public_api.PaginationInput() # PaginationInput | Defines the pagination parameters.  This parameter exists in alpha.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Defines the pagination parameters.  This parameter exists in alpha.
 
     try:
         # List Reverse Etl Models

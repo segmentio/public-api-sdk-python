@@ -196,7 +196,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.DestinationFiltersApi(api_client)
     destination_id = 'fP7qoQw2HTWt9WdMr718gn' # str | 
-    pagination = segment_public_api.PaginationInput() # PaginationInput | Pagination options.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination options.  This parameter exists in v1.
 
     try:
         # List Filters from Destination

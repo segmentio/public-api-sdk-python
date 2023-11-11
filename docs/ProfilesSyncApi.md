@@ -121,7 +121,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.ProfilesSyncApi(api_client)
     space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
-    pagination = segment_public_api.PaginationInput() # PaginationInput | Defines the pagination parameters.  This parameter exists in alpha. (optional)
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Defines the pagination parameters.  This parameter exists in alpha. (optional)
 
     try:
         # List Profiles Warehouse in Space
@@ -198,7 +198,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     api_instance = segment_public_api.ProfilesSyncApi(api_client)
     space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
     warehouse_id = 'fQyLbqjfwaqg9mr3hDQ7We' # str | 
-    pagination = segment_public_api.PaginationInput() # PaginationInput | Defines the pagination parameters.  This parameter exists in alpha.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Defines the pagination parameters.  This parameter exists in alpha.
 
     try:
         # List Selective Syncs from Warehouse And Space

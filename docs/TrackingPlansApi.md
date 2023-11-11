@@ -347,7 +347,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.TrackingPlansApi(api_client)
     tracking_plan_id = 'tp_sprout_rVGCC6WdrNxjCf6JpCHP' # str | 
-    pagination = segment_public_api.PaginationInput() # PaginationInput | Pagination options.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination options.  This parameter exists in v1.
 
     try:
         # List Rules from Tracking Plan
@@ -423,7 +423,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.TrackingPlansApi(api_client)
     tracking_plan_id = 'tp_sprout_rVGCC6WdrNxjCf6JpCHP' # str | 
-    pagination = segment_public_api.PaginationInput() # PaginationInput | Pagination options.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination options.  This parameter exists in v1.
 
     try:
         # List Sources from Tracking Plan
@@ -498,7 +498,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.TrackingPlansApi(api_client)
-    pagination = segment_public_api.PaginationInput() # PaginationInput | Pagination options.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination options.  This parameter exists in v1.
     type = 'LIVE' # str | Requests Tracking Plans of a certain type. If omitted, lists all types.  This parameter exists in v1. (optional)
 
     try:

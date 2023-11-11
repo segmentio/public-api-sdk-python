@@ -346,7 +346,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.SourcesApi(api_client)
     source_id = 'qQEHquLrjRDN9j1ByrChyn' # str | 
-    pagination = segment_public_api.PaginationInput() # PaginationInput | Required pagination params for the request.  This parameter exists in alpha.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Required pagination params for the request.  This parameter exists in alpha.
 
     try:
         # List Connected Destinations from Source
@@ -422,7 +422,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.SourcesApi(api_client)
     source_id = 'qQEHquLrjRDN9j1ByrChyn' # str | 
-    pagination = segment_public_api.PaginationInput() # PaginationInput | Required pagination params for the request.  This parameter exists in alpha.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Required pagination params for the request.  This parameter exists in alpha.
 
     try:
         # List Connected Warehouses from Source
@@ -570,7 +570,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.SourcesApi(api_client)
-    pagination = segment_public_api.PaginationInput() # PaginationInput | Defines the pagination parameters.  This parameter exists in alpha.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Defines the pagination parameters.  This parameter exists in alpha.
 
     try:
         # List Sources

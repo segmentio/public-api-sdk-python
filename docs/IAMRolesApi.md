@@ -39,7 +39,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.IAMRolesApi(api_client)
-    pagination = segment_public_api.PaginationInput() # PaginationInput | Pagination for roles.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination for roles.  This parameter exists in v1.
 
     try:
         # List Roles

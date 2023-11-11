@@ -47,7 +47,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     event_name = ['event_name_example'] # List[str] | A list of strings which filters the results to the given EventNames.  This parameter exists in v1. (optional)
     event_type = ['event_type_example'] # List[str] | A list of strings which filters the results to the given EventTypes.  This parameter exists in v1. (optional)
     app_version = ['app_version_example'] # List[str] | A list of strings which filters the results to the given AppVersions.  This parameter exists in v1. (optional)
-    pagination = segment_public_api.PaginationInput() # PaginationInput | Pagination input for event volume by Workspace.  This parameter exists in v1. (optional)
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination input for event volume by Workspace.  This parameter exists in v1. (optional)
 
     try:
         # Get Events Volume from Workspace

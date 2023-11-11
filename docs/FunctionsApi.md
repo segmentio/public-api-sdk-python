@@ -641,7 +641,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.FunctionsApi(api_client)
     function_id = 'sfnc_wXzcDGFR3KmjLDrtSawNHf' # str | 
-    pagination = segment_public_api.PaginationInput() # PaginationInput | Pagination parameters.  This parameter exists in alpha.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination parameters.  This parameter exists in alpha.
 
     try:
         # List Function Versions
@@ -716,7 +716,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.FunctionsApi(api_client)
-    pagination = segment_public_api.PaginationInput() # PaginationInput | Pagination parameters.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination parameters.  This parameter exists in v1.
     resource_type = 'SOURCE' # str | The Function type.  Config API note: equal to `type`.  This parameter exists in v1.
 
     try:
@@ -792,7 +792,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.FunctionsApi(api_client)
-    pagination = segment_public_api.PaginationInput() # PaginationInput | Pagination parameters.  This parameter exists in alpha.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination parameters.  This parameter exists in alpha.
     function_id = '76365637324e715a67535831' # str | The insert Function class id to lookup.  This parameter exists in alpha.
 
     try:
