@@ -22,7 +22,7 @@ from pydantic import validate_arguments, ValidationError
 from typing_extensions import Annotated
 from pydantic import Field, StrictStr, conlist, constr, validator
 
-from typing import Optional
+from typing import List, Optional
 
 from segment_public_api.models.create_cloud_source_regulation200_response import CreateCloudSourceRegulation200Response
 from segment_public_api.models.create_cloud_source_regulation_v1_input import CreateCloudSourceRegulationV1Input
@@ -810,7 +810,7 @@ class DeletionAndSuppressionApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_regulations_from_source(self, source_id : constr(strict=True), pagination : Annotated[PaginationInput, Field(..., description="Pagination parameters.  This parameter exists in v1.")], status : Annotated[Optional[StrictStr], Field(description="The status on which to filter returned regulations.  This parameter exists in v1.")] = None, regulation_types : Annotated[Optional[conlist(StrictStr)], Field(description="The regulation types on which to filter returned regulations.  This parameter exists in v1.")] = None, **kwargs) -> ListRegulationsFromSource200Response:  # noqa: E501
+    def list_regulations_from_source(self, source_id : constr(strict=True), pagination : Annotated[PaginationInput, Field(..., description="Pagination parameters.  This parameter exists in v1.")], status : Annotated[Optional[StrictStr], Field(description="The status on which to filter returned regulations.  This parameter exists in v1.")] = None, regulation_types : Annotated[Optional[conlist(conlist(StrictStr))], Field(description="The regulation types on which to filter returned regulations.  This parameter exists in v1.")] = None, **kwargs) -> ListRegulationsFromSource200Response:  # noqa: E501
         """List Regulations from Source  # noqa: E501
 
         Lists all Source-scoped regulations.  # noqa: E501
@@ -846,7 +846,7 @@ class DeletionAndSuppressionApi:
         return self.list_regulations_from_source_with_http_info(source_id, pagination, status, regulation_types, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_regulations_from_source_with_http_info(self, source_id : constr(strict=True), pagination : Annotated[PaginationInput, Field(..., description="Pagination parameters.  This parameter exists in v1.")], status : Annotated[Optional[StrictStr], Field(description="The status on which to filter returned regulations.  This parameter exists in v1.")] = None, regulation_types : Annotated[Optional[conlist(StrictStr)], Field(description="The regulation types on which to filter returned regulations.  This parameter exists in v1.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def list_regulations_from_source_with_http_info(self, source_id : constr(strict=True), pagination : Annotated[PaginationInput, Field(..., description="Pagination parameters.  This parameter exists in v1.")], status : Annotated[Optional[StrictStr], Field(description="The status on which to filter returned regulations.  This parameter exists in v1.")] = None, regulation_types : Annotated[Optional[conlist(conlist(StrictStr))], Field(description="The regulation types on which to filter returned regulations.  This parameter exists in v1.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Regulations from Source  # noqa: E501
 
         Lists all Source-scoped regulations.  # noqa: E501
@@ -934,7 +934,7 @@ class DeletionAndSuppressionApi:
 
         if _params.get('regulation_types') is not None:  # noqa: E501
             _query_params.append(('regulationTypes', _params['regulation_types']))
-            _collection_formats['regulationTypes'] = 'multi'
+            _collection_formats['regulationTypes'] = 'csv'
 
         if _params.get('pagination') is not None:  # noqa: E501
             _query_params.append(('pagination', _params['pagination']))
@@ -1121,7 +1121,7 @@ class DeletionAndSuppressionApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_workspace_regulations(self, pagination : Annotated[PaginationInput, Field(..., description="Pagination parameters.  This parameter exists in v1.")], status : Annotated[Optional[StrictStr], Field(description="The status on which to filter the returned regulations.  This parameter exists in v1.")] = None, regulation_types : Annotated[Optional[conlist(StrictStr)], Field(description="The regulation types on which to filter returned regulations.  This parameter exists in v1.")] = None, **kwargs) -> ListWorkspaceRegulations200Response:  # noqa: E501
+    def list_workspace_regulations(self, pagination : Annotated[PaginationInput, Field(..., description="Pagination parameters.  This parameter exists in v1.")], status : Annotated[Optional[StrictStr], Field(description="The status on which to filter the returned regulations.  This parameter exists in v1.")] = None, regulation_types : Annotated[Optional[conlist(conlist(StrictStr))], Field(description="The regulation types on which to filter returned regulations.  This parameter exists in v1.")] = None, **kwargs) -> ListWorkspaceRegulations200Response:  # noqa: E501
         """List Workspace Regulations  # noqa: E501
 
         Lists all Workspace-scoped regulations.  # noqa: E501
@@ -1155,7 +1155,7 @@ class DeletionAndSuppressionApi:
         return self.list_workspace_regulations_with_http_info(pagination, status, regulation_types, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_workspace_regulations_with_http_info(self, pagination : Annotated[PaginationInput, Field(..., description="Pagination parameters.  This parameter exists in v1.")], status : Annotated[Optional[StrictStr], Field(description="The status on which to filter the returned regulations.  This parameter exists in v1.")] = None, regulation_types : Annotated[Optional[conlist(StrictStr)], Field(description="The regulation types on which to filter returned regulations.  This parameter exists in v1.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def list_workspace_regulations_with_http_info(self, pagination : Annotated[PaginationInput, Field(..., description="Pagination parameters.  This parameter exists in v1.")], status : Annotated[Optional[StrictStr], Field(description="The status on which to filter the returned regulations.  This parameter exists in v1.")] = None, regulation_types : Annotated[Optional[conlist(conlist(StrictStr))], Field(description="The regulation types on which to filter returned regulations.  This parameter exists in v1.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Workspace Regulations  # noqa: E501
 
         Lists all Workspace-scoped regulations.  # noqa: E501
@@ -1237,7 +1237,7 @@ class DeletionAndSuppressionApi:
 
         if _params.get('regulation_types') is not None:  # noqa: E501
             _query_params.append(('regulationTypes', _params['regulation_types']))
-            _collection_formats['regulationTypes'] = 'multi'
+            _collection_formats['regulationTypes'] = 'csv'
 
         if _params.get('pagination') is not None:  # noqa: E501
             _query_params.append(('pagination', _params['pagination']))

@@ -22,6 +22,8 @@ from pydantic import validate_arguments, ValidationError
 from typing_extensions import Annotated
 from pydantic import Field, StrictStr, conlist, constr
 
+from typing import List
+
 from segment_public_api.models.add_permissions_to_user_group200_response import AddPermissionsToUserGroup200Response
 from segment_public_api.models.add_permissions_to_user_group_v1_input import AddPermissionsToUserGroupV1Input
 from segment_public_api.models.add_users_to_user_group200_response import AddUsersToUserGroup200Response
@@ -1260,7 +1262,7 @@ class IAMGroupsApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def remove_users_from_user_group(self, user_group_id : constr(strict=True), emails : Annotated[conlist(StrictStr), Field(..., description="The list of emails to remove from the user group.  This parameter exists in v1.")], **kwargs) -> RemoveUsersFromUserGroup200Response:  # noqa: E501
+    def remove_users_from_user_group(self, user_group_id : constr(strict=True), emails : Annotated[conlist(conlist(StrictStr)), Field(..., description="The list of emails to remove from the user group.  This parameter exists in v1.")], **kwargs) -> RemoveUsersFromUserGroup200Response:  # noqa: E501
         """Remove Users from User Group  # noqa: E501
 
         Removes one or multiple users or invites from a user group by email.    • When called, this endpoint may generate one or more of the following [audit trail](/tag/Audit-Trail) events:* Group Memberships Deleted * User Removed From User Group          The rate limit for this endpoint is 60 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
@@ -1292,7 +1294,7 @@ class IAMGroupsApi:
         return self.remove_users_from_user_group_with_http_info(user_group_id, emails, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def remove_users_from_user_group_with_http_info(self, user_group_id : constr(strict=True), emails : Annotated[conlist(StrictStr), Field(..., description="The list of emails to remove from the user group.  This parameter exists in v1.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def remove_users_from_user_group_with_http_info(self, user_group_id : constr(strict=True), emails : Annotated[conlist(conlist(StrictStr)), Field(..., description="The list of emails to remove from the user group.  This parameter exists in v1.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Remove Users from User Group  # noqa: E501
 
         Removes one or multiple users or invites from a user group by email.    • When called, this endpoint may generate one or more of the following [audit trail](/tag/Audit-Trail) events:* Group Memberships Deleted * User Removed From User Group          The rate limit for this endpoint is 60 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
@@ -1371,7 +1373,7 @@ class IAMGroupsApi:
         _query_params = []
         if _params.get('emails') is not None:  # noqa: E501
             _query_params.append(('emails', _params['emails']))
-            _collection_formats['emails'] = 'multi'
+            _collection_formats['emails'] = 'csv'
 
         # process the header parameters
         _header_params = dict(_params.get('_headers', {}))
