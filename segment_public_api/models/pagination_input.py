@@ -19,15 +19,15 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional, Union
-from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr
+from typing import Optional
+from pydantic import BaseModel, Field, StrictInt, StrictStr
 
 class PaginationInput(BaseModel):
     """
     Pagination parameters.  Every resource that returns a list of items in its `Output` object may contain a `PaginationInput` in its `Input` object. Required, though some of its fields are optional.  # noqa: E501
     """
     cursor: Optional[StrictStr] = Field(None, description="The page to request.  Acceptable values to use here are in PaginationOutput objects, in the `current`, `next`, and `previous` keys.  Consumers of the API must treat this value as opaque.")
-    count: Union[StrictFloat, StrictInt] = Field(..., description="The number of items to retrieve in a page, between 1 and 200.")
+    count: StrictInt = Field(..., description="The number of items to retrieve in a page, between 1 and 200.")
     __properties = ["cursor", "count"]
 
     class Config:
