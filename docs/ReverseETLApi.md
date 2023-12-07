@@ -4,12 +4,87 @@ All URIs are relative to *https://api.segmentapis.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**create_reverse_etl_manual_sync**](ReverseETLApi.md#create_reverse_etl_manual_sync) | **POST** /reverse-etl-syncs | Create Reverse ETL Manual Sync
 [**create_reverse_etl_model**](ReverseETLApi.md#create_reverse_etl_model) | **POST** /reverse-etl-models | Create Reverse Etl Model
 [**delete_reverse_etl_model**](ReverseETLApi.md#delete_reverse_etl_model) | **DELETE** /reverse-etl-models/{modelId} | Delete Reverse Etl Model
 [**get_reverse_etl_model**](ReverseETLApi.md#get_reverse_etl_model) | **GET** /reverse-etl-models/{modelId} | Get Reverse Etl Model
 [**list_reverse_etl_models**](ReverseETLApi.md#list_reverse_etl_models) | **GET** /reverse-etl-models | List Reverse Etl Models
 [**update_reverse_etl_model**](ReverseETLApi.md#update_reverse_etl_model) | **PATCH** /reverse-etl-models/{modelId} | Update Reverse Etl Model
 
+
+
+## Operation: create_reverse_etl_manual_sync
+
+> CreateReverseETLManualSync200Response create_reverse_etl_manual_sync(create_reverse_etl_manual_sync_input)
+
+Create Reverse ETL Manual Sync
+
+Triggers a manual sync for a Reverse ETL Connection.
+
+### Example
+
+* Bearer Authentication (token):
+```python
+import time
+import os
+import segment_public_api
+from segment_public_api.models.create_reverse_etl_manual_sync200_response import CreateReverseETLManualSync200Response
+from segment_public_api.models.create_reverse_etl_manual_sync_input import CreateReverseETLManualSyncInput
+from segment_public_api.rest import ApiException
+from pprint import pprint
+
+
+
+# Configure Bearer authorization: token
+configuration = segment_public_api.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with segment_public_api.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = segment_public_api.ReverseETLApi(api_client)
+    create_reverse_etl_manual_sync_input = {"sourceId":"sourceId","modelId":"modelId","subscriptionId":"subscriptionId"} # CreateReverseETLManualSyncInput | 
+
+    try:
+        # Create Reverse ETL Manual Sync
+        api_response = api_instance.create_reverse_etl_manual_sync(create_reverse_etl_manual_sync_input)
+        print("The response of ReverseETLApi->create_reverse_etl_manual_sync:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ReverseETLApi->create_reverse_etl_manual_sync: %s\n" % e)
+```
+
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **create_reverse_etl_manual_sync_input** | [**CreateReverseETLManualSyncInput**](CreateReverseETLManualSyncInput.md)|  | 
+
+### Return type
+
+[**CreateReverseETLManualSync200Response**](CreateReverseETLManualSync200Response.md)
+
+### Authorization
+
+[token](../README.md#token)
+
+### HTTP request headers
+
+ - **Content-Type**: application/vnd.segment.v1alpha+json
+ - **Accept**: application/vnd.segment.v1alpha+json, application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**404** | Resource not found |  -  |
+**422** | Validation failure |  -  |
+**429** | Too many requests |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## Operation: create_reverse_etl_model
