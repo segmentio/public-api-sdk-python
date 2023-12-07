@@ -57,7 +57,7 @@ class ReverseETLApi:
     def create_reverse_etl_manual_sync(self, create_reverse_etl_manual_sync_input : CreateReverseETLManualSyncInput, **kwargs) -> CreateReverseETLManualSync200Response:  # noqa: E501
         """Create Reverse ETL Manual Sync  # noqa: E501
 
-        Triggers a manual sync for a Reverse ETL Connection.  # noqa: E501
+        Triggers a manual sync for a Reverse ETL Connection.   The rate limit for this endpoint is 5 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -87,7 +87,7 @@ class ReverseETLApi:
     def create_reverse_etl_manual_sync_with_http_info(self, create_reverse_etl_manual_sync_input : CreateReverseETLManualSyncInput, **kwargs) -> ApiResponse:  # noqa: E501
         """Create Reverse ETL Manual Sync  # noqa: E501
 
-        Triggers a manual sync for a Reverse ETL Connection.  # noqa: E501
+        Triggers a manual sync for a Reverse ETL Connection.   The rate limit for this endpoint is 5 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
