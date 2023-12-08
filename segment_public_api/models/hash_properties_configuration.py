@@ -19,16 +19,28 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
-from pydantic import BaseModel
-from segment_public_api.models.list_invites_v1_output import ListInvitesV1Output
+from typing import List, Optional
+from pydantic import BaseModel, Field, StrictStr, conlist, validator
 
-class ListInvites200Response(BaseModel):
+class HashPropertiesConfiguration(BaseModel):
     """
-    ListInvites200Response
+    HashPropertiesConfiguration
     """
-    data: Optional[ListInvitesV1Output] = None
-    __properties = ["data"]
+    algorithm: StrictStr = Field(..., description="Which algorithm to use to hash to properties.")
+    key: Optional[StrictStr] = Field(None, description="Optional key to hash with.")
+    encoding: Optional[StrictStr] = Field(None, description="Optional encoding to use for the hashing.")
+    paths: conlist(StrictStr) = Field(..., description="The paths to the properties to be hashed.")
+    __properties = ["algorithm", "key", "encoding", "paths"]
+
+    @validator('encoding')
+    def encoding_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('BASE16', 'BASE64', 'BASE64URL', 'HEX'):
+            raise ValueError("must be one of enum values ('BASE16', 'BASE64', 'BASE64URL', 'HEX')")
+        return value
 
     class Config:
         """Pydantic configuration"""
@@ -44,8 +56,8 @@ class ListInvites200Response(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> ListInvites200Response:
-        """Create an instance of ListInvites200Response from a JSON string"""
+    def from_json(cls, json_str: str) -> HashPropertiesConfiguration:
+        """Create an instance of HashPropertiesConfiguration from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -54,22 +66,22 @@ class ListInvites200Response(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of data
-        if self.data:
-            _dict['data'] = self.data.to_dict()
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> ListInvites200Response:
-        """Create an instance of ListInvites200Response from a dict"""
+    def from_dict(cls, obj: dict) -> HashPropertiesConfiguration:
+        """Create an instance of HashPropertiesConfiguration from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return ListInvites200Response.parse_obj(obj)
+            return HashPropertiesConfiguration.parse_obj(obj)
 
-        _obj = ListInvites200Response.parse_obj({
-            "data": ListInvitesV1Output.from_dict(obj.get("data")) if obj.get("data") is not None else None
+        _obj = HashPropertiesConfiguration.parse_obj({
+            "algorithm": obj.get("algorithm"),
+            "key": obj.get("key"),
+            "encoding": obj.get("encoding"),
+            "paths": obj.get("paths")
         })
         return _obj
 
