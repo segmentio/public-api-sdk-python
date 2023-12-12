@@ -19,8 +19,9 @@ import re  # noqa: F401
 import json
 
 
-
+from typing import Optional
 from pydantic import BaseModel, Field, StrictBool, StrictStr
+from segment_public_api.models.definition1 import Definition1
 
 class AudienceSummary(BaseModel):
     """
@@ -32,11 +33,13 @@ class AudienceSummary(BaseModel):
     description: StrictStr = Field(..., description="Description of the audience.")
     key: StrictStr = Field(..., description="Key for the audience.")
     enabled: StrictBool = Field(..., description="Enabled/disabled status for the audience.")
+    definition: Optional[Definition1] = Field(...)
+    status: Optional[StrictStr] = Field(None, description="Status for the audience.  Possible values: Backfilling, Computing, Failed, Live, Awaiting Destinations, Disabled.")
     created_by: StrictStr = Field(..., alias="createdBy", description="User id who created the audience.")
     updated_by: StrictStr = Field(..., alias="updatedBy", description="User id who last updated the audience.")
     created_at: StrictStr = Field(..., alias="createdAt", description="Date the audience was created.")
     updated_at: StrictStr = Field(..., alias="updatedAt", description="Date the audience was last updated.")
-    __properties = ["id", "spaceId", "name", "description", "key", "enabled", "createdBy", "updatedBy", "createdAt", "updatedAt"]
+    __properties = ["id", "spaceId", "name", "description", "key", "enabled", "definition", "status", "createdBy", "updatedBy", "createdAt", "updatedAt"]
 
     class Config:
         """Pydantic configuration"""
@@ -62,6 +65,14 @@ class AudienceSummary(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # override the default output from pydantic by calling `to_dict()` of definition
+        if self.definition:
+            _dict['definition'] = self.definition.to_dict()
+        # set to None if definition (nullable) is None
+        # and __fields_set__ contains the field
+        if self.definition is None and "definition" in self.__fields_set__:
+            _dict['definition'] = None
+
         return _dict
 
     @classmethod
@@ -80,6 +91,8 @@ class AudienceSummary(BaseModel):
             "description": obj.get("description"),
             "key": obj.get("key"),
             "enabled": obj.get("enabled"),
+            "definition": Definition1.from_dict(obj.get("definition")) if obj.get("definition") is not None else None,
+            "status": obj.get("status"),
             "created_by": obj.get("createdBy"),
             "updated_by": obj.get("updatedBy"),
             "created_at": obj.get("createdAt"),
