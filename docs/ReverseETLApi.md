@@ -19,7 +19,7 @@ Method | HTTP request | Description
 
 Create Reverse ETL Manual Sync
 
-Triggers a manual sync for a Reverse ETL Connection.   The rate limit for this endpoint is 5 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
+Triggers a manual sync for a Reverse ETL Connection.   The rate limit for this endpoint is 20 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
 
 ### Example
 
