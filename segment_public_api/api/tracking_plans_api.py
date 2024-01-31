@@ -191,7 +191,7 @@ class TrackingPlansApi:
         # set the HTTP header `Content-Type`
         _content_types_list = _params.get('_content_type',
             self.api_client.select_header_content_type(
-                ['application/vnd.segment.v1+json', 'application/json', 'application/vnd.segment.v1beta+json', 'application/vnd.segment.v1alpha+json']))
+                ['application/json', 'application/vnd.segment.v1+json', 'application/vnd.segment.v1beta+json', 'application/vnd.segment.v1alpha+json']))
         if _content_types_list:
                 _header_params['Content-Type'] = _content_types_list
 
@@ -341,7 +341,7 @@ class TrackingPlansApi:
         # set the HTTP header `Content-Type`
         _content_types_list = _params.get('_content_type',
             self.api_client.select_header_content_type(
-                ['application/vnd.segment.v1+json', 'application/json', 'application/vnd.segment.v1beta+json', 'application/vnd.segment.v1alpha+json']))
+                ['application/json', 'application/vnd.segment.v1+json', 'application/vnd.segment.v1beta+json', 'application/vnd.segment.v1alpha+json']))
         if _content_types_list:
                 _header_params['Content-Type'] = _content_types_list
 
@@ -1541,7 +1541,7 @@ class TrackingPlansApi:
         # set the HTTP header `Content-Type`
         _content_types_list = _params.get('_content_type',
             self.api_client.select_header_content_type(
-                ['application/vnd.segment.v1+json', 'application/json', 'application/vnd.segment.v1beta+json', 'application/vnd.segment.v1alpha+json']))
+                ['application/json', 'application/vnd.segment.v1+json', 'application/vnd.segment.v1beta+json', 'application/vnd.segment.v1alpha+json']))
         if _content_types_list:
                 _header_params['Content-Type'] = _content_types_list
 
@@ -1699,7 +1699,7 @@ class TrackingPlansApi:
         # set the HTTP header `Content-Type`
         _content_types_list = _params.get('_content_type',
             self.api_client.select_header_content_type(
-                ['application/vnd.segment.v1+json', 'application/json', 'application/vnd.segment.v1beta+json', 'application/vnd.segment.v1alpha+json']))
+                ['application/json', 'application/vnd.segment.v1+json', 'application/vnd.segment.v1beta+json', 'application/vnd.segment.v1alpha+json']))
         if _content_types_list:
                 _header_params['Content-Type'] = _content_types_list
 
@@ -1857,7 +1857,7 @@ class TrackingPlansApi:
         # set the HTTP header `Content-Type`
         _content_types_list = _params.get('_content_type',
             self.api_client.select_header_content_type(
-                ['application/vnd.segment.v1+json', 'application/json', 'application/vnd.segment.v1beta+json', 'application/vnd.segment.v1alpha+json']))
+                ['application/json', 'application/vnd.segment.v1+json', 'application/vnd.segment.v1beta+json', 'application/vnd.segment.v1alpha+json']))
         if _content_types_list:
                 _header_params['Content-Type'] = _content_types_list
 
