@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 ## Operation: create_label
 
-> CreateLabel200Response create_label(create_label_v1_input)
+> CreateLabel201Response create_label(create_label_v1_input)
 
 Create Label
 
@@ -25,7 +25,7 @@ Creates a new label.    • When called, this endpoint may generate the `Label C
 import time
 import os
 import segment_public_api
-from segment_public_api.models.create_label200_response import CreateLabel200Response
+from segment_public_api.models.create_label201_response import CreateLabel201Response
 from segment_public_api.models.create_label_v1_input import CreateLabelV1Input
 from segment_public_api.rest import ApiException
 from pprint import pprint
@@ -62,7 +62,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**CreateLabel200Response**](CreateLabel200Response.md)
+[**CreateLabel201Response**](CreateLabel201Response.md)
 
 ### Authorization
 
@@ -76,7 +76,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | OK |  -  |
+**201** | Created |  -  |
 **404** | Resource not found |  -  |
 **422** | Validation failure |  -  |
 **429** | Too many requests |  -  |

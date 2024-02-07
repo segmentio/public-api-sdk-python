@@ -345,7 +345,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.DestinationFiltersApi(api_client)
     destination_id = 'fP7qoQw2HTWt9WdMr718gn' # str | 
-    filter_id = '2DrXi3N7S85LobhzPphZz0uFzJ4' # str | 
+    filter_id = '2c0vbGYWOBwbKszg0F0CoLSS01b' # str | 
 
     try:
         # Remove Filter from Destination

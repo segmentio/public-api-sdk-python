@@ -116,7 +116,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.TransformationsApi(api_client)
-    transformation_id = '2NhipGGSZWdzI7YrXHELB7pVXqR' # str | 
+    transformation_id = '2c0vVuRdDmJ3UQkVjd5WxaA3dar' # str | 
 
     try:
         # Delete Transformation

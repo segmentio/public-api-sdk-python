@@ -191,7 +191,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.SpacesApi(api_client)
     space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
-    replace_messaging_subscriptions_in_spaces_alpha_input = {"subscriptions":[{"key":"jacob@exmple.com","type":"EMAIL","status":"SUBSCRIBED"},{"key":"jane@exmple.com","type":"EMAIL","groups":[{"name":"promotions","status":"SUBSCRIBED"}]},{"key":"pgibbonsexample.com","type":"EMAIL"},{"key":"2162226233","type":"SMS","status":"DID_NOT_SUBSCRIBE"}]} # ReplaceMessagingSubscriptionsInSpacesAlphaInput | 
+    replace_messaging_subscriptions_in_spaces_alpha_input = {"subscriptions":[{"key":"jacob@exmple.com","type":"EMAIL","status":"SUBSCRIBED"},{"key":"jane@exmple.com","type":"EMAIL","status":"SUBSCRIBED","groups":[{"name":"promotions","status":"SUBSCRIBED"}]},{"key":"pgibbonsexample.com","type":"EMAIL","status":"UNSUBSCRIBED"},{"key":"+12162226233","type":"SMS","status":"DID_NOT_SUBSCRIBE"}]} # ReplaceMessagingSubscriptionsInSpacesAlphaInput | 
 
     try:
         # Replace Messaging Subscriptions in Spaces

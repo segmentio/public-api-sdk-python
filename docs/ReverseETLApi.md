@@ -89,7 +89,7 @@ Name | Type | Description  | Notes
 
 ## Operation: create_reverse_etl_model
 
-> CreateReverseEtlModel200Response create_reverse_etl_model(create_reverse_etl_model_input)
+> CreateReverseEtlModel201Response create_reverse_etl_model(create_reverse_etl_model_input)
 
 Create Reverse Etl Model
 
@@ -102,7 +102,7 @@ Creates a new Reverse ETL Model.          • When called, this endpoint may gen
 import time
 import os
 import segment_public_api
-from segment_public_api.models.create_reverse_etl_model200_response import CreateReverseEtlModel200Response
+from segment_public_api.models.create_reverse_etl_model201_response import CreateReverseEtlModel201Response
 from segment_public_api.models.create_reverse_etl_model_input import CreateReverseEtlModelInput
 from segment_public_api.rest import ApiException
 from pprint import pprint
@@ -139,7 +139,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**CreateReverseEtlModel200Response**](CreateReverseEtlModel200Response.md)
+[**CreateReverseEtlModel201Response**](CreateReverseEtlModel201Response.md)
 
 ### Authorization
 
@@ -153,7 +153,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | OK |  -  |
+**201** | Created |  -  |
 **404** | Resource not found |  -  |
 **422** | Validation failure |  -  |
 **429** | Too many requests |  -  |
@@ -191,7 +191,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.ReverseETLApi(api_client)
-    model_id = 'aow61ZsjXFRsUqB5wWmZES' # str | 
+    model_id = 'fxXMc5bLdKnDfEgBpDbV11' # str | 
 
     try:
         # Delete Reverse Etl Model
@@ -264,7 +264,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.ReverseETLApi(api_client)
-    model_id = 'MaAeg9yDd1UZTBeEYDiVw' # str | 
+    model_id = 'dY1JLx4HgWHKUNsB76tEU' # str | 
 
     try:
         # Get Reverse Etl Model
@@ -412,8 +412,8 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.ReverseETLApi(api_client)
-    model_id = '37YCmBXayzqG4sit63P5pH' # str | 
-    update_reverse_etl_model_input = {"name":"My Updated Model"} # UpdateReverseEtlModelInput | 
+    model_id = 'gFBTkmP2ENiu6BQRmdHBkr' # str | 
+    update_reverse_etl_model_input = {"name":"My Updated Model","scheduleStrategy":"MANUAL","scheduleConfig":{}} # UpdateReverseEtlModelInput | 
 
     try:
         # Update Reverse Etl Model
