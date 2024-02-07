@@ -78,7 +78,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
+ - **Content-Type**: application/json, application/vnd.segment.v1+json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
  - **Accept**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
 
 ### HTTP response details
@@ -94,7 +94,7 @@ Name | Type | Description  | Notes
 
 ## Operation: create_invites
 
-> CreateInvites200Response create_invites(create_invites_v1_input)
+> CreateInvites201Response create_invites(create_invites_v1_input)
 
 Create Invites
 
@@ -107,7 +107,7 @@ Invites a list of users to join a Workspace.    • When called, this endpoint m
 import time
 import os
 import segment_public_api
-from segment_public_api.models.create_invites200_response import CreateInvites200Response
+from segment_public_api.models.create_invites201_response import CreateInvites201Response
 from segment_public_api.models.create_invites_v1_input import CreateInvitesV1Input
 from segment_public_api.rest import ApiException
 from pprint import pprint
@@ -144,7 +144,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**CreateInvites200Response**](CreateInvites200Response.md)
+[**CreateInvites201Response**](CreateInvites201Response.md)
 
 ### Authorization
 
@@ -152,13 +152,13 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
+ - **Content-Type**: application/json, application/vnd.segment.v1+json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
  - **Accept**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | OK |  -  |
+**201** | Created |  -  |
 **404** | Resource not found |  -  |
 **422** | Validation failure |  -  |
 **429** | Too many requests |  -  |
@@ -671,7 +671,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
+ - **Content-Type**: application/json, application/vnd.segment.v1+json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
  - **Accept**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
 
 ### HTTP response details

@@ -19,7 +19,7 @@ Method | HTTP request | Description
 
 ## Operation: add_connection_from_source_to_warehouse
 
-> AddConnectionFromSourceToWarehouse200Response add_connection_from_source_to_warehouse(warehouse_id, source_id)
+> AddConnectionFromSourceToWarehouse201Response add_connection_from_source_to_warehouse(warehouse_id, source_id)
 
 Add Connection from Source to Warehouse
 
@@ -32,7 +32,7 @@ Connects a Source to a Warehouse.    • When called, this endpoint may generate
 import time
 import os
 import segment_public_api
-from segment_public_api.models.add_connection_from_source_to_warehouse200_response import AddConnectionFromSourceToWarehouse200Response
+from segment_public_api.models.add_connection_from_source_to_warehouse201_response import AddConnectionFromSourceToWarehouse201Response
 from segment_public_api.rest import ApiException
 from pprint import pprint
 
@@ -70,7 +70,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**AddConnectionFromSourceToWarehouse200Response**](AddConnectionFromSourceToWarehouse200Response.md)
+[**AddConnectionFromSourceToWarehouse201Response**](AddConnectionFromSourceToWarehouse201Response.md)
 
 ### Authorization
 
@@ -84,7 +84,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | OK |  -  |
+**201** | Created |  -  |
 **404** | Resource not found |  -  |
 **422** | Validation failure |  -  |
 **429** | Too many requests |  -  |
@@ -152,7 +152,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
+ - **Content-Type**: application/json, application/vnd.segment.v1+json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
  - **Accept**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
 
 ### HTTP response details
@@ -168,7 +168,7 @@ Name | Type | Description  | Notes
 
 ## Operation: create_warehouse
 
-> CreateWarehouse200Response create_warehouse(create_warehouse_v1_input)
+> CreateWarehouse201Response create_warehouse(create_warehouse_v1_input)
 
 Create Warehouse
 
@@ -181,7 +181,7 @@ Creates a new Warehouse.    • When called, this endpoint may generate the `Sto
 import time
 import os
 import segment_public_api
-from segment_public_api.models.create_warehouse200_response import CreateWarehouse200Response
+from segment_public_api.models.create_warehouse201_response import CreateWarehouse201Response
 from segment_public_api.models.create_warehouse_v1_input import CreateWarehouseV1Input
 from segment_public_api.rest import ApiException
 from pprint import pprint
@@ -218,7 +218,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**CreateWarehouse200Response**](CreateWarehouse200Response.md)
+[**CreateWarehouse201Response**](CreateWarehouse201Response.md)
 
 ### Authorization
 
@@ -226,13 +226,13 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
+ - **Content-Type**: application/json, application/vnd.segment.v1+json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
  - **Accept**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | OK |  -  |
+**201** | Created |  -  |
 **404** | Resource not found |  -  |
 **422** | Validation failure |  -  |
 **429** | Too many requests |  -  |
@@ -270,7 +270,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.WarehousesApi(api_client)
-    warehouse_id = '8VW6ytH4hKYCoTtfQ7Xbkd' # str | 
+    warehouse_id = 'tmiTtiPi58udvDAjcxKUJY' # str | 
 
     try:
         # Delete Warehouse
@@ -746,7 +746,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
+ - **Content-Type**: application/json, application/vnd.segment.v1+json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
  - **Accept**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
 
 ### HTTP response details

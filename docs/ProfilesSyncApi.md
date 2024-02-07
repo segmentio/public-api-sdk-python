@@ -15,7 +15,7 @@ Method | HTTP request | Description
 
 ## Operation: create_profiles_warehouse
 
-> CreateProfilesWarehouse200Response create_profiles_warehouse(space_id, create_profiles_warehouse_alpha_input)
+> CreateProfilesWarehouse201Response create_profiles_warehouse(space_id, create_profiles_warehouse_alpha_input)
 
 Create Profiles Warehouse
 
@@ -28,7 +28,7 @@ Creates a new Profiles Warehouse.    • When called, this endpoint may generate
 import time
 import os
 import segment_public_api
-from segment_public_api.models.create_profiles_warehouse200_response import CreateProfilesWarehouse200Response
+from segment_public_api.models.create_profiles_warehouse201_response import CreateProfilesWarehouse201Response
 from segment_public_api.models.create_profiles_warehouse_alpha_input import CreateProfilesWarehouseAlphaInput
 from segment_public_api.rest import ApiException
 from pprint import pprint
@@ -67,7 +67,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**CreateProfilesWarehouse200Response**](CreateProfilesWarehouse200Response.md)
+[**CreateProfilesWarehouse201Response**](CreateProfilesWarehouse201Response.md)
 
 ### Authorization
 
@@ -81,7 +81,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | OK |  -  |
+**201** | Created |  -  |
 **404** | Resource not found |  -  |
 **422** | Validation failure |  -  |
 **429** | Too many requests |  -  |
@@ -274,7 +274,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.ProfilesSyncApi(api_client)
     space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
-    warehouse_id = 'kjU72LCJexvrqL7G4TMHHN' # str | 
+    warehouse_id = 'qABd3NVTPfTLQ3kXWoBhgi' # str | 
 
     try:
         # Remove Profiles Warehouse from Space
@@ -350,7 +350,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.ProfilesSyncApi(api_client)
     space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
-    warehouse_id = 'eSrwSWY9u6JisZvHhZeK8o' # str | 
+    warehouse_id = '3eadBBqVMQD2DEtaWXSkqA' # str | 
     update_profiles_warehouse_for_space_warehouse_alpha_input = {"settings":{},"enabled":false,"name":"testing"} # UpdateProfilesWarehouseForSpaceWarehouseAlphaInput | 
 
     try:
@@ -427,8 +427,8 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.ProfilesSyncApi(api_client)
-    space_id = 'space_123' # str | 
-    warehouse_id = 'kjU72LCJexvrqL7G4TMHHN' # str | 
+    space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
+    warehouse_id = 'qABd3NVTPfTLQ3kXWoBhgi' # str | 
     update_selective_sync_for_warehouse_and_space_alpha_input = {"syncOverrides":[{"enabled":true,"collection":"tracks","property":"context_ip"}]} # UpdateSelectiveSyncForWarehouseAndSpaceAlphaInput | 
 
     try:

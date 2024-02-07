@@ -80,7 +80,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
+ - **Content-Type**: application/json, application/vnd.segment.v1+json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
  - **Accept**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
 
 ### HTTP response details
@@ -96,7 +96,7 @@ Name | Type | Description  | Notes
 
 ## Operation: create_source
 
-> CreateSource200Response create_source(create_source_v1_input)
+> CreateSource201Response create_source(create_source_v1_input)
 
 Create Source
 
@@ -109,7 +109,7 @@ Creates a new Source.    • When called, this endpoint may generate the `Source
 import time
 import os
 import segment_public_api
-from segment_public_api.models.create_source200_response import CreateSource200Response
+from segment_public_api.models.create_source201_response import CreateSource201Response
 from segment_public_api.models.create_source_v1_input import CreateSourceV1Input
 from segment_public_api.rest import ApiException
 from pprint import pprint
@@ -125,7 +125,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.SourcesApi(api_client)
-    create_source_v1_input = {"slug":"my-test-source-rhpd18","enabled":true,"metadataId":"IqDTy1TpoU","settings":{}} # CreateSourceV1Input | 
+    create_source_v1_input = {"slug":"my-test-source-s3_e9_","enabled":true,"metadataId":"IqDTy1TpoU","settings":{}} # CreateSourceV1Input | 
 
     try:
         # Create Source
@@ -146,7 +146,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**CreateSource200Response**](CreateSource200Response.md)
+[**CreateSource201Response**](CreateSource201Response.md)
 
 ### Authorization
 
@@ -154,13 +154,13 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
+ - **Content-Type**: application/json, application/vnd.segment.v1+json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
  - **Accept**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | OK |  -  |
+**201** | Created |  -  |
 **404** | Resource not found |  -  |
 **422** | Validation failure |  -  |
 **429** | Too many requests |  -  |
@@ -198,7 +198,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.SourcesApi(api_client)
-    source_id = '48EFjyXH4zdbKWx4vKiLuE' # str | 
+    source_id = 'rYxTjyaPtAELCjnFE5EYfM' # str | 
 
     try:
         # Delete Source
@@ -675,7 +675,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
+ - **Content-Type**: application/json, application/vnd.segment.v1+json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
  - **Accept**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
 
 ### HTTP response details
@@ -751,7 +751,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
+ - **Content-Type**: application/json, application/vnd.segment.v1+json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
  - **Accept**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
 
 ### HTTP response details
@@ -796,7 +796,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.SourcesApi(api_client)
-    source_id = 'piTVHEYNrRgBMM1uQGCPbK' # str | 
+    source_id = '87jXXk8QSLFPfMDGa6mtS3' # str | 
     update_source_v1_input = {"name":"My updated source","enabled":false} # UpdateSourceV1Input | 
 
     try:
@@ -827,7 +827,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
+ - **Content-Type**: application/json, application/vnd.segment.v1+json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
  - **Accept**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
 
 ### HTTP response details

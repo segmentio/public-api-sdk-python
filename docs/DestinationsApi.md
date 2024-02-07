@@ -78,7 +78,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
+ - **Content-Type**: application/json, application/vnd.segment.v1+json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
  - **Accept**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
 
 ### HTTP response details
@@ -198,7 +198,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.DestinationsApi(api_client)
-    destination_id = '6424a4a5b03b3d8fe288f000' # str | 
+    destination_id = '65c2bdbede6f2d8297f943db' # str | 
 
     try:
         # Delete Destination
@@ -345,7 +345,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.DestinationsApi(api_client)
     destination_id = 'fP7qoQw2HTWt9WdMr718gn' # str | 
-    id = 'iUyx2UdPSvp4uJtYAhjTup' # str | 
+    id = 'kyMKN6LUgMvF8dwRMEz3cX' # str | 
 
     try:
         # Get Subscription from Destination
@@ -651,7 +651,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.DestinationsApi(api_client)
     destination_id = 'fP7qoQw2HTWt9WdMr718gn' # str | 
-    id = 'bXbWrgh8vAeWioqx6Kg5vb' # str | 
+    id = 'zXCqmEMHJojkD45GcBAPt' # str | 
 
     try:
         # Remove Subscription from Destination
@@ -757,7 +757,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
+ - **Content-Type**: application/json, application/vnd.segment.v1+json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
  - **Accept**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
 
 ### HTTP response details
@@ -803,7 +803,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.DestinationsApi(api_client)
     destination_id = 'fP7qoQw2HTWt9WdMr718gn' # str | 
-    id = 'mAdhWCVCmFadguoGcqP3vN' # str | 
+    id = '3ELMSracBm5MMikXBYfo1c' # str | 
     update_subscription_for_destination_alpha_input = {"input":{"name":"Updated name"}} # UpdateSubscriptionForDestinationAlphaInput | 
 
     try:

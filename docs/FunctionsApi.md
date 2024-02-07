@@ -81,7 +81,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
+ - **Content-Type**: application/json, application/vnd.segment.v1+json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
  - **Accept**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
 
 ### HTTP response details
@@ -345,7 +345,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.FunctionsApi(api_client)
-    instance_id = '64edfa5ac43ed978ee4f2b7f' # str | 
+    instance_id = '65c2bdbdde6f2d8297f943da' # str | 
 
     try:
         # Delete Insert Function Instance
@@ -566,7 +566,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.FunctionsApi(api_client)
-    instance_id = '65414b1bf05ef7ecfd8b6736' # str | 
+    instance_id = '65c2bdbcde6f2d8297f943d7' # str | 
 
     try:
         # Get Insert Function Instance
@@ -975,7 +975,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
+ - **Content-Type**: application/json, application/vnd.segment.v1+json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
  - **Accept**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
 
 ### HTTP response details
@@ -1020,7 +1020,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.FunctionsApi(api_client)
-    instance_id = '64edfa58c43ed978ee4f2b7e' # str | 
+    instance_id = '65c2bdbcde6f2d8297f943d8' # str | 
     update_insert_function_instance_alpha_input = {"enabled":false,"settings":{"apiKey":"XYZ-new"}} # UpdateInsertFunctionInstanceAlphaInput | 
 
     try:
