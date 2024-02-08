@@ -26,19 +26,27 @@ class RegulationListEntryV1(BaseModel):
     """
     RegulationListEntryV1
     """
-    id: StrictStr = Field(...)
-    subject_type: StrictStr = Field(..., alias="subjectType")
-    subjects: conlist(StrictStr) = Field(...)
-    status: StrictStr = Field(...)
-    created_at: StrictStr = Field(..., alias="createdAt")
-    finished_at: Optional[StrictStr] = Field(None, alias="finishedAt")
-    __properties = ["id", "subjectType", "subjects", "status", "createdAt", "finishedAt"]
+    id: StrictStr = Field(..., description="The id of the regulate request.")
+    subject_type: StrictStr = Field(..., alias="subjectType", description="The subject type.")
+    subjects: conlist(StrictStr) = Field(..., description="The list of `userId` or `objectId` values of the subjects to regulate.")
+    status: StrictStr = Field(..., description="The current status of the regulate request.")
+    created_at: StrictStr = Field(..., alias="createdAt", description="The timestamp of the creation of the request.")
+    regulation_type: StrictStr = Field(..., alias="regulationType", description="The regulation type.")
+    finished_at: Optional[StrictStr] = Field(None, alias="finishedAt", description="The timestamp of when the request finished.")
+    __properties = ["id", "subjectType", "subjects", "status", "createdAt", "regulationType", "finishedAt"]
 
     @validator('status')
     def status_validate_enum(cls, value):
         """Validates the enum"""
         if value not in ('FAILED', 'FINISHED', 'INITIALIZED', 'INVALID', 'NOT_SUPPORTED', 'PARTIAL_SUCCESS', 'RUNNING'):
             raise ValueError("must be one of enum values ('FAILED', 'FINISHED', 'INITIALIZED', 'INVALID', 'NOT_SUPPORTED', 'PARTIAL_SUCCESS', 'RUNNING')")
+        return value
+
+    @validator('regulation_type')
+    def regulation_type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in ('DELETE_INTERNAL', 'DELETE_ONLY', 'SUPPRESS_ONLY', 'SUPPRESS_WITH_DELETE', 'UNSUPPRESS'):
+            raise ValueError("must be one of enum values ('DELETE_INTERNAL', 'DELETE_ONLY', 'SUPPRESS_ONLY', 'SUPPRESS_WITH_DELETE', 'UNSUPPRESS')")
         return value
 
     class Config:
@@ -82,6 +90,7 @@ class RegulationListEntryV1(BaseModel):
             "subjects": obj.get("subjects"),
             "status": obj.get("status"),
             "created_at": obj.get("createdAt"),
+            "regulation_type": obj.get("regulationType"),
             "finished_at": obj.get("finishedAt")
         })
         return _obj
