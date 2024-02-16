@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**create_reverse_etl_model**](ReverseETLApi.md#create_reverse_etl_model) | **POST** /reverse-etl-models | Create Reverse Etl Model
 [**delete_reverse_etl_model**](ReverseETLApi.md#delete_reverse_etl_model) | **DELETE** /reverse-etl-models/{modelId} | Delete Reverse Etl Model
 [**get_reverse_etl_model**](ReverseETLApi.md#get_reverse_etl_model) | **GET** /reverse-etl-models/{modelId} | Get Reverse Etl Model
+[**get_reverse_etl_sync_from_model**](ReverseETLApi.md#get_reverse_etl_sync_from_model) | **GET** /reverse-etl-models/{modelId}/syncs/{syncId} | Get Reverse ETL Sync from Model
 [**list_reverse_etl_models**](ReverseETLApi.md#list_reverse_etl_models) | **GET** /reverse-etl-models | List Reverse Etl Models
 [**update_reverse_etl_model**](ReverseETLApi.md#update_reverse_etl_model) | **PATCH** /reverse-etl-models/{modelId} | Update Reverse Etl Model
 
@@ -286,6 +287,81 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**GetReverseEtlModel200Response**](GetReverseEtlModel200Response.md)
+
+### Authorization
+
+[token](../README.md#token)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/vnd.segment.v1alpha+json, application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**404** | Resource not found |  -  |
+**422** | Validation failure |  -  |
+**429** | Too many requests |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## Operation: get_reverse_etl_sync_from_model
+
+> GetReverseETLSyncFromModel200Response get_reverse_etl_sync_from_model(model_id, sync_id)
+
+Get Reverse ETL Sync from Model
+
+Get the sync status for a Reverse ETL sync.   The rate limit for this endpoint is 250 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
+
+### Example
+
+* Bearer Authentication (token):
+```python
+import time
+import os
+import segment_public_api
+from segment_public_api.models.get_reverse_etl_sync_from_model200_response import GetReverseETLSyncFromModel200Response
+from segment_public_api.rest import ApiException
+from pprint import pprint
+
+
+
+# Configure Bearer authorization: token
+configuration = segment_public_api.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with segment_public_api.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = segment_public_api.ReverseETLApi(api_client)
+    model_id = 'modelId' # str | 
+    sync_id = 'syncId' # str | 
+
+    try:
+        # Get Reverse ETL Sync from Model
+        api_response = api_instance.get_reverse_etl_sync_from_model(model_id, sync_id)
+        print("The response of ReverseETLApi->get_reverse_etl_sync_from_model:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ReverseETLApi->get_reverse_etl_sync_from_model: %s\n" % e)
+```
+
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **model_id** | **str**|  | 
+ **sync_id** | **str**|  | 
+
+### Return type
+
+[**GetReverseETLSyncFromModel200Response**](GetReverseETLSyncFromModel200Response.md)
 
 ### Authorization
 
