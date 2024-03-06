@@ -716,7 +716,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.WarehousesApi(api_client)
     warehouse_id = 'kjU72LCJexvrqL7G4TMHHN' # str | 
-    update_warehouse_v1_input = {"name":"Redshift Dev","settings":{"host":"aws.redshift.dev"}} # UpdateWarehouseV1Input | 
+    update_warehouse_v1_input = {"name":"Redshift Dev","settings":{}} # UpdateWarehouseV1Input | 
 
     try:
         # Update Warehouse
