@@ -19,14 +19,14 @@ import re  # noqa: F401
 import json
 
 
-
+from typing import Optional
 from pydantic import BaseModel, Field, StrictBool
 
 class UpdateAudienceForSpaceInput(BaseModel):
     """
     Input to update an audience.  # noqa: E501
     """
-    enabled: StrictBool = Field(..., description="Enabled/disabled status for the audience.")
+    enabled: Optional[StrictBool] = Field(None, description="Enabled/disabled status for the audience.")
     __properties = ["enabled"]
 
     class Config:
