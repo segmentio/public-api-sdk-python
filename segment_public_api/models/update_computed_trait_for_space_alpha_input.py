@@ -19,14 +19,14 @@ import re  # noqa: F401
 import json
 
 
-
+from typing import Optional
 from pydantic import BaseModel, Field, StrictBool
 
 class UpdateComputedTraitForSpaceAlphaInput(BaseModel):
     """
     Input to update a computed trait.  # noqa: E501
     """
-    enabled: StrictBool = Field(..., description="Enabled/disabled status for the computed trait.")
+    enabled: Optional[StrictBool] = Field(None, description="Enabled/disabled status for the computed trait.")
     __properties = ["enabled"]
 
     class Config:
