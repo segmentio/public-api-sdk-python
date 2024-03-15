@@ -27,4 +27,5 @@ from segment_public_api.api.tracking_plans_api import TrackingPlansApi
 from segment_public_api.api.transformations_api import TransformationsApi
 from segment_public_api.api.warehouses_api import WarehousesApi
 from segment_public_api.api.workspaces_api import WorkspacesApi
+from segment_public_api.api.delivery_overview_api import DeliveryOverviewApi
 
