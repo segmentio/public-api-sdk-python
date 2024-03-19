@@ -6,12 +6,14 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**add_labels_to_source**](SourcesApi.md#add_labels_to_source) | **POST** /sources/{sourceId}/labels | Add Labels to Source
 [**create_source**](SourcesApi.md#create_source) | **POST** /sources | Create Source
+[**create_write_key_for_source**](SourcesApi.md#create_write_key_for_source) | **POST** /sources/{sourceId}/writekey | Create Write Key for Source
 [**delete_source**](SourcesApi.md#delete_source) | **DELETE** /sources/{sourceId} | Delete Source
 [**get_source**](SourcesApi.md#get_source) | **GET** /sources/{sourceId} | Get Source
 [**list_connected_destinations_from_source**](SourcesApi.md#list_connected_destinations_from_source) | **GET** /sources/{sourceId}/connected-destinations | List Connected Destinations from Source
 [**list_connected_warehouses_from_source**](SourcesApi.md#list_connected_warehouses_from_source) | **GET** /sources/{sourceId}/connected-warehouses | List Connected Warehouses from Source
 [**list_schema_settings_in_source**](SourcesApi.md#list_schema_settings_in_source) | **GET** /sources/{sourceId}/settings | List Schema Settings in Source
 [**list_sources**](SourcesApi.md#list_sources) | **GET** /sources | List Sources
+[**remove_write_key_from_source**](SourcesApi.md#remove_write_key_from_source) | **DELETE** /sources/{sourceId}/writekey/{writeKey} | Remove Write Key from Source
 [**replace_labels_in_source**](SourcesApi.md#replace_labels_in_source) | **PUT** /sources/{sourceId}/labels | Replace Labels in Source
 [**update_schema_settings_in_source**](SourcesApi.md#update_schema_settings_in_source) | **PATCH** /sources/{sourceId}/settings | Update Schema Settings in Source
 [**update_source**](SourcesApi.md#update_source) | **PATCH** /sources/{sourceId} | Update Source
@@ -161,6 +163,79 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | Created |  -  |
+**404** | Resource not found |  -  |
+**422** | Validation failure |  -  |
+**429** | Too many requests |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## Operation: create_write_key_for_source
+
+> CreateWriteKeyForSource200Response create_write_key_for_source(source_id)
+
+Create Write Key for Source
+
+Creates a new Write Key for the Source.    • When called, this endpoint may generate the `Source Modified` event in the [audit trail](/tag/Audit-Trail). 
+
+### Example
+
+* Bearer Authentication (token):
+```python
+import time
+import os
+import segment_public_api
+from segment_public_api.models.create_write_key_for_source200_response import CreateWriteKeyForSource200Response
+from segment_public_api.rest import ApiException
+from pprint import pprint
+
+
+
+# Configure Bearer authorization: token
+configuration = segment_public_api.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with segment_public_api.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = segment_public_api.SourcesApi(api_client)
+    source_id = 'idR4zzU9iGcGJgoAX891nf' # str | 
+
+    try:
+        # Create Write Key for Source
+        api_response = api_instance.create_write_key_for_source(source_id)
+        print("The response of SourcesApi->create_write_key_for_source:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling SourcesApi->create_write_key_for_source: %s\n" % e)
+```
+
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **source_id** | **str**|  | 
+
+### Return type
+
+[**CreateWriteKeyForSource200Response**](CreateWriteKeyForSource200Response.md)
+
+### Authorization
+
+[token](../README.md#token)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/vnd.segment.v1alpha+json, application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
 **404** | Resource not found |  -  |
 **422** | Validation failure |  -  |
 **429** | Too many requests |  -  |
@@ -601,6 +676,81 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: Not defined
  - **Accept**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**404** | Resource not found |  -  |
+**422** | Validation failure |  -  |
+**429** | Too many requests |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## Operation: remove_write_key_from_source
+
+> RemoveWriteKeyFromSource200Response remove_write_key_from_source(source_id, write_key)
+
+Remove Write Key from Source
+
+Removes a Write Key from a Source.    • When called, this endpoint may generate the `Source Modified` event in the [audit trail](/tag/Audit-Trail). 
+
+### Example
+
+* Bearer Authentication (token):
+```python
+import time
+import os
+import segment_public_api
+from segment_public_api.models.remove_write_key_from_source200_response import RemoveWriteKeyFromSource200Response
+from segment_public_api.rest import ApiException
+from pprint import pprint
+
+
+
+# Configure Bearer authorization: token
+configuration = segment_public_api.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with segment_public_api.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = segment_public_api.SourcesApi(api_client)
+    source_id = 'idR4zzU9iGcGJgoAX891nf' # str | 
+    write_key = 'wk123' # str | 
+
+    try:
+        # Remove Write Key from Source
+        api_response = api_instance.remove_write_key_from_source(source_id, write_key)
+        print("The response of SourcesApi->remove_write_key_from_source:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling SourcesApi->remove_write_key_from_source: %s\n" % e)
+```
+
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **source_id** | **str**|  | 
+ **write_key** | **str**|  | 
+
+### Return type
+
+[**RemoveWriteKeyFromSource200Response**](RemoveWriteKeyFromSource200Response.md)
+
+### Authorization
+
+[token](../README.md#token)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/vnd.segment.v1alpha+json, application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
