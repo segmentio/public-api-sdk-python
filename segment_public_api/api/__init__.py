@@ -7,6 +7,7 @@ from segment_public_api.api.audit_trail_api import AuditTrailApi
 from segment_public_api.api.catalog_api import CatalogApi
 from segment_public_api.api.computed_traits_api import ComputedTraitsApi
 from segment_public_api.api.deletion_and_suppression_api import DeletionAndSuppressionApi
+from segment_public_api.api.delivery_overview_api import DeliveryOverviewApi
 from segment_public_api.api.destination_filters_api import DestinationFiltersApi
 from segment_public_api.api.destinations_api import DestinationsApi
 from segment_public_api.api.edge_functions_api import EdgeFunctionsApi
