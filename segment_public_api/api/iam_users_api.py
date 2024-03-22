@@ -22,8 +22,6 @@ from pydantic import validate_arguments, ValidationError
 from typing_extensions import Annotated
 from pydantic import Field, StrictStr, conlist, constr
 
-from typing import List
-
 from segment_public_api.models.add_permissions_to_user200_response import AddPermissionsToUser200Response
 from segment_public_api.models.add_permissions_to_user_v1_input import AddPermissionsToUserV1Input
 from segment_public_api.models.create_invites201_response import CreateInvites201Response
@@ -367,7 +365,7 @@ class IAMUsersApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def delete_invites(self, emails : Annotated[conlist(conlist(StrictStr)), Field(..., description="The list of emails to delete invites for.  This parameter exists in v1.")], **kwargs) -> DeleteInvites200Response:  # noqa: E501
+    def delete_invites(self, emails : Annotated[conlist(StrictStr), Field(..., description="The list of emails to delete invites for.  This parameter exists in v1.")], **kwargs) -> DeleteInvites200Response:  # noqa: E501
         """Delete Invites  # noqa: E501
 
         Removes a list of invitations to join a Workspace.    • When called, this endpoint may generate one or more of the following [audit trail](/tag/Audit-Trail) events:* Invite Deleted * Group Memberships Deleted          The rate limit for this endpoint is 60 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
@@ -397,7 +395,7 @@ class IAMUsersApi:
         return self.delete_invites_with_http_info(emails, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def delete_invites_with_http_info(self, emails : Annotated[conlist(conlist(StrictStr)), Field(..., description="The list of emails to delete invites for.  This parameter exists in v1.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def delete_invites_with_http_info(self, emails : Annotated[conlist(StrictStr), Field(..., description="The list of emails to delete invites for.  This parameter exists in v1.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Delete Invites  # noqa: E501
 
         Removes a list of invitations to join a Workspace.    • When called, this endpoint may generate one or more of the following [audit trail](/tag/Audit-Trail) events:* Invite Deleted * Group Memberships Deleted          The rate limit for this endpoint is 60 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
@@ -470,7 +468,7 @@ class IAMUsersApi:
         _query_params = []
         if _params.get('emails') is not None:  # noqa: E501
             _query_params.append(('emails', _params['emails']))
-            _collection_formats['emails'] = 'csv'
+            _collection_formats['emails'] = 'multi'
 
         # process the header parameters
         _header_params = dict(_params.get('_headers', {}))
@@ -511,7 +509,7 @@ class IAMUsersApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def delete_users(self, user_ids : Annotated[conlist(conlist(StrictStr)), Field(..., description="The ids of the users to remove.  This parameter exists in v1.")], **kwargs) -> DeleteUsers200Response:  # noqa: E501
+    def delete_users(self, user_ids : Annotated[conlist(StrictStr), Field(..., description="The ids of the users to remove.  This parameter exists in v1.")], **kwargs) -> DeleteUsers200Response:  # noqa: E501
         """Delete Users  # noqa: E501
 
         Removes one or multiple users.    • When called, this endpoint may generate the `Group Memberships Deleted` event in the [audit trail](/tag/Audit-Trail).          The rate limit for this endpoint is 60 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
@@ -541,7 +539,7 @@ class IAMUsersApi:
         return self.delete_users_with_http_info(user_ids, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def delete_users_with_http_info(self, user_ids : Annotated[conlist(conlist(StrictStr)), Field(..., description="The ids of the users to remove.  This parameter exists in v1.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def delete_users_with_http_info(self, user_ids : Annotated[conlist(StrictStr), Field(..., description="The ids of the users to remove.  This parameter exists in v1.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Delete Users  # noqa: E501
 
         Removes one or multiple users.    • When called, this endpoint may generate the `Group Memberships Deleted` event in the [audit trail](/tag/Audit-Trail).          The rate limit for this endpoint is 60 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
@@ -614,7 +612,7 @@ class IAMUsersApi:
         _query_params = []
         if _params.get('user_ids') is not None:  # noqa: E501
             _query_params.append(('userIds', _params['user_ids']))
-            _collection_formats['userIds'] = 'csv'
+            _collection_formats['userIds'] = 'multi'
 
         # process the header parameters
         _header_params = dict(_params.get('_headers', {}))

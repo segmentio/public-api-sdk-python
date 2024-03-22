@@ -22,7 +22,7 @@ from pydantic import validate_arguments, ValidationError
 from typing_extensions import Annotated
 from pydantic import Field, StrictStr, conlist, constr
 
-from typing import List, Optional
+from typing import Optional
 
 from segment_public_api.models.add_source_to_tracking_plan200_response import AddSourceToTrackingPlan200Response
 from segment_public_api.models.add_source_to_tracking_plan_v1_input import AddSourceToTrackingPlanV1Input
@@ -1112,7 +1112,7 @@ class TrackingPlansApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def remove_rules_from_tracking_plan(self, tracking_plan_id : constr(strict=True), rules : Annotated[conlist(conlist(RemoveRuleV1)), Field(..., description="Rules to delete.  This parameter exists in v1.")], **kwargs) -> RemoveRulesFromTrackingPlan200Response:  # noqa: E501
+    def remove_rules_from_tracking_plan(self, tracking_plan_id : constr(strict=True), rules : Annotated[conlist(RemoveRuleV1), Field(..., description="Rules to delete.  This parameter exists in v1.")], **kwargs) -> RemoveRulesFromTrackingPlan200Response:  # noqa: E501
         """Remove Rules from Tracking Plan  # noqa: E501
 
         Deletes Tracking Plan rules.    • In order to successfully call this endpoint, the specified Workspace needs to have the Protocols feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
@@ -1144,7 +1144,7 @@ class TrackingPlansApi:
         return self.remove_rules_from_tracking_plan_with_http_info(tracking_plan_id, rules, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def remove_rules_from_tracking_plan_with_http_info(self, tracking_plan_id : constr(strict=True), rules : Annotated[conlist(conlist(RemoveRuleV1)), Field(..., description="Rules to delete.  This parameter exists in v1.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def remove_rules_from_tracking_plan_with_http_info(self, tracking_plan_id : constr(strict=True), rules : Annotated[conlist(RemoveRuleV1), Field(..., description="Rules to delete.  This parameter exists in v1.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Remove Rules from Tracking Plan  # noqa: E501
 
         Deletes Tracking Plan rules.    • In order to successfully call this endpoint, the specified Workspace needs to have the Protocols feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
@@ -1223,7 +1223,7 @@ class TrackingPlansApi:
         _query_params = []
         if _params.get('rules') is not None:  # noqa: E501
             _query_params.append(('rules', _params['rules']))
-            _collection_formats['rules'] = 'csv'
+            _collection_formats['rules'] = 'multi'
 
         # process the header parameters
         _header_params = dict(_params.get('_headers', {}))
