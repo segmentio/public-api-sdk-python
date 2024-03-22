@@ -196,7 +196,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.IAMUsersApi(api_client)
-    emails = ['[\"foo@example.com\"]'] # List[str] | The list of emails to delete invites for.  This parameter exists in v1.
+    emails = ['emails.0=foo%40example.com'] # List[str] | The list of emails to delete invites for.  This parameter exists in v1.
 
     try:
         # Delete Invites
@@ -269,7 +269,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.IAMUsersApi(api_client)
-    user_ids = ['[\"dLPzv57d5nRGz8U5iegLKp\"]'] # List[str] | The ids of the users to remove.  This parameter exists in v1.
+    user_ids = ['userIds.0=dLPzv57d5nRGz8U5iegLKp'] # List[str] | The ids of the users to remove.  This parameter exists in v1.
 
     try:
         # Delete Users

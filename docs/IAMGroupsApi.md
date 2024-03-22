@@ -648,7 +648,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.IAMGroupsApi(api_client)
     user_group_id = 'bBABwqbaDf2QdwTbW8bNEm' # str | 
-    emails = ['[\"foo@example.com\"]'] # List[str] | The list of emails to remove from the user group.  This parameter exists in v1.
+    emails = ['emails.0=foo%40example.com'] # List[str] | The list of emails to remove from the user group.  This parameter exists in v1.
 
     try:
         # Remove Users from User Group

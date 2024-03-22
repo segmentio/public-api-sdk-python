@@ -42,7 +42,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     granularity = 'DAY' # str | The size of each bucket in the requested window.  This parameter exists in v1.
     start_time = '2021-10-28T00:00:00Z' # str | The ISO8601 formatted timestamp that corresponds to the beginning of the requested time frame, inclusive.  This parameter exists in v1.
     end_time = '2021-10-29T16:40:00Z' # str | The ISO8601 formatted timestamp that corresponds to the end of the requested time frame, noninclusive. Segment recommends that you lag queries 1 minute behind clock time to reduce the risk for latency to impact the counts.  This parameter exists in v1.
-    group_by = ['[\"eventType\"]'] # List[str] | A comma-delimited list of strings that represents the dimensions to group the result by. The options are: `eventName`, `eventType` and `source`.  This parameter exists in v1. (optional)
+    group_by = ['groupBy.0=eventType'] # List[str] | A comma-delimited list of strings that represents the dimensions to group the result by. The options are: `eventName`, `eventType` and `source`.  This parameter exists in v1. (optional)
     source_id = ['source_id_example'] # List[str] | A list of strings which filters the results to the given SourceIds.  This parameter exists in v1. (optional)
     event_name = ['event_name_example'] # List[str] | A list of strings which filters the results to the given EventNames.  This parameter exists in v1. (optional)
     event_type = ['event_type_example'] # List[str] | A list of strings which filters the results to the given EventTypes.  This parameter exists in v1. (optional)
