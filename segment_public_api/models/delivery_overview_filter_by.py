@@ -26,7 +26,7 @@ class DeliveryOverviewFilterBy(BaseModel):
     """
     The `DeliveryOverviewFilterBy` object is a map of the filterable fields and their values.  # noqa: E501
     """
-    discard_reason: Optional[conlist(StrictStr)] = Field(None, alias="discardReason", description="A list of strings of discard reasons. Can be used to filter all Source and Destination steps, except for Successfully Received. If you would like to view retry attempts for a successful delivery, you can filter from `successes.attempt.1` to `successes.attempt.10`.  See [Discard Record Documentation](https://segment.com/docs/connections/delivery-overview/#troubleshooting) for valid error codes.")
+    discard_reason: Optional[conlist(StrictStr)] = Field(None, alias="discardReason", description="A list of strings of discard reasons. Can be used to filter all Source and Destination steps, except for Successfully Received.  See [Discard Record Documentation](https://segment.com/docs/connections/delivery-overview/#troubleshooting) for valid error codes.")
     event_name: Optional[conlist(StrictStr)] = Field(None, alias="eventName", description="A list of strings of event names.")
     event_type: Optional[conlist(StrictStr)] = Field(None, alias="eventType", description="A list of strings of event types. Valid options are: `alias`, `group`, `identify`, `page`, `screen`, and `track`.")
     app_version: Optional[conlist(StrictStr)] = Field(None, alias="appVersion", description="A list of strings of app versions.")
