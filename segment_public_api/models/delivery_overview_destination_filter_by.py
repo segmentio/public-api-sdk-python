@@ -22,15 +22,16 @@ import json
 from typing import List, Optional
 from pydantic import BaseModel, Field, StrictStr, conlist
 
-class DeliveryOverviewFilterBy(BaseModel):
+class DeliveryOverviewDestinationFilterBy(BaseModel):
     """
-    The `DeliveryOverviewFilterBy` object is a map of the filterable fields and their values.  # noqa: E501
+    The `DeliveryOverviewDestinationFilterBy` object is a map of the filterable fields and their values.  # noqa: E501
     """
-    discard_reason: Optional[conlist(StrictStr)] = Field(None, alias="discardReason", description="A list of strings of discard reasons. Can be used to filter all Source and Destination steps, except for Successfully Received.  See [Discard Record Documentation](https://segment.com/docs/connections/delivery-overview/#troubleshooting) for valid error codes.")
+    discard_reason: Optional[conlist(StrictStr)] = Field(None, alias="discardReason", description="A list of strings of discard reasons. Can be used to filter all Delivery Overview steps, except for Successfully Received.  See [Discard Record Documentation](https://segment.com/docs/connections/delivery-overview/#troubleshooting) for valid error codes.")
     event_name: Optional[conlist(StrictStr)] = Field(None, alias="eventName", description="A list of strings of event names.")
     event_type: Optional[conlist(StrictStr)] = Field(None, alias="eventType", description="A list of strings of event types. Valid options are: `alias`, `group`, `identify`, `page`, `screen`, and `track`.")
     app_version: Optional[conlist(StrictStr)] = Field(None, alias="appVersion", description="A list of strings of app versions.")
-    __properties = ["discardReason", "eventName", "eventType", "appVersion"]
+    subscription_id: Optional[conlist(StrictStr)] = Field(None, alias="subscriptionId", description="A list of strings of subscriptionIDs.")
+    __properties = ["discardReason", "eventName", "eventType", "appVersion", "subscriptionId"]
 
     class Config:
         """Pydantic configuration"""
@@ -46,8 +47,8 @@ class DeliveryOverviewFilterBy(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> DeliveryOverviewFilterBy:
-        """Create an instance of DeliveryOverviewFilterBy from a JSON string"""
+    def from_json(cls, json_str: str) -> DeliveryOverviewDestinationFilterBy:
+        """Create an instance of DeliveryOverviewDestinationFilterBy from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -59,19 +60,20 @@ class DeliveryOverviewFilterBy(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> DeliveryOverviewFilterBy:
-        """Create an instance of DeliveryOverviewFilterBy from a dict"""
+    def from_dict(cls, obj: dict) -> DeliveryOverviewDestinationFilterBy:
+        """Create an instance of DeliveryOverviewDestinationFilterBy from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return DeliveryOverviewFilterBy.parse_obj(obj)
+            return DeliveryOverviewDestinationFilterBy.parse_obj(obj)
 
-        _obj = DeliveryOverviewFilterBy.parse_obj({
+        _obj = DeliveryOverviewDestinationFilterBy.parse_obj({
             "discard_reason": obj.get("discardReason"),
             "event_name": obj.get("eventName"),
             "event_type": obj.get("eventType"),
-            "app_version": obj.get("appVersion")
+            "app_version": obj.get("appVersion"),
+            "subscription_id": obj.get("subscriptionId")
         })
         return _obj
 
