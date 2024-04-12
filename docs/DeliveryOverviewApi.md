@@ -471,7 +471,7 @@ Get events that were successfully received by Segment.
 import time
 import os
 import segment_public_api
-from segment_public_api.models.delivery_overview_source_filter_by import DeliveryOverviewSourceFilterBy
+from segment_public_api.models.delivery_overview_successfully_received_filter_by import DeliveryOverviewSuccessfullyReceivedFilterBy
 from segment_public_api.models.get_egress_failed_metrics_from_delivery_overview200_response import GetEgressFailedMetricsFromDeliveryOverview200Response
 from segment_public_api.models.pagination_input import PaginationInput
 from segment_public_api.rest import ApiException
@@ -494,7 +494,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     granularity = 'DAY' # str | The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.
     pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Optional params to specify the page cursor and count.  This parameter exists in beta.
     group_by = ['groupBy.0=eventName'] # List[str] | A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `eventName`, `eventType`, and `appVersion`.  This parameter exists in beta. (optional)
-    filter = segment_public_api.DeliveryOverviewSourceFilterBy() # DeliveryOverviewSourceFilterBy | An optional filter for `eventName`, `eventType`, and/or `appVersion` that can be applied in addition to a `groupBy`.  This parameter exists in beta. (optional)
+    filter = segment_public_api.DeliveryOverviewSuccessfullyReceivedFilterBy() # DeliveryOverviewSuccessfullyReceivedFilterBy | An optional filter for `eventName`, `eventType`, and/or `appVersion` that can be applied in addition to a `groupBy`.  This parameter exists in beta. (optional)
 
     try:
         # Get Ingress Success Metrics from Delivery Overview
@@ -517,7 +517,7 @@ Name | Type | Description  | Notes
  **granularity** | **str**| The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta. | 
  **pagination** | [**PaginationInput**](.md)| Optional params to specify the page cursor and count.  This parameter exists in beta. | 
  **group_by** | [**List[str]**](str.md)| A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: &#x60;eventName&#x60;, &#x60;eventType&#x60;, and &#x60;appVersion&#x60;.  This parameter exists in beta. | [optional] 
- **filter** | [**DeliveryOverviewSourceFilterBy**](.md)| An optional filter for &#x60;eventName&#x60;, &#x60;eventType&#x60;, and/or &#x60;appVersion&#x60; that can be applied in addition to a &#x60;groupBy&#x60;.  This parameter exists in beta. | [optional] 
+ **filter** | [**DeliveryOverviewSuccessfullyReceivedFilterBy**](.md)| An optional filter for &#x60;eventName&#x60;, &#x60;eventType&#x60;, and/or &#x60;appVersion&#x60; that can be applied in addition to a &#x60;groupBy&#x60;.  This parameter exists in beta. | [optional] 
 
 ### Return type
 
