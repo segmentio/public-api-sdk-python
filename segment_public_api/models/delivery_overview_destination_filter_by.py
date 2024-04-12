@@ -26,11 +26,11 @@ class DeliveryOverviewDestinationFilterBy(BaseModel):
     """
     The `DeliveryOverviewDestinationFilterBy` object is a map of the filterable fields and their values.  # noqa: E501
     """
-    discard_reason: Optional[conlist(StrictStr)] = Field(None, alias="discardReason", description="A list of strings of discard reasons. Can be used to filter all Delivery Overview steps, except for Successfully Received.  See [Discard Record Documentation](https://segment.com/docs/connections/delivery-overview/#troubleshooting) for valid error codes.")
+    discard_reason: Optional[conlist(StrictStr)] = Field(None, alias="discardReason", description="A list of strings of discard reasons.  See [Discard Record Documentation](https://segment.com/docs/connections/delivery-overview/#troubleshooting) for valid error codes.")
     event_name: Optional[conlist(StrictStr)] = Field(None, alias="eventName", description="A list of strings of event names.")
     event_type: Optional[conlist(StrictStr)] = Field(None, alias="eventType", description="A list of strings of event types. Valid options are: `alias`, `group`, `identify`, `page`, `screen`, and `track`.")
     app_version: Optional[conlist(StrictStr)] = Field(None, alias="appVersion", description="A list of strings of app versions.")
-    subscription_id: Optional[conlist(StrictStr)] = Field(None, alias="subscriptionId", description="A list of strings of subscriptionIDs.")
+    subscription_id: Optional[conlist(StrictStr)] = Field(None, alias="subscriptionId", description="A list of strings of subscriptionIDs for Actions Destinations.")
     __properties = ["discardReason", "eventName", "eventType", "appVersion", "subscriptionId"]
 
     class Config:
