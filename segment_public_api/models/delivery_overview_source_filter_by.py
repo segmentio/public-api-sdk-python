@@ -19,16 +19,18 @@ import re  # noqa: F401
 import json
 
 
+from typing import List, Optional
+from pydantic import BaseModel, Field, StrictStr, conlist
 
-from pydantic import BaseModel, Field, StrictStr
-
-class Definition1(BaseModel):
+class DeliveryOverviewSourceFilterBy(BaseModel):
     """
-    Query language definition and type.  # noqa: E501
+    The `DeliveryOverviewSourceFilterBy` object is a map of the filterable fields and their values.  # noqa: E501
     """
-    query: StrictStr = Field(..., description="The query language string defining the computed trait aggregation criteria.")
-    type: StrictStr = Field(..., description="The underlying data type being aggregated for this computed trait.  Possible values: users, accounts.")
-    __properties = ["query", "type"]
+    discard_reason: Optional[conlist(StrictStr)] = Field(None, alias="discardReason", description="A list of strings of discard reasons.  See [Discard Record Documentation](https://segment.com/docs/connections/delivery-overview/#troubleshooting) for valid error codes.")
+    event_name: Optional[conlist(StrictStr)] = Field(None, alias="eventName", description="A list of strings of event names.")
+    event_type: Optional[conlist(StrictStr)] = Field(None, alias="eventType", description="A list of strings of event types. Valid options are: `alias`, `group`, `identify`, `page`, `screen`, and `track`.")
+    app_version: Optional[conlist(StrictStr)] = Field(None, alias="appVersion", description="A list of strings of app versions.")
+    __properties = ["discardReason", "eventName", "eventType", "appVersion"]
 
     class Config:
         """Pydantic configuration"""
@@ -44,8 +46,8 @@ class Definition1(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Definition1:
-        """Create an instance of Definition1 from a JSON string"""
+    def from_json(cls, json_str: str) -> DeliveryOverviewSourceFilterBy:
+        """Create an instance of DeliveryOverviewSourceFilterBy from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -57,17 +59,19 @@ class Definition1(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> Definition1:
-        """Create an instance of Definition1 from a dict"""
+    def from_dict(cls, obj: dict) -> DeliveryOverviewSourceFilterBy:
+        """Create an instance of DeliveryOverviewSourceFilterBy from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return Definition1.parse_obj(obj)
+            return DeliveryOverviewSourceFilterBy.parse_obj(obj)
 
-        _obj = Definition1.parse_obj({
-            "query": obj.get("query"),
-            "type": obj.get("type")
+        _obj = DeliveryOverviewSourceFilterBy.parse_obj({
+            "discard_reason": obj.get("discardReason"),
+            "event_name": obj.get("eventName"),
+            "event_type": obj.get("eventType"),
+            "app_version": obj.get("appVersion")
         })
         return _obj
 
