@@ -21,13 +21,13 @@ import json
 
 from typing import Optional
 from pydantic import BaseModel
-from segment_public_api.models.get_reverse_etl_sync_from_model_output import GetReverseETLSyncFromModelOutput
+from segment_public_api.models.get_reverse_etl_sync_status_output import GetReverseETLSyncStatusOutput
 
-class GetReverseETLSyncFromModel200Response(BaseModel):
+class GetReverseETLSyncStatus200Response(BaseModel):
     """
-    GetReverseETLSyncFromModel200Response
+    GetReverseETLSyncStatus200Response
     """
-    data: Optional[GetReverseETLSyncFromModelOutput] = None
+    data: Optional[GetReverseETLSyncStatusOutput] = None
     __properties = ["data"]
 
     class Config:
@@ -44,8 +44,8 @@ class GetReverseETLSyncFromModel200Response(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> GetReverseETLSyncFromModel200Response:
-        """Create an instance of GetReverseETLSyncFromModel200Response from a JSON string"""
+    def from_json(cls, json_str: str) -> GetReverseETLSyncStatus200Response:
+        """Create an instance of GetReverseETLSyncStatus200Response from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -60,16 +60,16 @@ class GetReverseETLSyncFromModel200Response(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> GetReverseETLSyncFromModel200Response:
-        """Create an instance of GetReverseETLSyncFromModel200Response from a dict"""
+    def from_dict(cls, obj: dict) -> GetReverseETLSyncStatus200Response:
+        """Create an instance of GetReverseETLSyncStatus200Response from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return GetReverseETLSyncFromModel200Response.parse_obj(obj)
+            return GetReverseETLSyncStatus200Response.parse_obj(obj)
 
-        _obj = GetReverseETLSyncFromModel200Response.parse_obj({
-            "data": GetReverseETLSyncFromModelOutput.from_dict(obj.get("data")) if obj.get("data") is not None else None
+        _obj = GetReverseETLSyncStatus200Response.parse_obj({
+            "data": GetReverseETLSyncStatusOutput.from_dict(obj.get("data")) if obj.get("data") is not None else None
         })
         return _obj
 
