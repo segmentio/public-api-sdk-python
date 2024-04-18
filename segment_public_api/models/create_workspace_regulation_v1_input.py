@@ -34,8 +34,8 @@ class CreateWorkspaceRegulationV1Input(BaseModel):
     @validator('regulation_type')
     def regulation_type_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in ('DELETE_INTERNAL', 'DELETE_ONLY', 'SUPPRESS_ONLY', 'SUPPRESS_WITH_DELETE', 'UNSUPPRESS'):
-            raise ValueError("must be one of enum values ('DELETE_INTERNAL', 'DELETE_ONLY', 'SUPPRESS_ONLY', 'SUPPRESS_WITH_DELETE', 'UNSUPPRESS')")
+        if value not in ('DELETE_INTERNAL', 'DELETE_ONLY', 'SUPPRESS_ONLY', 'SUPPRESS_WITH_DELETE', 'SUPPRESS_WITH_DELETE_INTERNAL', 'UNSUPPRESS'):
+            raise ValueError("must be one of enum values ('DELETE_INTERNAL', 'DELETE_ONLY', 'SUPPRESS_ONLY', 'SUPPRESS_WITH_DELETE', 'SUPPRESS_WITH_DELETE_INTERNAL', 'UNSUPPRESS')")
         return value
 
     @validator('subject_type')
