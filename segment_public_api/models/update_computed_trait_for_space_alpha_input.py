@@ -28,8 +28,8 @@ class UpdateComputedTraitForSpaceAlphaInput(BaseModel):
     Input to update a computed trait.  # noqa: E501
     """
     enabled: Optional[StrictBool] = Field(None, description="Enabled/disabled status for the computed trait.")
-    name: Optional[StrictStr] = Field(None, description="The name of the computation")
-    description: Optional[StrictStr] = Field(None, description="The description of the computation")
+    name: Optional[StrictStr] = Field(None, description="The name of the computation.")
+    description: Optional[StrictStr] = Field(None, description="The description of the computation.")
     definition: Optional[TraitDefinition] = None
     __properties = ["enabled", "name", "description", "definition"]
 

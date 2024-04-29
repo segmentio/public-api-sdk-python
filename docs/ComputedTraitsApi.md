@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 ## Operation: create_computed_trait
 
-> CreateComputedTrait200Response create_computed_trait(space_id, create_trait_alpha_input)
+> CreateComputedTrait200Response create_computed_trait(space_id, create_computed_trait_alpha_input)
 
 Create Computed Trait
 
@@ -28,7 +28,7 @@ import time
 import os
 import segment_public_api
 from segment_public_api.models.create_computed_trait200_response import CreateComputedTrait200Response
-from segment_public_api.models.create_trait_alpha_input import CreateTraitAlphaInput
+from segment_public_api.models.create_computed_trait_alpha_input import CreateComputedTraitAlphaInput
 from segment_public_api.rest import ApiException
 from pprint import pprint
 
@@ -44,11 +44,11 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.ComputedTraitsApi(api_client)
     space_id = 'spaceId' # str | 
-    create_trait_alpha_input = {"name":"name","description":"description","definition":{"query":"event('Shoes Bought').count() >= 1","type":"users"}} # CreateTraitAlphaInput | 
+    create_computed_trait_alpha_input = {"name":"name","description":"description","definition":{"query":"event('Shoes Bought').count() >= 1","type":"users"}} # CreateComputedTraitAlphaInput | 
 
     try:
         # Create Computed Trait
-        api_response = api_instance.create_computed_trait(space_id, create_trait_alpha_input)
+        api_response = api_instance.create_computed_trait(space_id, create_computed_trait_alpha_input)
         print("The response of ComputedTraitsApi->create_computed_trait:\n")
         pprint(api_response)
     except Exception as e:
@@ -62,7 +62,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **space_id** | **str**|  | 
- **create_trait_alpha_input** | [**CreateTraitAlphaInput**](CreateTraitAlphaInput.md)|  | 
+ **create_computed_trait_alpha_input** | [**CreateComputedTraitAlphaInput**](CreateComputedTraitAlphaInput.md)|  | 
 
 ### Return type
 

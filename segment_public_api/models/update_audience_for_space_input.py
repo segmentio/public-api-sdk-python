@@ -28,8 +28,8 @@ class UpdateAudienceForSpaceInput(BaseModel):
     Input to update an audience.  # noqa: E501
     """
     enabled: Optional[StrictBool] = Field(None, description="Enabled/disabled status for the audience.")
-    name: Optional[StrictStr] = Field(None, description="The name of the computation")
-    description: Optional[StrictStr] = Field(None, description="The description of the computation")
+    name: Optional[StrictStr] = Field(None, description="The name of the computation.")
+    description: Optional[StrictStr] = Field(None, description="The description of the computation.")
     definition: Optional[AudienceComputationDefinition] = None
     __properties = ["enabled", "name", "description", "definition"]
 

@@ -23,7 +23,7 @@ from typing_extensions import Annotated
 from pydantic import Field, constr
 
 from segment_public_api.models.create_computed_trait200_response import CreateComputedTrait200Response
-from segment_public_api.models.create_trait_alpha_input import CreateTraitAlphaInput
+from segment_public_api.models.create_computed_trait_alpha_input import CreateComputedTraitAlphaInput
 from segment_public_api.models.get_computed_trait200_response import GetComputedTrait200Response
 from segment_public_api.models.list_computed_traits200_response import ListComputedTraits200Response
 from segment_public_api.models.pagination_input import PaginationInput
@@ -52,20 +52,20 @@ class ComputedTraitsApi:
         self.api_client = api_client
 
     @validate_arguments
-    def create_computed_trait(self, space_id : constr(strict=True), create_trait_alpha_input : CreateTraitAlphaInput, **kwargs) -> CreateComputedTrait200Response:  # noqa: E501
+    def create_computed_trait(self, space_id : constr(strict=True), create_computed_trait_alpha_input : CreateComputedTraitAlphaInput, **kwargs) -> CreateComputedTrait200Response:  # noqa: E501
         """Create Computed Trait  # noqa: E501
 
         Creates a Computed Trait  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Computed Trait feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.create_computed_trait(space_id, create_trait_alpha_input, async_req=True)
+        >>> thread = api.create_computed_trait(space_id, create_computed_trait_alpha_input, async_req=True)
         >>> result = thread.get()
 
         :param space_id: (required)
         :type space_id: str
-        :param create_trait_alpha_input: (required)
-        :type create_trait_alpha_input: CreateTraitAlphaInput
+        :param create_computed_trait_alpha_input: (required)
+        :type create_computed_trait_alpha_input: CreateComputedTraitAlphaInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _request_timeout: timeout setting for this request.
@@ -81,23 +81,23 @@ class ComputedTraitsApi:
         if '_preload_content' in kwargs:
             message = "Error! Please call the create_computed_trait_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.create_computed_trait_with_http_info(space_id, create_trait_alpha_input, **kwargs)  # noqa: E501
+        return self.create_computed_trait_with_http_info(space_id, create_computed_trait_alpha_input, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def create_computed_trait_with_http_info(self, space_id : constr(strict=True), create_trait_alpha_input : CreateTraitAlphaInput, **kwargs) -> ApiResponse:  # noqa: E501
+    def create_computed_trait_with_http_info(self, space_id : constr(strict=True), create_computed_trait_alpha_input : CreateComputedTraitAlphaInput, **kwargs) -> ApiResponse:  # noqa: E501
         """Create Computed Trait  # noqa: E501
 
         Creates a Computed Trait  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Computed Trait feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.create_computed_trait_with_http_info(space_id, create_trait_alpha_input, async_req=True)
+        >>> thread = api.create_computed_trait_with_http_info(space_id, create_computed_trait_alpha_input, async_req=True)
         >>> result = thread.get()
 
         :param space_id: (required)
         :type space_id: str
-        :param create_trait_alpha_input: (required)
-        :type create_trait_alpha_input: CreateTraitAlphaInput
+        :param create_computed_trait_alpha_input: (required)
+        :type create_computed_trait_alpha_input: CreateComputedTraitAlphaInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _preload_content: if False, the ApiResponse.data will
@@ -127,7 +127,7 @@ class ComputedTraitsApi:
 
         _all_params = [
             'space_id',
-            'create_trait_alpha_input'
+            'create_computed_trait_alpha_input'
         ]
         _all_params.extend(
             [
@@ -168,8 +168,8 @@ class ComputedTraitsApi:
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params['create_trait_alpha_input'] is not None:
-            _body_params = _params['create_trait_alpha_input']
+        if _params['create_computed_trait_alpha_input'] is not None:
+            _body_params = _params['create_computed_trait_alpha_input']
 
         # set the HTTP header `Accept`
         _header_params['Accept'] = self.api_client.select_header_accept(

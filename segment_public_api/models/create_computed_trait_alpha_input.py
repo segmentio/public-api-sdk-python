@@ -23,12 +23,12 @@ import json
 from pydantic import BaseModel, Field, StrictStr
 from segment_public_api.models.trait_definition import TraitDefinition
 
-class CreateTraitAlphaInput(BaseModel):
+class CreateComputedTraitAlphaInput(BaseModel):
     """
-    Input to create an audience.  # noqa: E501
+    Input to create a trait.  # noqa: E501
     """
-    name: StrictStr = Field(..., description="The name of the computation")
-    description: StrictStr = Field(..., description="The description of the computation")
+    name: StrictStr = Field(..., description="The name of the computation.")
+    description: StrictStr = Field(..., description="The description of the computation.")
     definition: TraitDefinition = Field(...)
     __properties = ["name", "description", "definition"]
 
@@ -46,8 +46,8 @@ class CreateTraitAlphaInput(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> CreateTraitAlphaInput:
-        """Create an instance of CreateTraitAlphaInput from a JSON string"""
+    def from_json(cls, json_str: str) -> CreateComputedTraitAlphaInput:
+        """Create an instance of CreateComputedTraitAlphaInput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -62,15 +62,15 @@ class CreateTraitAlphaInput(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> CreateTraitAlphaInput:
-        """Create an instance of CreateTraitAlphaInput from a dict"""
+    def from_dict(cls, obj: dict) -> CreateComputedTraitAlphaInput:
+        """Create an instance of CreateComputedTraitAlphaInput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return CreateTraitAlphaInput.parse_obj(obj)
+            return CreateComputedTraitAlphaInput.parse_obj(obj)
 
-        _obj = CreateTraitAlphaInput.parse_obj({
+        _obj = CreateComputedTraitAlphaInput.parse_obj({
             "name": obj.get("name"),
             "description": obj.get("description"),
             "definition": TraitDefinition.from_dict(obj.get("definition")) if obj.get("definition") is not None else None
