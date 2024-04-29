@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 from pydantic import BaseModel, Field, StrictBool, StrictStr
 
 class ReverseEtlModel(BaseModel):
@@ -32,7 +32,7 @@ class ReverseEtlModel(BaseModel):
     description: StrictStr = Field(..., description="A longer, more descriptive explanation of the Model.")
     enabled: StrictBool = Field(..., description="Indicates whether the Model should have syncs enabled. When disabled, no syncs will be triggered, regardless of the enabled status of the attached destinations/subscriptions.")
     schedule_strategy: StrictStr = Field(..., alias="scheduleStrategy", description="Determines the strategy used for triggering syncs, which will be used in conjunction with scheduleConfig.  Possible values: \"manual\", \"periodic\", \"specific_days\".")
-    schedule_config: Dict[str, Any] = Field(..., alias="scheduleConfig", description="Defines a configuration object used for scheduling, which can vary depending on the configured strategy, but must always be an object with at least 1 level of keys.")
+    schedule_config: Optional[Dict[str, Any]] = Field(None, alias="scheduleConfig", description="Defines a configuration object used for scheduling, which can vary depending on the configured strategy, but must always be an object with at least 1 level of keys.")
     query: StrictStr = Field(..., description="The SQL query that will be executed to extract data from the connected Source.")
     query_identifier_column: StrictStr = Field(..., alias="queryIdentifierColumn", description="Indicates the column named in `query` that should be used to uniquely identify the extracted records.")
     __properties = ["id", "sourceId", "name", "description", "enabled", "scheduleStrategy", "scheduleConfig", "query", "queryIdentifierColumn"]
