@@ -19,16 +19,16 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
-from pydantic import BaseModel
-from segment_public_api.models.get_computed_trait_alpha_output import GetComputedTraitAlphaOutput
 
-class GetComputedTrait200Response(BaseModel):
+from pydantic import BaseModel, Field, StrictStr
+
+class AudienceComputationDefinition(BaseModel):
     """
-    GetComputedTrait200Response
+    AudienceComputationDefinition
     """
-    data: Optional[GetComputedTraitAlphaOutput] = None
-    __properties = ["data"]
+    type: StrictStr = Field(...)
+    query: StrictStr = Field(...)
+    __properties = ["type", "query"]
 
     class Config:
         """Pydantic configuration"""
@@ -44,8 +44,8 @@ class GetComputedTrait200Response(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> GetComputedTrait200Response:
-        """Create an instance of GetComputedTrait200Response from a JSON string"""
+    def from_json(cls, json_str: str) -> AudienceComputationDefinition:
+        """Create an instance of AudienceComputationDefinition from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -54,22 +54,20 @@ class GetComputedTrait200Response(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of data
-        if self.data:
-            _dict['data'] = self.data.to_dict()
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> GetComputedTrait200Response:
-        """Create an instance of GetComputedTrait200Response from a dict"""
+    def from_dict(cls, obj: dict) -> AudienceComputationDefinition:
+        """Create an instance of AudienceComputationDefinition from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return GetComputedTrait200Response.parse_obj(obj)
+            return AudienceComputationDefinition.parse_obj(obj)
 
-        _obj = GetComputedTrait200Response.parse_obj({
-            "data": GetComputedTraitAlphaOutput.from_dict(obj.get("data")) if obj.get("data") is not None else None
+        _obj = AudienceComputationDefinition.parse_obj({
+            "type": obj.get("type"),
+            "query": obj.get("query")
         })
         return _obj
 

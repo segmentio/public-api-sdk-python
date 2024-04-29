@@ -19,16 +19,18 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
-from pydantic import BaseModel
-from segment_public_api.models.get_audience_alpha_output import GetAudienceAlphaOutput
 
-class GetAudience200Response(BaseModel):
+from pydantic import BaseModel, Field, StrictStr
+from segment_public_api.models.audience_computation_definition import AudienceComputationDefinition
+
+class CreateAudienceAlphaInput(BaseModel):
     """
-    GetAudience200Response
+    Input to create an audience.  # noqa: E501
     """
-    data: Optional[GetAudienceAlphaOutput] = None
-    __properties = ["data"]
+    name: StrictStr = Field(..., description="The name of the computation")
+    description: StrictStr = Field(..., description="The description of the computation")
+    definition: AudienceComputationDefinition = Field(...)
+    __properties = ["name", "description", "definition"]
 
     class Config:
         """Pydantic configuration"""
@@ -44,8 +46,8 @@ class GetAudience200Response(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> GetAudience200Response:
-        """Create an instance of GetAudience200Response from a JSON string"""
+    def from_json(cls, json_str: str) -> CreateAudienceAlphaInput:
+        """Create an instance of CreateAudienceAlphaInput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -54,22 +56,24 @@ class GetAudience200Response(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of data
-        if self.data:
-            _dict['data'] = self.data.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of definition
+        if self.definition:
+            _dict['definition'] = self.definition.to_dict()
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> GetAudience200Response:
-        """Create an instance of GetAudience200Response from a dict"""
+    def from_dict(cls, obj: dict) -> CreateAudienceAlphaInput:
+        """Create an instance of CreateAudienceAlphaInput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return GetAudience200Response.parse_obj(obj)
+            return CreateAudienceAlphaInput.parse_obj(obj)
 
-        _obj = GetAudience200Response.parse_obj({
-            "data": GetAudienceAlphaOutput.from_dict(obj.get("data")) if obj.get("data") is not None else None
+        _obj = CreateAudienceAlphaInput.parse_obj({
+            "name": obj.get("name"),
+            "description": obj.get("description"),
+            "definition": AudienceComputationDefinition.from_dict(obj.get("definition")) if obj.get("definition") is not None else None
         })
         return _obj
 
