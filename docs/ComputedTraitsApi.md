@@ -90,7 +90,7 @@ Name | Type | Description  | Notes
 
 ## Operation: get_computed_trait
 
-> CreateComputedTrait200Response get_computed_trait(space_id, id)
+> GetComputedTrait200Response get_computed_trait(space_id, id)
 
 Get Computed Trait
 
@@ -103,7 +103,7 @@ Returns the Computed Trait by id and spaceId  • This endpoint is in **Alpha** 
 import time
 import os
 import segment_public_api
-from segment_public_api.models.create_computed_trait200_response import CreateComputedTrait200Response
+from segment_public_api.models.get_computed_trait200_response import GetComputedTrait200Response
 from segment_public_api.rest import ApiException
 from pprint import pprint
 
@@ -141,7 +141,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**CreateComputedTrait200Response**](CreateComputedTrait200Response.md)
+[**GetComputedTrait200Response**](GetComputedTrait200Response.md)
 
 ### Authorization
 

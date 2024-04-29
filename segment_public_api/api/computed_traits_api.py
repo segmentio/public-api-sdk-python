@@ -24,6 +24,7 @@ from pydantic import Field, constr
 
 from segment_public_api.models.create_computed_trait200_response import CreateComputedTrait200Response
 from segment_public_api.models.create_trait_alpha_input import CreateTraitAlphaInput
+from segment_public_api.models.get_computed_trait200_response import GetComputedTrait200Response
 from segment_public_api.models.list_computed_traits200_response import ListComputedTraits200Response
 from segment_public_api.models.pagination_input import PaginationInput
 from segment_public_api.models.remove_computed_trait_from_space200_response import RemoveComputedTraitFromSpace200Response
@@ -209,7 +210,7 @@ class ComputedTraitsApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def get_computed_trait(self, space_id : constr(strict=True), id : constr(strict=True), **kwargs) -> CreateComputedTrait200Response:  # noqa: E501
+    def get_computed_trait(self, space_id : constr(strict=True), id : constr(strict=True), **kwargs) -> GetComputedTrait200Response:  # noqa: E501
         """Get Computed Trait  # noqa: E501
 
         Returns the Computed Trait by id and spaceId  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Computed Trait feature enabled. Please reach out to your customer success manager for more information.   The rate limit for this endpoint is 100 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
@@ -232,7 +233,7 @@ class ComputedTraitsApi:
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: CreateComputedTrait200Response
+        :rtype: GetComputedTrait200Response
         """
         kwargs['_return_http_data_only'] = True
         if '_preload_content' in kwargs:
@@ -277,7 +278,7 @@ class ComputedTraitsApi:
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(CreateComputedTrait200Response, status_code(int), headers(HTTPHeaderDict))
+        :rtype: tuple(GetComputedTrait200Response, status_code(int), headers(HTTPHeaderDict))
         """
 
         _params = locals()
@@ -336,7 +337,7 @@ class ComputedTraitsApi:
         _auth_settings = ['token']  # noqa: E501
 
         _response_types_map = {
-            '200': "CreateComputedTrait200Response",
+            '200': "GetComputedTrait200Response",
             '404': "RequestErrorEnvelope",
             '422': "RequestErrorEnvelope",
             '429': "RequestErrorEnvelope",

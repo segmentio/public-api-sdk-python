@@ -19,16 +19,16 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
-from pydantic import BaseModel
-from segment_public_api.models.create_computed_trait_alpha_output import CreateComputedTraitAlphaOutput
 
-class CreateComputedTrait200Response(BaseModel):
+from pydantic import BaseModel, Field
+from segment_public_api.models.computed_trait_summary import ComputedTraitSummary
+
+class CreateComputedTraitAlphaOutput(BaseModel):
     """
-    CreateComputedTrait200Response
+    Computed Trait output for create.  # noqa: E501
     """
-    data: Optional[CreateComputedTraitAlphaOutput] = None
-    __properties = ["data"]
+    computed_trait: ComputedTraitSummary = Field(..., alias="computedTrait")
+    __properties = ["computedTrait"]
 
     class Config:
         """Pydantic configuration"""
@@ -44,8 +44,8 @@ class CreateComputedTrait200Response(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> CreateComputedTrait200Response:
-        """Create an instance of CreateComputedTrait200Response from a JSON string"""
+    def from_json(cls, json_str: str) -> CreateComputedTraitAlphaOutput:
+        """Create an instance of CreateComputedTraitAlphaOutput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -54,22 +54,22 @@ class CreateComputedTrait200Response(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of data
-        if self.data:
-            _dict['data'] = self.data.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of computed_trait
+        if self.computed_trait:
+            _dict['computedTrait'] = self.computed_trait.to_dict()
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> CreateComputedTrait200Response:
-        """Create an instance of CreateComputedTrait200Response from a dict"""
+    def from_dict(cls, obj: dict) -> CreateComputedTraitAlphaOutput:
+        """Create an instance of CreateComputedTraitAlphaOutput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return CreateComputedTrait200Response.parse_obj(obj)
+            return CreateComputedTraitAlphaOutput.parse_obj(obj)
 
-        _obj = CreateComputedTrait200Response.parse_obj({
-            "data": CreateComputedTraitAlphaOutput.from_dict(obj.get("data")) if obj.get("data") is not None else None
+        _obj = CreateComputedTraitAlphaOutput.parse_obj({
+            "computed_trait": ComputedTraitSummary.from_dict(obj.get("computedTrait")) if obj.get("computedTrait") is not None else None
         })
         return _obj
 

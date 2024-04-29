@@ -24,6 +24,7 @@ from pydantic import Field, constr
 
 from segment_public_api.models.create_audience200_response import CreateAudience200Response
 from segment_public_api.models.create_audience_alpha_input import CreateAudienceAlphaInput
+from segment_public_api.models.get_audience200_response import GetAudience200Response
 from segment_public_api.models.list_audiences200_response import ListAudiences200Response
 from segment_public_api.models.pagination_input import PaginationInput
 from segment_public_api.models.remove_audience_from_space200_response import RemoveAudienceFromSpace200Response
@@ -209,7 +210,7 @@ class AudiencesApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def get_audience(self, space_id : constr(strict=True), id : constr(strict=True), **kwargs) -> CreateAudience200Response:  # noqa: E501
+    def get_audience(self, space_id : constr(strict=True), id : constr(strict=True), **kwargs) -> GetAudience200Response:  # noqa: E501
         """Get Audience  # noqa: E501
 
         Returns the Audience by id and spaceId.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.   The rate limit for this endpoint is 100 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
@@ -232,7 +233,7 @@ class AudiencesApi:
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: CreateAudience200Response
+        :rtype: GetAudience200Response
         """
         kwargs['_return_http_data_only'] = True
         if '_preload_content' in kwargs:
@@ -277,7 +278,7 @@ class AudiencesApi:
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(CreateAudience200Response, status_code(int), headers(HTTPHeaderDict))
+        :rtype: tuple(GetAudience200Response, status_code(int), headers(HTTPHeaderDict))
         """
 
         _params = locals()
@@ -336,7 +337,7 @@ class AudiencesApi:
         _auth_settings = ['token']  # noqa: E501
 
         _response_types_map = {
-            '200': "CreateAudience200Response",
+            '200': "GetAudience200Response",
             '404': "RequestErrorEnvelope",
             '422': "RequestErrorEnvelope",
             '429': "RequestErrorEnvelope",

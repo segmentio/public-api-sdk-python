@@ -90,7 +90,7 @@ Name | Type | Description  | Notes
 
 ## Operation: get_audience
 
-> CreateAudience200Response get_audience(space_id, id)
+> GetAudience200Response get_audience(space_id, id)
 
 Get Audience
 
@@ -103,7 +103,7 @@ Returns the Audience by id and spaceId.  • This endpoint is in **Alpha** testi
 import time
 import os
 import segment_public_api
-from segment_public_api.models.create_audience200_response import CreateAudience200Response
+from segment_public_api.models.get_audience200_response import GetAudience200Response
 from segment_public_api.rest import ApiException
 from pprint import pprint
 
@@ -141,7 +141,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**CreateAudience200Response**](CreateAudience200Response.md)
+[**GetAudience200Response**](GetAudience200Response.md)
 
 ### Authorization
 
