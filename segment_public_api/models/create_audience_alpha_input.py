@@ -19,9 +19,10 @@ import re  # noqa: F401
 import json
 
 
-
+from typing import Optional
 from pydantic import BaseModel, Field, StrictStr
 from segment_public_api.models.audience_computation_definition import AudienceComputationDefinition
+from segment_public_api.models.audience_create_options import AudienceCreateOptions
 
 class CreateAudienceAlphaInput(BaseModel):
     """
@@ -30,7 +31,8 @@ class CreateAudienceAlphaInput(BaseModel):
     name: StrictStr = Field(..., description="The name of the computation .")
     description: StrictStr = Field(..., description="The description of the computation.")
     definition: AudienceComputationDefinition = Field(...)
-    __properties = ["name", "description", "definition"]
+    options: Optional[AudienceCreateOptions] = None
+    __properties = ["name", "description", "definition", "options"]
 
     class Config:
         """Pydantic configuration"""
@@ -59,6 +61,9 @@ class CreateAudienceAlphaInput(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of definition
         if self.definition:
             _dict['definition'] = self.definition.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of options
+        if self.options:
+            _dict['options'] = self.options.to_dict()
         return _dict
 
     @classmethod
@@ -73,7 +78,8 @@ class CreateAudienceAlphaInput(BaseModel):
         _obj = CreateAudienceAlphaInput.parse_obj({
             "name": obj.get("name"),
             "description": obj.get("description"),
-            "definition": AudienceComputationDefinition.from_dict(obj.get("definition")) if obj.get("definition") is not None else None
+            "definition": AudienceComputationDefinition.from_dict(obj.get("definition")) if obj.get("definition") is not None else None,
+            "options": AudienceCreateOptions.from_dict(obj.get("options")) if obj.get("options") is not None else None
         })
         return _obj
 

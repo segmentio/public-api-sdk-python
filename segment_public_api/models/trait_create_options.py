@@ -19,16 +19,16 @@ import re  # noqa: F401
 import json
 
 
+from typing import Optional
+from pydantic import BaseModel, Field, StrictBool
 
-from pydantic import BaseModel, Field, StrictStr
-
-class Definition(BaseModel):
+class TraitCreateOptions(BaseModel):
     """
-    Query language definition and type.  # noqa: E501
+    TraitCreateOptions
     """
-    query: StrictStr = Field(..., description="The query language string defining the audience segmentation criteria.")
-    type: StrictStr = Field(..., description="The underlying data type being segmented for this audience.  Possible values: users, accounts.")
-    __properties = ["query", "type"]
+    include_historical: Optional[StrictBool] = Field(None, alias="includeHistorical")
+    include_anonymous: Optional[StrictBool] = Field(None, alias="includeAnonymous")
+    __properties = ["includeHistorical", "includeAnonymous"]
 
     class Config:
         """Pydantic configuration"""
@@ -44,8 +44,8 @@ class Definition(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Definition:
-        """Create an instance of Definition from a JSON string"""
+    def from_json(cls, json_str: str) -> TraitCreateOptions:
+        """Create an instance of TraitCreateOptions from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -57,17 +57,17 @@ class Definition(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> Definition:
-        """Create an instance of Definition from a dict"""
+    def from_dict(cls, obj: dict) -> TraitCreateOptions:
+        """Create an instance of TraitCreateOptions from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return Definition.parse_obj(obj)
+            return TraitCreateOptions.parse_obj(obj)
 
-        _obj = Definition.parse_obj({
-            "query": obj.get("query"),
-            "type": obj.get("type")
+        _obj = TraitCreateOptions.parse_obj({
+            "include_historical": obj.get("includeHistorical"),
+            "include_anonymous": obj.get("includeAnonymous")
         })
         return _obj
 
