@@ -84,6 +84,7 @@ from segment_public_api.models.advanced_warehouse_sync_schedule_v1_input import 
 from segment_public_api.models.advanced_warehouse_sync_schedule_v1_output import AdvancedWarehouseSyncScheduleV1Output
 from segment_public_api.models.allowed_label_beta import AllowedLabelBeta
 from segment_public_api.models.audience_computation_definition import AudienceComputationDefinition
+from segment_public_api.models.audience_create_options import AudienceCreateOptions
 from segment_public_api.models.audience_definition import AudienceDefinition
 from segment_public_api.models.audience_summary import AudienceSummary
 from segment_public_api.models.audit_event_v1 import AuditEventV1
@@ -514,6 +515,7 @@ from segment_public_api.models.sync_notice_v1 import SyncNoticeV1
 from segment_public_api.models.sync_v1 import SyncV1
 from segment_public_api.models.track_source_settings_v1 import TrackSourceSettingsV1
 from segment_public_api.models.tracking_plan_v1 import TrackingPlanV1
+from segment_public_api.models.trait_create_options import TraitCreateOptions
 from segment_public_api.models.trait_definition import TraitDefinition
 from segment_public_api.models.transformation_beta import TransformationBeta
 from segment_public_api.models.transformation_v1 import TransformationV1
