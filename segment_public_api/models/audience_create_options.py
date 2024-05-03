@@ -26,9 +26,9 @@ class AudienceCreateOptions(BaseModel):
     """
     AudienceCreateOptions
     """
-    include_historical: Optional[StrictBool] = Field(None, alias="includeHistorical")
-    include_anonymous: Optional[StrictBool] = Field(None, alias="includeAnonymous")
-    __properties = ["includeHistorical", "includeAnonymous"]
+    include_historical_data: Optional[StrictBool] = Field(None, alias="includeHistoricalData")
+    include_anonymous_users: Optional[StrictBool] = Field(None, alias="includeAnonymousUsers")
+    __properties = ["includeHistoricalData", "includeAnonymousUsers"]
 
     class Config:
         """Pydantic configuration"""
@@ -66,8 +66,8 @@ class AudienceCreateOptions(BaseModel):
             return AudienceCreateOptions.parse_obj(obj)
 
         _obj = AudienceCreateOptions.parse_obj({
-            "include_historical": obj.get("includeHistorical"),
-            "include_anonymous": obj.get("includeAnonymous")
+            "include_historical_data": obj.get("includeHistoricalData"),
+            "include_anonymous_users": obj.get("includeAnonymousUsers")
         })
         return _obj
 
