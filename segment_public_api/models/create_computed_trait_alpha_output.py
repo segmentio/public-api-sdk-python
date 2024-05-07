@@ -20,22 +20,15 @@ import json
 
 
 
-from pydantic import BaseModel, Field, StrictStr, validator
+from pydantic import BaseModel, Field
+from segment_public_api.models.computed_trait_summary import ComputedTraitSummary
 
-class Definition(BaseModel):
+class CreateComputedTraitAlphaOutput(BaseModel):
     """
-    Query language definition and type.  # noqa: E501
+    Computed Trait output for create.  # noqa: E501
     """
-    query: StrictStr = Field(..., description="The query language string defining the computed trait aggregation criteria.")
-    type: StrictStr = Field(..., description="The underlying data type being aggregated for this computed trait.  Possible values: users, accounts.")
-    __properties = ["query", "type"]
-
-    @validator('type')
-    def type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in ('accounts', 'users'):
-            raise ValueError("must be one of enum values ('accounts', 'users')")
-        return value
+    computed_trait: ComputedTraitSummary = Field(..., alias="computedTrait")
+    __properties = ["computedTrait"]
 
     class Config:
         """Pydantic configuration"""
@@ -51,8 +44,8 @@ class Definition(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Definition:
-        """Create an instance of Definition from a JSON string"""
+    def from_json(cls, json_str: str) -> CreateComputedTraitAlphaOutput:
+        """Create an instance of CreateComputedTraitAlphaOutput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -61,20 +54,22 @@ class Definition(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # override the default output from pydantic by calling `to_dict()` of computed_trait
+        if self.computed_trait:
+            _dict['computedTrait'] = self.computed_trait.to_dict()
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> Definition:
-        """Create an instance of Definition from a dict"""
+    def from_dict(cls, obj: dict) -> CreateComputedTraitAlphaOutput:
+        """Create an instance of CreateComputedTraitAlphaOutput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return Definition.parse_obj(obj)
+            return CreateComputedTraitAlphaOutput.parse_obj(obj)
 
-        _obj = Definition.parse_obj({
-            "query": obj.get("query"),
-            "type": obj.get("type")
+        _obj = CreateComputedTraitAlphaOutput.parse_obj({
+            "computed_trait": ComputedTraitSummary.from_dict(obj.get("computedTrait")) if obj.get("computedTrait") is not None else None
         })
         return _obj
 

@@ -19,23 +19,20 @@ import re  # noqa: F401
 import json
 
 
+from typing import Optional
+from pydantic import BaseModel, Field, StrictStr
+from segment_public_api.models.trait_create_options import TraitCreateOptions
+from segment_public_api.models.trait_definition import TraitDefinition
 
-from pydantic import BaseModel, Field, StrictStr, validator
-
-class Definition(BaseModel):
+class CreateComputedTraitAlphaInput(BaseModel):
     """
-    Query language definition and type.  # noqa: E501
+    Input to create a trait.  # noqa: E501
     """
-    query: StrictStr = Field(..., description="The query language string defining the computed trait aggregation criteria.")
-    type: StrictStr = Field(..., description="The underlying data type being aggregated for this computed trait.  Possible values: users, accounts.")
-    __properties = ["query", "type"]
-
-    @validator('type')
-    def type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in ('accounts', 'users'):
-            raise ValueError("must be one of enum values ('accounts', 'users')")
-        return value
+    name: StrictStr = Field(..., description="The name of the computation.")
+    description: StrictStr = Field(..., description="The description of the computation.")
+    definition: TraitDefinition = Field(...)
+    options: Optional[TraitCreateOptions] = None
+    __properties = ["name", "description", "definition", "options"]
 
     class Config:
         """Pydantic configuration"""
@@ -51,8 +48,8 @@ class Definition(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Definition:
-        """Create an instance of Definition from a JSON string"""
+    def from_json(cls, json_str: str) -> CreateComputedTraitAlphaInput:
+        """Create an instance of CreateComputedTraitAlphaInput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -61,20 +58,28 @@ class Definition(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # override the default output from pydantic by calling `to_dict()` of definition
+        if self.definition:
+            _dict['definition'] = self.definition.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of options
+        if self.options:
+            _dict['options'] = self.options.to_dict()
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> Definition:
-        """Create an instance of Definition from a dict"""
+    def from_dict(cls, obj: dict) -> CreateComputedTraitAlphaInput:
+        """Create an instance of CreateComputedTraitAlphaInput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return Definition.parse_obj(obj)
+            return CreateComputedTraitAlphaInput.parse_obj(obj)
 
-        _obj = Definition.parse_obj({
-            "query": obj.get("query"),
-            "type": obj.get("type")
+        _obj = CreateComputedTraitAlphaInput.parse_obj({
+            "name": obj.get("name"),
+            "description": obj.get("description"),
+            "definition": TraitDefinition.from_dict(obj.get("definition")) if obj.get("definition") is not None else None,
+            "options": TraitCreateOptions.from_dict(obj.get("options")) if obj.get("options") is not None else None
         })
         return _obj
 

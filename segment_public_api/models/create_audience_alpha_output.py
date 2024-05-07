@@ -20,22 +20,15 @@ import json
 
 
 
-from pydantic import BaseModel, Field, StrictStr, validator
+from pydantic import BaseModel, Field
+from segment_public_api.models.audience_summary import AudienceSummary
 
-class Definition(BaseModel):
+class CreateAudienceAlphaOutput(BaseModel):
     """
-    Query language definition and type.  # noqa: E501
+    Audience output for create.  # noqa: E501
     """
-    query: StrictStr = Field(..., description="The query language string defining the computed trait aggregation criteria.")
-    type: StrictStr = Field(..., description="The underlying data type being aggregated for this computed trait.  Possible values: users, accounts.")
-    __properties = ["query", "type"]
-
-    @validator('type')
-    def type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in ('accounts', 'users'):
-            raise ValueError("must be one of enum values ('accounts', 'users')")
-        return value
+    audience: AudienceSummary = Field(...)
+    __properties = ["audience"]
 
     class Config:
         """Pydantic configuration"""
@@ -51,8 +44,8 @@ class Definition(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Definition:
-        """Create an instance of Definition from a JSON string"""
+    def from_json(cls, json_str: str) -> CreateAudienceAlphaOutput:
+        """Create an instance of CreateAudienceAlphaOutput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -61,20 +54,22 @@ class Definition(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # override the default output from pydantic by calling `to_dict()` of audience
+        if self.audience:
+            _dict['audience'] = self.audience.to_dict()
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> Definition:
-        """Create an instance of Definition from a dict"""
+    def from_dict(cls, obj: dict) -> CreateAudienceAlphaOutput:
+        """Create an instance of CreateAudienceAlphaOutput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return Definition.parse_obj(obj)
+            return CreateAudienceAlphaOutput.parse_obj(obj)
 
-        _obj = Definition.parse_obj({
-            "query": obj.get("query"),
-            "type": obj.get("type")
+        _obj = CreateAudienceAlphaOutput.parse_obj({
+            "audience": AudienceSummary.from_dict(obj.get("audience")) if obj.get("audience") is not None else None
         })
         return _obj
 

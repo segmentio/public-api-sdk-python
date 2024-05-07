@@ -19,23 +19,16 @@ import re  # noqa: F401
 import json
 
 
+from typing import Optional
+from pydantic import BaseModel, Field, StrictBool
 
-from pydantic import BaseModel, Field, StrictStr, validator
-
-class Definition(BaseModel):
+class AudienceCreateOptions(BaseModel):
     """
-    Query language definition and type.  # noqa: E501
+    AudienceCreateOptions
     """
-    query: StrictStr = Field(..., description="The query language string defining the computed trait aggregation criteria.")
-    type: StrictStr = Field(..., description="The underlying data type being aggregated for this computed trait.  Possible values: users, accounts.")
-    __properties = ["query", "type"]
-
-    @validator('type')
-    def type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in ('accounts', 'users'):
-            raise ValueError("must be one of enum values ('accounts', 'users')")
-        return value
+    include_historical_data: Optional[StrictBool] = Field(None, alias="includeHistoricalData")
+    include_anonymous_users: Optional[StrictBool] = Field(None, alias="includeAnonymousUsers")
+    __properties = ["includeHistoricalData", "includeAnonymousUsers"]
 
     class Config:
         """Pydantic configuration"""
@@ -51,8 +44,8 @@ class Definition(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Definition:
-        """Create an instance of Definition from a JSON string"""
+    def from_json(cls, json_str: str) -> AudienceCreateOptions:
+        """Create an instance of AudienceCreateOptions from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -64,17 +57,17 @@ class Definition(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> Definition:
-        """Create an instance of Definition from a dict"""
+    def from_dict(cls, obj: dict) -> AudienceCreateOptions:
+        """Create an instance of AudienceCreateOptions from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return Definition.parse_obj(obj)
+            return AudienceCreateOptions.parse_obj(obj)
 
-        _obj = Definition.parse_obj({
-            "query": obj.get("query"),
-            "type": obj.get("type")
+        _obj = AudienceCreateOptions.parse_obj({
+            "include_historical_data": obj.get("includeHistoricalData"),
+            "include_anonymous_users": obj.get("includeAnonymousUsers")
         })
         return _obj
 

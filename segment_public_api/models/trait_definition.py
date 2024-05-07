@@ -22,13 +22,13 @@ import json
 
 from pydantic import BaseModel, Field, StrictStr, validator
 
-class Definition(BaseModel):
+class TraitDefinition(BaseModel):
     """
-    Query language definition and type.  # noqa: E501
+    TraitDefinition
     """
-    query: StrictStr = Field(..., description="The query language string defining the computed trait aggregation criteria.")
-    type: StrictStr = Field(..., description="The underlying data type being aggregated for this computed trait.  Possible values: users, accounts.")
-    __properties = ["query", "type"]
+    type: StrictStr = Field(...)
+    query: StrictStr = Field(...)
+    __properties = ["type", "query"]
 
     @validator('type')
     def type_validate_enum(cls, value):
@@ -51,8 +51,8 @@ class Definition(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Definition:
-        """Create an instance of Definition from a JSON string"""
+    def from_json(cls, json_str: str) -> TraitDefinition:
+        """Create an instance of TraitDefinition from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -64,17 +64,17 @@ class Definition(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> Definition:
-        """Create an instance of Definition from a dict"""
+    def from_dict(cls, obj: dict) -> TraitDefinition:
+        """Create an instance of TraitDefinition from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return Definition.parse_obj(obj)
+            return TraitDefinition.parse_obj(obj)
 
-        _obj = Definition.parse_obj({
-            "query": obj.get("query"),
-            "type": obj.get("type")
+        _obj = TraitDefinition.parse_obj({
+            "type": obj.get("type"),
+            "query": obj.get("query")
         })
         return _obj
 
