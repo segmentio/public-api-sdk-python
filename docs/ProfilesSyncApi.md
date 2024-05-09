@@ -167,7 +167,7 @@ Name | Type | Description  | Notes
 
 ## Operation: list_selective_syncs_from_warehouse_and_space
 
-> ListSelectiveSyncsFromWarehouseAndSpace200Response list_selective_syncs_from_warehouse_and_space(space_id, warehouse_id, pagination)
+> ListSelectiveSyncsFromWarehouseAndSpace200Response list_selective_syncs_from_warehouse_and_space(space_id, warehouse_id, pagination=pagination)
 
 List Selective Syncs from Warehouse And Space
 
@@ -198,11 +198,11 @@ with segment_public_api.ApiClient(configuration) as api_client:
     api_instance = segment_public_api.ProfilesSyncApi(api_client)
     space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
     warehouse_id = 'fQyLbqjfwaqg9mr3hDQ7We' # str | 
-    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Defines the pagination parameters.  This parameter exists in alpha.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Defines the pagination parameters.  This parameter exists in alpha. (optional)
 
     try:
         # List Selective Syncs from Warehouse And Space
-        api_response = api_instance.list_selective_syncs_from_warehouse_and_space(space_id, warehouse_id, pagination)
+        api_response = api_instance.list_selective_syncs_from_warehouse_and_space(space_id, warehouse_id, pagination=pagination)
         print("The response of ProfilesSyncApi->list_selective_syncs_from_warehouse_and_space:\n")
         pprint(api_response)
     except Exception as e:
@@ -217,7 +217,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **space_id** | **str**|  | 
  **warehouse_id** | **str**|  | 
- **pagination** | [**PaginationInput**](.md)| Defines the pagination parameters.  This parameter exists in alpha. | 
+ **pagination** | [**PaginationInput**](.md)| Defines the pagination parameters.  This parameter exists in alpha. | [optional] 
 
 ### Return type
 
