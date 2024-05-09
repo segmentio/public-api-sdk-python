@@ -22,6 +22,8 @@ from pydantic import validate_arguments, ValidationError
 from typing_extensions import Annotated
 from pydantic import Field, constr
 
+from typing import Optional
+
 from segment_public_api.models.get_destination_metadata200_response import GetDestinationMetadata200Response
 from segment_public_api.models.get_destinations_catalog200_response import GetDestinationsCatalog200Response
 from segment_public_api.models.get_source_metadata200_response import GetSourceMetadata200Response
@@ -480,7 +482,7 @@ class CatalogApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def get_sources_catalog(self, pagination : Annotated[PaginationInput, Field(..., description="Defines the pagination parameters.  This parameter exists in v1.")], **kwargs) -> GetSourcesCatalog200Response:  # noqa: E501
+    def get_sources_catalog(self, pagination : Annotated[Optional[PaginationInput], Field(description="Defines the pagination parameters.  This parameter exists in v1.")] = None, **kwargs) -> GetSourcesCatalog200Response:  # noqa: E501
         """Get Sources Catalog  # noqa: E501
 
         Returns a list of all available Sources in the Segment catalog.  # noqa: E501
@@ -490,7 +492,7 @@ class CatalogApi:
         >>> thread = api.get_sources_catalog(pagination, async_req=True)
         >>> result = thread.get()
 
-        :param pagination: Defines the pagination parameters.  This parameter exists in v1. (required)
+        :param pagination: Defines the pagination parameters.  This parameter exists in v1.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -510,7 +512,7 @@ class CatalogApi:
         return self.get_sources_catalog_with_http_info(pagination, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_sources_catalog_with_http_info(self, pagination : Annotated[PaginationInput, Field(..., description="Defines the pagination parameters.  This parameter exists in v1.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def get_sources_catalog_with_http_info(self, pagination : Annotated[Optional[PaginationInput], Field(description="Defines the pagination parameters.  This parameter exists in v1.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Get Sources Catalog  # noqa: E501
 
         Returns a list of all available Sources in the Segment catalog.  # noqa: E501
@@ -520,7 +522,7 @@ class CatalogApi:
         >>> thread = api.get_sources_catalog_with_http_info(pagination, async_req=True)
         >>> result = thread.get()
 
-        :param pagination: Defines the pagination parameters.  This parameter exists in v1. (required)
+        :param pagination: Defines the pagination parameters.  This parameter exists in v1.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -766,7 +768,7 @@ class CatalogApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def get_warehouses_catalog(self, pagination : Annotated[PaginationInput, Field(..., description="Required pagination params used to filter the Warehouses catalog.  This parameter exists in v1.")], **kwargs) -> GetWarehousesCatalog200Response:  # noqa: E501
+    def get_warehouses_catalog(self, pagination : Annotated[Optional[PaginationInput], Field(description="Optional pagination params used to filter the Warehouses catalog.  This parameter exists in v1.")] = None, **kwargs) -> GetWarehousesCatalog200Response:  # noqa: E501
         """Get Warehouses Catalog  # noqa: E501
 
         Returns a list of all available Warehouses in the Segment catalog.  # noqa: E501
@@ -776,7 +778,7 @@ class CatalogApi:
         >>> thread = api.get_warehouses_catalog(pagination, async_req=True)
         >>> result = thread.get()
 
-        :param pagination: Required pagination params used to filter the Warehouses catalog.  This parameter exists in v1. (required)
+        :param pagination: Optional pagination params used to filter the Warehouses catalog.  This parameter exists in v1.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -796,7 +798,7 @@ class CatalogApi:
         return self.get_warehouses_catalog_with_http_info(pagination, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_warehouses_catalog_with_http_info(self, pagination : Annotated[PaginationInput, Field(..., description="Required pagination params used to filter the Warehouses catalog.  This parameter exists in v1.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def get_warehouses_catalog_with_http_info(self, pagination : Annotated[Optional[PaginationInput], Field(description="Optional pagination params used to filter the Warehouses catalog.  This parameter exists in v1.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Get Warehouses Catalog  # noqa: E501
 
         Returns a list of all available Warehouses in the Segment catalog.  # noqa: E501
@@ -806,7 +808,7 @@ class CatalogApi:
         >>> thread = api.get_warehouses_catalog_with_http_info(pagination, async_req=True)
         >>> result = thread.get()
 
-        :param pagination: Required pagination params used to filter the Warehouses catalog.  This parameter exists in v1. (required)
+        :param pagination: Optional pagination params used to filter the Warehouses catalog.  This parameter exists in v1.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional

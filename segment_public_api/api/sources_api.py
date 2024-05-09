@@ -22,6 +22,8 @@ from pydantic import validate_arguments, ValidationError
 from typing_extensions import Annotated
 from pydantic import Field, constr
 
+from typing import Optional
+
 from segment_public_api.models.add_labels_to_source200_response import AddLabelsToSource200Response
 from segment_public_api.models.add_labels_to_source_v1_input import AddLabelsToSourceV1Input
 from segment_public_api.models.create_source201_response import CreateSource201Response
@@ -800,7 +802,7 @@ class SourcesApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_connected_destinations_from_source(self, source_id : constr(strict=True), pagination : Annotated[PaginationInput, Field(..., description="Required pagination params for the request.  This parameter exists in alpha.")], **kwargs) -> ListConnectedDestinationsFromSource200Response:  # noqa: E501
+    def list_connected_destinations_from_source(self, source_id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Required pagination params for the request.  This parameter exists in alpha.")] = None, **kwargs) -> ListConnectedDestinationsFromSource200Response:  # noqa: E501
         """List Connected Destinations from Source  # noqa: E501
 
         Returns a list of Destinations connected to a Source.  # noqa: E501
@@ -812,7 +814,7 @@ class SourcesApi:
 
         :param source_id: (required)
         :type source_id: str
-        :param pagination: Required pagination params for the request.  This parameter exists in alpha. (required)
+        :param pagination: Required pagination params for the request.  This parameter exists in alpha.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -832,7 +834,7 @@ class SourcesApi:
         return self.list_connected_destinations_from_source_with_http_info(source_id, pagination, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_connected_destinations_from_source_with_http_info(self, source_id : constr(strict=True), pagination : Annotated[PaginationInput, Field(..., description="Required pagination params for the request.  This parameter exists in alpha.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def list_connected_destinations_from_source_with_http_info(self, source_id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Required pagination params for the request.  This parameter exists in alpha.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Connected Destinations from Source  # noqa: E501
 
         Returns a list of Destinations connected to a Source.  # noqa: E501
@@ -844,7 +846,7 @@ class SourcesApi:
 
         :param source_id: (required)
         :type source_id: str
-        :param pagination: Required pagination params for the request.  This parameter exists in alpha. (required)
+        :param pagination: Required pagination params for the request.  This parameter exists in alpha.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -951,7 +953,7 @@ class SourcesApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_connected_warehouses_from_source(self, source_id : constr(strict=True), pagination : Annotated[PaginationInput, Field(..., description="Required pagination params for the request.  This parameter exists in alpha.")], **kwargs) -> ListConnectedWarehousesFromSource200Response:  # noqa: E501
+    def list_connected_warehouses_from_source(self, source_id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Required pagination params for the request.  This parameter exists in alpha.")] = None, **kwargs) -> ListConnectedWarehousesFromSource200Response:  # noqa: E501
         """List Connected Warehouses from Source  # noqa: E501
 
         Returns a list of Warehouses connected to a Source.  # noqa: E501
@@ -963,7 +965,7 @@ class SourcesApi:
 
         :param source_id: (required)
         :type source_id: str
-        :param pagination: Required pagination params for the request.  This parameter exists in alpha. (required)
+        :param pagination: Required pagination params for the request.  This parameter exists in alpha.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -983,7 +985,7 @@ class SourcesApi:
         return self.list_connected_warehouses_from_source_with_http_info(source_id, pagination, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_connected_warehouses_from_source_with_http_info(self, source_id : constr(strict=True), pagination : Annotated[PaginationInput, Field(..., description="Required pagination params for the request.  This parameter exists in alpha.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def list_connected_warehouses_from_source_with_http_info(self, source_id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Required pagination params for the request.  This parameter exists in alpha.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Connected Warehouses from Source  # noqa: E501
 
         Returns a list of Warehouses connected to a Source.  # noqa: E501
@@ -995,7 +997,7 @@ class SourcesApi:
 
         :param source_id: (required)
         :type source_id: str
-        :param pagination: Required pagination params for the request.  This parameter exists in alpha. (required)
+        :param pagination: Required pagination params for the request.  This parameter exists in alpha.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -1245,7 +1247,7 @@ class SourcesApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_sources(self, pagination : Annotated[PaginationInput, Field(..., description="Defines the pagination parameters.  This parameter exists in alpha.")], **kwargs) -> ListSources200Response:  # noqa: E501
+    def list_sources(self, pagination : Annotated[Optional[PaginationInput], Field(description="Defines the pagination parameters.  This parameter exists in alpha.")] = None, **kwargs) -> ListSources200Response:  # noqa: E501
         """List Sources  # noqa: E501
 
         Returns a list of Sources.  # noqa: E501
@@ -1255,7 +1257,7 @@ class SourcesApi:
         >>> thread = api.list_sources(pagination, async_req=True)
         >>> result = thread.get()
 
-        :param pagination: Defines the pagination parameters.  This parameter exists in alpha. (required)
+        :param pagination: Defines the pagination parameters.  This parameter exists in alpha.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -1275,7 +1277,7 @@ class SourcesApi:
         return self.list_sources_with_http_info(pagination, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_sources_with_http_info(self, pagination : Annotated[PaginationInput, Field(..., description="Defines the pagination parameters.  This parameter exists in alpha.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def list_sources_with_http_info(self, pagination : Annotated[Optional[PaginationInput], Field(description="Defines the pagination parameters.  This parameter exists in alpha.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Sources  # noqa: E501
 
         Returns a list of Sources.  # noqa: E501
@@ -1285,7 +1287,7 @@ class SourcesApi:
         >>> thread = api.list_sources_with_http_info(pagination, async_req=True)
         >>> result = thread.get()
 
-        :param pagination: Defines the pagination parameters.  This parameter exists in alpha. (required)
+        :param pagination: Defines the pagination parameters.  This parameter exists in alpha.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional

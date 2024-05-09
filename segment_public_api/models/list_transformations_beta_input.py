@@ -19,15 +19,15 @@ import re  # noqa: F401
 import json
 
 
-
-from pydantic import BaseModel, Field
+from typing import Optional
+from pydantic import BaseModel
 from segment_public_api.models.pagination_input import PaginationInput
 
 class ListTransformationsBetaInput(BaseModel):
     """
     Lists the Transformations associated with the current Workspace.  # noqa: E501
     """
-    pagination: PaginationInput = Field(...)
+    pagination: Optional[PaginationInput] = None
     __properties = ["pagination"]
 
     class Config:

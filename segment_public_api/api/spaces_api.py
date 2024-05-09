@@ -22,6 +22,8 @@ from pydantic import validate_arguments, ValidationError
 from typing_extensions import Annotated
 from pydantic import Field, constr
 
+from typing import Optional
+
 from segment_public_api.models.batch_query_messaging_subscriptions_for_space200_response import BatchQueryMessagingSubscriptionsForSpace200Response
 from segment_public_api.models.batch_query_messaging_subscriptions_for_space_alpha_input import BatchQueryMessagingSubscriptionsForSpaceAlphaInput
 from segment_public_api.models.get_space200_response import GetSpace200Response
@@ -352,7 +354,7 @@ class SpacesApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_spaces(self, pagination : Annotated[PaginationInput, Field(..., description="Pagination params  This parameter exists in alpha.")], **kwargs) -> ListSpaces200Response:  # noqa: E501
+    def list_spaces(self, pagination : Annotated[Optional[PaginationInput], Field(description="Pagination params  This parameter exists in alpha.")] = None, **kwargs) -> ListSpaces200Response:  # noqa: E501
         """List Spaces  # noqa: E501
 
         List Spaces.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Spaces feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
@@ -362,7 +364,7 @@ class SpacesApi:
         >>> thread = api.list_spaces(pagination, async_req=True)
         >>> result = thread.get()
 
-        :param pagination: Pagination params  This parameter exists in alpha. (required)
+        :param pagination: Pagination params  This parameter exists in alpha.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -382,7 +384,7 @@ class SpacesApi:
         return self.list_spaces_with_http_info(pagination, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_spaces_with_http_info(self, pagination : Annotated[PaginationInput, Field(..., description="Pagination params  This parameter exists in alpha.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def list_spaces_with_http_info(self, pagination : Annotated[Optional[PaginationInput], Field(description="Pagination params  This parameter exists in alpha.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Spaces  # noqa: E501
 
         List Spaces.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Spaces feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
@@ -392,7 +394,7 @@ class SpacesApi:
         >>> thread = api.list_spaces_with_http_info(pagination, async_req=True)
         >>> result = thread.get()
 
-        :param pagination: Pagination params  This parameter exists in alpha. (required)
+        :param pagination: Pagination params  This parameter exists in alpha.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional

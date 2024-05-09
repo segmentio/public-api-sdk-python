@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 ## Operation: get_daily_per_source_api_calls_usage
 
-> GetDailyPerSourceAPICallsUsage200Response get_daily_per_source_api_calls_usage(period, pagination)
+> GetDailyPerSourceAPICallsUsage200Response get_daily_per_source_api_calls_usage(period, pagination=pagination)
 
 Get Daily Per Source API Calls Usage
 
@@ -41,11 +41,11 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.APICallsApi(api_client)
     period = '2021-02-01' # str | The start of the usage month in the ISO-8601 format.  This parameter exists in v1.
-    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination input for per Source API calls counts.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination input for per Source API calls counts.  This parameter exists in v1. (optional)
 
     try:
         # Get Daily Per Source API Calls Usage
-        api_response = api_instance.get_daily_per_source_api_calls_usage(period, pagination)
+        api_response = api_instance.get_daily_per_source_api_calls_usage(period, pagination=pagination)
         print("The response of APICallsApi->get_daily_per_source_api_calls_usage:\n")
         pprint(api_response)
     except Exception as e:
@@ -59,7 +59,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **period** | **str**| The start of the usage month in the ISO-8601 format.  This parameter exists in v1. | 
- **pagination** | [**PaginationInput**](.md)| Pagination input for per Source API calls counts.  This parameter exists in v1. | 
+ **pagination** | [**PaginationInput**](.md)| Pagination input for per Source API calls counts.  This parameter exists in v1. | [optional] 
 
 ### Return type
 
@@ -87,7 +87,7 @@ Name | Type | Description  | Notes
 
 ## Operation: get_daily_workspace_api_calls_usage
 
-> GetDailyWorkspaceAPICallsUsage200Response get_daily_workspace_api_calls_usage(period, pagination)
+> GetDailyWorkspaceAPICallsUsage200Response get_daily_workspace_api_calls_usage(period, pagination=pagination)
 
 Get Daily Workspace API Calls Usage
 
@@ -117,11 +117,11 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.APICallsApi(api_client)
     period = '2021-02-01' # str | The start of the usage month in the ISO-8601 format.  This parameter exists in v1.
-    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination input for Workspace API call counts.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination input for Workspace API call counts.  This parameter exists in v1. (optional)
 
     try:
         # Get Daily Workspace API Calls Usage
-        api_response = api_instance.get_daily_workspace_api_calls_usage(period, pagination)
+        api_response = api_instance.get_daily_workspace_api_calls_usage(period, pagination=pagination)
         print("The response of APICallsApi->get_daily_workspace_api_calls_usage:\n")
         pprint(api_response)
     except Exception as e:
@@ -135,7 +135,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **period** | **str**| The start of the usage month in the ISO-8601 format.  This parameter exists in v1. | 
- **pagination** | [**PaginationInput**](.md)| Pagination input for Workspace API call counts.  This parameter exists in v1. | 
+ **pagination** | [**PaginationInput**](.md)| Pagination input for Workspace API call counts.  This parameter exists in v1. | [optional] 
 
 ### Return type
 

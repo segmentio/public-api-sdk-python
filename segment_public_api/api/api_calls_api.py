@@ -22,6 +22,8 @@ from pydantic import validate_arguments, ValidationError
 from typing_extensions import Annotated
 from pydantic import Field, StrictStr
 
+from typing import Optional
+
 from segment_public_api.models.get_daily_per_source_api_calls_usage200_response import GetDailyPerSourceAPICallsUsage200Response
 from segment_public_api.models.get_daily_workspace_api_calls_usage200_response import GetDailyWorkspaceAPICallsUsage200Response
 from segment_public_api.models.pagination_input import PaginationInput
@@ -47,7 +49,7 @@ class APICallsApi:
         self.api_client = api_client
 
     @validate_arguments
-    def get_daily_per_source_api_calls_usage(self, period : Annotated[StrictStr, Field(..., description="The start of the usage month in the ISO-8601 format.  This parameter exists in v1.")], pagination : Annotated[PaginationInput, Field(..., description="Pagination input for per Source API calls counts.  This parameter exists in v1.")], **kwargs) -> GetDailyPerSourceAPICallsUsage200Response:  # noqa: E501
+    def get_daily_per_source_api_calls_usage(self, period : Annotated[StrictStr, Field(..., description="The start of the usage month in the ISO-8601 format.  This parameter exists in v1.")], pagination : Annotated[Optional[PaginationInput], Field(description="Pagination input for per Source API calls counts.  This parameter exists in v1.")] = None, **kwargs) -> GetDailyPerSourceAPICallsUsage200Response:  # noqa: E501
         """Get Daily Per Source API Calls Usage  # noqa: E501
 
         Provides daily cumulative per-source API call counts for a usage period.  # noqa: E501
@@ -59,7 +61,7 @@ class APICallsApi:
 
         :param period: The start of the usage month in the ISO-8601 format.  This parameter exists in v1. (required)
         :type period: str
-        :param pagination: Pagination input for per Source API calls counts.  This parameter exists in v1. (required)
+        :param pagination: Pagination input for per Source API calls counts.  This parameter exists in v1.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -79,7 +81,7 @@ class APICallsApi:
         return self.get_daily_per_source_api_calls_usage_with_http_info(period, pagination, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_daily_per_source_api_calls_usage_with_http_info(self, period : Annotated[StrictStr, Field(..., description="The start of the usage month in the ISO-8601 format.  This parameter exists in v1.")], pagination : Annotated[PaginationInput, Field(..., description="Pagination input for per Source API calls counts.  This parameter exists in v1.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def get_daily_per_source_api_calls_usage_with_http_info(self, period : Annotated[StrictStr, Field(..., description="The start of the usage month in the ISO-8601 format.  This parameter exists in v1.")], pagination : Annotated[Optional[PaginationInput], Field(description="Pagination input for per Source API calls counts.  This parameter exists in v1.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Get Daily Per Source API Calls Usage  # noqa: E501
 
         Provides daily cumulative per-source API call counts for a usage period.  # noqa: E501
@@ -91,7 +93,7 @@ class APICallsApi:
 
         :param period: The start of the usage month in the ISO-8601 format.  This parameter exists in v1. (required)
         :type period: str
-        :param pagination: Pagination input for per Source API calls counts.  This parameter exists in v1. (required)
+        :param pagination: Pagination input for per Source API calls counts.  This parameter exists in v1.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -198,7 +200,7 @@ class APICallsApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def get_daily_workspace_api_calls_usage(self, period : Annotated[StrictStr, Field(..., description="The start of the usage month in the ISO-8601 format.  This parameter exists in v1.")], pagination : Annotated[PaginationInput, Field(..., description="Pagination input for Workspace API call counts.  This parameter exists in v1.")], **kwargs) -> GetDailyWorkspaceAPICallsUsage200Response:  # noqa: E501
+    def get_daily_workspace_api_calls_usage(self, period : Annotated[StrictStr, Field(..., description="The start of the usage month in the ISO-8601 format.  This parameter exists in v1.")], pagination : Annotated[Optional[PaginationInput], Field(description="Pagination input for Workspace API call counts.  This parameter exists in v1.")] = None, **kwargs) -> GetDailyWorkspaceAPICallsUsage200Response:  # noqa: E501
         """Get Daily Workspace API Calls Usage  # noqa: E501
 
         Provides daily cumulative API call counts for a usage period.  # noqa: E501
@@ -210,7 +212,7 @@ class APICallsApi:
 
         :param period: The start of the usage month in the ISO-8601 format.  This parameter exists in v1. (required)
         :type period: str
-        :param pagination: Pagination input for Workspace API call counts.  This parameter exists in v1. (required)
+        :param pagination: Pagination input for Workspace API call counts.  This parameter exists in v1.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -230,7 +232,7 @@ class APICallsApi:
         return self.get_daily_workspace_api_calls_usage_with_http_info(period, pagination, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_daily_workspace_api_calls_usage_with_http_info(self, period : Annotated[StrictStr, Field(..., description="The start of the usage month in the ISO-8601 format.  This parameter exists in v1.")], pagination : Annotated[PaginationInput, Field(..., description="Pagination input for Workspace API call counts.  This parameter exists in v1.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def get_daily_workspace_api_calls_usage_with_http_info(self, period : Annotated[StrictStr, Field(..., description="The start of the usage month in the ISO-8601 format.  This parameter exists in v1.")], pagination : Annotated[Optional[PaginationInput], Field(description="Pagination input for Workspace API call counts.  This parameter exists in v1.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Get Daily Workspace API Calls Usage  # noqa: E501
 
         Provides daily cumulative API call counts for a usage period.  # noqa: E501
@@ -242,7 +244,7 @@ class APICallsApi:
 
         :param period: The start of the usage month in the ISO-8601 format.  This parameter exists in v1. (required)
         :type period: str
-        :param pagination: Pagination input for Workspace API call counts.  This parameter exists in v1. (required)
+        :param pagination: Pagination input for Workspace API call counts.  This parameter exists in v1.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional

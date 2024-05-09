@@ -234,7 +234,7 @@ Name | Type | Description  | Notes
 
 ## Operation: list_transformations
 
-> ListTransformations200Response list_transformations(pagination)
+> ListTransformations200Response list_transformations(pagination=pagination)
 
 List Transformations
 
@@ -263,11 +263,11 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.TransformationsApi(api_client)
-    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination options.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination options.  This parameter exists in v1. (optional)
 
     try:
         # List Transformations
-        api_response = api_instance.list_transformations(pagination)
+        api_response = api_instance.list_transformations(pagination=pagination)
         print("The response of TransformationsApi->list_transformations:\n")
         pprint(api_response)
     except Exception as e:
@@ -280,7 +280,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pagination** | [**PaginationInput**](.md)| Pagination options.  This parameter exists in v1. | 
+ **pagination** | [**PaginationInput**](.md)| Pagination options.  This parameter exists in v1. | [optional] 
 
 ### Return type
 
