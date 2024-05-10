@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 ## Operation: get_daily_per_source_mtu_usage
 
-> GetDailyPerSourceMTUUsage200Response get_daily_per_source_mtu_usage(period, pagination)
+> GetDailyPerSourceMTUUsage200Response get_daily_per_source_mtu_usage(period, pagination=pagination)
 
 Get Daily Per Source MTU Usage
 
@@ -41,11 +41,11 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.MonthlyTrackedUsersApi(api_client)
     period = '2021-02-01' # str | The start of the usage month, in the ISO-8601 format.  This parameter exists in v1.
-    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination input for per Source MTU counts.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination input for per Source MTU counts.  This parameter exists in v1. (optional)
 
     try:
         # Get Daily Per Source MTU Usage
-        api_response = api_instance.get_daily_per_source_mtu_usage(period, pagination)
+        api_response = api_instance.get_daily_per_source_mtu_usage(period, pagination=pagination)
         print("The response of MonthlyTrackedUsersApi->get_daily_per_source_mtu_usage:\n")
         pprint(api_response)
     except Exception as e:
@@ -59,7 +59,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **period** | **str**| The start of the usage month, in the ISO-8601 format.  This parameter exists in v1. | 
- **pagination** | [**PaginationInput**](.md)| Pagination input for per Source MTU counts.  This parameter exists in v1. | 
+ **pagination** | [**PaginationInput**](.md)| Pagination input for per Source MTU counts.  This parameter exists in v1. | [optional] 
 
 ### Return type
 
@@ -87,7 +87,7 @@ Name | Type | Description  | Notes
 
 ## Operation: get_daily_workspace_mtu_usage
 
-> GetDailyWorkspaceMTUUsage200Response get_daily_workspace_mtu_usage(period, pagination)
+> GetDailyWorkspaceMTUUsage200Response get_daily_workspace_mtu_usage(period, pagination=pagination)
 
 Get Daily Workspace MTU Usage
 
@@ -117,11 +117,11 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.MonthlyTrackedUsersApi(api_client)
     period = '2021-02-01' # str | The start of the usage month, in the ISO-8601 format.  This parameter exists in v1.
-    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination input for Workspace MTU counts.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination input for Workspace MTU counts.  This parameter exists in v1. (optional)
 
     try:
         # Get Daily Workspace MTU Usage
-        api_response = api_instance.get_daily_workspace_mtu_usage(period, pagination)
+        api_response = api_instance.get_daily_workspace_mtu_usage(period, pagination=pagination)
         print("The response of MonthlyTrackedUsersApi->get_daily_workspace_mtu_usage:\n")
         pprint(api_response)
     except Exception as e:
@@ -135,7 +135,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **period** | **str**| The start of the usage month, in the ISO-8601 format.  This parameter exists in v1. | 
- **pagination** | [**PaginationInput**](.md)| Pagination input for Workspace MTU counts.  This parameter exists in v1. | 
+ **pagination** | [**PaginationInput**](.md)| Pagination input for Workspace MTU counts.  This parameter exists in v1. | [optional] 
 
 ### Return type
 

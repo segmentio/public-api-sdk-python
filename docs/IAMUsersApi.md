@@ -387,7 +387,7 @@ Name | Type | Description  | Notes
 
 ## Operation: list_invites
 
-> ListInvites200Response list_invites(pagination)
+> ListInvites200Response list_invites(pagination=pagination)
 
 List Invites
 
@@ -416,11 +416,11 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.IAMUsersApi(api_client)
-    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Defines the pagination parameters.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Defines the pagination parameters.  This parameter exists in v1. (optional)
 
     try:
         # List Invites
-        api_response = api_instance.list_invites(pagination)
+        api_response = api_instance.list_invites(pagination=pagination)
         print("The response of IAMUsersApi->list_invites:\n")
         pprint(api_response)
     except Exception as e:
@@ -433,7 +433,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pagination** | [**PaginationInput**](.md)| Defines the pagination parameters.  This parameter exists in v1. | 
+ **pagination** | [**PaginationInput**](.md)| Defines the pagination parameters.  This parameter exists in v1. | [optional] 
 
 ### Return type
 
@@ -461,7 +461,7 @@ Name | Type | Description  | Notes
 
 ## Operation: list_user_groups_from_user
 
-> ListUserGroupsFromUser200Response list_user_groups_from_user(user_id, pagination)
+> ListUserGroupsFromUser200Response list_user_groups_from_user(user_id, pagination=pagination)
 
 List User Groups from User
 
@@ -491,11 +491,11 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.IAMUsersApi(api_client)
     user_id = 'sgJDWk3K21k6LE3tLU9nRK' # str | 
-    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination for groups.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination for groups.  This parameter exists in v1. (optional)
 
     try:
         # List User Groups from User
-        api_response = api_instance.list_user_groups_from_user(user_id, pagination)
+        api_response = api_instance.list_user_groups_from_user(user_id, pagination=pagination)
         print("The response of IAMUsersApi->list_user_groups_from_user:\n")
         pprint(api_response)
     except Exception as e:
@@ -509,7 +509,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **user_id** | **str**|  | 
- **pagination** | [**PaginationInput**](.md)| Pagination for groups.  This parameter exists in v1. | 
+ **pagination** | [**PaginationInput**](.md)| Pagination for groups.  This parameter exists in v1. | [optional] 
 
 ### Return type
 
@@ -537,7 +537,7 @@ Name | Type | Description  | Notes
 
 ## Operation: list_users
 
-> ListUsers200Response list_users(pagination)
+> ListUsers200Response list_users(pagination=pagination)
 
 List Users
 
@@ -566,11 +566,11 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.IAMUsersApi(api_client)
-    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination for users.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination for users.  This parameter exists in v1. (optional)
 
     try:
         # List Users
-        api_response = api_instance.list_users(pagination)
+        api_response = api_instance.list_users(pagination=pagination)
         print("The response of IAMUsersApi->list_users:\n")
         pprint(api_response)
     except Exception as e:
@@ -583,7 +583,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pagination** | [**PaginationInput**](.md)| Pagination for users.  This parameter exists in v1. | 
+ **pagination** | [**PaginationInput**](.md)| Pagination for users.  This parameter exists in v1. | [optional] 
 
 ### Return type
 

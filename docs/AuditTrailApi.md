@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 ## Operation: list_audit_events
 
-> ListAuditEvents200Response list_audit_events(pagination, start_time=start_time, end_time=end_time, resource_id=resource_id, resource_type=resource_type)
+> ListAuditEvents200Response list_audit_events(start_time=start_time, end_time=end_time, resource_id=resource_id, resource_type=resource_type, pagination=pagination)
 
 List Audit Events
 
@@ -39,15 +39,15 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.AuditTrailApi(api_client)
-    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Defines the pagination parameters.  This parameter exists in v1.
     start_time = 'start_time_example' # str | Filter response to events that happened after this time.  This parameter exists in v1. (optional)
     end_time = 'end_time_example' # str | Filter response to events that happened before this time. Defaults to the current time, or the end time from the pagination cursor.  This parameter exists in v1. (optional)
     resource_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | Filter response to events that affect a specific resource, for example, a single Source.  This parameter exists in v1. (optional)
     resource_type = 'resource_type_example' # str | Filter response to events that affect a specific type, for example, Sources, Warehouses, and Tracking Plans.  This parameter exists in v1. (optional)
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Defines the pagination parameters.  This parameter exists in v1. (optional)
 
     try:
         # List Audit Events
-        api_response = api_instance.list_audit_events(pagination, start_time=start_time, end_time=end_time, resource_id=resource_id, resource_type=resource_type)
+        api_response = api_instance.list_audit_events(start_time=start_time, end_time=end_time, resource_id=resource_id, resource_type=resource_type, pagination=pagination)
         print("The response of AuditTrailApi->list_audit_events:\n")
         pprint(api_response)
     except Exception as e:
@@ -60,11 +60,11 @@ with segment_public_api.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pagination** | [**PaginationInput**](.md)| Defines the pagination parameters.  This parameter exists in v1. | 
  **start_time** | **str**| Filter response to events that happened after this time.  This parameter exists in v1. | [optional] 
  **end_time** | **str**| Filter response to events that happened before this time. Defaults to the current time, or the end time from the pagination cursor.  This parameter exists in v1. | [optional] 
  **resource_id** | **str**| Filter response to events that affect a specific resource, for example, a single Source.  This parameter exists in v1. | [optional] 
  **resource_type** | **str**| Filter response to events that affect a specific type, for example, Sources, Warehouses, and Tracking Plans.  This parameter exists in v1. | [optional] 
+ **pagination** | [**PaginationInput**](.md)| Defines the pagination parameters.  This parameter exists in v1. | [optional] 
 
 ### Return type
 

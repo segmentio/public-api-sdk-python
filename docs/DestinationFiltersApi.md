@@ -166,7 +166,7 @@ Name | Type | Description  | Notes
 
 ## Operation: list_filters_from_destination
 
-> ListFiltersFromDestination200Response list_filters_from_destination(destination_id, pagination)
+> ListFiltersFromDestination200Response list_filters_from_destination(destination_id, pagination=pagination)
 
 List Filters from Destination
 
@@ -196,11 +196,11 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.DestinationFiltersApi(api_client)
     destination_id = 'fP7qoQw2HTWt9WdMr718gn' # str | 
-    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination options.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination options.  This parameter exists in v1. (optional)
 
     try:
         # List Filters from Destination
-        api_response = api_instance.list_filters_from_destination(destination_id, pagination)
+        api_response = api_instance.list_filters_from_destination(destination_id, pagination=pagination)
         print("The response of DestinationFiltersApi->list_filters_from_destination:\n")
         pprint(api_response)
     except Exception as e:
@@ -214,7 +214,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **destination_id** | **str**|  | 
- **pagination** | [**PaginationInput**](.md)| Pagination options.  This parameter exists in v1. | 
+ **pagination** | [**PaginationInput**](.md)| Pagination options.  This parameter exists in v1. | [optional] 
 
 ### Return type
 

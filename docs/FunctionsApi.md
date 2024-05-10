@@ -611,7 +611,7 @@ Name | Type | Description  | Notes
 
 ## Operation: list_function_versions
 
-> ListFunctionVersions200Response list_function_versions(function_id, pagination)
+> ListFunctionVersions200Response list_function_versions(function_id, pagination=pagination)
 
 List Function Versions
 
@@ -641,11 +641,11 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.FunctionsApi(api_client)
     function_id = 'sfnc_wXzcDGFR3KmjLDrtSawNHf' # str | 
-    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination parameters.  This parameter exists in alpha.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination parameters.  This parameter exists in alpha. (optional)
 
     try:
         # List Function Versions
-        api_response = api_instance.list_function_versions(function_id, pagination)
+        api_response = api_instance.list_function_versions(function_id, pagination=pagination)
         print("The response of FunctionsApi->list_function_versions:\n")
         pprint(api_response)
     except Exception as e:
@@ -659,7 +659,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **function_id** | **str**|  | 
- **pagination** | [**PaginationInput**](.md)| Pagination parameters.  This parameter exists in alpha. | 
+ **pagination** | [**PaginationInput**](.md)| Pagination parameters.  This parameter exists in alpha. | [optional] 
 
 ### Return type
 
@@ -687,7 +687,7 @@ Name | Type | Description  | Notes
 
 ## Operation: list_functions
 
-> ListFunctions200Response list_functions(pagination, resource_type)
+> ListFunctions200Response list_functions(resource_type, pagination=pagination)
 
 List Functions
 
@@ -716,12 +716,12 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.FunctionsApi(api_client)
-    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination parameters.  This parameter exists in v1.
     resource_type = 'SOURCE' # str | The Function type.  Config API note: equal to `type`.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination parameters.  This parameter exists in v1. (optional)
 
     try:
         # List Functions
-        api_response = api_instance.list_functions(pagination, resource_type)
+        api_response = api_instance.list_functions(resource_type, pagination=pagination)
         print("The response of FunctionsApi->list_functions:\n")
         pprint(api_response)
     except Exception as e:
@@ -734,8 +734,8 @@ with segment_public_api.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pagination** | [**PaginationInput**](.md)| Pagination parameters.  This parameter exists in v1. | 
  **resource_type** | **str**| The Function type.  Config API note: equal to &#x60;type&#x60;.  This parameter exists in v1. | 
+ **pagination** | [**PaginationInput**](.md)| Pagination parameters.  This parameter exists in v1. | [optional] 
 
 ### Return type
 
@@ -763,7 +763,7 @@ Name | Type | Description  | Notes
 
 ## Operation: list_insert_function_instances
 
-> ListInsertFunctionInstances200Response list_insert_function_instances(pagination, function_id)
+> ListInsertFunctionInstances200Response list_insert_function_instances(function_id, pagination=pagination)
 
 List Insert Function Instances
 
@@ -792,12 +792,12 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.FunctionsApi(api_client)
-    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination parameters.  This parameter exists in alpha.
     function_id = '76365637324e715a67535831' # str | The insert Function class id to lookup.  This parameter exists in alpha.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination parameters.  This parameter exists in alpha. (optional)
 
     try:
         # List Insert Function Instances
-        api_response = api_instance.list_insert_function_instances(pagination, function_id)
+        api_response = api_instance.list_insert_function_instances(function_id, pagination=pagination)
         print("The response of FunctionsApi->list_insert_function_instances:\n")
         pprint(api_response)
     except Exception as e:
@@ -810,8 +810,8 @@ with segment_public_api.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pagination** | [**PaginationInput**](.md)| Pagination parameters.  This parameter exists in alpha. | 
  **function_id** | **str**| The insert Function class id to lookup.  This parameter exists in alpha. | 
+ **pagination** | [**PaginationInput**](.md)| Pagination parameters.  This parameter exists in alpha. | [optional] 
 
 ### Return type
 

@@ -162,7 +162,7 @@ Name | Type | Description  | Notes
 
 ## Operation: list_spaces
 
-> ListSpaces200Response list_spaces(pagination)
+> ListSpaces200Response list_spaces(pagination=pagination)
 
 List Spaces
 
@@ -191,11 +191,11 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.SpacesApi(api_client)
-    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination params  This parameter exists in alpha.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination params  This parameter exists in alpha. (optional)
 
     try:
         # List Spaces
-        api_response = api_instance.list_spaces(pagination)
+        api_response = api_instance.list_spaces(pagination=pagination)
         print("The response of SpacesApi->list_spaces:\n")
         pprint(api_response)
     except Exception as e:
@@ -208,7 +208,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pagination** | [**PaginationInput**](.md)| Pagination params  This parameter exists in alpha. | 
+ **pagination** | [**PaginationInput**](.md)| Pagination params  This parameter exists in alpha. | [optional] 
 
 ### Return type
 

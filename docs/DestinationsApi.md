@@ -472,7 +472,7 @@ Name | Type | Description  | Notes
 
 ## Operation: list_destinations
 
-> ListDestinations200Response list_destinations(pagination)
+> ListDestinations200Response list_destinations(pagination=pagination)
 
 List Destinations
 
@@ -501,11 +501,11 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.DestinationsApi(api_client)
-    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Required pagination params for the request.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Required pagination params for the request.  This parameter exists in v1. (optional)
 
     try:
         # List Destinations
-        api_response = api_instance.list_destinations(pagination)
+        api_response = api_instance.list_destinations(pagination=pagination)
         print("The response of DestinationsApi->list_destinations:\n")
         pprint(api_response)
     except Exception as e:
@@ -518,7 +518,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pagination** | [**PaginationInput**](.md)| Required pagination params for the request.  This parameter exists in v1. | 
+ **pagination** | [**PaginationInput**](.md)| Required pagination params for the request.  This parameter exists in v1. | [optional] 
 
 ### Return type
 
@@ -546,7 +546,7 @@ Name | Type | Description  | Notes
 
 ## Operation: list_subscriptions_from_destination
 
-> ListSubscriptionsFromDestination200Response list_subscriptions_from_destination(destination_id, pagination)
+> ListSubscriptionsFromDestination200Response list_subscriptions_from_destination(destination_id, pagination=pagination)
 
 List Subscriptions from Destination
 
@@ -576,11 +576,11 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.DestinationsApi(api_client)
     destination_id = 'fP7qoQw2HTWt9WdMr718gn' # str | 
-    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination options.  This parameter exists in alpha.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination options.  This parameter exists in alpha. (optional)
 
     try:
         # List Subscriptions from Destination
-        api_response = api_instance.list_subscriptions_from_destination(destination_id, pagination)
+        api_response = api_instance.list_subscriptions_from_destination(destination_id, pagination=pagination)
         print("The response of DestinationsApi->list_subscriptions_from_destination:\n")
         pprint(api_response)
     except Exception as e:
@@ -594,7 +594,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **destination_id** | **str**|  | 
- **pagination** | [**PaginationInput**](.md)| Pagination options.  This parameter exists in alpha. | 
+ **pagination** | [**PaginationInput**](.md)| Pagination options.  This parameter exists in alpha. | [optional] 
 
 ### Return type
 

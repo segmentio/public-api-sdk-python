@@ -391,7 +391,7 @@ Name | Type | Description  | Notes
 
 ## Operation: list_connected_destinations_from_source
 
-> ListConnectedDestinationsFromSource200Response list_connected_destinations_from_source(source_id, pagination)
+> ListConnectedDestinationsFromSource200Response list_connected_destinations_from_source(source_id, pagination=pagination)
 
 List Connected Destinations from Source
 
@@ -421,11 +421,11 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.SourcesApi(api_client)
     source_id = 'qQEHquLrjRDN9j1ByrChyn' # str | 
-    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Required pagination params for the request.  This parameter exists in alpha.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Required pagination params for the request.  This parameter exists in alpha. (optional)
 
     try:
         # List Connected Destinations from Source
-        api_response = api_instance.list_connected_destinations_from_source(source_id, pagination)
+        api_response = api_instance.list_connected_destinations_from_source(source_id, pagination=pagination)
         print("The response of SourcesApi->list_connected_destinations_from_source:\n")
         pprint(api_response)
     except Exception as e:
@@ -439,7 +439,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **source_id** | **str**|  | 
- **pagination** | [**PaginationInput**](.md)| Required pagination params for the request.  This parameter exists in alpha. | 
+ **pagination** | [**PaginationInput**](.md)| Required pagination params for the request.  This parameter exists in alpha. | [optional] 
 
 ### Return type
 
@@ -467,7 +467,7 @@ Name | Type | Description  | Notes
 
 ## Operation: list_connected_warehouses_from_source
 
-> ListConnectedWarehousesFromSource200Response list_connected_warehouses_from_source(source_id, pagination)
+> ListConnectedWarehousesFromSource200Response list_connected_warehouses_from_source(source_id, pagination=pagination)
 
 List Connected Warehouses from Source
 
@@ -497,11 +497,11 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.SourcesApi(api_client)
     source_id = 'qQEHquLrjRDN9j1ByrChyn' # str | 
-    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Required pagination params for the request.  This parameter exists in alpha.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Required pagination params for the request.  This parameter exists in alpha. (optional)
 
     try:
         # List Connected Warehouses from Source
-        api_response = api_instance.list_connected_warehouses_from_source(source_id, pagination)
+        api_response = api_instance.list_connected_warehouses_from_source(source_id, pagination=pagination)
         print("The response of SourcesApi->list_connected_warehouses_from_source:\n")
         pprint(api_response)
     except Exception as e:
@@ -515,7 +515,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **source_id** | **str**|  | 
- **pagination** | [**PaginationInput**](.md)| Required pagination params for the request.  This parameter exists in alpha. | 
+ **pagination** | [**PaginationInput**](.md)| Required pagination params for the request.  This parameter exists in alpha. | [optional] 
 
 ### Return type
 
@@ -616,7 +616,7 @@ Name | Type | Description  | Notes
 
 ## Operation: list_sources
 
-> ListSources200Response list_sources(pagination)
+> ListSources200Response list_sources(pagination=pagination)
 
 List Sources
 
@@ -645,11 +645,11 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.SourcesApi(api_client)
-    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Defines the pagination parameters.  This parameter exists in alpha.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Defines the pagination parameters.  This parameter exists in alpha. (optional)
 
     try:
         # List Sources
-        api_response = api_instance.list_sources(pagination)
+        api_response = api_instance.list_sources(pagination=pagination)
         print("The response of SourcesApi->list_sources:\n")
         pprint(api_response)
     except Exception as e:
@@ -662,7 +662,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pagination** | [**PaginationInput**](.md)| Defines the pagination parameters.  This parameter exists in alpha. | 
+ **pagination** | [**PaginationInput**](.md)| Defines the pagination parameters.  This parameter exists in alpha. | [optional] 
 
 ### Return type
 

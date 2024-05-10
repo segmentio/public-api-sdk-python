@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 ## Operation: list_roles
 
-> ListRoles200Response list_roles(pagination)
+> ListRoles200Response list_roles(pagination=pagination)
 
 List Roles
 
@@ -39,11 +39,11 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.IAMRolesApi(api_client)
-    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination for roles.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination for roles.  This parameter exists in v1. (optional)
 
     try:
         # List Roles
-        api_response = api_instance.list_roles(pagination)
+        api_response = api_instance.list_roles(pagination=pagination)
         print("The response of IAMRolesApi->list_roles:\n")
         pprint(api_response)
     except Exception as e:
@@ -56,7 +56,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pagination** | [**PaginationInput**](.md)| Pagination for roles.  This parameter exists in v1. | 
+ **pagination** | [**PaginationInput**](.md)| Pagination for roles.  This parameter exists in v1. | [optional] 
 
 ### Return type
 
