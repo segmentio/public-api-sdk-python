@@ -88,7 +88,7 @@ Name | Type | Description  | Notes
 
 ## Operation: list_computed_traits
 
-> ListComputedTraits200Response list_computed_traits(space_id, pagination=pagination)
+> ListComputedTraits200Response list_computed_traits(space_id, pagination)
 
 List Computed Traits
 
@@ -118,11 +118,11 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.ComputedTraitsApi(api_client)
     space_id = 'spaceId' # str | 
-    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Information about the pagination of this response.  This parameter exists in alpha. (optional)
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Information about the pagination of this response.  This parameter exists in alpha.
 
     try:
         # List Computed Traits
-        api_response = api_instance.list_computed_traits(space_id, pagination=pagination)
+        api_response = api_instance.list_computed_traits(space_id, pagination)
         print("The response of ComputedTraitsApi->list_computed_traits:\n")
         pprint(api_response)
     except Exception as e:
@@ -136,7 +136,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **space_id** | **str**|  | 
- **pagination** | [**PaginationInput**](.md)| Information about the pagination of this response.  This parameter exists in alpha. | [optional] 
+ **pagination** | [**PaginationInput**](.md)| Information about the pagination of this response.  This parameter exists in alpha. | 
 
 ### Return type
 

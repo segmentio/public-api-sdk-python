@@ -22,8 +22,6 @@ from pydantic import validate_arguments, ValidationError
 from typing_extensions import Annotated
 from pydantic import Field, constr
 
-from typing import Optional
-
 from segment_public_api.models.get_audience200_response import GetAudience200Response
 from segment_public_api.models.list_audiences200_response import ListAudiences200Response
 from segment_public_api.models.pagination_input import PaginationInput
@@ -203,7 +201,7 @@ class AudiencesApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_audiences(self, space_id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Information about the pagination of this response.  This parameter exists in alpha.")] = None, **kwargs) -> ListAudiences200Response:  # noqa: E501
+    def list_audiences(self, space_id : constr(strict=True), pagination : Annotated[PaginationInput, Field(..., description="Information about the pagination of this response.  This parameter exists in alpha.")], **kwargs) -> ListAudiences200Response:  # noqa: E501
         """List Audiences  # noqa: E501
 
         Returns Audiences by spaceId.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.   The rate limit for this endpoint is 25 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
@@ -215,7 +213,7 @@ class AudiencesApi:
 
         :param space_id: (required)
         :type space_id: str
-        :param pagination: Information about the pagination of this response.  This parameter exists in alpha.
+        :param pagination: Information about the pagination of this response.  This parameter exists in alpha. (required)
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -235,7 +233,7 @@ class AudiencesApi:
         return self.list_audiences_with_http_info(space_id, pagination, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_audiences_with_http_info(self, space_id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Information about the pagination of this response.  This parameter exists in alpha.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def list_audiences_with_http_info(self, space_id : constr(strict=True), pagination : Annotated[PaginationInput, Field(..., description="Information about the pagination of this response.  This parameter exists in alpha.")], **kwargs) -> ApiResponse:  # noqa: E501
         """List Audiences  # noqa: E501
 
         Returns Audiences by spaceId.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.   The rate limit for this endpoint is 25 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
@@ -247,7 +245,7 @@ class AudiencesApi:
 
         :param space_id: (required)
         :type space_id: str
-        :param pagination: Information about the pagination of this response.  This parameter exists in alpha.
+        :param pagination: Information about the pagination of this response.  This parameter exists in alpha. (required)
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
