@@ -25,7 +25,7 @@ from segment_public_api.models.audience_summary import AudienceSummary
 
 class GetAudienceAlphaOutput(BaseModel):
     """
-    Audience output for update.  # noqa: E501
+    Audience output for get.  # noqa: E501
     """
     audience: AudienceSummary = Field(...)
     __properties = ["audience"]

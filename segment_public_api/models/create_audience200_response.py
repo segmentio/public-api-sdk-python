@@ -20,18 +20,15 @@ import json
 
 
 from typing import Optional
-from pydantic import BaseModel, Field, StrictBool, StrictStr
-from segment_public_api.models.audience_computation_definition import AudienceComputationDefinition
+from pydantic import BaseModel
+from segment_public_api.models.create_audience_alpha_output import CreateAudienceAlphaOutput
 
-class UpdateAudienceForSpaceInput(BaseModel):
+class CreateAudience200Response(BaseModel):
     """
-    Input to update an audience.  # noqa: E501
+    CreateAudience200Response
     """
-    enabled: Optional[StrictBool] = Field(None, description="Enabled/disabled status for the audience.")
-    name: Optional[StrictStr] = Field(None, description="The name of the computation.")
-    description: Optional[StrictStr] = Field(None, description="The description of the computation.")
-    definition: Optional[AudienceComputationDefinition] = None
-    __properties = ["enabled", "name", "description", "definition"]
+    data: Optional[CreateAudienceAlphaOutput] = None
+    __properties = ["data"]
 
     class Config:
         """Pydantic configuration"""
@@ -47,8 +44,8 @@ class UpdateAudienceForSpaceInput(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> UpdateAudienceForSpaceInput:
-        """Create an instance of UpdateAudienceForSpaceInput from a JSON string"""
+    def from_json(cls, json_str: str) -> CreateAudience200Response:
+        """Create an instance of CreateAudience200Response from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -57,25 +54,22 @@ class UpdateAudienceForSpaceInput(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of definition
-        if self.definition:
-            _dict['definition'] = self.definition.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of data
+        if self.data:
+            _dict['data'] = self.data.to_dict()
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> UpdateAudienceForSpaceInput:
-        """Create an instance of UpdateAudienceForSpaceInput from a dict"""
+    def from_dict(cls, obj: dict) -> CreateAudience200Response:
+        """Create an instance of CreateAudience200Response from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return UpdateAudienceForSpaceInput.parse_obj(obj)
+            return CreateAudience200Response.parse_obj(obj)
 
-        _obj = UpdateAudienceForSpaceInput.parse_obj({
-            "enabled": obj.get("enabled"),
-            "name": obj.get("name"),
-            "description": obj.get("description"),
-            "definition": AudienceComputationDefinition.from_dict(obj.get("definition")) if obj.get("definition") is not None else None
+        _obj = CreateAudience200Response.parse_obj({
+            "data": CreateAudienceAlphaOutput.from_dict(obj.get("data")) if obj.get("data") is not None else None
         })
         return _obj
 

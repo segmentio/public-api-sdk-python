@@ -21,6 +21,7 @@ import json
 
 from typing import Optional
 from pydantic import BaseModel, Field, StrictBool, StrictStr
+from segment_public_api.models.audience_options import AudienceOptions
 from segment_public_api.models.definition1 import Definition1
 
 class AudienceSummary(BaseModel):
@@ -39,7 +40,8 @@ class AudienceSummary(BaseModel):
     updated_by: StrictStr = Field(..., alias="updatedBy", description="User id who last updated the audience.")
     created_at: StrictStr = Field(..., alias="createdAt", description="Date the audience was created.")
     updated_at: StrictStr = Field(..., alias="updatedAt", description="Date the audience was last updated.")
-    __properties = ["id", "spaceId", "name", "description", "key", "enabled", "definition", "status", "createdBy", "updatedBy", "createdAt", "updatedAt"]
+    options: Optional[AudienceOptions] = None
+    __properties = ["id", "spaceId", "name", "description", "key", "enabled", "definition", "status", "createdBy", "updatedBy", "createdAt", "updatedAt", "options"]
 
     class Config:
         """Pydantic configuration"""
@@ -68,6 +70,9 @@ class AudienceSummary(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of definition
         if self.definition:
             _dict['definition'] = self.definition.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of options
+        if self.options:
+            _dict['options'] = self.options.to_dict()
         # set to None if definition (nullable) is None
         # and __fields_set__ contains the field
         if self.definition is None and "definition" in self.__fields_set__:
@@ -96,7 +101,8 @@ class AudienceSummary(BaseModel):
             "created_by": obj.get("createdBy"),
             "updated_by": obj.get("updatedBy"),
             "created_at": obj.get("createdAt"),
-            "updated_at": obj.get("updatedAt")
+            "updated_at": obj.get("updatedAt"),
+            "options": AudienceOptions.from_dict(obj.get("options")) if obj.get("options") is not None else None
         })
         return _obj
 
