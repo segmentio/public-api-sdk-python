@@ -22,9 +22,9 @@ import json
 from typing import Optional
 from pydantic import BaseModel, Field, StrictBool
 
-class TraitCreateOptions(BaseModel):
+class TraitOptions(BaseModel):
     """
-    TraitCreateOptions
+    TraitOptions
     """
     include_historical_data: Optional[StrictBool] = Field(None, alias="includeHistoricalData")
     include_anonymous_users: Optional[StrictBool] = Field(None, alias="includeAnonymousUsers")
@@ -44,8 +44,8 @@ class TraitCreateOptions(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> TraitCreateOptions:
-        """Create an instance of TraitCreateOptions from a JSON string"""
+    def from_json(cls, json_str: str) -> TraitOptions:
+        """Create an instance of TraitOptions from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -57,15 +57,15 @@ class TraitCreateOptions(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> TraitCreateOptions:
-        """Create an instance of TraitCreateOptions from a dict"""
+    def from_dict(cls, obj: dict) -> TraitOptions:
+        """Create an instance of TraitOptions from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return TraitCreateOptions.parse_obj(obj)
+            return TraitOptions.parse_obj(obj)
 
-        _obj = TraitCreateOptions.parse_obj({
+        _obj = TraitOptions.parse_obj({
             "include_historical_data": obj.get("includeHistoricalData"),
             "include_anonymous_users": obj.get("includeAnonymousUsers")
         })

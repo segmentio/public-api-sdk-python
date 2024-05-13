@@ -21,8 +21,8 @@ import json
 
 from typing import Optional
 from pydantic import BaseModel, Field, StrictStr
-from segment_public_api.models.trait_create_options import TraitCreateOptions
 from segment_public_api.models.trait_definition import TraitDefinition
+from segment_public_api.models.trait_options import TraitOptions
 
 class CreateComputedTraitAlphaInput(BaseModel):
     """
@@ -31,7 +31,7 @@ class CreateComputedTraitAlphaInput(BaseModel):
     name: StrictStr = Field(..., description="The name of the computation.")
     description: StrictStr = Field(..., description="The description of the computation.")
     definition: TraitDefinition = Field(...)
-    options: Optional[TraitCreateOptions] = None
+    options: Optional[TraitOptions] = None
     __properties = ["name", "description", "definition", "options"]
 
     class Config:
@@ -79,7 +79,7 @@ class CreateComputedTraitAlphaInput(BaseModel):
             "name": obj.get("name"),
             "description": obj.get("description"),
             "definition": TraitDefinition.from_dict(obj.get("definition")) if obj.get("definition") is not None else None,
-            "options": TraitCreateOptions.from_dict(obj.get("options")) if obj.get("options") is not None else None
+            "options": TraitOptions.from_dict(obj.get("options")) if obj.get("options") is not None else None
         })
         return _obj
 

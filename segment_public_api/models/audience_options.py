@@ -22,9 +22,9 @@ import json
 from typing import Optional
 from pydantic import BaseModel, Field, StrictBool
 
-class AudienceCreateOptions(BaseModel):
+class AudienceOptions(BaseModel):
     """
-    AudienceCreateOptions
+    AudienceOptions
     """
     include_historical_data: Optional[StrictBool] = Field(None, alias="includeHistoricalData")
     include_anonymous_users: Optional[StrictBool] = Field(None, alias="includeAnonymousUsers")
@@ -44,8 +44,8 @@ class AudienceCreateOptions(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> AudienceCreateOptions:
-        """Create an instance of AudienceCreateOptions from a JSON string"""
+    def from_json(cls, json_str: str) -> AudienceOptions:
+        """Create an instance of AudienceOptions from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -57,15 +57,15 @@ class AudienceCreateOptions(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> AudienceCreateOptions:
-        """Create an instance of AudienceCreateOptions from a dict"""
+    def from_dict(cls, obj: dict) -> AudienceOptions:
+        """Create an instance of AudienceOptions from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return AudienceCreateOptions.parse_obj(obj)
+            return AudienceOptions.parse_obj(obj)
 
-        _obj = AudienceCreateOptions.parse_obj({
+        _obj = AudienceOptions.parse_obj({
             "include_historical_data": obj.get("includeHistoricalData"),
             "include_anonymous_users": obj.get("includeAnonymousUsers")
         })

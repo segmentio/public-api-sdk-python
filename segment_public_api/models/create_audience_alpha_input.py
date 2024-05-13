@@ -22,7 +22,7 @@ import json
 from typing import Optional
 from pydantic import BaseModel, Field, StrictStr
 from segment_public_api.models.audience_computation_definition import AudienceComputationDefinition
-from segment_public_api.models.audience_create_options import AudienceCreateOptions
+from segment_public_api.models.audience_options import AudienceOptions
 
 class CreateAudienceAlphaInput(BaseModel):
     """
@@ -31,7 +31,7 @@ class CreateAudienceAlphaInput(BaseModel):
     name: StrictStr = Field(..., description="The name of the computation .")
     description: StrictStr = Field(..., description="The description of the computation.")
     definition: AudienceComputationDefinition = Field(...)
-    options: Optional[AudienceCreateOptions] = None
+    options: Optional[AudienceOptions] = None
     __properties = ["name", "description", "definition", "options"]
 
     class Config:
@@ -79,7 +79,7 @@ class CreateAudienceAlphaInput(BaseModel):
             "name": obj.get("name"),
             "description": obj.get("description"),
             "definition": AudienceComputationDefinition.from_dict(obj.get("definition")) if obj.get("definition") is not None else None,
-            "options": AudienceCreateOptions.from_dict(obj.get("options")) if obj.get("options") is not None else None
+            "options": AudienceOptions.from_dict(obj.get("options")) if obj.get("options") is not None else None
         })
         return _obj
 
