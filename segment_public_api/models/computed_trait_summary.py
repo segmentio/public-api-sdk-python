@@ -22,7 +22,6 @@ import json
 from typing import Optional
 from pydantic import BaseModel, Field, StrictBool, StrictStr
 from segment_public_api.models.definition import Definition
-from segment_public_api.models.trait_options import TraitOptions
 
 class ComputedTraitSummary(BaseModel):
     """
@@ -40,8 +39,7 @@ class ComputedTraitSummary(BaseModel):
     updated_by: StrictStr = Field(..., alias="updatedBy", description="User id who last updated the computed trait.")
     created_at: StrictStr = Field(..., alias="createdAt", description="The timestamp of the computed trait's creation.")
     updated_at: StrictStr = Field(..., alias="updatedAt", description="The timestamp of the computed trait's last change.")
-    options: Optional[TraitOptions] = None
-    __properties = ["id", "spaceId", "name", "description", "key", "enabled", "definition", "status", "createdBy", "updatedBy", "createdAt", "updatedAt", "options"]
+    __properties = ["id", "spaceId", "name", "description", "key", "enabled", "definition", "status", "createdBy", "updatedBy", "createdAt", "updatedAt"]
 
     class Config:
         """Pydantic configuration"""
@@ -70,9 +68,6 @@ class ComputedTraitSummary(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of definition
         if self.definition:
             _dict['definition'] = self.definition.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of options
-        if self.options:
-            _dict['options'] = self.options.to_dict()
         # set to None if definition (nullable) is None
         # and __fields_set__ contains the field
         if self.definition is None and "definition" in self.__fields_set__:
@@ -101,8 +96,7 @@ class ComputedTraitSummary(BaseModel):
             "created_by": obj.get("createdBy"),
             "updated_by": obj.get("updatedBy"),
             "created_at": obj.get("createdAt"),
-            "updated_at": obj.get("updatedAt"),
-            "options": TraitOptions.from_dict(obj.get("options")) if obj.get("options") is not None else None
+            "updated_at": obj.get("updatedAt")
         })
         return _obj
 

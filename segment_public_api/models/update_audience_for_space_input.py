@@ -20,18 +20,14 @@ import json
 
 
 from typing import Optional
-from pydantic import BaseModel, Field, StrictBool, StrictStr
-from segment_public_api.models.audience_computation_definition import AudienceComputationDefinition
+from pydantic import BaseModel, Field, StrictBool
 
 class UpdateAudienceForSpaceInput(BaseModel):
     """
     Input to update an audience.  # noqa: E501
     """
     enabled: Optional[StrictBool] = Field(None, description="Enabled/disabled status for the audience.")
-    name: Optional[StrictStr] = Field(None, description="The name of the computation.")
-    description: Optional[StrictStr] = Field(None, description="The description of the computation.")
-    definition: Optional[AudienceComputationDefinition] = None
-    __properties = ["enabled", "name", "description", "definition"]
+    __properties = ["enabled"]
 
     class Config:
         """Pydantic configuration"""
@@ -57,9 +53,6 @@ class UpdateAudienceForSpaceInput(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of definition
-        if self.definition:
-            _dict['definition'] = self.definition.to_dict()
         return _dict
 
     @classmethod
@@ -72,10 +65,7 @@ class UpdateAudienceForSpaceInput(BaseModel):
             return UpdateAudienceForSpaceInput.parse_obj(obj)
 
         _obj = UpdateAudienceForSpaceInput.parse_obj({
-            "enabled": obj.get("enabled"),
-            "name": obj.get("name"),
-            "description": obj.get("description"),
-            "definition": AudienceComputationDefinition.from_dict(obj.get("definition")) if obj.get("definition") is not None else None
+            "enabled": obj.get("enabled")
         })
         return _obj
 
