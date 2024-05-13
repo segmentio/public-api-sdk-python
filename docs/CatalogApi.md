@@ -88,7 +88,7 @@ Name | Type | Description  | Notes
 
 ## Operation: get_destinations_catalog
 
-> GetDestinationsCatalog200Response get_destinations_catalog(pagination)
+> GetDestinationsCatalog200Response get_destinations_catalog(pagination=pagination)
 
 Get Destinations Catalog
 
@@ -117,11 +117,11 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.CatalogApi(api_client)
-    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Required pagination parameters used to filter the Destinations catalog.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Required pagination parameters used to filter the Destinations catalog.  This parameter exists in v1. (optional)
 
     try:
         # Get Destinations Catalog
-        api_response = api_instance.get_destinations_catalog(pagination)
+        api_response = api_instance.get_destinations_catalog(pagination=pagination)
         print("The response of CatalogApi->get_destinations_catalog:\n")
         pprint(api_response)
     except Exception as e:
@@ -134,7 +134,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pagination** | [**PaginationInput**](.md)| Required pagination parameters used to filter the Destinations catalog.  This parameter exists in v1. | 
+ **pagination** | [**PaginationInput**](.md)| Required pagination parameters used to filter the Destinations catalog.  This parameter exists in v1. | [optional] 
 
 ### Return type
 
@@ -235,7 +235,7 @@ Name | Type | Description  | Notes
 
 ## Operation: get_sources_catalog
 
-> GetSourcesCatalog200Response get_sources_catalog(pagination)
+> GetSourcesCatalog200Response get_sources_catalog(pagination=pagination)
 
 Get Sources Catalog
 
@@ -264,11 +264,11 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.CatalogApi(api_client)
-    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Defines the pagination parameters.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Defines the pagination parameters.  This parameter exists in v1. (optional)
 
     try:
         # Get Sources Catalog
-        api_response = api_instance.get_sources_catalog(pagination)
+        api_response = api_instance.get_sources_catalog(pagination=pagination)
         print("The response of CatalogApi->get_sources_catalog:\n")
         pprint(api_response)
     except Exception as e:
@@ -281,7 +281,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pagination** | [**PaginationInput**](.md)| Defines the pagination parameters.  This parameter exists in v1. | 
+ **pagination** | [**PaginationInput**](.md)| Defines the pagination parameters.  This parameter exists in v1. | [optional] 
 
 ### Return type
 
@@ -382,7 +382,7 @@ Name | Type | Description  | Notes
 
 ## Operation: get_warehouses_catalog
 
-> GetWarehousesCatalog200Response get_warehouses_catalog(pagination)
+> GetWarehousesCatalog200Response get_warehouses_catalog(pagination=pagination)
 
 Get Warehouses Catalog
 
@@ -411,11 +411,11 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.CatalogApi(api_client)
-    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Required pagination params used to filter the Warehouses catalog.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Optional pagination params used to filter the Warehouses catalog.  This parameter exists in v1. (optional)
 
     try:
         # Get Warehouses Catalog
-        api_response = api_instance.get_warehouses_catalog(pagination)
+        api_response = api_instance.get_warehouses_catalog(pagination=pagination)
         print("The response of CatalogApi->get_warehouses_catalog:\n")
         pprint(api_response)
     except Exception as e:
@@ -428,7 +428,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pagination** | [**PaginationInput**](.md)| Required pagination params used to filter the Warehouses catalog.  This parameter exists in v1. | 
+ **pagination** | [**PaginationInput**](.md)| Optional pagination params used to filter the Warehouses catalog.  This parameter exists in v1. | [optional] 
 
 ### Return type
 

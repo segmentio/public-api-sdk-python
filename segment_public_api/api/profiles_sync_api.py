@@ -365,7 +365,7 @@ class ProfilesSyncApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_selective_syncs_from_warehouse_and_space(self, space_id : constr(strict=True), warehouse_id : constr(strict=True), pagination : Annotated[PaginationInput, Field(..., description="Defines the pagination parameters.  This parameter exists in alpha.")], **kwargs) -> ListSelectiveSyncsFromWarehouseAndSpace200Response:  # noqa: E501
+    def list_selective_syncs_from_warehouse_and_space(self, space_id : constr(strict=True), warehouse_id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Defines the pagination parameters.  This parameter exists in alpha.")] = None, **kwargs) -> ListSelectiveSyncsFromWarehouseAndSpace200Response:  # noqa: E501
         """List Selective Syncs from Warehouse And Space  # noqa: E501
 
         Returns the schema for a Space Warehouse connection, including Collections and Properties.  # noqa: E501
@@ -379,7 +379,7 @@ class ProfilesSyncApi:
         :type space_id: str
         :param warehouse_id: (required)
         :type warehouse_id: str
-        :param pagination: Defines the pagination parameters.  This parameter exists in alpha. (required)
+        :param pagination: Defines the pagination parameters.  This parameter exists in alpha.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -399,7 +399,7 @@ class ProfilesSyncApi:
         return self.list_selective_syncs_from_warehouse_and_space_with_http_info(space_id, warehouse_id, pagination, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_selective_syncs_from_warehouse_and_space_with_http_info(self, space_id : constr(strict=True), warehouse_id : constr(strict=True), pagination : Annotated[PaginationInput, Field(..., description="Defines the pagination parameters.  This parameter exists in alpha.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def list_selective_syncs_from_warehouse_and_space_with_http_info(self, space_id : constr(strict=True), warehouse_id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Defines the pagination parameters.  This parameter exists in alpha.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Selective Syncs from Warehouse And Space  # noqa: E501
 
         Returns the schema for a Space Warehouse connection, including Collections and Properties.  # noqa: E501
@@ -413,7 +413,7 @@ class ProfilesSyncApi:
         :type space_id: str
         :param warehouse_id: (required)
         :type warehouse_id: str
-        :param pagination: Defines the pagination parameters.  This parameter exists in alpha. (required)
+        :param pagination: Defines the pagination parameters.  This parameter exists in alpha.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional

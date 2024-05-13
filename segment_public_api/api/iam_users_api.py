@@ -22,6 +22,8 @@ from pydantic import validate_arguments, ValidationError
 from typing_extensions import Annotated
 from pydantic import Field, StrictStr, conlist, constr
 
+from typing import Optional
+
 from segment_public_api.models.add_permissions_to_user200_response import AddPermissionsToUser200Response
 from segment_public_api.models.add_permissions_to_user_v1_input import AddPermissionsToUserV1Input
 from segment_public_api.models.create_invites201_response import CreateInvites201Response
@@ -796,7 +798,7 @@ class IAMUsersApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_invites(self, pagination : Annotated[PaginationInput, Field(..., description="Defines the pagination parameters.  This parameter exists in v1.")], **kwargs) -> ListInvites200Response:  # noqa: E501
+    def list_invites(self, pagination : Annotated[Optional[PaginationInput], Field(description="Defines the pagination parameters.  This parameter exists in v1.")] = None, **kwargs) -> ListInvites200Response:  # noqa: E501
         """List Invites  # noqa: E501
 
         Returns a list of invitations to join a Workspace.  Config API omitted fields: - `parent`   # noqa: E501
@@ -806,7 +808,7 @@ class IAMUsersApi:
         >>> thread = api.list_invites(pagination, async_req=True)
         >>> result = thread.get()
 
-        :param pagination: Defines the pagination parameters.  This parameter exists in v1. (required)
+        :param pagination: Defines the pagination parameters.  This parameter exists in v1.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -826,7 +828,7 @@ class IAMUsersApi:
         return self.list_invites_with_http_info(pagination, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_invites_with_http_info(self, pagination : Annotated[PaginationInput, Field(..., description="Defines the pagination parameters.  This parameter exists in v1.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def list_invites_with_http_info(self, pagination : Annotated[Optional[PaginationInput], Field(description="Defines the pagination parameters.  This parameter exists in v1.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Invites  # noqa: E501
 
         Returns a list of invitations to join a Workspace.  Config API omitted fields: - `parent`   # noqa: E501
@@ -836,7 +838,7 @@ class IAMUsersApi:
         >>> thread = api.list_invites_with_http_info(pagination, async_req=True)
         >>> result = thread.get()
 
-        :param pagination: Defines the pagination parameters.  This parameter exists in v1. (required)
+        :param pagination: Defines the pagination parameters.  This parameter exists in v1.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -939,7 +941,7 @@ class IAMUsersApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_user_groups_from_user(self, user_id : constr(strict=True), pagination : Annotated[PaginationInput, Field(..., description="Pagination for groups.  This parameter exists in v1.")], **kwargs) -> ListUserGroupsFromUser200Response:  # noqa: E501
+    def list_user_groups_from_user(self, user_id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Pagination for groups.  This parameter exists in v1.")] = None, **kwargs) -> ListUserGroupsFromUser200Response:  # noqa: E501
         """List User Groups from User  # noqa: E501
 
         Returns all groups a user belongs to.  # noqa: E501
@@ -951,7 +953,7 @@ class IAMUsersApi:
 
         :param user_id: (required)
         :type user_id: str
-        :param pagination: Pagination for groups.  This parameter exists in v1. (required)
+        :param pagination: Pagination for groups.  This parameter exists in v1.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -971,7 +973,7 @@ class IAMUsersApi:
         return self.list_user_groups_from_user_with_http_info(user_id, pagination, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_user_groups_from_user_with_http_info(self, user_id : constr(strict=True), pagination : Annotated[PaginationInput, Field(..., description="Pagination for groups.  This parameter exists in v1.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def list_user_groups_from_user_with_http_info(self, user_id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Pagination for groups.  This parameter exists in v1.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List User Groups from User  # noqa: E501
 
         Returns all groups a user belongs to.  # noqa: E501
@@ -983,7 +985,7 @@ class IAMUsersApi:
 
         :param user_id: (required)
         :type user_id: str
-        :param pagination: Pagination for groups.  This parameter exists in v1. (required)
+        :param pagination: Pagination for groups.  This parameter exists in v1.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -1090,7 +1092,7 @@ class IAMUsersApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_users(self, pagination : Annotated[PaginationInput, Field(..., description="Pagination for users.  This parameter exists in v1.")], **kwargs) -> ListUsers200Response:  # noqa: E501
+    def list_users(self, pagination : Annotated[Optional[PaginationInput], Field(description="Pagination for users.  This parameter exists in v1.")] = None, **kwargs) -> ListUsers200Response:  # noqa: E501
         """List Users  # noqa: E501
 
         Returns a list of users with access to the Workspace.  # noqa: E501
@@ -1100,7 +1102,7 @@ class IAMUsersApi:
         >>> thread = api.list_users(pagination, async_req=True)
         >>> result = thread.get()
 
-        :param pagination: Pagination for users.  This parameter exists in v1. (required)
+        :param pagination: Pagination for users.  This parameter exists in v1.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -1120,7 +1122,7 @@ class IAMUsersApi:
         return self.list_users_with_http_info(pagination, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_users_with_http_info(self, pagination : Annotated[PaginationInput, Field(..., description="Pagination for users.  This parameter exists in v1.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def list_users_with_http_info(self, pagination : Annotated[Optional[PaginationInput], Field(description="Pagination for users.  This parameter exists in v1.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Users  # noqa: E501
 
         Returns a list of users with access to the Workspace.  # noqa: E501
@@ -1130,7 +1132,7 @@ class IAMUsersApi:
         >>> thread = api.list_users_with_http_info(pagination, async_req=True)
         >>> result = thread.get()
 
-        :param pagination: Pagination for users.  This parameter exists in v1. (required)
+        :param pagination: Pagination for users.  This parameter exists in v1.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional

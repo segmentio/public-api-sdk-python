@@ -88,7 +88,7 @@ Name | Type | Description  | Notes
 
 ## Operation: list_selective_syncs_from_warehouse_and_source
 
-> ListSelectiveSyncsFromWarehouseAndSource200Response list_selective_syncs_from_warehouse_and_source(warehouse_id, source_id, pagination)
+> ListSelectiveSyncsFromWarehouseAndSource200Response list_selective_syncs_from_warehouse_and_source(warehouse_id, source_id, pagination=pagination)
 
 List Selective Syncs from Warehouse And Source
 
@@ -119,11 +119,11 @@ with segment_public_api.ApiClient(configuration) as api_client:
     api_instance = segment_public_api.SelectiveSyncApi(api_client)
     warehouse_id = 'kjU72LCJexvrqL7G4TMHHN' # str | 
     source_id = 'rh5BDZp6QDHvXFCkibm1pR' # str | 
-    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Defines the pagination parameters.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Defines the pagination parameters.  This parameter exists in v1. (optional)
 
     try:
         # List Selective Syncs from Warehouse And Source
-        api_response = api_instance.list_selective_syncs_from_warehouse_and_source(warehouse_id, source_id, pagination)
+        api_response = api_instance.list_selective_syncs_from_warehouse_and_source(warehouse_id, source_id, pagination=pagination)
         print("The response of SelectiveSyncApi->list_selective_syncs_from_warehouse_and_source:\n")
         pprint(api_response)
     except Exception as e:
@@ -138,7 +138,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **warehouse_id** | **str**|  | 
  **source_id** | **str**|  | 
- **pagination** | [**PaginationInput**](.md)| Defines the pagination parameters.  This parameter exists in v1. | 
+ **pagination** | [**PaginationInput**](.md)| Defines the pagination parameters.  This parameter exists in v1. | [optional] 
 
 ### Return type
 
@@ -166,7 +166,7 @@ Name | Type | Description  | Notes
 
 ## Operation: list_syncs_from_warehouse
 
-> ListSyncsFromWarehouse200Response list_syncs_from_warehouse(warehouse_id, pagination)
+> ListSyncsFromWarehouse200Response list_syncs_from_warehouse(warehouse_id, pagination=pagination)
 
 List Syncs from Warehouse
 
@@ -196,11 +196,11 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.SelectiveSyncApi(api_client)
     warehouse_id = 'kjU72LCJexvrqL7G4TMHHN' # str | 
-    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Defines the pagination parameters.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Defines the pagination parameters.  This parameter exists in v1. (optional)
 
     try:
         # List Syncs from Warehouse
-        api_response = api_instance.list_syncs_from_warehouse(warehouse_id, pagination)
+        api_response = api_instance.list_syncs_from_warehouse(warehouse_id, pagination=pagination)
         print("The response of SelectiveSyncApi->list_syncs_from_warehouse:\n")
         pprint(api_response)
     except Exception as e:
@@ -214,7 +214,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **warehouse_id** | **str**|  | 
- **pagination** | [**PaginationInput**](.md)| Defines the pagination parameters.  This parameter exists in v1. | 
+ **pagination** | [**PaginationInput**](.md)| Defines the pagination parameters.  This parameter exists in v1. | [optional] 
 
 ### Return type
 
@@ -242,7 +242,7 @@ Name | Type | Description  | Notes
 
 ## Operation: list_syncs_from_warehouse_and_source
 
-> ListSyncsFromWarehouseAndSource200Response list_syncs_from_warehouse_and_source(warehouse_id, source_id, pagination)
+> ListSyncsFromWarehouseAndSource200Response list_syncs_from_warehouse_and_source(warehouse_id, source_id, pagination=pagination)
 
 List Syncs from Warehouse And Source
 
@@ -273,11 +273,11 @@ with segment_public_api.ApiClient(configuration) as api_client:
     api_instance = segment_public_api.SelectiveSyncApi(api_client)
     warehouse_id = 'kjU72LCJexvrqL7G4TMHHN' # str | 
     source_id = 'rh5BDZp6QDHvXFCkibm1pR' # str | 
-    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Defines the pagination parameters.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Defines the pagination parameters.  This parameter exists in v1. (optional)
 
     try:
         # List Syncs from Warehouse And Source
-        api_response = api_instance.list_syncs_from_warehouse_and_source(warehouse_id, source_id, pagination)
+        api_response = api_instance.list_syncs_from_warehouse_and_source(warehouse_id, source_id, pagination=pagination)
         print("The response of SelectiveSyncApi->list_syncs_from_warehouse_and_source:\n")
         pprint(api_response)
     except Exception as e:
@@ -292,7 +292,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **warehouse_id** | **str**|  | 
  **source_id** | **str**|  | 
- **pagination** | [**PaginationInput**](.md)| Defines the pagination parameters.  This parameter exists in v1. | 
+ **pagination** | [**PaginationInput**](.md)| Defines the pagination parameters.  This parameter exists in v1. | [optional] 
 
 ### Return type
 

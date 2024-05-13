@@ -22,6 +22,8 @@ from pydantic import validate_arguments, ValidationError
 from typing_extensions import Annotated
 from pydantic import Field, constr
 
+from typing import Optional
+
 from segment_public_api.models.create_filter_for_destination200_response import CreateFilterForDestination200Response
 from segment_public_api.models.create_filter_for_destination_v1_input import CreateFilterForDestinationV1Input
 from segment_public_api.models.get_filter_in_destination200_response import GetFilterInDestination200Response
@@ -363,7 +365,7 @@ class DestinationFiltersApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_filters_from_destination(self, destination_id : constr(strict=True), pagination : Annotated[PaginationInput, Field(..., description="Pagination options.  This parameter exists in v1.")], **kwargs) -> ListFiltersFromDestination200Response:  # noqa: E501
+    def list_filters_from_destination(self, destination_id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Pagination options.  This parameter exists in v1.")] = None, **kwargs) -> ListFiltersFromDestination200Response:  # noqa: E501
         """List Filters from Destination  # noqa: E501
 
         Lists filters for a Destination.  # noqa: E501
@@ -375,7 +377,7 @@ class DestinationFiltersApi:
 
         :param destination_id: (required)
         :type destination_id: str
-        :param pagination: Pagination options.  This parameter exists in v1. (required)
+        :param pagination: Pagination options.  This parameter exists in v1.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -395,7 +397,7 @@ class DestinationFiltersApi:
         return self.list_filters_from_destination_with_http_info(destination_id, pagination, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_filters_from_destination_with_http_info(self, destination_id : constr(strict=True), pagination : Annotated[PaginationInput, Field(..., description="Pagination options.  This parameter exists in v1.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def list_filters_from_destination_with_http_info(self, destination_id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Pagination options.  This parameter exists in v1.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Filters from Destination  # noqa: E501
 
         Lists filters for a Destination.  # noqa: E501
@@ -407,7 +409,7 @@ class DestinationFiltersApi:
 
         :param destination_id: (required)
         :type destination_id: str
-        :param pagination: Pagination options.  This parameter exists in v1. (required)
+        :param pagination: Pagination options.  This parameter exists in v1.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional

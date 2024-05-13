@@ -22,6 +22,8 @@ from pydantic import validate_arguments, ValidationError
 from typing_extensions import Annotated
 from pydantic import Field, constr
 
+from typing import Optional
+
 from segment_public_api.models.create_transformation200_response import CreateTransformation200Response
 from segment_public_api.models.create_transformation_v1_input import CreateTransformationV1Input
 from segment_public_api.models.delete_transformation200_response import DeleteTransformation200Response
@@ -488,7 +490,7 @@ class TransformationsApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_transformations(self, pagination : Annotated[PaginationInput, Field(..., description="Pagination options.  This parameter exists in v1.")], **kwargs) -> ListTransformations200Response:  # noqa: E501
+    def list_transformations(self, pagination : Annotated[Optional[PaginationInput], Field(description="Pagination options.  This parameter exists in v1.")] = None, **kwargs) -> ListTransformations200Response:  # noqa: E501
         """List Transformations  # noqa: E501
 
         Lists all Transformations in the Workspace.    • In order to successfully call this endpoint, the specified Workspace needs to have the Protocols feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
@@ -498,7 +500,7 @@ class TransformationsApi:
         >>> thread = api.list_transformations(pagination, async_req=True)
         >>> result = thread.get()
 
-        :param pagination: Pagination options.  This parameter exists in v1. (required)
+        :param pagination: Pagination options.  This parameter exists in v1.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -518,7 +520,7 @@ class TransformationsApi:
         return self.list_transformations_with_http_info(pagination, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_transformations_with_http_info(self, pagination : Annotated[PaginationInput, Field(..., description="Pagination options.  This parameter exists in v1.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def list_transformations_with_http_info(self, pagination : Annotated[Optional[PaginationInput], Field(description="Pagination options.  This parameter exists in v1.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Transformations  # noqa: E501
 
         Lists all Transformations in the Workspace.    • In order to successfully call this endpoint, the specified Workspace needs to have the Protocols feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
@@ -528,7 +530,7 @@ class TransformationsApi:
         >>> thread = api.list_transformations_with_http_info(pagination, async_req=True)
         >>> result = thread.get()
 
-        :param pagination: Pagination options.  This parameter exists in v1. (required)
+        :param pagination: Pagination options.  This parameter exists in v1.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional

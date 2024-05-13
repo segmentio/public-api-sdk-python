@@ -385,7 +385,7 @@ Name | Type | Description  | Notes
 
 ## Operation: list_reverse_etl_models
 
-> ListReverseEtlModels200Response list_reverse_etl_models(pagination)
+> ListReverseEtlModels200Response list_reverse_etl_models(pagination=pagination)
 
 List Reverse Etl Models
 
@@ -414,11 +414,11 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.ReverseETLApi(api_client)
-    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Defines the pagination parameters.  This parameter exists in alpha.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Defines the pagination parameters.  This parameter exists in alpha. (optional)
 
     try:
         # List Reverse Etl Models
-        api_response = api_instance.list_reverse_etl_models(pagination)
+        api_response = api_instance.list_reverse_etl_models(pagination=pagination)
         print("The response of ReverseETLApi->list_reverse_etl_models:\n")
         pprint(api_response)
     except Exception as e:
@@ -431,7 +431,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pagination** | [**PaginationInput**](.md)| Defines the pagination parameters.  This parameter exists in alpha. | 
+ **pagination** | [**PaginationInput**](.md)| Defines the pagination parameters.  This parameter exists in alpha. | [optional] 
 
 ### Return type
 

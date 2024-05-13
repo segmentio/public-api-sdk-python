@@ -317,7 +317,7 @@ Name | Type | Description  | Notes
 
 ## Operation: list_rules_from_tracking_plan
 
-> ListRulesFromTrackingPlan200Response list_rules_from_tracking_plan(tracking_plan_id, pagination)
+> ListRulesFromTrackingPlan200Response list_rules_from_tracking_plan(tracking_plan_id, pagination=pagination)
 
 List Rules from Tracking Plan
 
@@ -347,11 +347,11 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.TrackingPlansApi(api_client)
     tracking_plan_id = 'tp_sprout_rVGCC6WdrNxjCf6JpCHP' # str | 
-    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination options.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination options.  This parameter exists in v1. (optional)
 
     try:
         # List Rules from Tracking Plan
-        api_response = api_instance.list_rules_from_tracking_plan(tracking_plan_id, pagination)
+        api_response = api_instance.list_rules_from_tracking_plan(tracking_plan_id, pagination=pagination)
         print("The response of TrackingPlansApi->list_rules_from_tracking_plan:\n")
         pprint(api_response)
     except Exception as e:
@@ -365,7 +365,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **tracking_plan_id** | **str**|  | 
- **pagination** | [**PaginationInput**](.md)| Pagination options.  This parameter exists in v1. | 
+ **pagination** | [**PaginationInput**](.md)| Pagination options.  This parameter exists in v1. | [optional] 
 
 ### Return type
 
@@ -393,7 +393,7 @@ Name | Type | Description  | Notes
 
 ## Operation: list_sources_from_tracking_plan
 
-> ListSourcesFromTrackingPlan200Response list_sources_from_tracking_plan(tracking_plan_id, pagination)
+> ListSourcesFromTrackingPlan200Response list_sources_from_tracking_plan(tracking_plan_id, pagination=pagination)
 
 List Sources from Tracking Plan
 
@@ -423,11 +423,11 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.TrackingPlansApi(api_client)
     tracking_plan_id = 'tp_sprout_rVGCC6WdrNxjCf6JpCHP' # str | 
-    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination options.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination options.  This parameter exists in v1. (optional)
 
     try:
         # List Sources from Tracking Plan
-        api_response = api_instance.list_sources_from_tracking_plan(tracking_plan_id, pagination)
+        api_response = api_instance.list_sources_from_tracking_plan(tracking_plan_id, pagination=pagination)
         print("The response of TrackingPlansApi->list_sources_from_tracking_plan:\n")
         pprint(api_response)
     except Exception as e:
@@ -441,7 +441,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **tracking_plan_id** | **str**|  | 
- **pagination** | [**PaginationInput**](.md)| Pagination options.  This parameter exists in v1. | 
+ **pagination** | [**PaginationInput**](.md)| Pagination options.  This parameter exists in v1. | [optional] 
 
 ### Return type
 
@@ -469,7 +469,7 @@ Name | Type | Description  | Notes
 
 ## Operation: list_tracking_plans
 
-> ListTrackingPlans200Response list_tracking_plans(pagination, type=type)
+> ListTrackingPlans200Response list_tracking_plans(type=type, pagination=pagination)
 
 List Tracking Plans
 
@@ -498,12 +498,12 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.TrackingPlansApi(api_client)
-    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination options.  This parameter exists in v1.
     type = 'LIVE' # str | Requests Tracking Plans of a certain type. If omitted, lists all types.  This parameter exists in v1. (optional)
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination options.  This parameter exists in v1. (optional)
 
     try:
         # List Tracking Plans
-        api_response = api_instance.list_tracking_plans(pagination, type=type)
+        api_response = api_instance.list_tracking_plans(type=type, pagination=pagination)
         print("The response of TrackingPlansApi->list_tracking_plans:\n")
         pprint(api_response)
     except Exception as e:
@@ -516,8 +516,8 @@ with segment_public_api.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pagination** | [**PaginationInput**](.md)| Pagination options.  This parameter exists in v1. | 
  **type** | **str**| Requests Tracking Plans of a certain type. If omitted, lists all types.  This parameter exists in v1. | [optional] 
+ **pagination** | [**PaginationInput**](.md)| Pagination options.  This parameter exists in v1. | [optional] 
 
 ### Return type
 

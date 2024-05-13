@@ -389,7 +389,7 @@ Name | Type | Description  | Notes
 
 ## Operation: list_regulations_from_source
 
-> ListRegulationsFromSource200Response list_regulations_from_source(source_id, pagination, status=status, regulation_types=regulation_types)
+> ListRegulationsFromSource200Response list_regulations_from_source(source_id, status=status, regulation_types=regulation_types, pagination=pagination)
 
 List Regulations from Source
 
@@ -419,13 +419,13 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.DeletionAndSuppressionApi(api_client)
     source_id = 'qQEHquLrjRDN9j1ByrChyn' # str | 
-    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination parameters.  This parameter exists in v1.
     status = 'status_example' # str | The status on which to filter returned regulations.  This parameter exists in v1. (optional)
     regulation_types = ['regulation_types_example'] # List[str] | The regulation types on which to filter returned regulations.  This parameter exists in v1. (optional)
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination parameters.  This parameter exists in v1. (optional)
 
     try:
         # List Regulations from Source
-        api_response = api_instance.list_regulations_from_source(source_id, pagination, status=status, regulation_types=regulation_types)
+        api_response = api_instance.list_regulations_from_source(source_id, status=status, regulation_types=regulation_types, pagination=pagination)
         print("The response of DeletionAndSuppressionApi->list_regulations_from_source:\n")
         pprint(api_response)
     except Exception as e:
@@ -439,9 +439,9 @@ with segment_public_api.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **source_id** | **str**|  | 
- **pagination** | [**PaginationInput**](.md)| Pagination parameters.  This parameter exists in v1. | 
  **status** | **str**| The status on which to filter returned regulations.  This parameter exists in v1. | [optional] 
  **regulation_types** | [**List[str]**](str.md)| The regulation types on which to filter returned regulations.  This parameter exists in v1. | [optional] 
+ **pagination** | [**PaginationInput**](.md)| Pagination parameters.  This parameter exists in v1. | [optional] 
 
 ### Return type
 
@@ -469,7 +469,7 @@ Name | Type | Description  | Notes
 
 ## Operation: list_suppressions
 
-> ListSuppressions200Response list_suppressions(pagination)
+> ListSuppressions200Response list_suppressions(pagination=pagination)
 
 List Suppressions
 
@@ -498,11 +498,11 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.DeletionAndSuppressionApi(api_client)
-    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination parameters.  This parameter exists in v1.
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination parameters.  This parameter exists in v1. (optional)
 
     try:
         # List Suppressions
-        api_response = api_instance.list_suppressions(pagination)
+        api_response = api_instance.list_suppressions(pagination=pagination)
         print("The response of DeletionAndSuppressionApi->list_suppressions:\n")
         pprint(api_response)
     except Exception as e:
@@ -515,7 +515,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pagination** | [**PaginationInput**](.md)| Pagination parameters.  This parameter exists in v1. | 
+ **pagination** | [**PaginationInput**](.md)| Pagination parameters.  This parameter exists in v1. | [optional] 
 
 ### Return type
 
@@ -543,7 +543,7 @@ Name | Type | Description  | Notes
 
 ## Operation: list_workspace_regulations
 
-> ListWorkspaceRegulations200Response list_workspace_regulations(pagination, status=status, regulation_types=regulation_types)
+> ListWorkspaceRegulations200Response list_workspace_regulations(status=status, regulation_types=regulation_types, pagination=pagination)
 
 List Workspace Regulations
 
@@ -572,13 +572,13 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.DeletionAndSuppressionApi(api_client)
-    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination parameters.  This parameter exists in v1.
     status = 'status_example' # str | The status on which to filter the returned regulations.  This parameter exists in v1. (optional)
     regulation_types = ['regulation_types_example'] # List[str] | The regulation types on which to filter returned regulations.  This parameter exists in v1. (optional)
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination parameters.  This parameter exists in v1. (optional)
 
     try:
         # List Workspace Regulations
-        api_response = api_instance.list_workspace_regulations(pagination, status=status, regulation_types=regulation_types)
+        api_response = api_instance.list_workspace_regulations(status=status, regulation_types=regulation_types, pagination=pagination)
         print("The response of DeletionAndSuppressionApi->list_workspace_regulations:\n")
         pprint(api_response)
     except Exception as e:
@@ -591,9 +591,9 @@ with segment_public_api.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pagination** | [**PaginationInput**](.md)| Pagination parameters.  This parameter exists in v1. | 
  **status** | **str**| The status on which to filter the returned regulations.  This parameter exists in v1. | [optional] 
  **regulation_types** | [**List[str]**](str.md)| The regulation types on which to filter returned regulations.  This parameter exists in v1. | [optional] 
+ **pagination** | [**PaginationInput**](.md)| Pagination parameters.  This parameter exists in v1. | [optional] 
 
 ### Return type
 

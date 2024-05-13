@@ -22,6 +22,8 @@ from pydantic import validate_arguments, ValidationError
 from typing_extensions import Annotated
 from pydantic import Field, StrictStr, constr
 
+from typing import Optional
+
 from segment_public_api.models.create_function200_response import CreateFunction200Response
 from segment_public_api.models.create_function_deployment200_response import CreateFunctionDeployment200Response
 from segment_public_api.models.create_function_v1_input import CreateFunctionV1Input
@@ -1230,7 +1232,7 @@ class FunctionsApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_function_versions(self, function_id : constr(strict=True), pagination : Annotated[PaginationInput, Field(..., description="Pagination parameters.  This parameter exists in alpha.")], **kwargs) -> ListFunctionVersions200Response:  # noqa: E501
+    def list_function_versions(self, function_id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Pagination parameters.  This parameter exists in alpha.")] = None, **kwargs) -> ListFunctionVersions200Response:  # noqa: E501
         """List Function Versions  # noqa: E501
 
         Lists versions for a Function in a Workspace.    • In order to successfully call this endpoint, the specified Workspace needs to have the Functions feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
@@ -1242,7 +1244,7 @@ class FunctionsApi:
 
         :param function_id: (required)
         :type function_id: str
-        :param pagination: Pagination parameters.  This parameter exists in alpha. (required)
+        :param pagination: Pagination parameters.  This parameter exists in alpha.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -1262,7 +1264,7 @@ class FunctionsApi:
         return self.list_function_versions_with_http_info(function_id, pagination, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_function_versions_with_http_info(self, function_id : constr(strict=True), pagination : Annotated[PaginationInput, Field(..., description="Pagination parameters.  This parameter exists in alpha.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def list_function_versions_with_http_info(self, function_id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Pagination parameters.  This parameter exists in alpha.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Function Versions  # noqa: E501
 
         Lists versions for a Function in a Workspace.    • In order to successfully call this endpoint, the specified Workspace needs to have the Functions feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
@@ -1274,7 +1276,7 @@ class FunctionsApi:
 
         :param function_id: (required)
         :type function_id: str
-        :param pagination: Pagination parameters.  This parameter exists in alpha. (required)
+        :param pagination: Pagination parameters.  This parameter exists in alpha.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -1381,20 +1383,20 @@ class FunctionsApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_functions(self, pagination : Annotated[PaginationInput, Field(..., description="Pagination parameters.  This parameter exists in v1.")], resource_type : Annotated[StrictStr, Field(..., description="The Function type.  Config API note: equal to `type`.  This parameter exists in v1.")], **kwargs) -> ListFunctions200Response:  # noqa: E501
+    def list_functions(self, resource_type : Annotated[StrictStr, Field(..., description="The Function type.  Config API note: equal to `type`.  This parameter exists in v1.")], pagination : Annotated[Optional[PaginationInput], Field(description="Pagination parameters.  This parameter exists in v1.")] = None, **kwargs) -> ListFunctions200Response:  # noqa: E501
         """List Functions  # noqa: E501
 
         Lists all Functions in a Workspace.    • In order to successfully call this endpoint, the specified Workspace needs to have the Functions feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.list_functions(pagination, resource_type, async_req=True)
+        >>> thread = api.list_functions(resource_type, pagination, async_req=True)
         >>> result = thread.get()
 
-        :param pagination: Pagination parameters.  This parameter exists in v1. (required)
-        :type pagination: PaginationInput
         :param resource_type: The Function type.  Config API note: equal to `type`.  This parameter exists in v1. (required)
         :type resource_type: str
+        :param pagination: Pagination parameters.  This parameter exists in v1.
+        :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _request_timeout: timeout setting for this request.
@@ -1410,23 +1412,23 @@ class FunctionsApi:
         if '_preload_content' in kwargs:
             message = "Error! Please call the list_functions_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.list_functions_with_http_info(pagination, resource_type, **kwargs)  # noqa: E501
+        return self.list_functions_with_http_info(resource_type, pagination, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_functions_with_http_info(self, pagination : Annotated[PaginationInput, Field(..., description="Pagination parameters.  This parameter exists in v1.")], resource_type : Annotated[StrictStr, Field(..., description="The Function type.  Config API note: equal to `type`.  This parameter exists in v1.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def list_functions_with_http_info(self, resource_type : Annotated[StrictStr, Field(..., description="The Function type.  Config API note: equal to `type`.  This parameter exists in v1.")], pagination : Annotated[Optional[PaginationInput], Field(description="Pagination parameters.  This parameter exists in v1.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Functions  # noqa: E501
 
         Lists all Functions in a Workspace.    • In order to successfully call this endpoint, the specified Workspace needs to have the Functions feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.list_functions_with_http_info(pagination, resource_type, async_req=True)
+        >>> thread = api.list_functions_with_http_info(resource_type, pagination, async_req=True)
         >>> result = thread.get()
 
-        :param pagination: Pagination parameters.  This parameter exists in v1. (required)
-        :type pagination: PaginationInput
         :param resource_type: The Function type.  Config API note: equal to `type`.  This parameter exists in v1. (required)
         :type resource_type: str
+        :param pagination: Pagination parameters.  This parameter exists in v1.
+        :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _preload_content: if False, the ApiResponse.data will
@@ -1455,8 +1457,8 @@ class FunctionsApi:
         _params = locals()
 
         _all_params = [
-            'pagination',
-            'resource_type'
+            'resource_type',
+            'pagination'
         ]
         _all_params.extend(
             [
@@ -1532,20 +1534,20 @@ class FunctionsApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_insert_function_instances(self, pagination : Annotated[PaginationInput, Field(..., description="Pagination parameters.  This parameter exists in alpha.")], function_id : Annotated[StrictStr, Field(..., description="The insert Function class id to lookup.  This parameter exists in alpha.")], **kwargs) -> ListInsertFunctionInstances200Response:  # noqa: E501
+    def list_insert_function_instances(self, function_id : Annotated[StrictStr, Field(..., description="The insert Function class id to lookup.  This parameter exists in alpha.")], pagination : Annotated[Optional[PaginationInput], Field(description="Pagination parameters.  This parameter exists in alpha.")] = None, **kwargs) -> ListInsertFunctionInstances200Response:  # noqa: E501
         """List Insert Function Instances  # noqa: E501
 
         Lists all insert Function instances connected to the given insert Function.    • In order to successfully call this endpoint, the specified Workspace needs to have the Functions feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.list_insert_function_instances(pagination, function_id, async_req=True)
+        >>> thread = api.list_insert_function_instances(function_id, pagination, async_req=True)
         >>> result = thread.get()
 
-        :param pagination: Pagination parameters.  This parameter exists in alpha. (required)
-        :type pagination: PaginationInput
         :param function_id: The insert Function class id to lookup.  This parameter exists in alpha. (required)
         :type function_id: str
+        :param pagination: Pagination parameters.  This parameter exists in alpha.
+        :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _request_timeout: timeout setting for this request.
@@ -1561,23 +1563,23 @@ class FunctionsApi:
         if '_preload_content' in kwargs:
             message = "Error! Please call the list_insert_function_instances_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.list_insert_function_instances_with_http_info(pagination, function_id, **kwargs)  # noqa: E501
+        return self.list_insert_function_instances_with_http_info(function_id, pagination, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_insert_function_instances_with_http_info(self, pagination : Annotated[PaginationInput, Field(..., description="Pagination parameters.  This parameter exists in alpha.")], function_id : Annotated[StrictStr, Field(..., description="The insert Function class id to lookup.  This parameter exists in alpha.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def list_insert_function_instances_with_http_info(self, function_id : Annotated[StrictStr, Field(..., description="The insert Function class id to lookup.  This parameter exists in alpha.")], pagination : Annotated[Optional[PaginationInput], Field(description="Pagination parameters.  This parameter exists in alpha.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Insert Function Instances  # noqa: E501
 
         Lists all insert Function instances connected to the given insert Function.    • In order to successfully call this endpoint, the specified Workspace needs to have the Functions feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.list_insert_function_instances_with_http_info(pagination, function_id, async_req=True)
+        >>> thread = api.list_insert_function_instances_with_http_info(function_id, pagination, async_req=True)
         >>> result = thread.get()
 
-        :param pagination: Pagination parameters.  This parameter exists in alpha. (required)
-        :type pagination: PaginationInput
         :param function_id: The insert Function class id to lookup.  This parameter exists in alpha. (required)
         :type function_id: str
+        :param pagination: Pagination parameters.  This parameter exists in alpha.
+        :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _preload_content: if False, the ApiResponse.data will
@@ -1606,8 +1608,8 @@ class FunctionsApi:
         _params = locals()
 
         _all_params = [
-            'pagination',
-            'function_id'
+            'function_id',
+            'pagination'
         ]
         _all_params.extend(
             [

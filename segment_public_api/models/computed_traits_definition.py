@@ -20,7 +20,7 @@ import json
 
 
 
-from pydantic import BaseModel, Field, StrictStr, validator
+from pydantic import BaseModel, Field, StrictStr
 
 class ComputedTraitsDefinition(BaseModel):
     """
@@ -29,13 +29,6 @@ class ComputedTraitsDefinition(BaseModel):
     query: StrictStr = Field(..., description="The query language string defining the computed trait aggregation criteria.")
     type: StrictStr = Field(..., description="The underlying data type being aggregated for this computed trait.  Possible values: users, accounts.")
     __properties = ["query", "type"]
-
-    @validator('type')
-    def type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in ('accounts', 'users'):
-            raise ValueError("must be one of enum values ('accounts', 'users')")
-        return value
 
     class Config:
         """Pydantic configuration"""

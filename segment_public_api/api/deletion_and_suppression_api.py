@@ -810,24 +810,24 @@ class DeletionAndSuppressionApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_regulations_from_source(self, source_id : constr(strict=True), pagination : Annotated[PaginationInput, Field(..., description="Pagination parameters.  This parameter exists in v1.")], status : Annotated[Optional[StrictStr], Field(description="The status on which to filter returned regulations.  This parameter exists in v1.")] = None, regulation_types : Annotated[Optional[conlist(StrictStr)], Field(description="The regulation types on which to filter returned regulations.  This parameter exists in v1.")] = None, **kwargs) -> ListRegulationsFromSource200Response:  # noqa: E501
+    def list_regulations_from_source(self, source_id : constr(strict=True), status : Annotated[Optional[StrictStr], Field(description="The status on which to filter returned regulations.  This parameter exists in v1.")] = None, regulation_types : Annotated[Optional[conlist(StrictStr)], Field(description="The regulation types on which to filter returned regulations.  This parameter exists in v1.")] = None, pagination : Annotated[Optional[PaginationInput], Field(description="Pagination parameters.  This parameter exists in v1.")] = None, **kwargs) -> ListRegulationsFromSource200Response:  # noqa: E501
         """List Regulations from Source  # noqa: E501
 
         Lists all Source-scoped regulations.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.list_regulations_from_source(source_id, pagination, status, regulation_types, async_req=True)
+        >>> thread = api.list_regulations_from_source(source_id, status, regulation_types, pagination, async_req=True)
         >>> result = thread.get()
 
         :param source_id: (required)
         :type source_id: str
-        :param pagination: Pagination parameters.  This parameter exists in v1. (required)
-        :type pagination: PaginationInput
         :param status: The status on which to filter returned regulations.  This parameter exists in v1.
         :type status: str
         :param regulation_types: The regulation types on which to filter returned regulations.  This parameter exists in v1.
         :type regulation_types: List[str]
+        :param pagination: Pagination parameters.  This parameter exists in v1.
+        :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _request_timeout: timeout setting for this request.
@@ -843,27 +843,27 @@ class DeletionAndSuppressionApi:
         if '_preload_content' in kwargs:
             message = "Error! Please call the list_regulations_from_source_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.list_regulations_from_source_with_http_info(source_id, pagination, status, regulation_types, **kwargs)  # noqa: E501
+        return self.list_regulations_from_source_with_http_info(source_id, status, regulation_types, pagination, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_regulations_from_source_with_http_info(self, source_id : constr(strict=True), pagination : Annotated[PaginationInput, Field(..., description="Pagination parameters.  This parameter exists in v1.")], status : Annotated[Optional[StrictStr], Field(description="The status on which to filter returned regulations.  This parameter exists in v1.")] = None, regulation_types : Annotated[Optional[conlist(StrictStr)], Field(description="The regulation types on which to filter returned regulations.  This parameter exists in v1.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def list_regulations_from_source_with_http_info(self, source_id : constr(strict=True), status : Annotated[Optional[StrictStr], Field(description="The status on which to filter returned regulations.  This parameter exists in v1.")] = None, regulation_types : Annotated[Optional[conlist(StrictStr)], Field(description="The regulation types on which to filter returned regulations.  This parameter exists in v1.")] = None, pagination : Annotated[Optional[PaginationInput], Field(description="Pagination parameters.  This parameter exists in v1.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Regulations from Source  # noqa: E501
 
         Lists all Source-scoped regulations.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.list_regulations_from_source_with_http_info(source_id, pagination, status, regulation_types, async_req=True)
+        >>> thread = api.list_regulations_from_source_with_http_info(source_id, status, regulation_types, pagination, async_req=True)
         >>> result = thread.get()
 
         :param source_id: (required)
         :type source_id: str
-        :param pagination: Pagination parameters.  This parameter exists in v1. (required)
-        :type pagination: PaginationInput
         :param status: The status on which to filter returned regulations.  This parameter exists in v1.
         :type status: str
         :param regulation_types: The regulation types on which to filter returned regulations.  This parameter exists in v1.
         :type regulation_types: List[str]
+        :param pagination: Pagination parameters.  This parameter exists in v1.
+        :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _preload_content: if False, the ApiResponse.data will
@@ -893,9 +893,9 @@ class DeletionAndSuppressionApi:
 
         _all_params = [
             'source_id',
-            'pagination',
             'status',
-            'regulation_types'
+            'regulation_types',
+            'pagination'
         ]
         _all_params.extend(
             [
@@ -978,7 +978,7 @@ class DeletionAndSuppressionApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_suppressions(self, pagination : Annotated[PaginationInput, Field(..., description="Pagination parameters.  This parameter exists in v1.")], **kwargs) -> ListSuppressions200Response:  # noqa: E501
+    def list_suppressions(self, pagination : Annotated[Optional[PaginationInput], Field(description="Pagination parameters.  This parameter exists in v1.")] = None, **kwargs) -> ListSuppressions200Response:  # noqa: E501
         """List Suppressions  # noqa: E501
 
         Lists all suppressions in a given Workspace.  # noqa: E501
@@ -988,7 +988,7 @@ class DeletionAndSuppressionApi:
         >>> thread = api.list_suppressions(pagination, async_req=True)
         >>> result = thread.get()
 
-        :param pagination: Pagination parameters.  This parameter exists in v1. (required)
+        :param pagination: Pagination parameters.  This parameter exists in v1.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -1008,7 +1008,7 @@ class DeletionAndSuppressionApi:
         return self.list_suppressions_with_http_info(pagination, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_suppressions_with_http_info(self, pagination : Annotated[PaginationInput, Field(..., description="Pagination parameters.  This parameter exists in v1.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def list_suppressions_with_http_info(self, pagination : Annotated[Optional[PaginationInput], Field(description="Pagination parameters.  This parameter exists in v1.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Suppressions  # noqa: E501
 
         Lists all suppressions in a given Workspace.  # noqa: E501
@@ -1018,7 +1018,7 @@ class DeletionAndSuppressionApi:
         >>> thread = api.list_suppressions_with_http_info(pagination, async_req=True)
         >>> result = thread.get()
 
-        :param pagination: Pagination parameters.  This parameter exists in v1. (required)
+        :param pagination: Pagination parameters.  This parameter exists in v1.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -1121,22 +1121,22 @@ class DeletionAndSuppressionApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_workspace_regulations(self, pagination : Annotated[PaginationInput, Field(..., description="Pagination parameters.  This parameter exists in v1.")], status : Annotated[Optional[StrictStr], Field(description="The status on which to filter the returned regulations.  This parameter exists in v1.")] = None, regulation_types : Annotated[Optional[conlist(StrictStr)], Field(description="The regulation types on which to filter returned regulations.  This parameter exists in v1.")] = None, **kwargs) -> ListWorkspaceRegulations200Response:  # noqa: E501
+    def list_workspace_regulations(self, status : Annotated[Optional[StrictStr], Field(description="The status on which to filter the returned regulations.  This parameter exists in v1.")] = None, regulation_types : Annotated[Optional[conlist(StrictStr)], Field(description="The regulation types on which to filter returned regulations.  This parameter exists in v1.")] = None, pagination : Annotated[Optional[PaginationInput], Field(description="Pagination parameters.  This parameter exists in v1.")] = None, **kwargs) -> ListWorkspaceRegulations200Response:  # noqa: E501
         """List Workspace Regulations  # noqa: E501
 
         Lists all Workspace-scoped regulations.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.list_workspace_regulations(pagination, status, regulation_types, async_req=True)
+        >>> thread = api.list_workspace_regulations(status, regulation_types, pagination, async_req=True)
         >>> result = thread.get()
 
-        :param pagination: Pagination parameters.  This parameter exists in v1. (required)
-        :type pagination: PaginationInput
         :param status: The status on which to filter the returned regulations.  This parameter exists in v1.
         :type status: str
         :param regulation_types: The regulation types on which to filter returned regulations.  This parameter exists in v1.
         :type regulation_types: List[str]
+        :param pagination: Pagination parameters.  This parameter exists in v1.
+        :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _request_timeout: timeout setting for this request.
@@ -1152,25 +1152,25 @@ class DeletionAndSuppressionApi:
         if '_preload_content' in kwargs:
             message = "Error! Please call the list_workspace_regulations_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.list_workspace_regulations_with_http_info(pagination, status, regulation_types, **kwargs)  # noqa: E501
+        return self.list_workspace_regulations_with_http_info(status, regulation_types, pagination, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_workspace_regulations_with_http_info(self, pagination : Annotated[PaginationInput, Field(..., description="Pagination parameters.  This parameter exists in v1.")], status : Annotated[Optional[StrictStr], Field(description="The status on which to filter the returned regulations.  This parameter exists in v1.")] = None, regulation_types : Annotated[Optional[conlist(StrictStr)], Field(description="The regulation types on which to filter returned regulations.  This parameter exists in v1.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def list_workspace_regulations_with_http_info(self, status : Annotated[Optional[StrictStr], Field(description="The status on which to filter the returned regulations.  This parameter exists in v1.")] = None, regulation_types : Annotated[Optional[conlist(StrictStr)], Field(description="The regulation types on which to filter returned regulations.  This parameter exists in v1.")] = None, pagination : Annotated[Optional[PaginationInput], Field(description="Pagination parameters.  This parameter exists in v1.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Workspace Regulations  # noqa: E501
 
         Lists all Workspace-scoped regulations.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.list_workspace_regulations_with_http_info(pagination, status, regulation_types, async_req=True)
+        >>> thread = api.list_workspace_regulations_with_http_info(status, regulation_types, pagination, async_req=True)
         >>> result = thread.get()
 
-        :param pagination: Pagination parameters.  This parameter exists in v1. (required)
-        :type pagination: PaginationInput
         :param status: The status on which to filter the returned regulations.  This parameter exists in v1.
         :type status: str
         :param regulation_types: The regulation types on which to filter returned regulations.  This parameter exists in v1.
         :type regulation_types: List[str]
+        :param pagination: Pagination parameters.  This parameter exists in v1.
+        :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _preload_content: if False, the ApiResponse.data will
@@ -1199,9 +1199,9 @@ class DeletionAndSuppressionApi:
         _params = locals()
 
         _all_params = [
-            'pagination',
             'status',
-            'regulation_types'
+            'regulation_types',
+            'pagination'
         ]
         _all_params.extend(
             [

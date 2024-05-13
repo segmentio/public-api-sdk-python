@@ -22,6 +22,8 @@ from pydantic import validate_arguments, ValidationError
 from typing_extensions import Annotated
 from pydantic import Field
 
+from typing import Optional
+
 from segment_public_api.models.list_roles200_response import ListRoles200Response
 from segment_public_api.models.pagination_input import PaginationInput
 
@@ -46,7 +48,7 @@ class IAMRolesApi:
         self.api_client = api_client
 
     @validate_arguments
-    def list_roles(self, pagination : Annotated[PaginationInput, Field(..., description="Pagination for roles.  This parameter exists in v1.")], **kwargs) -> ListRoles200Response:  # noqa: E501
+    def list_roles(self, pagination : Annotated[Optional[PaginationInput], Field(description="Pagination for roles.  This parameter exists in v1.")] = None, **kwargs) -> ListRoles200Response:  # noqa: E501
         """List Roles  # noqa: E501
 
         Returns a list of Roles available to apply to permissions for users and/or groups.  # noqa: E501
@@ -56,7 +58,7 @@ class IAMRolesApi:
         >>> thread = api.list_roles(pagination, async_req=True)
         >>> result = thread.get()
 
-        :param pagination: Pagination for roles.  This parameter exists in v1. (required)
+        :param pagination: Pagination for roles.  This parameter exists in v1.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -76,7 +78,7 @@ class IAMRolesApi:
         return self.list_roles_with_http_info(pagination, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_roles_with_http_info(self, pagination : Annotated[PaginationInput, Field(..., description="Pagination for roles.  This parameter exists in v1.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def list_roles_with_http_info(self, pagination : Annotated[Optional[PaginationInput], Field(description="Pagination for roles.  This parameter exists in v1.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Roles  # noqa: E501
 
         Returns a list of Roles available to apply to permissions for users and/or groups.  # noqa: E501
@@ -86,7 +88,7 @@ class IAMRolesApi:
         >>> thread = api.list_roles_with_http_info(pagination, async_req=True)
         >>> result = thread.get()
 
-        :param pagination: Pagination for roles.  This parameter exists in v1. (required)
+        :param pagination: Pagination for roles.  This parameter exists in v1.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional

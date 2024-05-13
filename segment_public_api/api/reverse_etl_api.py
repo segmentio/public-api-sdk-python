@@ -22,6 +22,8 @@ from pydantic import validate_arguments, ValidationError
 from typing_extensions import Annotated
 from pydantic import Field, constr
 
+from typing import Optional
+
 from segment_public_api.models.create_reverse_etl_manual_sync200_response import CreateReverseETLManualSync200Response
 from segment_public_api.models.create_reverse_etl_manual_sync_input import CreateReverseETLManualSyncInput
 from segment_public_api.models.create_reverse_etl_model201_response import CreateReverseEtlModel201Response
@@ -792,7 +794,7 @@ class ReverseETLApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_reverse_etl_models(self, pagination : Annotated[PaginationInput, Field(..., description="Defines the pagination parameters.  This parameter exists in alpha.")], **kwargs) -> ListReverseEtlModels200Response:  # noqa: E501
+    def list_reverse_etl_models(self, pagination : Annotated[Optional[PaginationInput], Field(description="Defines the pagination parameters.  This parameter exists in alpha.")] = None, **kwargs) -> ListReverseEtlModels200Response:  # noqa: E501
         """List Reverse Etl Models  # noqa: E501
 
         Returns a list of Reverse ETL Models.  # noqa: E501
@@ -802,7 +804,7 @@ class ReverseETLApi:
         >>> thread = api.list_reverse_etl_models(pagination, async_req=True)
         >>> result = thread.get()
 
-        :param pagination: Defines the pagination parameters.  This parameter exists in alpha. (required)
+        :param pagination: Defines the pagination parameters.  This parameter exists in alpha.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -822,7 +824,7 @@ class ReverseETLApi:
         return self.list_reverse_etl_models_with_http_info(pagination, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_reverse_etl_models_with_http_info(self, pagination : Annotated[PaginationInput, Field(..., description="Defines the pagination parameters.  This parameter exists in alpha.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def list_reverse_etl_models_with_http_info(self, pagination : Annotated[Optional[PaginationInput], Field(description="Defines the pagination parameters.  This parameter exists in alpha.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Reverse Etl Models  # noqa: E501
 
         Returns a list of Reverse ETL Models.  # noqa: E501
@@ -832,7 +834,7 @@ class ReverseETLApi:
         >>> thread = api.list_reverse_etl_models_with_http_info(pagination, async_req=True)
         >>> result = thread.get()
 
-        :param pagination: Defines the pagination parameters.  This parameter exists in alpha. (required)
+        :param pagination: Defines the pagination parameters.  This parameter exists in alpha.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional

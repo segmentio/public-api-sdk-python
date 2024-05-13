@@ -659,7 +659,7 @@ class TrackingPlansApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_rules_from_tracking_plan(self, tracking_plan_id : constr(strict=True), pagination : Annotated[PaginationInput, Field(..., description="Pagination options.  This parameter exists in v1.")], **kwargs) -> ListRulesFromTrackingPlan200Response:  # noqa: E501
+    def list_rules_from_tracking_plan(self, tracking_plan_id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Pagination options.  This parameter exists in v1.")] = None, **kwargs) -> ListRulesFromTrackingPlan200Response:  # noqa: E501
         """List Rules from Tracking Plan  # noqa: E501
 
         Lists Tracking Plan rules.    • In order to successfully call this endpoint, the specified Workspace needs to have the Protocols feature enabled. Please reach out to your customer success manager for more information.   The rate limit for this endpoint is 200 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
@@ -671,7 +671,7 @@ class TrackingPlansApi:
 
         :param tracking_plan_id: (required)
         :type tracking_plan_id: str
-        :param pagination: Pagination options.  This parameter exists in v1. (required)
+        :param pagination: Pagination options.  This parameter exists in v1.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -691,7 +691,7 @@ class TrackingPlansApi:
         return self.list_rules_from_tracking_plan_with_http_info(tracking_plan_id, pagination, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_rules_from_tracking_plan_with_http_info(self, tracking_plan_id : constr(strict=True), pagination : Annotated[PaginationInput, Field(..., description="Pagination options.  This parameter exists in v1.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def list_rules_from_tracking_plan_with_http_info(self, tracking_plan_id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Pagination options.  This parameter exists in v1.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Rules from Tracking Plan  # noqa: E501
 
         Lists Tracking Plan rules.    • In order to successfully call this endpoint, the specified Workspace needs to have the Protocols feature enabled. Please reach out to your customer success manager for more information.   The rate limit for this endpoint is 200 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
@@ -703,7 +703,7 @@ class TrackingPlansApi:
 
         :param tracking_plan_id: (required)
         :type tracking_plan_id: str
-        :param pagination: Pagination options.  This parameter exists in v1. (required)
+        :param pagination: Pagination options.  This parameter exists in v1.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -810,7 +810,7 @@ class TrackingPlansApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_sources_from_tracking_plan(self, tracking_plan_id : constr(strict=True), pagination : Annotated[PaginationInput, Field(..., description="Pagination options.  This parameter exists in v1.")], **kwargs) -> ListSourcesFromTrackingPlan200Response:  # noqa: E501
+    def list_sources_from_tracking_plan(self, tracking_plan_id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Pagination options.  This parameter exists in v1.")] = None, **kwargs) -> ListSourcesFromTrackingPlan200Response:  # noqa: E501
         """List Sources from Tracking Plan  # noqa: E501
 
         Lists Sources connected to a Tracking Plan.    • In order to successfully call this endpoint, the specified Workspace needs to have the Protocols feature enabled. Please reach out to your customer success manager for more information.   This endpoint requires the user to have at least the following permission(s):   * Source Read-only  * Tracking Plan Read-only  # noqa: E501
@@ -822,7 +822,7 @@ class TrackingPlansApi:
 
         :param tracking_plan_id: (required)
         :type tracking_plan_id: str
-        :param pagination: Pagination options.  This parameter exists in v1. (required)
+        :param pagination: Pagination options.  This parameter exists in v1.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -842,7 +842,7 @@ class TrackingPlansApi:
         return self.list_sources_from_tracking_plan_with_http_info(tracking_plan_id, pagination, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_sources_from_tracking_plan_with_http_info(self, tracking_plan_id : constr(strict=True), pagination : Annotated[PaginationInput, Field(..., description="Pagination options.  This parameter exists in v1.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def list_sources_from_tracking_plan_with_http_info(self, tracking_plan_id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Pagination options.  This parameter exists in v1.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Sources from Tracking Plan  # noqa: E501
 
         Lists Sources connected to a Tracking Plan.    • In order to successfully call this endpoint, the specified Workspace needs to have the Protocols feature enabled. Please reach out to your customer success manager for more information.   This endpoint requires the user to have at least the following permission(s):   * Source Read-only  * Tracking Plan Read-only  # noqa: E501
@@ -854,7 +854,7 @@ class TrackingPlansApi:
 
         :param tracking_plan_id: (required)
         :type tracking_plan_id: str
-        :param pagination: Pagination options.  This parameter exists in v1. (required)
+        :param pagination: Pagination options.  This parameter exists in v1.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -961,20 +961,20 @@ class TrackingPlansApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_tracking_plans(self, pagination : Annotated[PaginationInput, Field(..., description="Pagination options.  This parameter exists in v1.")], type : Annotated[Optional[StrictStr], Field(description="Requests Tracking Plans of a certain type. If omitted, lists all types.  This parameter exists in v1.")] = None, **kwargs) -> ListTrackingPlans200Response:  # noqa: E501
+    def list_tracking_plans(self, type : Annotated[Optional[StrictStr], Field(description="Requests Tracking Plans of a certain type. If omitted, lists all types.  This parameter exists in v1.")] = None, pagination : Annotated[Optional[PaginationInput], Field(description="Pagination options.  This parameter exists in v1.")] = None, **kwargs) -> ListTrackingPlans200Response:  # noqa: E501
         """List Tracking Plans  # noqa: E501
 
         Returns a list of Tracking Plans.    • In order to successfully call this endpoint, the specified Workspace needs to have the Protocols feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.list_tracking_plans(pagination, type, async_req=True)
+        >>> thread = api.list_tracking_plans(type, pagination, async_req=True)
         >>> result = thread.get()
 
-        :param pagination: Pagination options.  This parameter exists in v1. (required)
-        :type pagination: PaginationInput
         :param type: Requests Tracking Plans of a certain type. If omitted, lists all types.  This parameter exists in v1.
         :type type: str
+        :param pagination: Pagination options.  This parameter exists in v1.
+        :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _request_timeout: timeout setting for this request.
@@ -990,23 +990,23 @@ class TrackingPlansApi:
         if '_preload_content' in kwargs:
             message = "Error! Please call the list_tracking_plans_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.list_tracking_plans_with_http_info(pagination, type, **kwargs)  # noqa: E501
+        return self.list_tracking_plans_with_http_info(type, pagination, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_tracking_plans_with_http_info(self, pagination : Annotated[PaginationInput, Field(..., description="Pagination options.  This parameter exists in v1.")], type : Annotated[Optional[StrictStr], Field(description="Requests Tracking Plans of a certain type. If omitted, lists all types.  This parameter exists in v1.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def list_tracking_plans_with_http_info(self, type : Annotated[Optional[StrictStr], Field(description="Requests Tracking Plans of a certain type. If omitted, lists all types.  This parameter exists in v1.")] = None, pagination : Annotated[Optional[PaginationInput], Field(description="Pagination options.  This parameter exists in v1.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Tracking Plans  # noqa: E501
 
         Returns a list of Tracking Plans.    • In order to successfully call this endpoint, the specified Workspace needs to have the Protocols feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.list_tracking_plans_with_http_info(pagination, type, async_req=True)
+        >>> thread = api.list_tracking_plans_with_http_info(type, pagination, async_req=True)
         >>> result = thread.get()
 
-        :param pagination: Pagination options.  This parameter exists in v1. (required)
-        :type pagination: PaginationInput
         :param type: Requests Tracking Plans of a certain type. If omitted, lists all types.  This parameter exists in v1.
         :type type: str
+        :param pagination: Pagination options.  This parameter exists in v1.
+        :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _preload_content: if False, the ApiResponse.data will
@@ -1035,8 +1035,8 @@ class TrackingPlansApi:
         _params = locals()
 
         _all_params = [
-            'pagination',
-            'type'
+            'type',
+            'pagination'
         ]
         _all_params.extend(
             [

@@ -22,6 +22,8 @@ from pydantic import validate_arguments, ValidationError
 from typing_extensions import Annotated
 from pydantic import Field, StrictStr, conlist, constr
 
+from typing import Optional
+
 from segment_public_api.models.add_permissions_to_user_group200_response import AddPermissionsToUserGroup200Response
 from segment_public_api.models.add_permissions_to_user_group_v1_input import AddPermissionsToUserGroupV1Input
 from segment_public_api.models.add_users_to_user_group200_response import AddUsersToUserGroup200Response
@@ -815,7 +817,7 @@ class IAMGroupsApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_invites_from_user_group(self, user_group_id : constr(strict=True), pagination : Annotated[PaginationInput, Field(..., description="Pagination for invites to the group.  This parameter exists in v1.")], **kwargs) -> ListInvitesFromUserGroup200Response:  # noqa: E501
+    def list_invites_from_user_group(self, user_group_id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Pagination for invites to the group.  This parameter exists in v1.")] = None, **kwargs) -> ListInvitesFromUserGroup200Response:  # noqa: E501
         """List Invites from User Group  # noqa: E501
 
         Returns the emails of invitees to a user group.  # noqa: E501
@@ -827,7 +829,7 @@ class IAMGroupsApi:
 
         :param user_group_id: (required)
         :type user_group_id: str
-        :param pagination: Pagination for invites to the group.  This parameter exists in v1. (required)
+        :param pagination: Pagination for invites to the group.  This parameter exists in v1.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -847,7 +849,7 @@ class IAMGroupsApi:
         return self.list_invites_from_user_group_with_http_info(user_group_id, pagination, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_invites_from_user_group_with_http_info(self, user_group_id : constr(strict=True), pagination : Annotated[PaginationInput, Field(..., description="Pagination for invites to the group.  This parameter exists in v1.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def list_invites_from_user_group_with_http_info(self, user_group_id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Pagination for invites to the group.  This parameter exists in v1.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Invites from User Group  # noqa: E501
 
         Returns the emails of invitees to a user group.  # noqa: E501
@@ -859,7 +861,7 @@ class IAMGroupsApi:
 
         :param user_group_id: (required)
         :type user_group_id: str
-        :param pagination: Pagination for invites to the group.  This parameter exists in v1. (required)
+        :param pagination: Pagination for invites to the group.  This parameter exists in v1.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -966,7 +968,7 @@ class IAMGroupsApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_user_groups(self, pagination : Annotated[PaginationInput, Field(..., description="Pagination for user groups.  This parameter exists in v1.")], **kwargs) -> ListUserGroups200Response:  # noqa: E501
+    def list_user_groups(self, pagination : Annotated[Optional[PaginationInput], Field(description="Pagination for user groups.  This parameter exists in v1.")] = None, **kwargs) -> ListUserGroups200Response:  # noqa: E501
         """List User Groups  # noqa: E501
 
         Returns all user groups.  # noqa: E501
@@ -976,7 +978,7 @@ class IAMGroupsApi:
         >>> thread = api.list_user_groups(pagination, async_req=True)
         >>> result = thread.get()
 
-        :param pagination: Pagination for user groups.  This parameter exists in v1. (required)
+        :param pagination: Pagination for user groups.  This parameter exists in v1.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -996,7 +998,7 @@ class IAMGroupsApi:
         return self.list_user_groups_with_http_info(pagination, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_user_groups_with_http_info(self, pagination : Annotated[PaginationInput, Field(..., description="Pagination for user groups.  This parameter exists in v1.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def list_user_groups_with_http_info(self, pagination : Annotated[Optional[PaginationInput], Field(description="Pagination for user groups.  This parameter exists in v1.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List User Groups  # noqa: E501
 
         Returns all user groups.  # noqa: E501
@@ -1006,7 +1008,7 @@ class IAMGroupsApi:
         >>> thread = api.list_user_groups_with_http_info(pagination, async_req=True)
         >>> result = thread.get()
 
-        :param pagination: Pagination for user groups.  This parameter exists in v1. (required)
+        :param pagination: Pagination for user groups.  This parameter exists in v1.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -1109,7 +1111,7 @@ class IAMGroupsApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_users_from_user_group(self, user_group_id : constr(strict=True), pagination : Annotated[PaginationInput, Field(..., description="Pagination for members of a group.  This parameter exists in v1.")], **kwargs) -> ListUsersFromUserGroup200Response:  # noqa: E501
+    def list_users_from_user_group(self, user_group_id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Pagination for members of a group.  This parameter exists in v1.")] = None, **kwargs) -> ListUsersFromUserGroup200Response:  # noqa: E501
         """List Users from User Group  # noqa: E501
 
         Returns users belonging to a user group.  # noqa: E501
@@ -1121,7 +1123,7 @@ class IAMGroupsApi:
 
         :param user_group_id: (required)
         :type user_group_id: str
-        :param pagination: Pagination for members of a group.  This parameter exists in v1. (required)
+        :param pagination: Pagination for members of a group.  This parameter exists in v1.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -1141,7 +1143,7 @@ class IAMGroupsApi:
         return self.list_users_from_user_group_with_http_info(user_group_id, pagination, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_users_from_user_group_with_http_info(self, user_group_id : constr(strict=True), pagination : Annotated[PaginationInput, Field(..., description="Pagination for members of a group.  This parameter exists in v1.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def list_users_from_user_group_with_http_info(self, user_group_id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Pagination for members of a group.  This parameter exists in v1.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Users from User Group  # noqa: E501
 
         Returns users belonging to a user group.  # noqa: E501
@@ -1153,7 +1155,7 @@ class IAMGroupsApi:
 
         :param user_group_id: (required)
         :type user_group_id: str
-        :param pagination: Pagination for members of a group.  This parameter exists in v1. (required)
+        :param pagination: Pagination for members of a group.  This parameter exists in v1.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
