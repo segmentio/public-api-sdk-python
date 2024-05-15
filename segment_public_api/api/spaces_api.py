@@ -56,7 +56,7 @@ class SpacesApi:
     def batch_query_messaging_subscriptions_for_space(self, space_id : constr(strict=True), batch_query_messaging_subscriptions_for_space_alpha_input : BatchQueryMessagingSubscriptionsForSpaceAlphaInput, **kwargs) -> BatchQueryMessagingSubscriptionsForSpace200Response:  # noqa: E501
         """Batch Query Messaging Subscriptions for Space  # noqa: E501
 
-        Get Messaging Subscriptions for space.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Spaces feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
+        Get Messaging Subscriptions for space.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Spaces feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -88,7 +88,7 @@ class SpacesApi:
     def batch_query_messaging_subscriptions_for_space_with_http_info(self, space_id : constr(strict=True), batch_query_messaging_subscriptions_for_space_alpha_input : BatchQueryMessagingSubscriptionsForSpaceAlphaInput, **kwargs) -> ApiResponse:  # noqa: E501
         """Batch Query Messaging Subscriptions for Space  # noqa: E501
 
-        Get Messaging Subscriptions for space.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Spaces feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
+        Get Messaging Subscriptions for space.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Spaces feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -214,7 +214,7 @@ class SpacesApi:
     def get_space(self, space_id : constr(strict=True), **kwargs) -> GetSpace200Response:  # noqa: E501
         """Get Space  # noqa: E501
 
-        Returns the Space by id.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Spaces feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
+        Returns the Space by id.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Spaces feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -244,7 +244,7 @@ class SpacesApi:
     def get_space_with_http_info(self, space_id : constr(strict=True), **kwargs) -> ApiResponse:  # noqa: E501
         """Get Space  # noqa: E501
 
-        Returns the Space by id.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Spaces feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
+        Returns the Space by id.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Spaces feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -357,7 +357,7 @@ class SpacesApi:
     def list_spaces(self, pagination : Annotated[Optional[PaginationInput], Field(description="Pagination params  This parameter exists in alpha.")] = None, **kwargs) -> ListSpaces200Response:  # noqa: E501
         """List Spaces  # noqa: E501
 
-        List Spaces.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Spaces feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
+        List Spaces.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Spaces feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -387,7 +387,7 @@ class SpacesApi:
     def list_spaces_with_http_info(self, pagination : Annotated[Optional[PaginationInput], Field(description="Pagination params  This parameter exists in alpha.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Spaces  # noqa: E501
 
-        List Spaces.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Spaces feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
+        List Spaces.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Spaces feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -500,7 +500,7 @@ class SpacesApi:
     def replace_messaging_subscriptions_in_spaces(self, space_id : constr(strict=True), replace_messaging_subscriptions_in_spaces_alpha_input : ReplaceMessagingSubscriptionsInSpacesAlphaInput, **kwargs) -> ReplaceMessagingSubscriptionsInSpaces200Response:  # noqa: E501
         """Replace Messaging Subscriptions in Spaces  # noqa: E501
 
-        Replace Messaging Subscriptions in Spaces.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Spaces feature enabled. Please reach out to your customer success manager for more information.   The rate limit for this endpoint is 60 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
+        Replace Messaging Subscriptions in Spaces.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Spaces feature enabled. Please reach out to your customer success manager for more information.   The rate limit for this endpoint is 60 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -532,7 +532,7 @@ class SpacesApi:
     def replace_messaging_subscriptions_in_spaces_with_http_info(self, space_id : constr(strict=True), replace_messaging_subscriptions_in_spaces_alpha_input : ReplaceMessagingSubscriptionsInSpacesAlphaInput, **kwargs) -> ApiResponse:  # noqa: E501
         """Replace Messaging Subscriptions in Spaces  # noqa: E501
 
-        Replace Messaging Subscriptions in Spaces.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Spaces feature enabled. Please reach out to your customer success manager for more information.   The rate limit for this endpoint is 60 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
+        Replace Messaging Subscriptions in Spaces.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Spaces feature enabled. Please reach out to your customer success manager for more information.   The rate limit for this endpoint is 60 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 

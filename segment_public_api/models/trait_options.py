@@ -26,8 +26,8 @@ class TraitOptions(BaseModel):
     """
     TraitOptions
     """
-    include_historical_data: Optional[StrictBool] = Field(None, alias="includeHistoricalData")
-    include_anonymous_users: Optional[StrictBool] = Field(None, alias="includeAnonymousUsers")
+    include_historical_data: Optional[StrictBool] = Field(None, alias="includeHistoricalData", description="Determines whether data prior to the computed trait being created is included when determining the computed trait value.")
+    include_anonymous_users: Optional[StrictBool] = Field(None, alias="includeAnonymousUsers", description="Determines whether anonymous users should be included when determining the computed trait value.")
     __properties = ["includeHistoricalData", "includeAnonymousUsers"]
 
     class Config:

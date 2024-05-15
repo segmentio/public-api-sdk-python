@@ -51,7 +51,7 @@ class EdgeFunctionsApi:
     def create_edge_functions(self, source_id : constr(strict=True), create_edge_functions_alpha_input : CreateEdgeFunctionsAlphaInput, **kwargs) -> CreateEdgeFunctions200Response:  # noqa: E501
         """Create Edge Functions  # noqa: E501
 
-        Create EdgeFunctions for your Source given a valid upload URL for an Edge Functions bundle.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Edge Functions feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
+        Create EdgeFunctions for your Source given a valid upload URL for an Edge Functions bundle.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Edge Functions feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -83,7 +83,7 @@ class EdgeFunctionsApi:
     def create_edge_functions_with_http_info(self, source_id : constr(strict=True), create_edge_functions_alpha_input : CreateEdgeFunctionsAlphaInput, **kwargs) -> ApiResponse:  # noqa: E501
         """Create Edge Functions  # noqa: E501
 
-        Create EdgeFunctions for your Source given a valid upload URL for an Edge Functions bundle.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Edge Functions feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
+        Create EdgeFunctions for your Source given a valid upload URL for an Edge Functions bundle.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Edge Functions feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -209,7 +209,7 @@ class EdgeFunctionsApi:
     def disable_edge_functions(self, source_id : constr(strict=True), **kwargs) -> DisableEdgeFunctions200Response:  # noqa: E501
         """Disable Edge Functions  # noqa: E501
 
-        Disable Edge Functions for your Source.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Edge Functions feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
+        Disable Edge Functions for your Source.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Edge Functions feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -239,7 +239,7 @@ class EdgeFunctionsApi:
     def disable_edge_functions_with_http_info(self, source_id : constr(strict=True), **kwargs) -> ApiResponse:  # noqa: E501
         """Disable Edge Functions  # noqa: E501
 
-        Disable Edge Functions for your Source.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Edge Functions feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
+        Disable Edge Functions for your Source.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Edge Functions feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -352,7 +352,7 @@ class EdgeFunctionsApi:
     def generate_upload_url_for_edge_functions(self, source_id : constr(strict=True), **kwargs) -> GenerateUploadURLForEdgeFunctions200Response:  # noqa: E501
         """Generate Upload URL for Edge Functions  # noqa: E501
 
-        Generate a temporary upload URL that can be used to upload an Edge Functions bundle.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Edge Functions feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
+        Generate a temporary upload URL that can be used to upload an Edge Functions bundle.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Edge Functions feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -382,7 +382,7 @@ class EdgeFunctionsApi:
     def generate_upload_url_for_edge_functions_with_http_info(self, source_id : constr(strict=True), **kwargs) -> ApiResponse:  # noqa: E501
         """Generate Upload URL for Edge Functions  # noqa: E501
 
-        Generate a temporary upload URL that can be used to upload an Edge Functions bundle.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Edge Functions feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
+        Generate a temporary upload URL that can be used to upload an Edge Functions bundle.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Edge Functions feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -495,7 +495,7 @@ class EdgeFunctionsApi:
     def get_latest_from_edge_functions(self, source_id : constr(strict=True), **kwargs) -> GetLatestFromEdgeFunctions200Response:  # noqa: E501
         """Get Latest from Edge Functions  # noqa: E501
 
-        Get the latest Edge Functions for your Source.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Edge Functions feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
+        Get the latest Edge Functions for your Source.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Edge Functions feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -525,7 +525,7 @@ class EdgeFunctionsApi:
     def get_latest_from_edge_functions_with_http_info(self, source_id : constr(strict=True), **kwargs) -> ApiResponse:  # noqa: E501
         """Get Latest from Edge Functions  # noqa: E501
 
-        Get the latest Edge Functions for your Source.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Edge Functions feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
+        Get the latest Edge Functions for your Source.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Edge Functions feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 

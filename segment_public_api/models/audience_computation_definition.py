@@ -26,8 +26,8 @@ class AudienceComputationDefinition(BaseModel):
     """
     AudienceComputationDefinition
     """
-    type: StrictStr = Field(...)
-    query: StrictStr = Field(...)
+    type: StrictStr = Field(..., description="The underlying data type being segmented for this audience.  Possible values: users, accounts.")
+    query: StrictStr = Field(..., description="The query language string defining the audience segmentation criteria.  For guidance on using the query language, see the [Segment documentation site](https://segment.com/docs/api/public-api/query-language).")
     __properties = ["type", "query"]
 
     class Config:

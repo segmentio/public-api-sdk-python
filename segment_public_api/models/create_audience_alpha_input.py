@@ -28,8 +28,8 @@ class CreateAudienceAlphaInput(BaseModel):
     """
     Input to create an audience.  # noqa: E501
     """
-    name: StrictStr = Field(..., description="The name of the computation .")
-    description: StrictStr = Field(..., description="The description of the computation.")
+    name: StrictStr = Field(..., description="Name of the audience.")
+    description: StrictStr = Field(..., description="Description of the audience.")
     definition: AudienceComputationDefinition = Field(...)
     options: Optional[AudienceOptions] = None
     __properties = ["name", "description", "definition", "options"]

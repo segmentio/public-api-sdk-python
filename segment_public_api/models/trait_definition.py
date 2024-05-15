@@ -26,8 +26,8 @@ class TraitDefinition(BaseModel):
     """
     TraitDefinition
     """
-    type: StrictStr = Field(...)
-    query: StrictStr = Field(...)
+    type: StrictStr = Field(..., description="The underlying data type being aggregated for this computed trait.  Possible values: users, accounts.")
+    query: StrictStr = Field(..., description="The query language string defining the computed trait aggregation criteria. For guidance on using the query language, see the [Segment documentation site](https://segment.com/docs/api/public-api/query-language).")
     __properties = ["type", "query"]
 
     class Config:
