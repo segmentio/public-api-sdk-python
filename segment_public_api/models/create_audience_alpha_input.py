@@ -20,7 +20,7 @@ import json
 
 
 from typing import Optional
-from pydantic import BaseModel, Field, StrictStr
+from pydantic import BaseModel, Field, StrictBool, StrictStr
 from segment_public_api.models.audience_computation_definition import AudienceComputationDefinition
 from segment_public_api.models.audience_options import AudienceOptions
 
@@ -29,10 +29,11 @@ class CreateAudienceAlphaInput(BaseModel):
     Input to create an audience.  # noqa: E501
     """
     name: StrictStr = Field(..., description="Name of the audience.")
+    enabled: Optional[StrictBool] = Field(None, description="Determines whether a computation is enabled")
     description: StrictStr = Field(..., description="Description of the audience.")
     definition: AudienceComputationDefinition = Field(...)
     options: Optional[AudienceOptions] = None
-    __properties = ["name", "description", "definition", "options"]
+    __properties = ["name", "enabled", "description", "definition", "options"]
 
     class Config:
         """Pydantic configuration"""
@@ -77,6 +78,7 @@ class CreateAudienceAlphaInput(BaseModel):
 
         _obj = CreateAudienceAlphaInput.parse_obj({
             "name": obj.get("name"),
+            "enabled": obj.get("enabled"),
             "description": obj.get("description"),
             "definition": AudienceComputationDefinition.from_dict(obj.get("definition")) if obj.get("definition") is not None else None,
             "options": AudienceOptions.from_dict(obj.get("options")) if obj.get("options") is not None else None
