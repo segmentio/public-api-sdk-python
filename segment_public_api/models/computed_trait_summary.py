@@ -21,7 +21,7 @@ import json
 
 from typing import Optional
 from pydantic import BaseModel, Field, StrictBool, StrictStr
-from segment_public_api.models.definition import Definition
+from segment_public_api.models.definition1 import Definition1
 from segment_public_api.models.trait_options import TraitOptions
 
 class ComputedTraitSummary(BaseModel):
@@ -34,7 +34,7 @@ class ComputedTraitSummary(BaseModel):
     description: StrictStr = Field(..., description="Description of the computed trait.")
     key: StrictStr = Field(..., description="Key for the computed trait.")
     enabled: StrictBool = Field(..., description="Enabled/disabled status for the computed trait.")
-    definition: Optional[Definition] = Field(...)
+    definition: Optional[Definition1] = Field(...)
     status: Optional[StrictStr] = Field(None, description="Status for the computed trait.  Possible values: Backfilling, Computing, Failed, Live, Awaiting Destinations, Disabled.")
     created_by: StrictStr = Field(..., alias="createdBy", description="User id who created the computed trait.")
     updated_by: StrictStr = Field(..., alias="updatedBy", description="User id who last updated the computed trait.")
@@ -96,7 +96,7 @@ class ComputedTraitSummary(BaseModel):
             "description": obj.get("description"),
             "key": obj.get("key"),
             "enabled": obj.get("enabled"),
-            "definition": Definition.from_dict(obj.get("definition")) if obj.get("definition") is not None else None,
+            "definition": Definition1.from_dict(obj.get("definition")) if obj.get("definition") is not None else None,
             "status": obj.get("status"),
             "created_by": obj.get("createdBy"),
             "updated_by": obj.get("updatedBy"),

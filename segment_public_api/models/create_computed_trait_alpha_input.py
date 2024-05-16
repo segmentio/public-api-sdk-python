@@ -29,7 +29,7 @@ class CreateComputedTraitAlphaInput(BaseModel):
     Input to create a trait.  # noqa: E501
     """
     name: StrictStr = Field(..., description="The name of the computation.")
-    enabled: Optional[StrictBool] = Field(None, description="Determines whether a computation is enabled")
+    enabled: Optional[StrictBool] = Field(None, description="Determines whether a computation is enabled.")
     description: StrictStr = Field(..., description="The description of the computation.")
     definition: TraitDefinition = Field(...)
     options: Optional[TraitOptions] = None
