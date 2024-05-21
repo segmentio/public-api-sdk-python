@@ -26,7 +26,7 @@ class TraitOptions(BaseModel):
     """
     TraitOptions
     """
-    include_historical_data: Optional[StrictBool] = Field(None, alias="includeHistoricalData", description="Determines whether data prior to the computed trait being created is included when determining the computed trait value.")
+    include_historical_data: Optional[StrictBool] = Field(None, alias="includeHistoricalData", description="Determines whether data prior to the computed trait being created is included when determining the computed trait value. Note that including historical data may be needed in order to properly handle the definition specified. In these cases, Segment will automatically handle including historical data and the response will return the includeHistoricalData parameter as true.")
     include_anonymous_users: Optional[StrictBool] = Field(None, alias="includeAnonymousUsers", description="Determines whether anonymous users should be included when determining the computed trait value.")
     __properties = ["includeHistoricalData", "includeAnonymousUsers"]
 

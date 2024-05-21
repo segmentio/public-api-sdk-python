@@ -30,7 +30,7 @@ class CreateAudienceAlphaInput(BaseModel):
     """
     name: StrictStr = Field(..., description="Name of the audience.")
     enabled: Optional[StrictBool] = Field(None, description="Determines whether a computation is enabled.")
-    description: StrictStr = Field(..., description="Description of the audience.")
+    description: Optional[StrictStr] = Field(None, description="Description of the audience.")
     definition: AudienceComputationDefinition = Field(...)
     options: Optional[AudienceOptions] = None
     __properties = ["name", "enabled", "description", "definition", "options"]

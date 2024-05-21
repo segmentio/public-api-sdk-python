@@ -30,7 +30,7 @@ class CreateComputedTraitAlphaInput(BaseModel):
     """
     name: StrictStr = Field(..., description="The name of the computation.")
     enabled: Optional[StrictBool] = Field(None, description="Determines whether a computation is enabled.")
-    description: StrictStr = Field(..., description="The description of the computation.")
+    description: Optional[StrictStr] = Field(None, description="The description of the computation.")
     definition: TraitDefinition = Field(...)
     options: Optional[TraitOptions] = None
     __properties = ["name", "enabled", "description", "definition", "options"]
