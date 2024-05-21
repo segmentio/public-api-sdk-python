@@ -26,7 +26,7 @@ class AudienceOptions(BaseModel):
     """
     AudienceOptions
     """
-    include_historical_data: Optional[StrictBool] = Field(None, alias="includeHistoricalData", description="Determines whether data prior to the audience being created is included when determining audience membership.")
+    include_historical_data: Optional[StrictBool] = Field(None, alias="includeHistoricalData", description="Determines whether data prior to the audience being created is included when determining audience membership. Note that including historical data may be needed in order to properly handle the definition specified. In these cases, Segment will automatically handle including historical data and the response will return the includeHistoricalData parameter as true.")
     include_anonymous_users: Optional[StrictBool] = Field(None, alias="includeAnonymousUsers", description="Determines whether anonymous users should be included when determining audience membership.")
     __properties = ["includeHistoricalData", "includeAnonymousUsers"]
 

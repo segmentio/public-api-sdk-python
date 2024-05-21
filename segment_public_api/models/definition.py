@@ -26,8 +26,8 @@ class Definition(BaseModel):
     """
     Query language definition and type.  # noqa: E501
     """
-    query: StrictStr = Field(..., description="The query language string defining the audience segmentation criteria.")
-    type: StrictStr = Field(..., description="The underlying data type being segmented for this audience.  Possible values: users, accounts.")
+    query: StrictStr = Field(..., description="The query language string defining the computed trait aggregation criteria. For guidance on using the query language, see the [Segment documentation site](https://segment.com/docs/api/public-api/query-language).")
+    type: StrictStr = Field(..., description="The underlying data type being aggregated for this computed trait.  Possible values: users, accounts.")
     __properties = ["query", "type"]
 
     class Config:
