@@ -44,7 +44,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.ComputedTraitsApi(api_client)
     space_id = 'spaceId' # str | 
-    create_computed_trait_alpha_input = {"name":"name","description":"description","definition":{"query":"event('Shoes Bought').count() >= 1","type":"users"}} # CreateComputedTraitAlphaInput | 
+    create_computed_trait_alpha_input = {"name":"name","description":"description","enabled":false,"definition":{"query":"event('Shoes Bought').count() >= 1","type":"USERS"},"options":{"includeAnonymousUsers":true,"includeHistoricalData":true}} # CreateComputedTraitAlphaInput | 
 
     try:
         # Create Computed Trait
