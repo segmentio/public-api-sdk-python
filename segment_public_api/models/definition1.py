@@ -20,7 +20,7 @@ import json
 
 
 
-from pydantic import BaseModel, Field, StrictStr
+from pydantic import BaseModel, Field, StrictStr, validator
 
 class Definition1(BaseModel):
     """
@@ -29,6 +29,13 @@ class Definition1(BaseModel):
     query: StrictStr = Field(..., description="The query language string defining the audience segmentation criteria.")
     type: StrictStr = Field(..., description="The underlying data type being segmented for this audience.  Possible values: users, accounts.")
     __properties = ["query", "type"]
+
+    @validator('type')
+    def type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in ('ACCOUNTS', 'USERS'):
+            raise ValueError("must be one of enum values ('ACCOUNTS', 'USERS')")
+        return value
 
     class Config:
         """Pydantic configuration"""
