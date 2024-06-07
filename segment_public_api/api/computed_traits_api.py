@@ -22,6 +22,8 @@ from pydantic import validate_arguments, ValidationError
 from typing_extensions import Annotated
 from pydantic import Field, constr
 
+from typing import Optional
+
 from segment_public_api.models.create_computed_trait200_response import CreateComputedTrait200Response
 from segment_public_api.models.create_computed_trait_alpha_input import CreateComputedTraitAlphaInput
 from segment_public_api.models.get_computed_trait200_response import GetComputedTrait200Response
@@ -361,7 +363,7 @@ class ComputedTraitsApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_computed_traits(self, space_id : constr(strict=True), pagination : Annotated[PaginationInput, Field(..., description="Information about the pagination of this response.  [See pagination](https://docs.segmentapis.com/tag/Pagination/#section/Pagination-parameters) for more info.  This parameter exists in alpha.")], **kwargs) -> ListComputedTraits200Response:  # noqa: E501
+    def list_computed_traits(self, space_id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Information about the pagination of this response.  [See pagination](https://docs.segmentapis.com/tag/Pagination/#section/Pagination-parameters) for more info.  This parameter exists in alpha.")] = None, **kwargs) -> ListComputedTraits200Response:  # noqa: E501
         """List Computed Traits  # noqa: E501
 
         Returns Computed Traits by spaceId.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Computed Trait feature enabled. Please reach out to your customer success manager for more information.   The rate limit for this endpoint is 25 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
@@ -373,7 +375,7 @@ class ComputedTraitsApi:
 
         :param space_id: (required)
         :type space_id: str
-        :param pagination: Information about the pagination of this response.  [See pagination](https://docs.segmentapis.com/tag/Pagination/#section/Pagination-parameters) for more info.  This parameter exists in alpha. (required)
+        :param pagination: Information about the pagination of this response.  [See pagination](https://docs.segmentapis.com/tag/Pagination/#section/Pagination-parameters) for more info.  This parameter exists in alpha.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -393,7 +395,7 @@ class ComputedTraitsApi:
         return self.list_computed_traits_with_http_info(space_id, pagination, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_computed_traits_with_http_info(self, space_id : constr(strict=True), pagination : Annotated[PaginationInput, Field(..., description="Information about the pagination of this response.  [See pagination](https://docs.segmentapis.com/tag/Pagination/#section/Pagination-parameters) for more info.  This parameter exists in alpha.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def list_computed_traits_with_http_info(self, space_id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Information about the pagination of this response.  [See pagination](https://docs.segmentapis.com/tag/Pagination/#section/Pagination-parameters) for more info.  This parameter exists in alpha.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Computed Traits  # noqa: E501
 
         Returns Computed Traits by spaceId.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Computed Trait feature enabled. Please reach out to your customer success manager for more information.   The rate limit for this endpoint is 25 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
@@ -405,7 +407,7 @@ class ComputedTraitsApi:
 
         :param space_id: (required)
         :type space_id: str
-        :param pagination: Information about the pagination of this response.  [See pagination](https://docs.segmentapis.com/tag/Pagination/#section/Pagination-parameters) for more info.  This parameter exists in alpha. (required)
+        :param pagination: Information about the pagination of this response.  [See pagination](https://docs.segmentapis.com/tag/Pagination/#section/Pagination-parameters) for more info.  This parameter exists in alpha.
         :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
