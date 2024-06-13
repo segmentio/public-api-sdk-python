@@ -19,23 +19,19 @@ import re  # noqa: F401
 import json
 
 
+from typing import List, Optional
+from pydantic import BaseModel, Field, StrictStr, conlist
 
-from pydantic import BaseModel, Field, StrictStr, validator
-
-class Definition(BaseModel):
+class DeliveryOverviewAudienceFilterBy(BaseModel):
     """
-    Query language definition and type.  # noqa: E501
+    The `DeliveryOverviewAudienceFilterBy` object is a map of the filterable fields and their values.  # noqa: E501
     """
-    query: StrictStr = Field(..., description="The query language string defining the computed trait aggregation criteria. For guidance on using the query language, see the [Segment documentation site](https://segment.com/docs/api/public-api/query-language).")
-    type: StrictStr = Field(..., description="The underlying data type being aggregated for this computed trait.  Possible values: users, accounts.")
-    __properties = ["query", "type"]
-
-    @validator('type')
-    def type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in ('ACCOUNTS', 'USERS'):
-            raise ValueError("must be one of enum values ('ACCOUNTS', 'USERS')")
-        return value
+    event_name: Optional[conlist(StrictStr)] = Field(None, alias="eventName", description="A list of strings of event names.")
+    event_type: Optional[conlist(StrictStr)] = Field(None, alias="eventType", description="A list of strings of event types. Valid options are: `alias`, `group`, `identify`, `page`, `screen`, and `track`.")
+    activation_id: Optional[conlist(StrictStr)] = Field(None, alias="activationId", description="A list of strings of event context IDs from a Linked Audience mapping/activation.")
+    audience_id: Optional[conlist(StrictStr)] = Field(None, alias="audienceId", description="A list of strings of audienceIDs for a Linked Audience.")
+    space_id: Optional[conlist(StrictStr)] = Field(None, alias="spaceId", description="A list of strings of spaceIDs for a Linked Audience.")
+    __properties = ["eventName", "eventType", "activationId", "audienceId", "spaceId"]
 
     class Config:
         """Pydantic configuration"""
@@ -51,8 +47,8 @@ class Definition(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Definition:
-        """Create an instance of Definition from a JSON string"""
+    def from_json(cls, json_str: str) -> DeliveryOverviewAudienceFilterBy:
+        """Create an instance of DeliveryOverviewAudienceFilterBy from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -64,17 +60,20 @@ class Definition(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> Definition:
-        """Create an instance of Definition from a dict"""
+    def from_dict(cls, obj: dict) -> DeliveryOverviewAudienceFilterBy:
+        """Create an instance of DeliveryOverviewAudienceFilterBy from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return Definition.parse_obj(obj)
+            return DeliveryOverviewAudienceFilterBy.parse_obj(obj)
 
-        _obj = Definition.parse_obj({
-            "query": obj.get("query"),
-            "type": obj.get("type")
+        _obj = DeliveryOverviewAudienceFilterBy.parse_obj({
+            "event_name": obj.get("eventName"),
+            "event_type": obj.get("eventType"),
+            "activation_id": obj.get("activationId"),
+            "audience_id": obj.get("audienceId"),
+            "space_id": obj.get("spaceId")
         })
         return _obj
 
