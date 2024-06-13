@@ -544,7 +544,7 @@ Name | Type | Description  | Notes
 
 ## Operation: get_linked_audience_success_metrics_from_delivery_overview
 
-> GetEgressFailedMetricsFromDeliveryOverview200Response get_linked_audience_success_metrics_from_delivery_overview()
+> GetEgressFailedMetricsFromDeliveryOverview200Response get_linked_audience_success_metrics_from_delivery_overview(source_id, destination_config_id, start_time, end_time, granularity, group_by=group_by, filter=filter, pagination=pagination)
 
 Get Linked Audience Success Metrics from Delivery Overview
 
@@ -557,7 +557,9 @@ Get events successfully delivered for Linked Audiences.
 import time
 import os
 import segment_public_api
+from segment_public_api.models.delivery_overview_audience_filter_by import DeliveryOverviewAudienceFilterBy
 from segment_public_api.models.get_egress_failed_metrics_from_delivery_overview200_response import GetEgressFailedMetricsFromDeliveryOverview200Response
+from segment_public_api.models.pagination_input import PaginationInput
 from segment_public_api.rest import ApiException
 from pprint import pprint
 
@@ -572,10 +574,18 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.DeliveryOverviewApi(api_client)
+    source_id = 'rh5BDZp6QDHvXFCkibm1pR' # str | The sourceId for the Workspace.  This parameter exists in beta.
+    destination_config_id = 'fP7qoQw2HTWt9WdMr718gn' # str | The id tied to a Workspace Destination.  This parameter exists in beta.
+    start_time = '2024-01-01T00:00:00Z' # str | The ISO8601 formatted timestamp corresponding to the beginning of the requested timeframe, inclusive.  This parameter exists in beta.
+    end_time = '2024-01-03T00:00:00Z' # str | The ISO8601 formatted timestamp corresponding to the end of the requested timeframe, noninclusive.  This parameter exists in beta.
+    granularity = 'DAY' # str | The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.
+    group_by = ['groupBy.0=spaceId'] # List[str] | A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `eventName`, `eventType`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta. (optional)
+    filter = segment_public_api.DeliveryOverviewAudienceFilterBy() # DeliveryOverviewAudienceFilterBy | An optional filter for `eventName`, `eventType`, `activationId`, `audienceId`, and/or `spaceId` that can be applied in addition to a `groupBy`. If you would like to view retry attempts for a successful delivery, you can filter `discardReason` from `successes.attempt.1` through `successes.attempt.10`.  This parameter exists in beta. (optional)
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Params to specify the page cursor and count.  This parameter exists in beta. (optional)
 
     try:
         # Get Linked Audience Success Metrics from Delivery Overview
-        api_response = api_instance.get_linked_audience_success_metrics_from_delivery_overview()
+        api_response = api_instance.get_linked_audience_success_metrics_from_delivery_overview(source_id, destination_config_id, start_time, end_time, granularity, group_by=group_by, filter=filter, pagination=pagination)
         print("The response of DeliveryOverviewApi->get_linked_audience_success_metrics_from_delivery_overview:\n")
         pprint(api_response)
     except Exception as e:
@@ -585,7 +595,17 @@ with segment_public_api.ApiClient(configuration) as api_client:
 
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **source_id** | **str**| The sourceId for the Workspace.  This parameter exists in beta. | 
+ **destination_config_id** | **str**| The id tied to a Workspace Destination.  This parameter exists in beta. | 
+ **start_time** | **str**| The ISO8601 formatted timestamp corresponding to the beginning of the requested timeframe, inclusive.  This parameter exists in beta. | 
+ **end_time** | **str**| The ISO8601 formatted timestamp corresponding to the end of the requested timeframe, noninclusive.  This parameter exists in beta. | 
+ **granularity** | **str**| The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta. | 
+ **group_by** | [**List[str]**](str.md)| A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: &#x60;eventName&#x60;, &#x60;eventType&#x60;, &#x60;activationId&#x60;, &#x60;audienceId&#x60;, and &#x60;spaceId&#x60;.  This parameter exists in beta. | [optional] 
+ **filter** | [**DeliveryOverviewAudienceFilterBy**](.md)| An optional filter for &#x60;eventName&#x60;, &#x60;eventType&#x60;, &#x60;activationId&#x60;, &#x60;audienceId&#x60;, and/or &#x60;spaceId&#x60; that can be applied in addition to a &#x60;groupBy&#x60;. If you would like to view retry attempts for a successful delivery, you can filter &#x60;discardReason&#x60; from &#x60;successes.attempt.1&#x60; through &#x60;successes.attempt.10&#x60;.  This parameter exists in beta. | [optional] 
+ **pagination** | [**PaginationInput**](.md)| Params to specify the page cursor and count.  This parameter exists in beta. | [optional] 
 
 ### Return type
 

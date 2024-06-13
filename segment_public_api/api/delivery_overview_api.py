@@ -24,6 +24,7 @@ from pydantic import Field, StrictStr, conlist
 
 from typing import Optional
 
+from segment_public_api.models.delivery_overview_audience_filter_by import DeliveryOverviewAudienceFilterBy
 from segment_public_api.models.delivery_overview_destination_filter_by import DeliveryOverviewDestinationFilterBy
 from segment_public_api.models.delivery_overview_source_filter_by import DeliveryOverviewSourceFilterBy
 from segment_public_api.models.delivery_overview_successfully_received_filter_by import DeliveryOverviewSuccessfullyReceivedFilterBy
@@ -1227,16 +1228,32 @@ class DeliveryOverviewApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def get_linked_audience_success_metrics_from_delivery_overview(self, **kwargs) -> GetEgressFailedMetricsFromDeliveryOverview200Response:  # noqa: E501
+    def get_linked_audience_success_metrics_from_delivery_overview(self, source_id : Annotated[StrictStr, Field(..., description="The sourceId for the Workspace.  This parameter exists in beta.")], destination_config_id : Annotated[StrictStr, Field(..., description="The id tied to a Workspace Destination.  This parameter exists in beta.")], start_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the beginning of the requested timeframe, inclusive.  This parameter exists in beta.")], end_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the end of the requested timeframe, noninclusive.  This parameter exists in beta.")], granularity : Annotated[StrictStr, Field(..., description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")], group_by : Annotated[Optional[conlist(StrictStr)], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `eventName`, `eventType`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.")] = None, filter : Annotated[Optional[DeliveryOverviewAudienceFilterBy], Field(description="An optional filter for `eventName`, `eventType`, `activationId`, `audienceId`, and/or `spaceId` that can be applied in addition to a `groupBy`. If you would like to view retry attempts for a successful delivery, you can filter `discardReason` from `successes.attempt.1` through `successes.attempt.10`.  This parameter exists in beta.")] = None, pagination : Annotated[Optional[PaginationInput], Field(description="Params to specify the page cursor and count.  This parameter exists in beta.")] = None, **kwargs) -> GetEgressFailedMetricsFromDeliveryOverview200Response:  # noqa: E501
         """Get Linked Audience Success Metrics from Delivery Overview  # noqa: E501
 
         Get events successfully delivered for Linked Audiences.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_linked_audience_success_metrics_from_delivery_overview(async_req=True)
+        >>> thread = api.get_linked_audience_success_metrics_from_delivery_overview(source_id, destination_config_id, start_time, end_time, granularity, group_by, filter, pagination, async_req=True)
         >>> result = thread.get()
 
+        :param source_id: The sourceId for the Workspace.  This parameter exists in beta. (required)
+        :type source_id: str
+        :param destination_config_id: The id tied to a Workspace Destination.  This parameter exists in beta. (required)
+        :type destination_config_id: str
+        :param start_time: The ISO8601 formatted timestamp corresponding to the beginning of the requested timeframe, inclusive.  This parameter exists in beta. (required)
+        :type start_time: str
+        :param end_time: The ISO8601 formatted timestamp corresponding to the end of the requested timeframe, noninclusive.  This parameter exists in beta. (required)
+        :type end_time: str
+        :param granularity: The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta. (required)
+        :type granularity: str
+        :param group_by: A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `eventName`, `eventType`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.
+        :type group_by: List[str]
+        :param filter: An optional filter for `eventName`, `eventType`, `activationId`, `audienceId`, and/or `spaceId` that can be applied in addition to a `groupBy`. If you would like to view retry attempts for a successful delivery, you can filter `discardReason` from `successes.attempt.1` through `successes.attempt.10`.  This parameter exists in beta.
+        :type filter: DeliveryOverviewAudienceFilterBy
+        :param pagination: Params to specify the page cursor and count.  This parameter exists in beta.
+        :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _request_timeout: timeout setting for this request.
@@ -1252,19 +1269,35 @@ class DeliveryOverviewApi:
         if '_preload_content' in kwargs:
             message = "Error! Please call the get_linked_audience_success_metrics_from_delivery_overview_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.get_linked_audience_success_metrics_from_delivery_overview_with_http_info(**kwargs)  # noqa: E501
+        return self.get_linked_audience_success_metrics_from_delivery_overview_with_http_info(source_id, destination_config_id, start_time, end_time, granularity, group_by, filter, pagination, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_linked_audience_success_metrics_from_delivery_overview_with_http_info(self, **kwargs) -> ApiResponse:  # noqa: E501
+    def get_linked_audience_success_metrics_from_delivery_overview_with_http_info(self, source_id : Annotated[StrictStr, Field(..., description="The sourceId for the Workspace.  This parameter exists in beta.")], destination_config_id : Annotated[StrictStr, Field(..., description="The id tied to a Workspace Destination.  This parameter exists in beta.")], start_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the beginning of the requested timeframe, inclusive.  This parameter exists in beta.")], end_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the end of the requested timeframe, noninclusive.  This parameter exists in beta.")], granularity : Annotated[StrictStr, Field(..., description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")], group_by : Annotated[Optional[conlist(StrictStr)], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `eventName`, `eventType`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.")] = None, filter : Annotated[Optional[DeliveryOverviewAudienceFilterBy], Field(description="An optional filter for `eventName`, `eventType`, `activationId`, `audienceId`, and/or `spaceId` that can be applied in addition to a `groupBy`. If you would like to view retry attempts for a successful delivery, you can filter `discardReason` from `successes.attempt.1` through `successes.attempt.10`.  This parameter exists in beta.")] = None, pagination : Annotated[Optional[PaginationInput], Field(description="Params to specify the page cursor and count.  This parameter exists in beta.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Get Linked Audience Success Metrics from Delivery Overview  # noqa: E501
 
         Get events successfully delivered for Linked Audiences.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_linked_audience_success_metrics_from_delivery_overview_with_http_info(async_req=True)
+        >>> thread = api.get_linked_audience_success_metrics_from_delivery_overview_with_http_info(source_id, destination_config_id, start_time, end_time, granularity, group_by, filter, pagination, async_req=True)
         >>> result = thread.get()
 
+        :param source_id: The sourceId for the Workspace.  This parameter exists in beta. (required)
+        :type source_id: str
+        :param destination_config_id: The id tied to a Workspace Destination.  This parameter exists in beta. (required)
+        :type destination_config_id: str
+        :param start_time: The ISO8601 formatted timestamp corresponding to the beginning of the requested timeframe, inclusive.  This parameter exists in beta. (required)
+        :type start_time: str
+        :param end_time: The ISO8601 formatted timestamp corresponding to the end of the requested timeframe, noninclusive.  This parameter exists in beta. (required)
+        :type end_time: str
+        :param granularity: The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta. (required)
+        :type granularity: str
+        :param group_by: A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `eventName`, `eventType`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.
+        :type group_by: List[str]
+        :param filter: An optional filter for `eventName`, `eventType`, `activationId`, `audienceId`, and/or `spaceId` that can be applied in addition to a `groupBy`. If you would like to view retry attempts for a successful delivery, you can filter `discardReason` from `successes.attempt.1` through `successes.attempt.10`.  This parameter exists in beta.
+        :type filter: DeliveryOverviewAudienceFilterBy
+        :param pagination: Params to specify the page cursor and count.  This parameter exists in beta.
+        :type pagination: PaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _preload_content: if False, the ApiResponse.data will
@@ -1293,6 +1326,14 @@ class DeliveryOverviewApi:
         _params = locals()
 
         _all_params = [
+            'source_id',
+            'destination_config_id',
+            'start_time',
+            'end_time',
+            'granularity',
+            'group_by',
+            'filter',
+            'pagination'
         ]
         _all_params.extend(
             [
@@ -1323,6 +1364,31 @@ class DeliveryOverviewApi:
 
         # process the query parameters
         _query_params = []
+        if _params.get('source_id') is not None:  # noqa: E501
+            _query_params.append(('sourceId', _params['source_id']))
+
+        if _params.get('destination_config_id') is not None:  # noqa: E501
+            _query_params.append(('destinationConfigId', _params['destination_config_id']))
+
+        if _params.get('start_time') is not None:  # noqa: E501
+            _query_params.append(('startTime', _params['start_time']))
+
+        if _params.get('end_time') is not None:  # noqa: E501
+            _query_params.append(('endTime', _params['end_time']))
+
+        if _params.get('group_by') is not None:  # noqa: E501
+            _query_params.append(('groupBy', _params['group_by']))
+            _collection_formats['groupBy'] = 'multi'
+
+        if _params.get('granularity') is not None:  # noqa: E501
+            _query_params.append(('granularity', _params['granularity']))
+
+        if _params.get('filter') is not None:  # noqa: E501
+            _query_params.append(('filter', _params['filter']))
+
+        if _params.get('pagination') is not None:  # noqa: E501
+            _query_params.append(('pagination', _params['pagination']))
+
         # process the header parameters
         _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
