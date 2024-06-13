@@ -30,7 +30,7 @@ class CreateProfilesWarehouseAlphaInput(BaseModel):
     name: Optional[StrictStr] = Field(None, description="An optional human-readable name for this Warehouse.")
     enabled: Optional[StrictBool] = Field(None, description="Enable to allow this Warehouse to receive data. Defaults to true.")
     settings: Dict[str, Any] = Field(..., description="A key-value object that contains instance-specific Warehouse settings.")
-    schema_name: Optional[StrictStr] = Field(None, alias="schemaName", description="The custom schema name that Segment uses on the Warehouse side. The space slug value is default otherwise.")
+    schema_name: Optional[StrictStr] = Field(None, alias="schemaName", description="The custom schema name that Segment uses on the Warehouse side. The space slug value is default otherwise. The schema name cannot be an existing schema name in the Warehouse. To use an existing schema name, please create a profiles Warehouse through the Segment app UI.")
     __properties = ["metadataId", "name", "enabled", "settings", "schemaName"]
 
     class Config:
