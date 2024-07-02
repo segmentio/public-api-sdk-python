@@ -35,7 +35,8 @@ class DestinationSubscription(BaseModel):
     settings: Dict[str, Any] = Field(..., description="Represents settings used to configure an action subscription.")
     trigger: StrictStr = Field(..., description="FQL string that describes what events should trigger a Destination action.")
     model_id: Optional[StrictStr] = Field(None, alias="modelId", description="The unique identifier for the linked ReverseETLModel, if this part of a Reverse ETL connection.")
-    __properties = ["id", "name", "actionId", "actionSlug", "destinationId", "enabled", "settings", "trigger", "modelId"]
+    reverse_etl_schedule: Optional[Dict[str, Any]] = Field(None, alias="reverseETLSchedule", description="The schedule for the Reverse ETL subscription.")
+    __properties = ["id", "name", "actionId", "actionSlug", "destinationId", "enabled", "settings", "trigger", "modelId", "reverseETLSchedule"]
 
     class Config:
         """Pydantic configuration"""
@@ -61,6 +62,11 @@ class DestinationSubscription(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if reverse_etl_schedule (nullable) is None
+        # and __fields_set__ contains the field
+        if self.reverse_etl_schedule is None and "reverse_etl_schedule" in self.__fields_set__:
+            _dict['reverseETLSchedule'] = None
+
         return _dict
 
     @classmethod
@@ -81,7 +87,8 @@ class DestinationSubscription(BaseModel):
             "enabled": obj.get("enabled"),
             "settings": obj.get("settings"),
             "trigger": obj.get("trigger"),
-            "model_id": obj.get("modelId")
+            "model_id": obj.get("modelId"),
+            "reverse_etl_schedule": obj.get("reverseETLSchedule")
         })
         return _obj
 
