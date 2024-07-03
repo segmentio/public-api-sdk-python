@@ -19,9 +19,8 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
+from typing import Any, Dict, Optional
 from pydantic import BaseModel, Field, StrictBool, StrictStr
-from segment_public_api.models.schedule_config import ScheduleConfig
 
 class ReverseEtlModel(BaseModel):
     """
@@ -33,7 +32,7 @@ class ReverseEtlModel(BaseModel):
     description: StrictStr = Field(..., description="A longer, more descriptive explanation of the Model.")
     enabled: StrictBool = Field(..., description="Indicates whether the Model should have syncs enabled. When disabled, no syncs will be triggered, regardless of the enabled status of the attached destinations/subscriptions.")
     schedule_strategy: StrictStr = Field(..., alias="scheduleStrategy", description="Determines the strategy used for triggering syncs, which will be used in conjunction with scheduleConfig.  Possible values: \"manual\", \"periodic\", \"specific_days\".")
-    schedule_config: Optional[ScheduleConfig] = Field(None, alias="scheduleConfig")
+    schedule_config: Optional[Dict[str, Any]] = Field(None, alias="scheduleConfig", description="Defines a configuration object used for scheduling, which can vary depending on the configured strategy, but must always be an object with at least 1 level of keys.")
     query: StrictStr = Field(..., description="The SQL query that will be executed to extract data from the connected Source.")
     query_identifier_column: StrictStr = Field(..., alias="queryIdentifierColumn", description="Indicates the column named in `query` that should be used to uniquely identify the extracted records.")
     __properties = ["id", "sourceId", "name", "description", "enabled", "scheduleStrategy", "scheduleConfig", "query", "queryIdentifierColumn"]
@@ -62,14 +61,6 @@ class ReverseEtlModel(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of schedule_config
-        if self.schedule_config:
-            _dict['scheduleConfig'] = self.schedule_config.to_dict()
-        # set to None if schedule_config (nullable) is None
-        # and __fields_set__ contains the field
-        if self.schedule_config is None and "schedule_config" in self.__fields_set__:
-            _dict['scheduleConfig'] = None
-
         return _dict
 
     @classmethod
@@ -88,7 +79,7 @@ class ReverseEtlModel(BaseModel):
             "description": obj.get("description"),
             "enabled": obj.get("enabled"),
             "schedule_strategy": obj.get("scheduleStrategy"),
-            "schedule_config": ScheduleConfig.from_dict(obj.get("scheduleConfig")) if obj.get("scheduleConfig") is not None else None,
+            "schedule_config": obj.get("scheduleConfig"),
             "query": obj.get("query"),
             "query_identifier_column": obj.get("queryIdentifierColumn")
         })
