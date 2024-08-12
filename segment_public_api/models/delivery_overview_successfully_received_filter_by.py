@@ -29,10 +29,7 @@ class DeliveryOverviewSuccessfullyReceivedFilterBy(BaseModel):
     event_name: Optional[conlist(StrictStr)] = Field(None, alias="eventName", description="A list of strings of event names.")
     event_type: Optional[conlist(StrictStr)] = Field(None, alias="eventType", description="A list of strings of event types. Valid options are: `alias`, `group`, `identify`, `page`, `screen`, and `track`.")
     app_version: Optional[conlist(StrictStr)] = Field(None, alias="appVersion", description="A list of strings of app versions.")
-    activation_id: Optional[conlist(StrictStr)] = Field(None, alias="activationId", description="A list of strings of event context IDs from a Linked Audience mapping/activation.")
-    audience_id: Optional[conlist(StrictStr)] = Field(None, alias="audienceId", description="A list of strings of audienceIDs for a Linked Audience.")
-    space_id: Optional[conlist(StrictStr)] = Field(None, alias="spaceId", description="A list of strings of spaceIDs for a Linked Audience.")
-    __properties = ["eventName", "eventType", "appVersion", "activationId", "audienceId", "spaceId"]
+    __properties = ["eventName", "eventType", "appVersion"]
 
     class Config:
         """Pydantic configuration"""
@@ -72,10 +69,7 @@ class DeliveryOverviewSuccessfullyReceivedFilterBy(BaseModel):
         _obj = DeliveryOverviewSuccessfullyReceivedFilterBy.parse_obj({
             "event_name": obj.get("eventName"),
             "event_type": obj.get("eventType"),
-            "app_version": obj.get("appVersion"),
-            "activation_id": obj.get("activationId"),
-            "audience_id": obj.get("audienceId"),
-            "space_id": obj.get("spaceId")
+            "app_version": obj.get("appVersion")
         })
         return _obj
 
