@@ -35,14 +35,13 @@ class UpdateTransformationV1Input(BaseModel):
     destination_metadata_id: Optional[StrictStr] = Field(None, alias="destinationMetadataId", description="The optional Destination metadata to be associated with the Transformation.")
     enabled: Optional[StrictBool] = Field(None, description="If the Transformation should be enabled.")
     var_if: Optional[StrictStr] = Field(None, alias="if", description="If statement ([FQL](https://segment.com/docs/config-api/fql/)) to match events.  For standard event matchers, use the following:  Track -\\> \"event='\\<eventName\\>'\"  Identify -\\> \"type='identify'\"  Group -\\> \"type='group'\"")
-    drop: Optional[StrictBool] = Field(None, description="Optional boolean value if the Transformation should drop the event entirely when the if statement matches, ignores all other transforms.")
     new_event_name: Optional[StrictStr] = Field(None, alias="newEventName", description="Optional new event name for renaming events. Works only for 'track' event type.")
     property_renames: Optional[conlist(PropertyRenameV1)] = Field(None, alias="propertyRenames", description="Optional array for renaming properties collected by your events.")
     property_value_transformations: Optional[conlist(PropertyValueTransformationV1)] = Field(None, alias="propertyValueTransformations", description="Optional array for transforming properties and values collected by your events. Limited to 10 properties.")
     fql_defined_properties: Optional[conlist(FQLDefinedPropertyV1)] = Field(None, alias="fqlDefinedProperties", description="Optional array for updating properties defined in [FQL](https://segment.com/docs/config-api/fql/). Currently limited to 1 property.")
     allow_properties: Optional[conlist(StrictStr)] = Field(None, alias="allowProperties", description="Optional array for allowing properties from your events.")
     hash_properties_configuration: Optional[HashPropertiesConfiguration] = Field(None, alias="hashPropertiesConfiguration")
-    __properties = ["name", "sourceId", "destinationMetadataId", "enabled", "if", "drop", "newEventName", "propertyRenames", "propertyValueTransformations", "fqlDefinedProperties", "allowProperties", "hashPropertiesConfiguration"]
+    __properties = ["name", "sourceId", "destinationMetadataId", "enabled", "if", "newEventName", "propertyRenames", "propertyValueTransformations", "fqlDefinedProperties", "allowProperties", "hashPropertiesConfiguration"]
 
     class Config:
         """Pydantic configuration"""
@@ -109,7 +108,6 @@ class UpdateTransformationV1Input(BaseModel):
             "destination_metadata_id": obj.get("destinationMetadataId"),
             "enabled": obj.get("enabled"),
             "var_if": obj.get("if"),
-            "drop": obj.get("drop"),
             "new_event_name": obj.get("newEventName"),
             "property_renames": [PropertyRenameV1.from_dict(_item) for _item in obj.get("propertyRenames")] if obj.get("propertyRenames") is not None else None,
             "property_value_transformations": [PropertyValueTransformationV1.from_dict(_item) for _item in obj.get("propertyValueTransformations")] if obj.get("propertyValueTransformations") is not None else None,
