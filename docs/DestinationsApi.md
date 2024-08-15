@@ -49,7 +49,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.DestinationsApi(api_client)
-    create_destination_v1_input = {"sourceId":"rh5BDZp6QDHvXFCkibm1pR","metadataId":"547610a5db31d978f14a5c4e","name":"my destination v1","settings":{"apiKey":"XYZ","retarget":true}} # CreateDestinationV1Input | 
+    create_destination_v1_input = {"sourceId":"rh5BDZp6QDHvXFCkibm1pR","metadataId":"54521fd525e721e32a72ee91","name":"my destination v1","settings":{"apiKey":"3cb9b589437d3904f19b2b791c2cdada","retarget":true}} # CreateDestinationV1Input | 
 
     try:
         # Create Destination
@@ -271,7 +271,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.DestinationsApi(api_client)
-    destination_id = 'fP7qoQw2HTWt9WdMr718gn' # str | 
+    destination_id = 'qtiZHLLqqsHmpvLXNtP5du' # str | 
 
     try:
         # Get Destination
@@ -726,7 +726,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.DestinationsApi(api_client)
-    destination_id = 'fP7qoQw2HTWt9WdMr718gn' # str | 
+    destination_id = 'qtiZHLLqqsHmpvLXNtP5du' # str | 
     update_destination_v1_input = {"enabled":false} # UpdateDestinationV1Input | 
 
     try:
