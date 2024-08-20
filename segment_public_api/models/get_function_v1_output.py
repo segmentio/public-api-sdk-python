@@ -21,13 +21,13 @@ import json
 
 from typing import Optional
 from pydantic import BaseModel, Field
-from segment_public_api.models.function import Function
+from segment_public_api.models.function_v1 import FunctionV1
 
 class GetFunctionV1Output(BaseModel):
     """
     Gets a single Function.  # noqa: E501
     """
-    function: Optional[Function] = Field(...)
+    function: Optional[FunctionV1] = Field(...)
     __properties = ["function"]
 
     class Config:
@@ -74,7 +74,7 @@ class GetFunctionV1Output(BaseModel):
             return GetFunctionV1Output.parse_obj(obj)
 
         _obj = GetFunctionV1Output.parse_obj({
-            "function": Function.from_dict(obj.get("function")) if obj.get("function") is not None else None
+            "function": FunctionV1.from_dict(obj.get("function")) if obj.get("function") is not None else None
         })
         return _obj
 
