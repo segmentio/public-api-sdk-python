@@ -24,7 +24,7 @@ from pydantic import BaseModel, Field, StrictStr
 
 class Space(BaseModel):
     """
-    Space
+    Space matching the given id.  # noqa: E501
     """
     id: StrictStr = Field(...)
     slug: StrictStr = Field(...)

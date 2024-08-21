@@ -19,16 +19,23 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
-from pydantic import BaseModel, Field
-from segment_public_api.models.function import Function
 
-class GetFunctionV1Output(BaseModel):
+from pydantic import BaseModel, Field, StrictStr, validator
+
+class Definition(BaseModel):
     """
-    Gets a single Function.  # noqa: E501
+    Query language definition and type.  # noqa: E501
     """
-    function: Optional[Function] = Field(...)
-    __properties = ["function"]
+    query: StrictStr = Field(..., description="The query language string defining the computed trait aggregation criteria. For guidance on using the query language, see the [Segment documentation site](https://segment.com/docs/api/public-api/query-language).")
+    type: StrictStr = Field(..., description="The underlying data type being aggregated for this computed trait.  Possible values: users, accounts.")
+    __properties = ["query", "type"]
+
+    @validator('type')
+    def type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in ('ACCOUNTS', 'USERS'):
+            raise ValueError("must be one of enum values ('ACCOUNTS', 'USERS')")
+        return value
 
     class Config:
         """Pydantic configuration"""
@@ -44,8 +51,8 @@ class GetFunctionV1Output(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> GetFunctionV1Output:
-        """Create an instance of GetFunctionV1Output from a JSON string"""
+    def from_json(cls, json_str: str) -> Definition:
+        """Create an instance of Definition from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -54,27 +61,20 @@ class GetFunctionV1Output(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of function
-        if self.function:
-            _dict['function'] = self.function.to_dict()
-        # set to None if function (nullable) is None
-        # and __fields_set__ contains the field
-        if self.function is None and "function" in self.__fields_set__:
-            _dict['function'] = None
-
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> GetFunctionV1Output:
-        """Create an instance of GetFunctionV1Output from a dict"""
+    def from_dict(cls, obj: dict) -> Definition:
+        """Create an instance of Definition from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return GetFunctionV1Output.parse_obj(obj)
+            return Definition.parse_obj(obj)
 
-        _obj = GetFunctionV1Output.parse_obj({
-            "function": Function.from_dict(obj.get("function")) if obj.get("function") is not None else None
+        _obj = Definition.parse_obj({
+            "query": obj.get("query"),
+            "type": obj.get("type")
         })
         return _obj
 

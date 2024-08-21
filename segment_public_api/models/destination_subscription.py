@@ -35,7 +35,7 @@ class DestinationSubscription(BaseModel):
     settings: Dict[str, Any] = Field(..., description="Represents settings used to configure an action subscription.")
     trigger: StrictStr = Field(..., description="FQL string that describes what events should trigger a Destination action.")
     model_id: Optional[StrictStr] = Field(None, alias="modelId", description="The unique identifier for the linked ReverseETLModel, if this part of a Reverse ETL connection.")
-    reverse_etl_schedule: Optional[Any] = Field(None, alias="reverseETLSchedule", description="The schedule for the Reverse ETL subscription.")
+    reverse_etl_schedule: Optional[Dict[str, Any]] = Field(None, alias="reverseETLSchedule", description="The schedule for the Reverse ETL subscription.")
     __properties = ["id", "name", "actionId", "actionSlug", "destinationId", "enabled", "settings", "trigger", "modelId", "reverseETLSchedule"]
 
     class Config:
