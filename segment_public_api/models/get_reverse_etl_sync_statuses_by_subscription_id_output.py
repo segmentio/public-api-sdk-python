@@ -19,16 +19,18 @@ import re  # noqa: F401
 import json
 
 
-
-from pydantic import BaseModel, Field
+from typing import List, Optional
+from pydantic import BaseModel, Field, conlist
+from segment_public_api.models.pagination_output import PaginationOutput
 from segment_public_api.models.reverse_etl_sync_status import ReverseETLSyncStatus
 
-class GetReverseETLSyncStatusOutput(BaseModel):
+class GetReverseETLSyncStatusesBySubscriptionIdOutput(BaseModel):
     """
-    Output for triggering a manual sync for a RETL connection.  # noqa: E501
+    The reverse ETL sync statuses that were looked up.  # noqa: E501
     """
-    reverse_etl_sync_status: ReverseETLSyncStatus = Field(..., alias="reverseETLSyncStatus")
-    __properties = ["reverseETLSyncStatus"]
+    sync_statuses: conlist(ReverseETLSyncStatus) = Field(..., alias="syncStatuses", description="The reverse ETL sync statuses that were looked up of the subscriptionId.")
+    pagination: Optional[PaginationOutput] = None
+    __properties = ["syncStatuses", "pagination"]
 
     class Config:
         """Pydantic configuration"""
@@ -44,8 +46,8 @@ class GetReverseETLSyncStatusOutput(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> GetReverseETLSyncStatusOutput:
-        """Create an instance of GetReverseETLSyncStatusOutput from a JSON string"""
+    def from_json(cls, json_str: str) -> GetReverseETLSyncStatusesBySubscriptionIdOutput:
+        """Create an instance of GetReverseETLSyncStatusesBySubscriptionIdOutput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -54,22 +56,30 @@ class GetReverseETLSyncStatusOutput(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of reverse_etl_sync_status
-        if self.reverse_etl_sync_status:
-            _dict['reverseETLSyncStatus'] = self.reverse_etl_sync_status.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in sync_statuses (list)
+        _items = []
+        if self.sync_statuses:
+            for _item in self.sync_statuses:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['syncStatuses'] = _items
+        # override the default output from pydantic by calling `to_dict()` of pagination
+        if self.pagination:
+            _dict['pagination'] = self.pagination.to_dict()
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> GetReverseETLSyncStatusOutput:
-        """Create an instance of GetReverseETLSyncStatusOutput from a dict"""
+    def from_dict(cls, obj: dict) -> GetReverseETLSyncStatusesBySubscriptionIdOutput:
+        """Create an instance of GetReverseETLSyncStatusesBySubscriptionIdOutput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return GetReverseETLSyncStatusOutput.parse_obj(obj)
+            return GetReverseETLSyncStatusesBySubscriptionIdOutput.parse_obj(obj)
 
-        _obj = GetReverseETLSyncStatusOutput.parse_obj({
-            "reverse_etl_sync_status": ReverseETLSyncStatus.from_dict(obj.get("reverseETLSyncStatus")) if obj.get("reverseETLSyncStatus") is not None else None
+        _obj = GetReverseETLSyncStatusesBySubscriptionIdOutput.parse_obj({
+            "sync_statuses": [ReverseETLSyncStatus.from_dict(_item) for _item in obj.get("syncStatuses")] if obj.get("syncStatuses") is not None else None,
+            "pagination": PaginationOutput.from_dict(obj.get("pagination")) if obj.get("pagination") is not None else None
         })
         return _obj
 

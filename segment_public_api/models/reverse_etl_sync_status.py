@@ -24,7 +24,7 @@ from pydantic import BaseModel, Field, StrictStr
 from segment_public_api.models.sync_extract_phase import SyncExtractPhase
 from segment_public_api.models.sync_load_phase import SyncLoadPhase
 
-class ReverseETLSyncOutput(BaseModel):
+class ReverseETLSyncStatus(BaseModel):
     """
     Defines the result of getting the sync status of a RETL connection.  # noqa: E501
     """
@@ -55,8 +55,8 @@ class ReverseETLSyncOutput(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> ReverseETLSyncOutput:
-        """Create an instance of ReverseETLSyncOutput from a JSON string"""
+    def from_json(cls, json_str: str) -> ReverseETLSyncStatus:
+        """Create an instance of ReverseETLSyncStatus from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -74,15 +74,15 @@ class ReverseETLSyncOutput(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> ReverseETLSyncOutput:
-        """Create an instance of ReverseETLSyncOutput from a dict"""
+    def from_dict(cls, obj: dict) -> ReverseETLSyncStatus:
+        """Create an instance of ReverseETLSyncStatus from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return ReverseETLSyncOutput.parse_obj(obj)
+            return ReverseETLSyncStatus.parse_obj(obj)
 
-        _obj = ReverseETLSyncOutput.parse_obj({
+        _obj = ReverseETLSyncStatus.parse_obj({
             "sync_id": obj.get("syncId"),
             "model_id": obj.get("modelId"),
             "source_id": obj.get("sourceId"),

@@ -19,16 +19,16 @@ import re  # noqa: F401
 import json
 
 
+from typing import Optional
+from pydantic import BaseModel
+from segment_public_api.models.get_reverse_etl_sync_statuses_by_subscription_id_output import GetReverseETLSyncStatusesBySubscriptionIdOutput
 
-from pydantic import BaseModel, Field
-from segment_public_api.models.reverse_etl_sync_status import ReverseETLSyncStatus
-
-class GetReverseETLSyncStatusOutput(BaseModel):
+class GetReverseETLSyncStatusesBySubscriptionId200Response(BaseModel):
     """
-    Output for triggering a manual sync for a RETL connection.  # noqa: E501
+    GetReverseETLSyncStatusesBySubscriptionId200Response
     """
-    reverse_etl_sync_status: ReverseETLSyncStatus = Field(..., alias="reverseETLSyncStatus")
-    __properties = ["reverseETLSyncStatus"]
+    data: Optional[GetReverseETLSyncStatusesBySubscriptionIdOutput] = None
+    __properties = ["data"]
 
     class Config:
         """Pydantic configuration"""
@@ -44,8 +44,8 @@ class GetReverseETLSyncStatusOutput(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> GetReverseETLSyncStatusOutput:
-        """Create an instance of GetReverseETLSyncStatusOutput from a JSON string"""
+    def from_json(cls, json_str: str) -> GetReverseETLSyncStatusesBySubscriptionId200Response:
+        """Create an instance of GetReverseETLSyncStatusesBySubscriptionId200Response from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -54,22 +54,22 @@ class GetReverseETLSyncStatusOutput(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of reverse_etl_sync_status
-        if self.reverse_etl_sync_status:
-            _dict['reverseETLSyncStatus'] = self.reverse_etl_sync_status.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of data
+        if self.data:
+            _dict['data'] = self.data.to_dict()
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> GetReverseETLSyncStatusOutput:
-        """Create an instance of GetReverseETLSyncStatusOutput from a dict"""
+    def from_dict(cls, obj: dict) -> GetReverseETLSyncStatusesBySubscriptionId200Response:
+        """Create an instance of GetReverseETLSyncStatusesBySubscriptionId200Response from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return GetReverseETLSyncStatusOutput.parse_obj(obj)
+            return GetReverseETLSyncStatusesBySubscriptionId200Response.parse_obj(obj)
 
-        _obj = GetReverseETLSyncStatusOutput.parse_obj({
-            "reverse_etl_sync_status": ReverseETLSyncStatus.from_dict(obj.get("reverseETLSyncStatus")) if obj.get("reverseETLSyncStatus") is not None else None
+        _obj = GetReverseETLSyncStatusesBySubscriptionId200Response.parse_obj({
+            "data": GetReverseETLSyncStatusesBySubscriptionIdOutput.from_dict(obj.get("data")) if obj.get("data") is not None else None
         })
         return _obj
 
