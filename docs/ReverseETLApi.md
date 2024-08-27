@@ -10,7 +10,6 @@ Method | HTTP request | Description
 [**get_reverse_etl_model**](ReverseETLApi.md#get_reverse_etl_model) | **GET** /reverse-etl-models/{modelId} | Get Reverse Etl Model
 [**get_reverse_etl_sync_status**](ReverseETLApi.md#get_reverse_etl_sync_status) | **GET** /reverse-etl-models/{modelId}/syncs/{syncId} | Get Reverse ETL Sync Status
 [**list_reverse_etl_models**](ReverseETLApi.md#list_reverse_etl_models) | **GET** /reverse-etl-models | List Reverse Etl Models
-[**list_reverse_etl_sync_statuses_from_model_and_subscription_id**](ReverseETLApi.md#list_reverse_etl_sync_statuses_from_model_and_subscription_id) | **GET** /reverse-etl-models/{modelId}/subscriptionId/{subscriptionId}/syncs | List Reverse ETL Sync Statuses from Model And Subscription Id
 [**update_reverse_etl_model**](ReverseETLApi.md#update_reverse_etl_model) | **PATCH** /reverse-etl-models/{modelId} | Update Reverse Etl Model
 
 
@@ -437,84 +436,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ListReverseEtlModels200Response**](ListReverseEtlModels200Response.md)
-
-### Authorization
-
-[token](../README.md#token)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/vnd.segment.v1alpha+json, application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | OK |  -  |
-**404** | Resource not found |  -  |
-**422** | Validation failure |  -  |
-**429** | Too many requests |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-
-## Operation: list_reverse_etl_sync_statuses_from_model_and_subscription_id
-
-> ListReverseETLSyncStatusesFromModelAndSubscriptionId200Response list_reverse_etl_sync_statuses_from_model_and_subscription_id(model_id, subscription_id, pagination=pagination)
-
-List Reverse ETL Sync Statuses from Model And Subscription Id
-
-Get the sync statuses for a Reverse ETL mapping subscription.  The sync status includes all detailed information about the sync - sync status, duration, details about the extract and load phase if applicable, etc.  The default page count is 10, and then the next page can be fetched by passing the `cursor` query parameter.
-
-### Example
-
-* Bearer Authentication (token):
-```python
-import time
-import os
-import segment_public_api
-from segment_public_api.models.list_reverse_etl_sync_statuses_from_model_and_subscription_id200_response import ListReverseETLSyncStatusesFromModelAndSubscriptionId200Response
-from segment_public_api.models.pagination_input import PaginationInput
-from segment_public_api.rest import ApiException
-from pprint import pprint
-
-
-
-# Configure Bearer authorization: token
-configuration = segment_public_api.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with segment_public_api.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = segment_public_api.ReverseETLApi(api_client)
-    model_id = 'modelId' # str | 
-    subscription_id = 'subscriptionId' # str | 
-    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Optional pagination params.  This parameter exists in alpha. (optional)
-
-    try:
-        # List Reverse ETL Sync Statuses from Model And Subscription Id
-        api_response = api_instance.list_reverse_etl_sync_statuses_from_model_and_subscription_id(model_id, subscription_id, pagination=pagination)
-        print("The response of ReverseETLApi->list_reverse_etl_sync_statuses_from_model_and_subscription_id:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling ReverseETLApi->list_reverse_etl_sync_statuses_from_model_and_subscription_id: %s\n" % e)
-```
-
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **model_id** | **str**|  | 
- **subscription_id** | **str**|  | 
- **pagination** | [**PaginationInput**](.md)| Optional pagination params.  This parameter exists in alpha. | [optional] 
-
-### Return type
-
-[**ListReverseETLSyncStatusesFromModelAndSubscriptionId200Response**](ListReverseETLSyncStatusesFromModelAndSubscriptionId200Response.md)
 
 ### Authorization
 
