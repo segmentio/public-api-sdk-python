@@ -20,9 +20,9 @@ import warnings
 from pydantic import validate_arguments, ValidationError
 
 from typing_extensions import Annotated
-from pydantic import Field, constr
+from pydantic import Field, StrictFloat, StrictInt, StrictStr, constr
 
-from typing import Optional
+from typing import Optional, Union
 
 from segment_public_api.models.create_reverse_etl_manual_sync200_response import CreateReverseETLManualSync200Response
 from segment_public_api.models.create_reverse_etl_manual_sync_input import CreateReverseETLManualSyncInput
@@ -938,22 +938,24 @@ class ReverseETLApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_reverse_etl_sync_statuses_from_model_and_subscription_id(self, model_id : constr(strict=True), subscription_id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Optional pagination params.  This parameter exists in alpha.")] = None, **kwargs) -> ListReverseETLSyncStatusesFromModelAndSubscriptionId200Response:  # noqa: E501
+    def list_reverse_etl_sync_statuses_from_model_and_subscription_id(self, model_id : constr(strict=True), subscription_id : constr(strict=True), count : Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="The number of items to retrieve in a page, between 1 and 100. Default is 10  This parameter exists in alpha.")] = None, cursor : Annotated[Optional[StrictStr], Field(description="The page to request. Acceptable values to use here are in PaginationOutput objects, in the `current`, `next`, and `previous` keys.  This parameter exists in alpha.")] = None, **kwargs) -> ListReverseETLSyncStatusesFromModelAndSubscriptionId200Response:  # noqa: E501
         """List Reverse ETL Sync Statuses from Model And Subscription Id  # noqa: E501
 
         Get the sync statuses for a Reverse ETL mapping subscription.  The sync status includes all detailed information about the sync - sync status, duration, details about the extract and load phase if applicable, etc.  The default page count is 10, and then the next page can be fetched by passing the `cursor` query parameter.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.list_reverse_etl_sync_statuses_from_model_and_subscription_id(model_id, subscription_id, pagination, async_req=True)
+        >>> thread = api.list_reverse_etl_sync_statuses_from_model_and_subscription_id(model_id, subscription_id, count, cursor, async_req=True)
         >>> result = thread.get()
 
         :param model_id: (required)
         :type model_id: str
         :param subscription_id: (required)
         :type subscription_id: str
-        :param pagination: Optional pagination params.  This parameter exists in alpha.
-        :type pagination: PaginationInput
+        :param count: The number of items to retrieve in a page, between 1 and 100. Default is 10  This parameter exists in alpha.
+        :type count: float
+        :param cursor: The page to request. Acceptable values to use here are in PaginationOutput objects, in the `current`, `next`, and `previous` keys.  This parameter exists in alpha.
+        :type cursor: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _request_timeout: timeout setting for this request.
@@ -969,25 +971,27 @@ class ReverseETLApi:
         if '_preload_content' in kwargs:
             message = "Error! Please call the list_reverse_etl_sync_statuses_from_model_and_subscription_id_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.list_reverse_etl_sync_statuses_from_model_and_subscription_id_with_http_info(model_id, subscription_id, pagination, **kwargs)  # noqa: E501
+        return self.list_reverse_etl_sync_statuses_from_model_and_subscription_id_with_http_info(model_id, subscription_id, count, cursor, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_reverse_etl_sync_statuses_from_model_and_subscription_id_with_http_info(self, model_id : constr(strict=True), subscription_id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Optional pagination params.  This parameter exists in alpha.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def list_reverse_etl_sync_statuses_from_model_and_subscription_id_with_http_info(self, model_id : constr(strict=True), subscription_id : constr(strict=True), count : Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="The number of items to retrieve in a page, between 1 and 100. Default is 10  This parameter exists in alpha.")] = None, cursor : Annotated[Optional[StrictStr], Field(description="The page to request. Acceptable values to use here are in PaginationOutput objects, in the `current`, `next`, and `previous` keys.  This parameter exists in alpha.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Reverse ETL Sync Statuses from Model And Subscription Id  # noqa: E501
 
         Get the sync statuses for a Reverse ETL mapping subscription.  The sync status includes all detailed information about the sync - sync status, duration, details about the extract and load phase if applicable, etc.  The default page count is 10, and then the next page can be fetched by passing the `cursor` query parameter.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.list_reverse_etl_sync_statuses_from_model_and_subscription_id_with_http_info(model_id, subscription_id, pagination, async_req=True)
+        >>> thread = api.list_reverse_etl_sync_statuses_from_model_and_subscription_id_with_http_info(model_id, subscription_id, count, cursor, async_req=True)
         >>> result = thread.get()
 
         :param model_id: (required)
         :type model_id: str
         :param subscription_id: (required)
         :type subscription_id: str
-        :param pagination: Optional pagination params.  This parameter exists in alpha.
-        :type pagination: PaginationInput
+        :param count: The number of items to retrieve in a page, between 1 and 100. Default is 10  This parameter exists in alpha.
+        :type count: float
+        :param cursor: The page to request. Acceptable values to use here are in PaginationOutput objects, in the `current`, `next`, and `previous` keys.  This parameter exists in alpha.
+        :type cursor: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _preload_content: if False, the ApiResponse.data will
@@ -1018,7 +1022,8 @@ class ReverseETLApi:
         _all_params = [
             'model_id',
             'subscription_id',
-            'pagination'
+            'count',
+            'cursor'
         ]
         _all_params.extend(
             [
@@ -1055,8 +1060,11 @@ class ReverseETLApi:
 
         # process the query parameters
         _query_params = []
-        if _params.get('pagination') is not None:  # noqa: E501
-            _query_params.append(('pagination', _params['pagination']))
+        if _params.get('count') is not None:  # noqa: E501
+            _query_params.append(('count', _params['count']))
+
+        if _params.get('cursor') is not None:  # noqa: E501
+            _query_params.append(('cursor', _params['cursor']))
 
         # process the header parameters
         _header_params = dict(_params.get('_headers', {}))

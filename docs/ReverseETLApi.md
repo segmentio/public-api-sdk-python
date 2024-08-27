@@ -460,7 +460,7 @@ Name | Type | Description  | Notes
 
 ## Operation: list_reverse_etl_sync_statuses_from_model_and_subscription_id
 
-> ListReverseETLSyncStatusesFromModelAndSubscriptionId200Response list_reverse_etl_sync_statuses_from_model_and_subscription_id(model_id, subscription_id, pagination=pagination)
+> ListReverseETLSyncStatusesFromModelAndSubscriptionId200Response list_reverse_etl_sync_statuses_from_model_and_subscription_id(model_id, subscription_id, count=count, cursor=cursor)
 
 List Reverse ETL Sync Statuses from Model And Subscription Id
 
@@ -474,7 +474,6 @@ import time
 import os
 import segment_public_api
 from segment_public_api.models.list_reverse_etl_sync_statuses_from_model_and_subscription_id200_response import ListReverseETLSyncStatusesFromModelAndSubscriptionId200Response
-from segment_public_api.models.pagination_input import PaginationInput
 from segment_public_api.rest import ApiException
 from pprint import pprint
 
@@ -491,11 +490,12 @@ with segment_public_api.ApiClient(configuration) as api_client:
     api_instance = segment_public_api.ReverseETLApi(api_client)
     model_id = 'modelId' # str | 
     subscription_id = 'subscriptionId' # str | 
-    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Optional pagination params.  This parameter exists in alpha. (optional)
+    count = 3.4 # float | The number of items to retrieve in a page, between 1 and 100. Default is 10  This parameter exists in alpha. (optional)
+    cursor = 'cursor_example' # str | The page to request. Acceptable values to use here are in PaginationOutput objects, in the `current`, `next`, and `previous` keys.  This parameter exists in alpha. (optional)
 
     try:
         # List Reverse ETL Sync Statuses from Model And Subscription Id
-        api_response = api_instance.list_reverse_etl_sync_statuses_from_model_and_subscription_id(model_id, subscription_id, pagination=pagination)
+        api_response = api_instance.list_reverse_etl_sync_statuses_from_model_and_subscription_id(model_id, subscription_id, count=count, cursor=cursor)
         print("The response of ReverseETLApi->list_reverse_etl_sync_statuses_from_model_and_subscription_id:\n")
         pprint(api_response)
     except Exception as e:
@@ -510,7 +510,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **model_id** | **str**|  | 
  **subscription_id** | **str**|  | 
- **pagination** | [**PaginationInput**](.md)| Optional pagination params.  This parameter exists in alpha. | [optional] 
+ **count** | **float**| The number of items to retrieve in a page, between 1 and 100. Default is 10  This parameter exists in alpha. | [optional] 
+ **cursor** | **str**| The page to request. Acceptable values to use here are in PaginationOutput objects, in the &#x60;current&#x60;, &#x60;next&#x60;, and &#x60;previous&#x60; keys.  This parameter exists in alpha. | [optional] 
 
 ### Return type
 
