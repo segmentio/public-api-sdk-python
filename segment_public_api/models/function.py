@@ -23,9 +23,9 @@ from typing import List, Optional, Union
 from pydantic import BaseModel, Field, StrictBool, StrictFloat, StrictInt, StrictStr, conlist, validator
 from segment_public_api.models.function_setting_v1 import FunctionSettingV1
 
-class FunctionV1(BaseModel):
+class Function(BaseModel):
     """
-    Represents a Function.  # noqa: E501
+    A Function object.  # noqa: E501
     """
     id: Optional[StrictStr] = Field(None, description="An identifier for this Function.")
     resource_type: Optional[StrictStr] = Field(None, alias="resourceType", description="The Function type.  Config API note: equal to `type`.")
@@ -67,8 +67,8 @@ class FunctionV1(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> FunctionV1:
-        """Create an instance of FunctionV1 from a JSON string"""
+    def from_json(cls, json_str: str) -> Function:
+        """Create an instance of Function from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -92,15 +92,15 @@ class FunctionV1(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> FunctionV1:
-        """Create an instance of FunctionV1 from a dict"""
+    def from_dict(cls, obj: dict) -> Function:
+        """Create an instance of Function from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return FunctionV1.parse_obj(obj)
+            return Function.parse_obj(obj)
 
-        _obj = FunctionV1.parse_obj({
+        _obj = Function.parse_obj({
             "id": obj.get("id"),
             "resource_type": obj.get("resourceType"),
             "created_at": obj.get("createdAt"),

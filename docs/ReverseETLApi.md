@@ -491,7 +491,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     model_id = 'modelId' # str | 
     subscription_id = 'subscriptionId' # str | 
     count = 3.4 # float | The number of items to retrieve in a page, between 1 and 100. Default is 10  This parameter exists in alpha. (optional)
-    cursor = 'cursor_example' # str | The page to request. Acceptable values to use here are in the `current`, `next`, and `previous` keys.  This parameter exists in alpha. (optional)
+    cursor = 'cursor_example' # str | The page to request. Acceptable values to use are from the `current`, `next`, and `previous` keys.  This parameter exists in alpha. (optional)
 
     try:
         # List Reverse ETL Sync Statuses from Model And Subscription Id
@@ -511,7 +511,7 @@ Name | Type | Description  | Notes
  **model_id** | **str**|  | 
  **subscription_id** | **str**|  | 
  **count** | **float**| The number of items to retrieve in a page, between 1 and 100. Default is 10  This parameter exists in alpha. | [optional] 
- **cursor** | **str**| The page to request. Acceptable values to use here are in the &#x60;current&#x60;, &#x60;next&#x60;, and &#x60;previous&#x60; keys.  This parameter exists in alpha. | [optional] 
+ **cursor** | **str**| The page to request. Acceptable values to use are from the &#x60;current&#x60;, &#x60;next&#x60;, and &#x60;previous&#x60; keys.  This parameter exists in alpha. | [optional] 
 
 ### Return type
 
