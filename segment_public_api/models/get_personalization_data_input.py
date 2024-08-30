@@ -19,23 +19,18 @@ import re  # noqa: F401
 import json
 
 
+from typing import Optional
+from pydantic import BaseModel, Field, StrictStr
 
-from pydantic import BaseModel, Field, StrictStr, validator
-
-class Definition(BaseModel):
+class GetPersonalizationDataInput(BaseModel):
     """
-    Query language definition and type.  # noqa: E501
+    Input for the getEntityDataForProfile endpoint.  # noqa: E501
     """
-    query: StrictStr = Field(..., description="The query language string defining the computed trait aggregation criteria. For guidance on using the query language, see the [Segment documentation site](https://segment.com/docs/api/public-api/query-language).")
-    type: StrictStr = Field(..., description="The underlying data type being aggregated for this computed trait.  Possible values: users, accounts.")
-    __properties = ["query", "type"]
-
-    @validator('type')
-    def type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in ('ACCOUNTS', 'USERS'):
-            raise ValueError("must be one of enum values ('ACCOUNTS', 'USERS')")
-        return value
+    space_id: StrictStr = Field(..., alias="spaceId", description="The space id.")
+    entity_type: StrictStr = Field(..., alias="entityType", description="Entity type.")
+    entity_id: StrictStr = Field(..., alias="entityId", description="Entity id - if type is profile, should have the shape \"<type>:<identifier>\".")
+    child_entity_type: Optional[StrictStr] = Field(None, alias="childEntityType", description="Child entity type.")
+    __properties = ["spaceId", "entityType", "entityId", "childEntityType"]
 
     class Config:
         """Pydantic configuration"""
@@ -51,8 +46,8 @@ class Definition(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Definition:
-        """Create an instance of Definition from a JSON string"""
+    def from_json(cls, json_str: str) -> GetPersonalizationDataInput:
+        """Create an instance of GetPersonalizationDataInput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -64,17 +59,19 @@ class Definition(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> Definition:
-        """Create an instance of Definition from a dict"""
+    def from_dict(cls, obj: dict) -> GetPersonalizationDataInput:
+        """Create an instance of GetPersonalizationDataInput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return Definition.parse_obj(obj)
+            return GetPersonalizationDataInput.parse_obj(obj)
 
-        _obj = Definition.parse_obj({
-            "query": obj.get("query"),
-            "type": obj.get("type")
+        _obj = GetPersonalizationDataInput.parse_obj({
+            "space_id": obj.get("spaceId"),
+            "entity_type": obj.get("entityType"),
+            "entity_id": obj.get("entityId"),
+            "child_entity_type": obj.get("childEntityType")
         })
         return _obj
 

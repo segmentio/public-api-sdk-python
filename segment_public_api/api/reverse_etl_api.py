@@ -938,7 +938,7 @@ class ReverseETLApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_reverse_etl_sync_statuses_from_model_and_subscription_id(self, model_id : constr(strict=True), subscription_id : constr(strict=True), count : Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="The number of items to retrieve in a page, between 1 and 100. Default is 10  This parameter exists in alpha.")] = None, cursor : Annotated[Optional[StrictStr], Field(description="The page to request. Acceptable values to use are from the `current`, `next`, and `previous` keys.  This parameter exists in alpha.")] = None, **kwargs) -> ListReverseETLSyncStatusesFromModelAndSubscriptionId200Response:  # noqa: E501
+    def list_reverse_etl_sync_statuses_from_model_and_subscription_id(self, model_id : constr(strict=True), subscription_id : constr(strict=True), count : Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="The number of items to retrieve in a page, between 1 and 100. Default is 10  This parameter exists in alpha.")] = None, cursor : Annotated[Optional[StrictStr], Field(description="The page to request. Acceptable values to use here are in the `current`, `next`, and `previous` keys.  This parameter exists in alpha.")] = None, **kwargs) -> ListReverseETLSyncStatusesFromModelAndSubscriptionId200Response:  # noqa: E501
         """List Reverse ETL Sync Statuses from Model And Subscription Id  # noqa: E501
 
         Get the sync statuses for a Reverse ETL mapping subscription.  The sync status includes all detailed information about the sync - sync status, duration, details about the extract and load phase if applicable, etc.  The default page count is 10, and then the next page can be fetched by passing the `cursor` query parameter.  # noqa: E501
@@ -954,7 +954,7 @@ class ReverseETLApi:
         :type subscription_id: str
         :param count: The number of items to retrieve in a page, between 1 and 100. Default is 10  This parameter exists in alpha.
         :type count: float
-        :param cursor: The page to request. Acceptable values to use are from the `current`, `next`, and `previous` keys.  This parameter exists in alpha.
+        :param cursor: The page to request. Acceptable values to use here are in the `current`, `next`, and `previous` keys.  This parameter exists in alpha.
         :type cursor: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -974,7 +974,7 @@ class ReverseETLApi:
         return self.list_reverse_etl_sync_statuses_from_model_and_subscription_id_with_http_info(model_id, subscription_id, count, cursor, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_reverse_etl_sync_statuses_from_model_and_subscription_id_with_http_info(self, model_id : constr(strict=True), subscription_id : constr(strict=True), count : Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="The number of items to retrieve in a page, between 1 and 100. Default is 10  This parameter exists in alpha.")] = None, cursor : Annotated[Optional[StrictStr], Field(description="The page to request. Acceptable values to use are from the `current`, `next`, and `previous` keys.  This parameter exists in alpha.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def list_reverse_etl_sync_statuses_from_model_and_subscription_id_with_http_info(self, model_id : constr(strict=True), subscription_id : constr(strict=True), count : Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="The number of items to retrieve in a page, between 1 and 100. Default is 10  This parameter exists in alpha.")] = None, cursor : Annotated[Optional[StrictStr], Field(description="The page to request. Acceptable values to use here are in the `current`, `next`, and `previous` keys.  This parameter exists in alpha.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Reverse ETL Sync Statuses from Model And Subscription Id  # noqa: E501
 
         Get the sync statuses for a Reverse ETL mapping subscription.  The sync status includes all detailed information about the sync - sync status, duration, details about the extract and load phase if applicable, etc.  The default page count is 10, and then the next page can be fetched by passing the `cursor` query parameter.  # noqa: E501
@@ -990,7 +990,7 @@ class ReverseETLApi:
         :type subscription_id: str
         :param count: The number of items to retrieve in a page, between 1 and 100. Default is 10  This parameter exists in alpha.
         :type count: float
-        :param cursor: The page to request. Acceptable values to use are from the `current`, `next`, and `previous` keys.  This parameter exists in alpha.
+        :param cursor: The page to request. Acceptable values to use here are in the `current`, `next`, and `previous` keys.  This parameter exists in alpha.
         :type cursor: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional

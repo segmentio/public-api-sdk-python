@@ -19,23 +19,15 @@ import re  # noqa: F401
 import json
 
 
+from typing import Any, Dict
+from pydantic import BaseModel, Field
 
-from pydantic import BaseModel, Field, StrictStr, validator
-
-class Definition1(BaseModel):
+class GetPersonalizationDataOutput(BaseModel):
     """
-    Query language definition and type.  # noqa: E501
+    Response for the getEntityDataForProfile endpoint.  # noqa: E501
     """
-    query: StrictStr = Field(..., description="The query language string defining the audience segmentation criteria.")
-    type: StrictStr = Field(..., description="The underlying data type being segmented for this audience.  Possible values: users, accounts.")
-    __properties = ["query", "type"]
-
-    @validator('type')
-    def type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in ('ACCOUNTS', 'USERS'):
-            raise ValueError("must be one of enum values ('ACCOUNTS', 'USERS')")
-        return value
+    personalization_data: Dict[str, Any] = Field(..., alias="personalizationData", description="A key-value object that contains instance-specific Warehouse settings.")
+    __properties = ["personalizationData"]
 
     class Config:
         """Pydantic configuration"""
@@ -51,8 +43,8 @@ class Definition1(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Definition1:
-        """Create an instance of Definition1 from a JSON string"""
+    def from_json(cls, json_str: str) -> GetPersonalizationDataOutput:
+        """Create an instance of GetPersonalizationDataOutput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -64,17 +56,16 @@ class Definition1(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> Definition1:
-        """Create an instance of Definition1 from a dict"""
+    def from_dict(cls, obj: dict) -> GetPersonalizationDataOutput:
+        """Create an instance of GetPersonalizationDataOutput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return Definition1.parse_obj(obj)
+            return GetPersonalizationDataOutput.parse_obj(obj)
 
-        _obj = Definition1.parse_obj({
-            "query": obj.get("query"),
-            "type": obj.get("type")
+        _obj = GetPersonalizationDataOutput.parse_obj({
+            "personalization_data": obj.get("personalizationData")
         })
         return _obj
 
