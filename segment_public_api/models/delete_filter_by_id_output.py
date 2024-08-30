@@ -20,22 +20,14 @@ import json
 
 
 
-from pydantic import BaseModel, Field, StrictStr, validator
+from pydantic import BaseModel, Field, StrictBool
 
-class Definition1(BaseModel):
+class DeleteFilterByIdOutput(BaseModel):
     """
-    Query language definition and type.  # noqa: E501
+    Output for DeleteFilterById  # noqa: E501
     """
-    query: StrictStr = Field(..., description="The query language string defining the computed trait aggregation criteria. For guidance on using the query language, see the [Segment documentation site](https://segment.com/docs/api/public-api/query-language).")
-    type: StrictStr = Field(..., description="The underlying data type being aggregated for this computed trait.  Possible values: users, accounts.")
-    __properties = ["query", "type"]
-
-    @validator('type')
-    def type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in ('ACCOUNTS', 'USERS'):
-            raise ValueError("must be one of enum values ('ACCOUNTS', 'USERS')")
-        return value
+    deleted: StrictBool = Field(..., description="Filter deleted by filter id.")
+    __properties = ["deleted"]
 
     class Config:
         """Pydantic configuration"""
@@ -51,8 +43,8 @@ class Definition1(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Definition1:
-        """Create an instance of Definition1 from a JSON string"""
+    def from_json(cls, json_str: str) -> DeleteFilterByIdOutput:
+        """Create an instance of DeleteFilterByIdOutput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -64,17 +56,16 @@ class Definition1(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> Definition1:
-        """Create an instance of Definition1 from a dict"""
+    def from_dict(cls, obj: dict) -> DeleteFilterByIdOutput:
+        """Create an instance of DeleteFilterByIdOutput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return Definition1.parse_obj(obj)
+            return DeleteFilterByIdOutput.parse_obj(obj)
 
-        _obj = Definition1.parse_obj({
-            "query": obj.get("query"),
-            "type": obj.get("type")
+        _obj = DeleteFilterByIdOutput.parse_obj({
+            "deleted": obj.get("deleted")
         })
         return _obj
 

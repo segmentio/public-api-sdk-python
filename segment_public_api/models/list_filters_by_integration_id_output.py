@@ -19,23 +19,18 @@ import re  # noqa: F401
 import json
 
 
+from typing import List, Optional
+from pydantic import BaseModel, Field, conlist
+from segment_public_api.models.filter import Filter
+from segment_public_api.models.pagination_output import PaginationOutput
 
-from pydantic import BaseModel, Field, StrictStr, validator
-
-class Definition1(BaseModel):
+class ListFiltersByIntegrationIdOutput(BaseModel):
     """
-    Query language definition and type.  # noqa: E501
+    Output for ListFiltersByIntegrationId  # noqa: E501
     """
-    query: StrictStr = Field(..., description="The query language string defining the computed trait aggregation criteria. For guidance on using the query language, see the [Segment documentation site](https://segment.com/docs/api/public-api/query-language).")
-    type: StrictStr = Field(..., description="The underlying data type being aggregated for this computed trait.  Possible values: users, accounts.")
-    __properties = ["query", "type"]
-
-    @validator('type')
-    def type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in ('ACCOUNTS', 'USERS'):
-            raise ValueError("must be one of enum values ('ACCOUNTS', 'USERS')")
-        return value
+    filters: Optional[conlist(Filter)] = Field(None, description="Filter output.")
+    pagination: Optional[PaginationOutput] = None
+    __properties = ["filters", "pagination"]
 
     class Config:
         """Pydantic configuration"""
@@ -51,8 +46,8 @@ class Definition1(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Definition1:
-        """Create an instance of Definition1 from a JSON string"""
+    def from_json(cls, json_str: str) -> ListFiltersByIntegrationIdOutput:
+        """Create an instance of ListFiltersByIntegrationIdOutput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -61,20 +56,30 @@ class Definition1(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # override the default output from pydantic by calling `to_dict()` of each item in filters (list)
+        _items = []
+        if self.filters:
+            for _item in self.filters:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['filters'] = _items
+        # override the default output from pydantic by calling `to_dict()` of pagination
+        if self.pagination:
+            _dict['pagination'] = self.pagination.to_dict()
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> Definition1:
-        """Create an instance of Definition1 from a dict"""
+    def from_dict(cls, obj: dict) -> ListFiltersByIntegrationIdOutput:
+        """Create an instance of ListFiltersByIntegrationIdOutput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return Definition1.parse_obj(obj)
+            return ListFiltersByIntegrationIdOutput.parse_obj(obj)
 
-        _obj = Definition1.parse_obj({
-            "query": obj.get("query"),
-            "type": obj.get("type")
+        _obj = ListFiltersByIntegrationIdOutput.parse_obj({
+            "filters": [Filter.from_dict(_item) for _item in obj.get("filters")] if obj.get("filters") is not None else None,
+            "pagination": PaginationOutput.from_dict(obj.get("pagination")) if obj.get("pagination") is not None else None
         })
         return _obj
 
