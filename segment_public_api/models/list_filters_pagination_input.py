@@ -19,23 +19,16 @@ import re  # noqa: F401
 import json
 
 
+from typing import Optional, Union
+from pydantic import BaseModel, Field, StrictFloat, StrictInt
 
-from pydantic import BaseModel, Field, StrictStr, validator
-
-class Definition1(BaseModel):
+class ListFiltersPaginationInput(BaseModel):
     """
-    Query language definition and type.  # noqa: E501
+    Pagination for list filters  # noqa: E501
     """
-    query: StrictStr = Field(..., description="The query language string defining the audience segmentation criteria.")
-    type: StrictStr = Field(..., description="The underlying data type being segmented for this audience.  Possible values: users, accounts.")
-    __properties = ["query", "type"]
-
-    @validator('type')
-    def type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in ('ACCOUNTS', 'USERS'):
-            raise ValueError("must be one of enum values ('ACCOUNTS', 'USERS')")
-        return value
+    cursor: Optional[Union[StrictFloat, StrictInt]] = Field(None, description="The offset.")
+    count: Union[StrictFloat, StrictInt] = Field(..., description="The number of items to retrieve in a page, between 1 and 1000.")
+    __properties = ["cursor", "count"]
 
     class Config:
         """Pydantic configuration"""
@@ -51,8 +44,8 @@ class Definition1(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Definition1:
-        """Create an instance of Definition1 from a JSON string"""
+    def from_json(cls, json_str: str) -> ListFiltersPaginationInput:
+        """Create an instance of ListFiltersPaginationInput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -64,17 +57,17 @@ class Definition1(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> Definition1:
-        """Create an instance of Definition1 from a dict"""
+    def from_dict(cls, obj: dict) -> ListFiltersPaginationInput:
+        """Create an instance of ListFiltersPaginationInput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return Definition1.parse_obj(obj)
+            return ListFiltersPaginationInput.parse_obj(obj)
 
-        _obj = Definition1.parse_obj({
-            "query": obj.get("query"),
-            "type": obj.get("type")
+        _obj = ListFiltersPaginationInput.parse_obj({
+            "cursor": obj.get("cursor"),
+            "count": obj.get("count")
         })
         return _obj
 

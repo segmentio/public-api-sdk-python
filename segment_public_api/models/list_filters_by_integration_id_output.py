@@ -22,14 +22,14 @@ import json
 from typing import List, Optional
 from pydantic import BaseModel, Field, conlist
 from segment_public_api.models.filter import Filter
-from segment_public_api.models.pagination_output import PaginationOutput
+from segment_public_api.models.list_filters_pagination_output import ListFiltersPaginationOutput
 
 class ListFiltersByIntegrationIdOutput(BaseModel):
     """
     Output for ListFiltersByIntegrationId  # noqa: E501
     """
     filters: Optional[conlist(Filter)] = Field(None, description="Filter output.")
-    pagination: Optional[PaginationOutput] = None
+    pagination: Optional[ListFiltersPaginationOutput] = None
     __properties = ["filters", "pagination"]
 
     class Config:
@@ -79,7 +79,7 @@ class ListFiltersByIntegrationIdOutput(BaseModel):
 
         _obj = ListFiltersByIntegrationIdOutput.parse_obj({
             "filters": [Filter.from_dict(_item) for _item in obj.get("filters")] if obj.get("filters") is not None else None,
-            "pagination": PaginationOutput.from_dict(obj.get("pagination")) if obj.get("pagination") is not None else None
+            "pagination": ListFiltersPaginationOutput.from_dict(obj.get("pagination")) if obj.get("pagination") is not None else None
         })
         return _obj
 

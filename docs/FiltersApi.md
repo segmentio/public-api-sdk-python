@@ -241,7 +241,7 @@ Lists filters by integration id.
 import time
 import os
 import segment_public_api
-from segment_public_api.models.pagination_input import PaginationInput
+from segment_public_api.models.list_filters_pagination_input import ListFiltersPaginationInput
 from segment_public_api.rest import ApiException
 from pprint import pprint
 
@@ -258,7 +258,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     api_instance = segment_public_api.FiltersApi(api_client)
     integration_id = '<id>' # str | 
     product_area = 'spaces' # str | The product area of the filter, which should be spaces (endpoint table should be able to determine the resource)  This parameter exists in alpha.
-    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination parameters.  This parameter exists in alpha. (optional)
+    pagination = segment_public_api.ListFiltersPaginationInput() # ListFiltersPaginationInput | Pagination parameters.  This parameter exists in alpha. (optional)
 
     try:
         # List Filters By Integration Id
@@ -275,7 +275,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **integration_id** | **str**|  | 
  **product_area** | **str**| The product area of the filter, which should be spaces (endpoint table should be able to determine the resource)  This parameter exists in alpha. | 
- **pagination** | [**PaginationInput**](.md)| Pagination parameters.  This parameter exists in alpha. | [optional] 
+ **pagination** | [**ListFiltersPaginationInput**](.md)| Pagination parameters.  This parameter exists in alpha. | [optional] 
 
 ### Return type
 

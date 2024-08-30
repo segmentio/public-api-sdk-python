@@ -19,23 +19,17 @@ import re  # noqa: F401
 import json
 
 
+from typing import Optional, Union
+from pydantic import BaseModel, Field, StrictFloat, StrictInt
 
-from pydantic import BaseModel, Field, StrictStr, validator
-
-class Definition1(BaseModel):
+class ListFiltersPaginationOutput(BaseModel):
     """
-    Query language definition and type.  # noqa: E501
+    Pagination for list filters  # noqa: E501
     """
-    query: StrictStr = Field(..., description="The query language string defining the audience segmentation criteria.")
-    type: StrictStr = Field(..., description="The underlying data type being segmented for this audience.  Possible values: users, accounts.")
-    __properties = ["query", "type"]
-
-    @validator('type')
-    def type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in ('ACCOUNTS', 'USERS'):
-            raise ValueError("must be one of enum values ('ACCOUNTS', 'USERS')")
-        return value
+    current: Optional[Union[StrictFloat, StrictInt]] = Field(None, description="Current.")
+    next: Optional[Union[StrictFloat, StrictInt]] = Field(None, description="Next.")
+    total_entries: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="totalEntries", description="Total entries.")
+    __properties = ["current", "next", "totalEntries"]
 
     class Config:
         """Pydantic configuration"""
@@ -51,8 +45,8 @@ class Definition1(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Definition1:
-        """Create an instance of Definition1 from a JSON string"""
+    def from_json(cls, json_str: str) -> ListFiltersPaginationOutput:
+        """Create an instance of ListFiltersPaginationOutput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -64,17 +58,18 @@ class Definition1(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> Definition1:
-        """Create an instance of Definition1 from a dict"""
+    def from_dict(cls, obj: dict) -> ListFiltersPaginationOutput:
+        """Create an instance of ListFiltersPaginationOutput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return Definition1.parse_obj(obj)
+            return ListFiltersPaginationOutput.parse_obj(obj)
 
-        _obj = Definition1.parse_obj({
-            "query": obj.get("query"),
-            "type": obj.get("type")
+        _obj = ListFiltersPaginationOutput.parse_obj({
+            "current": obj.get("current"),
+            "next": obj.get("next"),
+            "total_entries": obj.get("totalEntries")
         })
         return _obj
 

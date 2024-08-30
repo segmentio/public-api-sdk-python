@@ -25,7 +25,7 @@ from pydantic import Field, StrictStr, constr
 from typing import Optional
 
 from segment_public_api.models.create_filter_input import CreateFilterInput
-from segment_public_api.models.pagination_input import PaginationInput
+from segment_public_api.models.list_filters_pagination_input import ListFiltersPaginationInput
 from segment_public_api.models.update_filter_by_id_input import UpdateFilterByIdInput
 
 from segment_public_api.api_client import ApiClient
@@ -494,7 +494,7 @@ class FiltersApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_filters_by_integration_id(self, integration_id : constr(strict=True), product_area : Annotated[StrictStr, Field(..., description="The product area of the filter, which should be spaces (endpoint table should be able to determine the resource)  This parameter exists in alpha.")], pagination : Annotated[Optional[PaginationInput], Field(description="Pagination parameters.  This parameter exists in alpha.")] = None, **kwargs) -> None:  # noqa: E501
+    def list_filters_by_integration_id(self, integration_id : constr(strict=True), product_area : Annotated[StrictStr, Field(..., description="The product area of the filter, which should be spaces (endpoint table should be able to determine the resource)  This parameter exists in alpha.")], pagination : Annotated[Optional[ListFiltersPaginationInput], Field(description="Pagination parameters.  This parameter exists in alpha.")] = None, **kwargs) -> None:  # noqa: E501
         """List Filters By Integration Id  # noqa: E501
 
         Lists filters by integration id.  # noqa: E501
@@ -509,7 +509,7 @@ class FiltersApi:
         :param product_area: The product area of the filter, which should be spaces (endpoint table should be able to determine the resource)  This parameter exists in alpha. (required)
         :type product_area: str
         :param pagination: Pagination parameters.  This parameter exists in alpha.
-        :type pagination: PaginationInput
+        :type pagination: ListFiltersPaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _request_timeout: timeout setting for this request.
@@ -528,7 +528,7 @@ class FiltersApi:
         return self.list_filters_by_integration_id_with_http_info(integration_id, product_area, pagination, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_filters_by_integration_id_with_http_info(self, integration_id : constr(strict=True), product_area : Annotated[StrictStr, Field(..., description="The product area of the filter, which should be spaces (endpoint table should be able to determine the resource)  This parameter exists in alpha.")], pagination : Annotated[Optional[PaginationInput], Field(description="Pagination parameters.  This parameter exists in alpha.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def list_filters_by_integration_id_with_http_info(self, integration_id : constr(strict=True), product_area : Annotated[StrictStr, Field(..., description="The product area of the filter, which should be spaces (endpoint table should be able to determine the resource)  This parameter exists in alpha.")], pagination : Annotated[Optional[ListFiltersPaginationInput], Field(description="Pagination parameters.  This parameter exists in alpha.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Filters By Integration Id  # noqa: E501
 
         Lists filters by integration id.  # noqa: E501
@@ -543,7 +543,7 @@ class FiltersApi:
         :param product_area: The product area of the filter, which should be spaces (endpoint table should be able to determine the resource)  This parameter exists in alpha. (required)
         :type product_area: str
         :param pagination: Pagination parameters.  This parameter exists in alpha.
-        :type pagination: PaginationInput
+        :type pagination: ListFiltersPaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _preload_content: if False, the ApiResponse.data will
