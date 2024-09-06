@@ -21,6 +21,7 @@ import json
 
 from typing import Any, Dict, Optional
 from pydantic import BaseModel, Field, StrictBool, StrictStr
+from segment_public_api.models.reverse_etl_schedule_definition import ReverseEtlScheduleDefinition
 
 class DestinationSubscription(BaseModel):
     """
@@ -35,7 +36,7 @@ class DestinationSubscription(BaseModel):
     settings: Dict[str, Any] = Field(..., description="Represents settings used to configure an action subscription.")
     trigger: StrictStr = Field(..., description="FQL string that describes what events should trigger a Destination action.")
     model_id: Optional[StrictStr] = Field(None, alias="modelId", description="The unique identifier for the linked ReverseETLModel, if this part of a Reverse ETL connection.")
-    reverse_etl_schedule: Optional[Dict[str, Any]] = Field(None, alias="reverseETLSchedule", description="The schedule for the Reverse ETL subscription.")
+    reverse_etl_schedule: Optional[ReverseEtlScheduleDefinition] = Field(None, alias="reverseETLSchedule")
     __properties = ["id", "name", "actionId", "actionSlug", "destinationId", "enabled", "settings", "trigger", "modelId", "reverseETLSchedule"]
 
     class Config:
@@ -62,11 +63,9 @@ class DestinationSubscription(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # set to None if reverse_etl_schedule (nullable) is None
-        # and __fields_set__ contains the field
-        if self.reverse_etl_schedule is None and "reverse_etl_schedule" in self.__fields_set__:
-            _dict['reverseETLSchedule'] = None
-
+        # override the default output from pydantic by calling `to_dict()` of reverse_etl_schedule
+        if self.reverse_etl_schedule:
+            _dict['reverseETLSchedule'] = self.reverse_etl_schedule.to_dict()
         return _dict
 
     @classmethod
@@ -88,7 +87,7 @@ class DestinationSubscription(BaseModel):
             "settings": obj.get("settings"),
             "trigger": obj.get("trigger"),
             "model_id": obj.get("modelId"),
-            "reverse_etl_schedule": obj.get("reverseETLSchedule")
+            "reverse_etl_schedule": ReverseEtlScheduleDefinition.from_dict(obj.get("reverseETLSchedule")) if obj.get("reverseETLSchedule") is not None else None
         })
         return _obj
 
