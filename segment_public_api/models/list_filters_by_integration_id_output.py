@@ -26,7 +26,7 @@ from segment_public_api.models.list_filters_pagination_output import ListFilters
 
 class ListFiltersByIntegrationIdOutput(BaseModel):
     """
-    Output for ListFiltersByIntegrationId  # noqa: E501
+    Output for ListFiltersByIntegrationId.  # noqa: E501
     """
     filters: Optional[conlist(Filter)] = Field(None, description="Filter output.")
     pagination: Optional[ListFiltersPaginationOutput] = None

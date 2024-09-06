@@ -24,7 +24,7 @@ from pydantic import BaseModel, Field, StrictFloat, StrictInt
 
 class ListFiltersPaginationOutput(BaseModel):
     """
-    Pagination for list filters  # noqa: E501
+    Pagination for list filters.  # noqa: E501
     """
     current: Optional[Union[StrictFloat, StrictInt]] = Field(None, description="Current.")
     next: Optional[Union[StrictFloat, StrictInt]] = Field(None, description="Next.")

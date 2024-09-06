@@ -4,17 +4,17 @@ All URIs are relative to *https://api.segmentapis.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**create_filter**](FiltersApi.md#create_filter) | **POST** /filters/create/{integrationId} | Create Filter
-[**delete_filter_by_id**](FiltersApi.md#delete_filter_by_id) | **DELETE** /filters/delete/{id} | Delete Filter By Id
-[**get_filter_by_id**](FiltersApi.md#get_filter_by_id) | **GET** /filters/filter/{id} | Get Filter By Id
-[**list_filters_by_integration_id**](FiltersApi.md#list_filters_by_integration_id) | **GET** /filters/{integrationId} | List Filters By Integration Id
-[**update_filter_by_id**](FiltersApi.md#update_filter_by_id) | **PATCH** /filters/update/{id} | Update Filter By Id
+[**create_filter**](FiltersApi.md#create_filter) | **POST** /filters | Create Filter
+[**delete_filter_by_id**](FiltersApi.md#delete_filter_by_id) | **DELETE** /filters/{id} | Delete Filter By Id
+[**get_filter_by_id**](FiltersApi.md#get_filter_by_id) | **GET** /filters/{id} | Get Filter By Id
+[**list_filters_by_integration_id**](FiltersApi.md#list_filters_by_integration_id) | **GET** /filters | List Filters By Integration Id
+[**update_filter_by_id**](FiltersApi.md#update_filter_by_id) | **PATCH** /filters/{id} | Update Filter By Id
 
 
 
 ## Operation: create_filter
 
-> create_filter(integration_id, create_filter_input)
+> create_filter(create_filter_input)
 
 Create Filter
 
@@ -42,12 +42,11 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.FiltersApi(api_client)
-    integration_id = '<id>' # str | 
-    create_filter_input = {"name":"Test filter","if":"type = \"track\""} # CreateFilterInput | 
+    create_filter_input = {"integrationId":"<id>","name":"Test filter","if":"type = \"track\""} # CreateFilterInput | 
 
     try:
         # Create Filter
-        api_instance.create_filter(integration_id, create_filter_input)
+        api_instance.create_filter(create_filter_input)
     except Exception as e:
         print("Exception when calling FiltersApi->create_filter: %s\n" % e)
 ```
@@ -58,7 +57,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **integration_id** | **str**|  | 
  **create_filter_input** | [**CreateFilterInput**](CreateFilterInput.md)|  | 
 
 ### Return type
@@ -114,7 +112,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.FiltersApi(api_client)
     id = '<id>' # str | 
-    product_area = 'spaces' # str | The product area of the filter  This parameter exists in alpha.
+    product_area = 'spaces' # str | The product area of the filter.  This parameter exists in alpha.
 
     try:
         # Delete Filter By Id
@@ -130,7 +128,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**|  | 
- **product_area** | **str**| The product area of the filter  This parameter exists in alpha. | 
+ **product_area** | **str**| The product area of the filter.  This parameter exists in alpha. | 
 
 ### Return type
 
@@ -185,7 +183,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.FiltersApi(api_client)
     id = '<id>' # str | 
-    product_area = 'spaces' # str | The product area of the filter, which should be spaces (endpoint table should be able to determine the resource)  This parameter exists in alpha.
+    product_area = 'spaces' # str | The product area of the filter, which should be spaces (endpoint table should be able to determine the resource).  This parameter exists in alpha.
 
     try:
         # Get Filter By Id
@@ -201,7 +199,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**|  | 
- **product_area** | **str**| The product area of the filter, which should be spaces (endpoint table should be able to determine the resource)  This parameter exists in alpha. | 
+ **product_area** | **str**| The product area of the filter, which should be spaces (endpoint table should be able to determine the resource).  This parameter exists in alpha. | 
 
 ### Return type
 
@@ -256,8 +254,8 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.FiltersApi(api_client)
-    integration_id = '<id>' # str | 
-    product_area = 'spaces' # str | The product area of the filter, which should be spaces (endpoint table should be able to determine the resource)  This parameter exists in alpha.
+    integration_id = '<id>' # str | The integration id used to fetch filters.  This parameter exists in alpha.
+    product_area = 'spaces' # str | The product area of the filter, which should be spaces (endpoint table should be able to determine the resource).  This parameter exists in alpha.
     pagination = segment_public_api.ListFiltersPaginationInput() # ListFiltersPaginationInput | Pagination parameters.  This parameter exists in alpha. (optional)
 
     try:
@@ -273,8 +271,8 @@ with segment_public_api.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **integration_id** | **str**|  | 
- **product_area** | **str**| The product area of the filter, which should be spaces (endpoint table should be able to determine the resource)  This parameter exists in alpha. | 
+ **integration_id** | **str**| The integration id used to fetch filters.  This parameter exists in alpha. | 
+ **product_area** | **str**| The product area of the filter, which should be spaces (endpoint table should be able to determine the resource).  This parameter exists in alpha. | 
  **pagination** | [**ListFiltersPaginationInput**](.md)| Pagination parameters.  This parameter exists in alpha. | [optional] 
 
 ### Return type

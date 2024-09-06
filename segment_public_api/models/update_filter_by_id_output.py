@@ -25,7 +25,7 @@ from segment_public_api.models.filter import Filter
 
 class UpdateFilterByIdOutput(BaseModel):
     """
-    Output for UpdateFilterById  # noqa: E501
+    Output for UpdateFilterById.  # noqa: E501
     """
     filter: Filter = Field(...)
     __properties = ["filter"]

@@ -49,18 +49,16 @@ class FiltersApi:
         self.api_client = api_client
 
     @validate_arguments
-    def create_filter(self, integration_id : constr(strict=True), create_filter_input : CreateFilterInput, **kwargs) -> None:  # noqa: E501
+    def create_filter(self, create_filter_input : CreateFilterInput, **kwargs) -> None:  # noqa: E501
         """Create Filter  # noqa: E501
 
         Creates a filter.    • When called, this endpoint may generate the `Filter Created` event in the [audit trail](/tag/Audit-Trail).         # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.create_filter(integration_id, create_filter_input, async_req=True)
+        >>> thread = api.create_filter(create_filter_input, async_req=True)
         >>> result = thread.get()
 
-        :param integration_id: (required)
-        :type integration_id: str
         :param create_filter_input: (required)
         :type create_filter_input: CreateFilterInput
         :param async_req: Whether to execute the request asynchronously.
@@ -78,21 +76,19 @@ class FiltersApi:
         if '_preload_content' in kwargs:
             message = "Error! Please call the create_filter_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.create_filter_with_http_info(integration_id, create_filter_input, **kwargs)  # noqa: E501
+        return self.create_filter_with_http_info(create_filter_input, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def create_filter_with_http_info(self, integration_id : constr(strict=True), create_filter_input : CreateFilterInput, **kwargs) -> ApiResponse:  # noqa: E501
+    def create_filter_with_http_info(self, create_filter_input : CreateFilterInput, **kwargs) -> ApiResponse:  # noqa: E501
         """Create Filter  # noqa: E501
 
         Creates a filter.    • When called, this endpoint may generate the `Filter Created` event in the [audit trail](/tag/Audit-Trail).         # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.create_filter_with_http_info(integration_id, create_filter_input, async_req=True)
+        >>> thread = api.create_filter_with_http_info(create_filter_input, async_req=True)
         >>> result = thread.get()
 
-        :param integration_id: (required)
-        :type integration_id: str
         :param create_filter_input: (required)
         :type create_filter_input: CreateFilterInput
         :param async_req: Whether to execute the request asynchronously.
@@ -123,7 +119,6 @@ class FiltersApi:
         _params = locals()
 
         _all_params = [
-            'integration_id',
             'create_filter_input'
         ]
         _all_params.extend(
@@ -152,9 +147,6 @@ class FiltersApi:
 
         # process the path parameters
         _path_params = {}
-        if _params['integration_id']:
-            _path_params['integrationId'] = _params['integration_id']
-
 
         # process the query parameters
         _query_params = []
@@ -185,7 +177,7 @@ class FiltersApi:
         _response_types_map = {}
 
         return self.api_client.call_api(
-            '/filters/create/{integrationId}', 'POST',
+            '/filters', 'POST',
             _path_params,
             _query_params,
             _header_params,
@@ -202,7 +194,7 @@ class FiltersApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def delete_filter_by_id(self, id : constr(strict=True), product_area : Annotated[StrictStr, Field(..., description="The product area of the filter  This parameter exists in alpha.")], **kwargs) -> None:  # noqa: E501
+    def delete_filter_by_id(self, id : constr(strict=True), product_area : Annotated[StrictStr, Field(..., description="The product area of the filter.  This parameter exists in alpha.")], **kwargs) -> None:  # noqa: E501
         """Delete Filter By Id  # noqa: E501
 
         Deletes a filter by id.    • When called, this endpoint may generate the `Filter Deleted` event in the [audit trail](/tag/Audit-Trail).         # noqa: E501
@@ -214,7 +206,7 @@ class FiltersApi:
 
         :param id: (required)
         :type id: str
-        :param product_area: The product area of the filter  This parameter exists in alpha. (required)
+        :param product_area: The product area of the filter.  This parameter exists in alpha. (required)
         :type product_area: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -234,7 +226,7 @@ class FiltersApi:
         return self.delete_filter_by_id_with_http_info(id, product_area, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def delete_filter_by_id_with_http_info(self, id : constr(strict=True), product_area : Annotated[StrictStr, Field(..., description="The product area of the filter  This parameter exists in alpha.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def delete_filter_by_id_with_http_info(self, id : constr(strict=True), product_area : Annotated[StrictStr, Field(..., description="The product area of the filter.  This parameter exists in alpha.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Delete Filter By Id  # noqa: E501
 
         Deletes a filter by id.    • When called, this endpoint may generate the `Filter Deleted` event in the [audit trail](/tag/Audit-Trail).         # noqa: E501
@@ -246,7 +238,7 @@ class FiltersApi:
 
         :param id: (required)
         :type id: str
-        :param product_area: The product area of the filter  This parameter exists in alpha. (required)
+        :param product_area: The product area of the filter.  This parameter exists in alpha. (required)
         :type product_area: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -331,7 +323,7 @@ class FiltersApi:
         _response_types_map = {}
 
         return self.api_client.call_api(
-            '/filters/delete/{id}', 'DELETE',
+            '/filters/{id}', 'DELETE',
             _path_params,
             _query_params,
             _header_params,
@@ -348,7 +340,7 @@ class FiltersApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def get_filter_by_id(self, id : constr(strict=True), product_area : Annotated[StrictStr, Field(..., description="The product area of the filter, which should be spaces (endpoint table should be able to determine the resource)  This parameter exists in alpha.")], **kwargs) -> None:  # noqa: E501
+    def get_filter_by_id(self, id : constr(strict=True), product_area : Annotated[StrictStr, Field(..., description="The product area of the filter, which should be spaces (endpoint table should be able to determine the resource).  This parameter exists in alpha.")], **kwargs) -> None:  # noqa: E501
         """Get Filter By Id  # noqa: E501
 
         Gets a filter by id.  # noqa: E501
@@ -360,7 +352,7 @@ class FiltersApi:
 
         :param id: (required)
         :type id: str
-        :param product_area: The product area of the filter, which should be spaces (endpoint table should be able to determine the resource)  This parameter exists in alpha. (required)
+        :param product_area: The product area of the filter, which should be spaces (endpoint table should be able to determine the resource).  This parameter exists in alpha. (required)
         :type product_area: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -380,7 +372,7 @@ class FiltersApi:
         return self.get_filter_by_id_with_http_info(id, product_area, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_filter_by_id_with_http_info(self, id : constr(strict=True), product_area : Annotated[StrictStr, Field(..., description="The product area of the filter, which should be spaces (endpoint table should be able to determine the resource)  This parameter exists in alpha.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def get_filter_by_id_with_http_info(self, id : constr(strict=True), product_area : Annotated[StrictStr, Field(..., description="The product area of the filter, which should be spaces (endpoint table should be able to determine the resource).  This parameter exists in alpha.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Get Filter By Id  # noqa: E501
 
         Gets a filter by id.  # noqa: E501
@@ -392,7 +384,7 @@ class FiltersApi:
 
         :param id: (required)
         :type id: str
-        :param product_area: The product area of the filter, which should be spaces (endpoint table should be able to determine the resource)  This parameter exists in alpha. (required)
+        :param product_area: The product area of the filter, which should be spaces (endpoint table should be able to determine the resource).  This parameter exists in alpha. (required)
         :type product_area: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -477,7 +469,7 @@ class FiltersApi:
         _response_types_map = {}
 
         return self.api_client.call_api(
-            '/filters/filter/{id}', 'GET',
+            '/filters/{id}', 'GET',
             _path_params,
             _query_params,
             _header_params,
@@ -494,7 +486,7 @@ class FiltersApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_filters_by_integration_id(self, integration_id : constr(strict=True), product_area : Annotated[StrictStr, Field(..., description="The product area of the filter, which should be spaces (endpoint table should be able to determine the resource)  This parameter exists in alpha.")], pagination : Annotated[Optional[ListFiltersPaginationInput], Field(description="Pagination parameters.  This parameter exists in alpha.")] = None, **kwargs) -> None:  # noqa: E501
+    def list_filters_by_integration_id(self, integration_id : Annotated[StrictStr, Field(..., description="The integration id used to fetch filters.  This parameter exists in alpha.")], product_area : Annotated[StrictStr, Field(..., description="The product area of the filter, which should be spaces (endpoint table should be able to determine the resource).  This parameter exists in alpha.")], pagination : Annotated[Optional[ListFiltersPaginationInput], Field(description="Pagination parameters.  This parameter exists in alpha.")] = None, **kwargs) -> None:  # noqa: E501
         """List Filters By Integration Id  # noqa: E501
 
         Lists filters by integration id.  # noqa: E501
@@ -504,9 +496,9 @@ class FiltersApi:
         >>> thread = api.list_filters_by_integration_id(integration_id, product_area, pagination, async_req=True)
         >>> result = thread.get()
 
-        :param integration_id: (required)
+        :param integration_id: The integration id used to fetch filters.  This parameter exists in alpha. (required)
         :type integration_id: str
-        :param product_area: The product area of the filter, which should be spaces (endpoint table should be able to determine the resource)  This parameter exists in alpha. (required)
+        :param product_area: The product area of the filter, which should be spaces (endpoint table should be able to determine the resource).  This parameter exists in alpha. (required)
         :type product_area: str
         :param pagination: Pagination parameters.  This parameter exists in alpha.
         :type pagination: ListFiltersPaginationInput
@@ -528,7 +520,7 @@ class FiltersApi:
         return self.list_filters_by_integration_id_with_http_info(integration_id, product_area, pagination, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_filters_by_integration_id_with_http_info(self, integration_id : constr(strict=True), product_area : Annotated[StrictStr, Field(..., description="The product area of the filter, which should be spaces (endpoint table should be able to determine the resource)  This parameter exists in alpha.")], pagination : Annotated[Optional[ListFiltersPaginationInput], Field(description="Pagination parameters.  This parameter exists in alpha.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def list_filters_by_integration_id_with_http_info(self, integration_id : Annotated[StrictStr, Field(..., description="The integration id used to fetch filters.  This parameter exists in alpha.")], product_area : Annotated[StrictStr, Field(..., description="The product area of the filter, which should be spaces (endpoint table should be able to determine the resource).  This parameter exists in alpha.")], pagination : Annotated[Optional[ListFiltersPaginationInput], Field(description="Pagination parameters.  This parameter exists in alpha.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Filters By Integration Id  # noqa: E501
 
         Lists filters by integration id.  # noqa: E501
@@ -538,9 +530,9 @@ class FiltersApi:
         >>> thread = api.list_filters_by_integration_id_with_http_info(integration_id, product_area, pagination, async_req=True)
         >>> result = thread.get()
 
-        :param integration_id: (required)
+        :param integration_id: The integration id used to fetch filters.  This parameter exists in alpha. (required)
         :type integration_id: str
-        :param product_area: The product area of the filter, which should be spaces (endpoint table should be able to determine the resource)  This parameter exists in alpha. (required)
+        :param product_area: The product area of the filter, which should be spaces (endpoint table should be able to determine the resource).  This parameter exists in alpha. (required)
         :type product_area: str
         :param pagination: Pagination parameters.  This parameter exists in alpha.
         :type pagination: ListFiltersPaginationInput
@@ -602,12 +594,12 @@ class FiltersApi:
 
         # process the path parameters
         _path_params = {}
-        if _params['integration_id']:
-            _path_params['integrationId'] = _params['integration_id']
-
 
         # process the query parameters
         _query_params = []
+        if _params.get('integration_id') is not None:  # noqa: E501
+            _query_params.append(('integrationId', _params['integration_id']))
+
         if _params.get('product_area') is not None:  # noqa: E501
             _query_params.append(('productArea', _params['product_area']))
 
@@ -631,7 +623,7 @@ class FiltersApi:
         _response_types_map = {}
 
         return self.api_client.call_api(
-            '/filters/{integrationId}', 'GET',
+            '/filters', 'GET',
             _path_params,
             _query_params,
             _header_params,
@@ -784,7 +776,7 @@ class FiltersApi:
         _response_types_map = {}
 
         return self.api_client.call_api(
-            '/filters/update/{id}', 'PATCH',
+            '/filters/{id}', 'PATCH',
             _path_params,
             _query_params,
             _header_params,

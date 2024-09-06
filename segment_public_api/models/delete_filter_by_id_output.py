@@ -24,7 +24,7 @@ from pydantic import BaseModel, Field, StrictBool
 
 class DeleteFilterByIdOutput(BaseModel):
     """
-    Output for DeleteFilterById  # noqa: E501
+    Output for DeleteFilterById.  # noqa: E501
     """
     deleted: StrictBool = Field(..., description="Filter deleted by filter id.")
     __properties = ["deleted"]

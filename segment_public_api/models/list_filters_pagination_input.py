@@ -24,7 +24,7 @@ from pydantic import BaseModel, Field, StrictFloat, StrictInt
 
 class ListFiltersPaginationInput(BaseModel):
     """
-    Pagination for list filters  # noqa: E501
+    Pagination for list filters.  # noqa: E501
     """
     cursor: Optional[Union[StrictFloat, StrictInt]] = Field(None, description="The offset.")
     count: Union[StrictFloat, StrictInt] = Field(..., description="The number of items to retrieve in a page, between 1 and 1000.")

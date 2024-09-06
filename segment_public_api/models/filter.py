@@ -24,17 +24,17 @@ from pydantic import BaseModel, Field, StrictBool, StrictStr, conlist
 
 class Filter(BaseModel):
     """
-    Filter output  # noqa: E501
+    Filter output.  # noqa: E501
     """
-    id: StrictStr = Field(..., description="The newly created filter ID")
-    workspace_id: StrictStr = Field(..., alias="workspaceId", description="The workspace id to create the filter")
-    integration_id: StrictStr = Field(..., alias="integrationId", description="The integration id of the resource")
-    enabled: Optional[StrictBool] = Field(None, description="Whether the filter is enabled")
-    drop: Optional[StrictBool] = Field(None, description="Whether the event is dropped")
-    name: StrictStr = Field(..., description="The name of the filter")
-    description: Optional[StrictStr] = Field(None, description="The description of the filter")
-    var_if: StrictStr = Field(..., alias="if", description="The \"if\" statement for a filter")
-    product_area: Optional[StrictStr] = Field(None, alias="productArea", description="The product area of the filter, which should be spaces")
+    id: StrictStr = Field(..., description="The newly created filter ID.")
+    workspace_id: StrictStr = Field(..., alias="workspaceId", description="The workspace id to create the filter.")
+    integration_id: StrictStr = Field(..., alias="integrationId", description="The integration id of the resource.")
+    enabled: Optional[StrictBool] = Field(None, description="Whether the filter is enabled.")
+    drop: Optional[StrictBool] = Field(None, description="Whether the event is dropped.")
+    name: StrictStr = Field(..., description="The name of the filter.")
+    description: Optional[StrictStr] = Field(None, description="The description of the filter.")
+    var_if: StrictStr = Field(..., alias="if", description="The \"if\" statement for a filter.")
+    product_area: Optional[StrictStr] = Field(None, alias="productArea", description="The product area of the filter, which should be spaces.")
     property_drops: Optional[conlist(StrictStr)] = Field(None, alias="propertyDrops", description="Describes the properties to be dropped on events that match the \"if\" statement.")
     allow_properties: Optional[conlist(StrictStr)] = Field(None, alias="allowProperties", description="Describes the properties allowed on events that match the \"if\" statement.")
     __properties = ["id", "workspaceId", "integrationId", "enabled", "drop", "name", "description", "if", "productArea", "propertyDrops", "allowProperties"]

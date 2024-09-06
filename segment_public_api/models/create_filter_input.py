@@ -26,15 +26,16 @@ class CreateFilterInput(BaseModel):
     """
     Input for CreateFilter.  # noqa: E501
     """
-    enabled: Optional[StrictBool] = Field(None, description="Whether the filter is enabled")
-    drop: Optional[StrictBool] = Field(None, description="Whether the event is dropped")
-    name: StrictStr = Field(..., description="The name of the filter")
-    description: Optional[StrictStr] = Field(None, description="The description of the filter")
-    var_if: StrictStr = Field(..., alias="if", description="The \"if\" statement for a filter")
-    product_area: Optional[StrictStr] = Field(None, alias="productArea", description="The product area of the filter, which should be spaces (endpoint table should be able to determine the resource)")
+    integration_id: StrictStr = Field(..., alias="integrationId", description="The integration id of the resource.")
+    enabled: Optional[StrictBool] = Field(None, description="Whether the filter is enabled.")
+    drop: Optional[StrictBool] = Field(None, description="Whether the event is dropped.")
+    name: StrictStr = Field(..., description="The name of the filter.")
+    description: Optional[StrictStr] = Field(None, description="The description of the filter.")
+    var_if: StrictStr = Field(..., alias="if", description="The \"if\" statement for a filter.")
+    product_area: Optional[StrictStr] = Field(None, alias="productArea", description="The product area of the filter, which should be spaces (endpoint table should be able to determine the resource).")
     property_drops: Optional[conlist(StrictStr)] = Field(None, alias="propertyDrops", description="Describes the properties to be dropped on events that match the \"if\" statement.")
     allow_properties: Optional[conlist(StrictStr)] = Field(None, alias="allowProperties", description="Describes the properties allowed on events that match the \"if\" statement.")
-    __properties = ["enabled", "drop", "name", "description", "if", "productArea", "propertyDrops", "allowProperties"]
+    __properties = ["integrationId", "enabled", "drop", "name", "description", "if", "productArea", "propertyDrops", "allowProperties"]
 
     class Config:
         """Pydantic configuration"""
@@ -72,6 +73,7 @@ class CreateFilterInput(BaseModel):
             return CreateFilterInput.parse_obj(obj)
 
         _obj = CreateFilterInput.parse_obj({
+            "integration_id": obj.get("integrationId"),
             "enabled": obj.get("enabled"),
             "drop": obj.get("drop"),
             "name": obj.get("name"),
