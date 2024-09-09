@@ -18,7 +18,6 @@ from segment_public_api.api.iam_roles_api import IAMRolesApi
 from segment_public_api.api.iam_users_api import IAMUsersApi
 from segment_public_api.api.labels_api import LabelsApi
 from segment_public_api.api.monthly_tracked_users_api import MonthlyTrackedUsersApi
-from segment_public_api.api.personalization_api import PersonalizationApi
 from segment_public_api.api.profiles_sync_api import ProfilesSyncApi
 from segment_public_api.api.reverse_etl_api import ReverseETLApi
 from segment_public_api.api.selective_sync_api import SelectiveSyncApi
