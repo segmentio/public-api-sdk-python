@@ -12,6 +12,7 @@ from segment_public_api.api.destination_filters_api import DestinationFiltersApi
 from segment_public_api.api.destinations_api import DestinationsApi
 from segment_public_api.api.edge_functions_api import EdgeFunctionsApi
 from segment_public_api.api.events_api import EventsApi
+from segment_public_api.api.filters_api import FiltersApi
 from segment_public_api.api.functions_api import FunctionsApi
 from segment_public_api.api.iam_groups_api import IAMGroupsApi
 from segment_public_api.api.iam_roles_api import IAMRolesApi
