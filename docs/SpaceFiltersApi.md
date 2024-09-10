@@ -1,14 +1,14 @@
-# segment_public_api.FiltersApi
+# segment_public_api.SpaceFiltersApi
 
 All URIs are relative to *https://api.segmentapis.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**create_filter**](FiltersApi.md#create_filter) | **POST** /filters | Create Filter
-[**delete_filter_by_id**](FiltersApi.md#delete_filter_by_id) | **DELETE** /filters/{id} | Delete Filter By Id
-[**get_filter_by_id**](FiltersApi.md#get_filter_by_id) | **GET** /filters/{id} | Get Filter By Id
-[**list_filters_by_integration_id**](FiltersApi.md#list_filters_by_integration_id) | **GET** /filters | List Filters By Integration Id
-[**update_filter_by_id**](FiltersApi.md#update_filter_by_id) | **PATCH** /filters/{id} | Update Filter By Id
+[**create_filter**](SpaceFiltersApi.md#create_filter) | **POST** /filters | Create Filter
+[**delete_filter_by_id**](SpaceFiltersApi.md#delete_filter_by_id) | **DELETE** /filters/{id} | Delete Filter By Id
+[**get_filter_by_id**](SpaceFiltersApi.md#get_filter_by_id) | **GET** /filters/{id} | Get Filter By Id
+[**list_filters_by_integration_id**](SpaceFiltersApi.md#list_filters_by_integration_id) | **GET** /filters | List Filters By Integration Id
+[**update_filter_by_id**](SpaceFiltersApi.md#update_filter_by_id) | **PATCH** /filters/{id} | Update Filter By Id
 
 
 
@@ -18,7 +18,7 @@ Method | HTTP request | Description
 
 Create Filter
 
-Creates a filter.    • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.    • In order to successfully call this endpoint, the specified Workspace needs to have the Filters feature enabled. Please reach out to your customer success manager for more information.   • When called, this endpoint may generate the `Filter Created` event in the [audit trail](/tag/Audit-Trail).       
+Creates a filter.    • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.    • In order to successfully call this endpoint, the specified Workspace needs to have the Space Filters feature enabled. Please reach out to your customer success manager for more information.   • When called, this endpoint may generate the `Filter Created` event in the [audit trail](/tag/Audit-Trail).       
 
 ### Example
 
@@ -42,16 +42,16 @@ configuration = segment_public_api.Configuration(
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = segment_public_api.FiltersApi(api_client)
+    api_instance = segment_public_api.SpaceFiltersApi(api_client)
     create_filter_input = {"integrationId":"<id>","name":"Test filter","if":"type = \"track\""} # CreateFilterInput | 
 
     try:
         # Create Filter
         api_response = api_instance.create_filter(create_filter_input)
-        print("The response of FiltersApi->create_filter:\n")
+        print("The response of SpaceFiltersApi->create_filter:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling FiltersApi->create_filter: %s\n" % e)
+        print("Exception when calling SpaceFiltersApi->create_filter: %s\n" % e)
 ```
 
 
@@ -92,7 +92,7 @@ Name | Type | Description  | Notes
 
 Delete Filter By Id
 
-Deletes a filter by id.    • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.    • In order to successfully call this endpoint, the specified Workspace needs to have the Filters feature enabled. Please reach out to your customer success manager for more information.   • When called, this endpoint may generate the `Filter Deleted` event in the [audit trail](/tag/Audit-Trail).       
+Deletes a filter by id.    • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.    • In order to successfully call this endpoint, the specified Workspace needs to have the Space Filters feature enabled. Please reach out to your customer success manager for more information.   • When called, this endpoint may generate the `Filter Deleted` event in the [audit trail](/tag/Audit-Trail).       
 
 ### Example
 
@@ -115,16 +115,16 @@ configuration = segment_public_api.Configuration(
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = segment_public_api.FiltersApi(api_client)
+    api_instance = segment_public_api.SpaceFiltersApi(api_client)
     id = '<id>' # str | 
 
     try:
         # Delete Filter By Id
         api_response = api_instance.delete_filter_by_id(id)
-        print("The response of FiltersApi->delete_filter_by_id:\n")
+        print("The response of SpaceFiltersApi->delete_filter_by_id:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling FiltersApi->delete_filter_by_id: %s\n" % e)
+        print("Exception when calling SpaceFiltersApi->delete_filter_by_id: %s\n" % e)
 ```
 
 
@@ -165,7 +165,7 @@ Name | Type | Description  | Notes
 
 Get Filter By Id
 
-Gets a filter by id.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Filters feature enabled. Please reach out to your customer success manager for more information.
+Gets a filter by id.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Space Filters feature enabled. Please reach out to your customer success manager for more information.
 
 ### Example
 
@@ -188,16 +188,16 @@ configuration = segment_public_api.Configuration(
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = segment_public_api.FiltersApi(api_client)
+    api_instance = segment_public_api.SpaceFiltersApi(api_client)
     id = '<id>' # str | 
 
     try:
         # Get Filter By Id
         api_response = api_instance.get_filter_by_id(id)
-        print("The response of FiltersApi->get_filter_by_id:\n")
+        print("The response of SpaceFiltersApi->get_filter_by_id:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling FiltersApi->get_filter_by_id: %s\n" % e)
+        print("Exception when calling SpaceFiltersApi->get_filter_by_id: %s\n" % e)
 ```
 
 
@@ -238,7 +238,7 @@ Name | Type | Description  | Notes
 
 List Filters By Integration Id
 
-Lists filters by Integration id.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Filters feature enabled. Please reach out to your customer success manager for more information.
+Lists filters by Integration id.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Space Filters feature enabled. Please reach out to your customer success manager for more information.
 
 ### Example
 
@@ -262,17 +262,17 @@ configuration = segment_public_api.Configuration(
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = segment_public_api.FiltersApi(api_client)
+    api_instance = segment_public_api.SpaceFiltersApi(api_client)
     integration_id = '<id>' # str | The integration id used to fetch filters.  This parameter exists in alpha.
     pagination = segment_public_api.ListFiltersPaginationInput() # ListFiltersPaginationInput | Pagination parameters.  This parameter exists in alpha. (optional)
 
     try:
         # List Filters By Integration Id
         api_response = api_instance.list_filters_by_integration_id(integration_id, pagination=pagination)
-        print("The response of FiltersApi->list_filters_by_integration_id:\n")
+        print("The response of SpaceFiltersApi->list_filters_by_integration_id:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling FiltersApi->list_filters_by_integration_id: %s\n" % e)
+        print("Exception when calling SpaceFiltersApi->list_filters_by_integration_id: %s\n" % e)
 ```
 
 
@@ -314,7 +314,7 @@ Name | Type | Description  | Notes
 
 Update Filter By Id
 
-Updates a filter by id and replaces the existing filter.    • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.    • In order to successfully call this endpoint, the specified Workspace needs to have the Filters feature enabled. Please reach out to your customer success manager for more information.   • When called, this endpoint may generate the `Filter Updated` event in the [audit trail](/tag/Audit-Trail).       
+Updates a filter by id and replaces the existing filter.    • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.    • In order to successfully call this endpoint, the specified Workspace needs to have the Space Filters feature enabled. Please reach out to your customer success manager for more information.   • When called, this endpoint may generate the `Filter Updated` event in the [audit trail](/tag/Audit-Trail).       
 
 ### Example
 
@@ -338,17 +338,17 @@ configuration = segment_public_api.Configuration(
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = segment_public_api.FiltersApi(api_client)
+    api_instance = segment_public_api.SpaceFiltersApi(api_client)
     id = '<id>' # str | 
     update_filter_by_id_input = {"integrationId":"<id>","name":"Test name","enabled":true,"description":"Changed description"} # UpdateFilterByIdInput | 
 
     try:
         # Update Filter By Id
         api_response = api_instance.update_filter_by_id(id, update_filter_by_id_input)
-        print("The response of FiltersApi->update_filter_by_id:\n")
+        print("The response of SpaceFiltersApi->update_filter_by_id:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling FiltersApi->update_filter_by_id: %s\n" % e)
+        print("Exception when calling SpaceFiltersApi->update_filter_by_id: %s\n" % e)
 ```
 
 

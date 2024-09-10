@@ -29,7 +29,6 @@ from segment_public_api.api.destination_filters_api import DestinationFiltersApi
 from segment_public_api.api.destinations_api import DestinationsApi
 from segment_public_api.api.edge_functions_api import EdgeFunctionsApi
 from segment_public_api.api.events_api import EventsApi
-from segment_public_api.api.filters_api import FiltersApi
 from segment_public_api.api.functions_api import FunctionsApi
 from segment_public_api.api.iam_groups_api import IAMGroupsApi
 from segment_public_api.api.iam_roles_api import IAMRolesApi
@@ -40,6 +39,7 @@ from segment_public_api.api.profiles_sync_api import ProfilesSyncApi
 from segment_public_api.api.reverse_etl_api import ReverseETLApi
 from segment_public_api.api.selective_sync_api import SelectiveSyncApi
 from segment_public_api.api.sources_api import SourcesApi
+from segment_public_api.api.space_filters_api import SpaceFiltersApi
 from segment_public_api.api.spaces_api import SpacesApi
 from segment_public_api.api.testing_api import TestingApi
 from segment_public_api.api.tracking_plans_api import TrackingPlansApi
