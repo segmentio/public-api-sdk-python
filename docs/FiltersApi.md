@@ -18,7 +18,7 @@ Method | HTTP request | Description
 
 Create Filter
 
-Creates a filter.    • When called, this endpoint may generate the `Filter Created` event in the [audit trail](/tag/Audit-Trail).       
+Creates a filter.    • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.    • In order to successfully call this endpoint, the specified Workspace needs to have the Filters feature enabled. Please reach out to your customer success manager for more information.   • When called, this endpoint may generate the `Filter Created` event in the [audit trail](/tag/Audit-Trail).       
 
 ### Example
 
@@ -92,7 +92,7 @@ Name | Type | Description  | Notes
 
 Delete Filter By Id
 
-Deletes a filter by id.    • When called, this endpoint may generate the `Filter Deleted` event in the [audit trail](/tag/Audit-Trail).       
+Deletes a filter by id.    • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.    • In order to successfully call this endpoint, the specified Workspace needs to have the Filters feature enabled. Please reach out to your customer success manager for more information.   • When called, this endpoint may generate the `Filter Deleted` event in the [audit trail](/tag/Audit-Trail).       
 
 ### Example
 
@@ -165,7 +165,7 @@ Name | Type | Description  | Notes
 
 Get Filter By Id
 
-Gets a filter by id.
+Gets a filter by id.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Filters feature enabled. Please reach out to your customer success manager for more information.
 
 ### Example
 
@@ -238,7 +238,7 @@ Name | Type | Description  | Notes
 
 List Filters By Integration Id
 
-Lists filters by Integration id.
+Lists filters by Integration id.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Filters feature enabled. Please reach out to your customer success manager for more information.
 
 ### Example
 
@@ -314,7 +314,7 @@ Name | Type | Description  | Notes
 
 Update Filter By Id
 
-Updates a filter by id.    • When called, this endpoint may generate the `Filter Updated` event in the [audit trail](/tag/Audit-Trail).       
+Updates a filter by id and replaces the existing filter.    • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.    • In order to successfully call this endpoint, the specified Workspace needs to have the Filters feature enabled. Please reach out to your customer success manager for more information.   • When called, this endpoint may generate the `Filter Updated` event in the [audit trail](/tag/Audit-Trail).       
 
 ### Example
 
