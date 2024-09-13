@@ -28,13 +28,13 @@ class UpdateFilterByIdInput(BaseModel):
     """
     integration_id: StrictStr = Field(..., alias="integrationId", description="The Integration id of the resource.")
     enabled: Optional[StrictBool] = Field(None, description="Whether the filter is enabled.")
-    drop: Optional[StrictBool] = Field(None, description="Whether the event is dropped.")
     name: Optional[StrictStr] = Field(None, description="The name of the filter.")
     description: Optional[StrictStr] = Field(None, description="The description of the filter.")
     var_if: Optional[StrictStr] = Field(None, alias="if", description="The \"if\" statement for a filter.")
-    property_drops: Optional[conlist(StrictStr)] = Field(None, alias="propertyDrops", description="Describes the properties to be dropped on events that match the \"if\" statement.")
+    drop: Optional[StrictBool] = Field(None, description="Whether the event is dropped.")
+    drop_properties: Optional[conlist(StrictStr)] = Field(None, alias="dropProperties", description="Describes the properties to be dropped on events that match the \"if\" statement.")
     allow_properties: Optional[conlist(StrictStr)] = Field(None, alias="allowProperties", description="Describes the properties allowed on events that match the \"if\" statement.")
-    __properties = ["integrationId", "enabled", "drop", "name", "description", "if", "propertyDrops", "allowProperties"]
+    __properties = ["integrationId", "enabled", "name", "description", "if", "drop", "dropProperties", "allowProperties"]
 
     class Config:
         """Pydantic configuration"""
@@ -74,11 +74,11 @@ class UpdateFilterByIdInput(BaseModel):
         _obj = UpdateFilterByIdInput.parse_obj({
             "integration_id": obj.get("integrationId"),
             "enabled": obj.get("enabled"),
-            "drop": obj.get("drop"),
             "name": obj.get("name"),
             "description": obj.get("description"),
             "var_if": obj.get("if"),
-            "property_drops": obj.get("propertyDrops"),
+            "drop": obj.get("drop"),
+            "drop_properties": obj.get("dropProperties"),
             "allow_properties": obj.get("allowProperties")
         })
         return _obj
