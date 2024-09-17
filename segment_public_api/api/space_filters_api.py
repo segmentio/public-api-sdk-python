@@ -24,11 +24,11 @@ from pydantic import Field, StrictStr, constr
 
 from typing import Optional
 
-from segment_public_api.models.create_filter_for_space200_response import CreateFilterForSpace200Response
-from segment_public_api.models.create_filter_for_space_input import CreateFilterForSpaceInput
+from segment_public_api.models.create_filter200_response import CreateFilter200Response
+from segment_public_api.models.create_filter_input import CreateFilterInput
 from segment_public_api.models.delete_filter_by_id200_response import DeleteFilterById200Response
 from segment_public_api.models.get_filter_by_id200_response import GetFilterById200Response
-from segment_public_api.models.list_filters_for_space200_response import ListFiltersForSpace200Response
+from segment_public_api.models.list_filters_by_integration_id200_response import ListFiltersByIntegrationId200Response
 from segment_public_api.models.list_filters_pagination_input import ListFiltersPaginationInput
 from segment_public_api.models.update_filter_by_id200_response import UpdateFilterById200Response
 from segment_public_api.models.update_filter_by_id_input import UpdateFilterByIdInput
@@ -54,18 +54,18 @@ class SpaceFiltersApi:
         self.api_client = api_client
 
     @validate_arguments
-    def create_filter_for_space(self, create_filter_for_space_input : CreateFilterForSpaceInput, **kwargs) -> CreateFilterForSpace200Response:  # noqa: E501
-        """Create Filter for Space  # noqa: E501
+    def create_filter(self, create_filter_input : CreateFilterInput, **kwargs) -> CreateFilter200Response:  # noqa: E501
+        """Create Filter  # noqa: E501
 
-        Creates a filter for a space. A space filter applies to events coming from all Sources connected to a space.    • This endpoint is in **Beta** testing.  Please submit any feedback by sending an email to friends@segment.com.    • In order to successfully call this endpoint, the specified Workspace needs to have the Space Filters feature enabled. Please reach out to your customer success manager for more information.   • When called, this endpoint may generate the `Filter Created` event in the [audit trail](/tag/Audit-Trail).         # noqa: E501
+        Creates a filter.    • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.    • In order to successfully call this endpoint, the specified Workspace needs to have the Space Filters feature enabled. Please reach out to your customer success manager for more information.   • When called, this endpoint may generate the `Filter Created` event in the [audit trail](/tag/Audit-Trail).         # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.create_filter_for_space(create_filter_for_space_input, async_req=True)
+        >>> thread = api.create_filter(create_filter_input, async_req=True)
         >>> result = thread.get()
 
-        :param create_filter_for_space_input: (required)
-        :type create_filter_for_space_input: CreateFilterForSpaceInput
+        :param create_filter_input: (required)
+        :type create_filter_input: CreateFilterInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _request_timeout: timeout setting for this request.
@@ -75,27 +75,27 @@ class SpaceFiltersApi:
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: CreateFilterForSpace200Response
+        :rtype: CreateFilter200Response
         """
         kwargs['_return_http_data_only'] = True
         if '_preload_content' in kwargs:
-            message = "Error! Please call the create_filter_for_space_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            message = "Error! Please call the create_filter_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.create_filter_for_space_with_http_info(create_filter_for_space_input, **kwargs)  # noqa: E501
+        return self.create_filter_with_http_info(create_filter_input, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def create_filter_for_space_with_http_info(self, create_filter_for_space_input : CreateFilterForSpaceInput, **kwargs) -> ApiResponse:  # noqa: E501
-        """Create Filter for Space  # noqa: E501
+    def create_filter_with_http_info(self, create_filter_input : CreateFilterInput, **kwargs) -> ApiResponse:  # noqa: E501
+        """Create Filter  # noqa: E501
 
-        Creates a filter for a space. A space filter applies to events coming from all Sources connected to a space.    • This endpoint is in **Beta** testing.  Please submit any feedback by sending an email to friends@segment.com.    • In order to successfully call this endpoint, the specified Workspace needs to have the Space Filters feature enabled. Please reach out to your customer success manager for more information.   • When called, this endpoint may generate the `Filter Created` event in the [audit trail](/tag/Audit-Trail).         # noqa: E501
+        Creates a filter.    • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.    • In order to successfully call this endpoint, the specified Workspace needs to have the Space Filters feature enabled. Please reach out to your customer success manager for more information.   • When called, this endpoint may generate the `Filter Created` event in the [audit trail](/tag/Audit-Trail).         # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.create_filter_for_space_with_http_info(create_filter_for_space_input, async_req=True)
+        >>> thread = api.create_filter_with_http_info(create_filter_input, async_req=True)
         >>> result = thread.get()
 
-        :param create_filter_for_space_input: (required)
-        :type create_filter_for_space_input: CreateFilterForSpaceInput
+        :param create_filter_input: (required)
+        :type create_filter_input: CreateFilterInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _preload_content: if False, the ApiResponse.data will
@@ -118,13 +118,13 @@ class SpaceFiltersApi:
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(CreateFilterForSpace200Response, status_code(int), headers(HTTPHeaderDict))
+        :rtype: tuple(CreateFilter200Response, status_code(int), headers(HTTPHeaderDict))
         """
 
         _params = locals()
 
         _all_params = [
-            'create_filter_for_space_input'
+            'create_filter_input'
         ]
         _all_params.extend(
             [
@@ -143,7 +143,7 @@ class SpaceFiltersApi:
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method create_filter_for_space" % _key
+                    " to method create_filter" % _key
                 )
             _params[_key] = _val
         del _params['kwargs']
@@ -162,17 +162,17 @@ class SpaceFiltersApi:
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params['create_filter_for_space_input'] is not None:
-            _body_params = _params['create_filter_for_space_input']
+        if _params['create_filter_input'] is not None:
+            _body_params = _params['create_filter_input']
 
         # set the HTTP header `Accept`
         _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/vnd.segment.v1beta+json', 'application/vnd.segment.v1alpha+json', 'application/json'])  # noqa: E501
+            ['application/vnd.segment.v1alpha+json', 'application/json'])  # noqa: E501
 
         # set the HTTP header `Content-Type`
         _content_types_list = _params.get('_content_type',
             self.api_client.select_header_content_type(
-                ['application/vnd.segment.v1beta+json', 'application/vnd.segment.v1alpha+json']))
+                ['application/vnd.segment.v1alpha+json']))
         if _content_types_list:
                 _header_params['Content-Type'] = _content_types_list
 
@@ -180,7 +180,7 @@ class SpaceFiltersApi:
         _auth_settings = ['token']  # noqa: E501
 
         _response_types_map = {
-            '200': "CreateFilterForSpace200Response",
+            '200': "CreateFilter200Response",
             '404': "RequestErrorEnvelope",
             '422': "RequestErrorEnvelope",
             '429': "RequestErrorEnvelope",
@@ -207,7 +207,7 @@ class SpaceFiltersApi:
     def delete_filter_by_id(self, id : constr(strict=True), **kwargs) -> DeleteFilterById200Response:  # noqa: E501
         """Delete Filter By Id  # noqa: E501
 
-        Deletes a filter by id.    • This endpoint is in **Beta** testing.  Please submit any feedback by sending an email to friends@segment.com.    • In order to successfully call this endpoint, the specified Workspace needs to have the Space Filters feature enabled. Please reach out to your customer success manager for more information.   • When called, this endpoint may generate the `Filter Deleted` event in the [audit trail](/tag/Audit-Trail).         # noqa: E501
+        Deletes a filter by id.    • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.    • In order to successfully call this endpoint, the specified Workspace needs to have the Space Filters feature enabled. Please reach out to your customer success manager for more information.   • When called, this endpoint may generate the `Filter Deleted` event in the [audit trail](/tag/Audit-Trail).         # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -237,7 +237,7 @@ class SpaceFiltersApi:
     def delete_filter_by_id_with_http_info(self, id : constr(strict=True), **kwargs) -> ApiResponse:  # noqa: E501
         """Delete Filter By Id  # noqa: E501
 
-        Deletes a filter by id.    • This endpoint is in **Beta** testing.  Please submit any feedback by sending an email to friends@segment.com.    • In order to successfully call this endpoint, the specified Workspace needs to have the Space Filters feature enabled. Please reach out to your customer success manager for more information.   • When called, this endpoint may generate the `Filter Deleted` event in the [audit trail](/tag/Audit-Trail).         # noqa: E501
+        Deletes a filter by id.    • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.    • In order to successfully call this endpoint, the specified Workspace needs to have the Space Filters feature enabled. Please reach out to your customer success manager for more information.   • When called, this endpoint may generate the `Filter Deleted` event in the [audit trail](/tag/Audit-Trail).         # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -317,7 +317,7 @@ class SpaceFiltersApi:
         _body_params = None
         # set the HTTP header `Accept`
         _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/vnd.segment.v1beta+json', 'application/vnd.segment.v1alpha+json', 'application/json'])  # noqa: E501
+            ['application/vnd.segment.v1alpha+json', 'application/json'])  # noqa: E501
 
         # authentication setting
         _auth_settings = ['token']  # noqa: E501
@@ -350,7 +350,7 @@ class SpaceFiltersApi:
     def get_filter_by_id(self, id : constr(strict=True), **kwargs) -> GetFilterById200Response:  # noqa: E501
         """Get Filter By Id  # noqa: E501
 
-        Gets a filter by id.  • This endpoint is in **Beta** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Space Filters feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
+        Gets a filter by id.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Space Filters feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -380,7 +380,7 @@ class SpaceFiltersApi:
     def get_filter_by_id_with_http_info(self, id : constr(strict=True), **kwargs) -> ApiResponse:  # noqa: E501
         """Get Filter By Id  # noqa: E501
 
-        Gets a filter by id.  • This endpoint is in **Beta** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Space Filters feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
+        Gets a filter by id.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Space Filters feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -460,7 +460,7 @@ class SpaceFiltersApi:
         _body_params = None
         # set the HTTP header `Accept`
         _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/vnd.segment.v1beta+json', 'application/vnd.segment.v1alpha+json', 'application/json'])  # noqa: E501
+            ['application/vnd.segment.v1alpha+json', 'application/json'])  # noqa: E501
 
         # authentication setting
         _auth_settings = ['token']  # noqa: E501
@@ -490,19 +490,19 @@ class SpaceFiltersApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_filters_for_space(self, integration_id : Annotated[StrictStr, Field(..., description="The Space Id for which to fetch filters  This parameter exists in beta.")], pagination : Annotated[Optional[ListFiltersPaginationInput], Field(description="Pagination parameters.  This parameter exists in beta.")] = None, **kwargs) -> ListFiltersForSpace200Response:  # noqa: E501
-        """List Filters for Space  # noqa: E501
+    def list_filters_by_integration_id(self, integration_id : Annotated[StrictStr, Field(..., description="The integration id used to fetch filters.  This parameter exists in alpha.")], pagination : Annotated[Optional[ListFiltersPaginationInput], Field(description="Pagination parameters.  This parameter exists in alpha.")] = None, **kwargs) -> ListFiltersByIntegrationId200Response:  # noqa: E501
+        """List Filters By Integration Id  # noqa: E501
 
-        Lists filters for a space.  • This endpoint is in **Beta** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Space Filters feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
+        Lists filters by Integration id.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Space Filters feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.list_filters_for_space(integration_id, pagination, async_req=True)
+        >>> thread = api.list_filters_by_integration_id(integration_id, pagination, async_req=True)
         >>> result = thread.get()
 
-        :param integration_id: The Space Id for which to fetch filters  This parameter exists in beta. (required)
+        :param integration_id: The integration id used to fetch filters.  This parameter exists in alpha. (required)
         :type integration_id: str
-        :param pagination: Pagination parameters.  This parameter exists in beta.
+        :param pagination: Pagination parameters.  This parameter exists in alpha.
         :type pagination: ListFiltersPaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -513,28 +513,28 @@ class SpaceFiltersApi:
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: ListFiltersForSpace200Response
+        :rtype: ListFiltersByIntegrationId200Response
         """
         kwargs['_return_http_data_only'] = True
         if '_preload_content' in kwargs:
-            message = "Error! Please call the list_filters_for_space_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            message = "Error! Please call the list_filters_by_integration_id_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.list_filters_for_space_with_http_info(integration_id, pagination, **kwargs)  # noqa: E501
+        return self.list_filters_by_integration_id_with_http_info(integration_id, pagination, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_filters_for_space_with_http_info(self, integration_id : Annotated[StrictStr, Field(..., description="The Space Id for which to fetch filters  This parameter exists in beta.")], pagination : Annotated[Optional[ListFiltersPaginationInput], Field(description="Pagination parameters.  This parameter exists in beta.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """List Filters for Space  # noqa: E501
+    def list_filters_by_integration_id_with_http_info(self, integration_id : Annotated[StrictStr, Field(..., description="The integration id used to fetch filters.  This parameter exists in alpha.")], pagination : Annotated[Optional[ListFiltersPaginationInput], Field(description="Pagination parameters.  This parameter exists in alpha.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """List Filters By Integration Id  # noqa: E501
 
-        Lists filters for a space.  • This endpoint is in **Beta** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Space Filters feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
+        Lists filters by Integration id.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Space Filters feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.list_filters_for_space_with_http_info(integration_id, pagination, async_req=True)
+        >>> thread = api.list_filters_by_integration_id_with_http_info(integration_id, pagination, async_req=True)
         >>> result = thread.get()
 
-        :param integration_id: The Space Id for which to fetch filters  This parameter exists in beta. (required)
+        :param integration_id: The integration id used to fetch filters.  This parameter exists in alpha. (required)
         :type integration_id: str
-        :param pagination: Pagination parameters.  This parameter exists in beta.
+        :param pagination: Pagination parameters.  This parameter exists in alpha.
         :type pagination: ListFiltersPaginationInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -558,7 +558,7 @@ class SpaceFiltersApi:
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(ListFiltersForSpace200Response, status_code(int), headers(HTTPHeaderDict))
+        :rtype: tuple(ListFiltersByIntegrationId200Response, status_code(int), headers(HTTPHeaderDict))
         """
 
         _params = locals()
@@ -584,7 +584,7 @@ class SpaceFiltersApi:
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method list_filters_for_space" % _key
+                    " to method list_filters_by_integration_id" % _key
                 )
             _params[_key] = _val
         del _params['kwargs']
@@ -611,13 +611,13 @@ class SpaceFiltersApi:
         _body_params = None
         # set the HTTP header `Accept`
         _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/vnd.segment.v1beta+json', 'application/vnd.segment.v1alpha+json', 'application/json'])  # noqa: E501
+            ['application/vnd.segment.v1alpha+json', 'application/json'])  # noqa: E501
 
         # authentication setting
         _auth_settings = ['token']  # noqa: E501
 
         _response_types_map = {
-            '200': "ListFiltersForSpace200Response",
+            '200': "ListFiltersByIntegrationId200Response",
             '404': "RequestErrorEnvelope",
             '422': "RequestErrorEnvelope",
             '429': "RequestErrorEnvelope",
@@ -644,7 +644,7 @@ class SpaceFiltersApi:
     def update_filter_by_id(self, id : constr(strict=True), update_filter_by_id_input : UpdateFilterByIdInput, **kwargs) -> UpdateFilterById200Response:  # noqa: E501
         """Update Filter By Id  # noqa: E501
 
-        Updates a filter by id and replaces the existing filter.    • This endpoint is in **Beta** testing.  Please submit any feedback by sending an email to friends@segment.com.    • In order to successfully call this endpoint, the specified Workspace needs to have the Space Filters feature enabled. Please reach out to your customer success manager for more information.   • When called, this endpoint may generate the `Filter Updated` event in the [audit trail](/tag/Audit-Trail).         # noqa: E501
+        Updates a filter by id and replaces the existing filter.    • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.    • In order to successfully call this endpoint, the specified Workspace needs to have the Space Filters feature enabled. Please reach out to your customer success manager for more information.   • When called, this endpoint may generate the `Filter Updated` event in the [audit trail](/tag/Audit-Trail).         # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -676,7 +676,7 @@ class SpaceFiltersApi:
     def update_filter_by_id_with_http_info(self, id : constr(strict=True), update_filter_by_id_input : UpdateFilterByIdInput, **kwargs) -> ApiResponse:  # noqa: E501
         """Update Filter By Id  # noqa: E501
 
-        Updates a filter by id and replaces the existing filter.    • This endpoint is in **Beta** testing.  Please submit any feedback by sending an email to friends@segment.com.    • In order to successfully call this endpoint, the specified Workspace needs to have the Space Filters feature enabled. Please reach out to your customer success manager for more information.   • When called, this endpoint may generate the `Filter Updated` event in the [audit trail](/tag/Audit-Trail).         # noqa: E501
+        Updates a filter by id and replaces the existing filter.    • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.    • In order to successfully call this endpoint, the specified Workspace needs to have the Space Filters feature enabled. Please reach out to your customer success manager for more information.   • When called, this endpoint may generate the `Filter Updated` event in the [audit trail](/tag/Audit-Trail).         # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -762,12 +762,12 @@ class SpaceFiltersApi:
 
         # set the HTTP header `Accept`
         _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/vnd.segment.v1beta+json', 'application/vnd.segment.v1alpha+json', 'application/json'])  # noqa: E501
+            ['application/vnd.segment.v1alpha+json', 'application/json'])  # noqa: E501
 
         # set the HTTP header `Content-Type`
         _content_types_list = _params.get('_content_type',
             self.api_client.select_header_content_type(
-                ['application/vnd.segment.v1beta+json', 'application/vnd.segment.v1alpha+json']))
+                ['application/vnd.segment.v1alpha+json']))
         if _content_types_list:
                 _header_params['Content-Type'] = _content_types_list
 

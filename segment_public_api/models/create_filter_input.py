@@ -22,11 +22,11 @@ import json
 from typing import List, Optional
 from pydantic import BaseModel, Field, StrictBool, StrictStr, conlist
 
-class CreateFilterForSpaceInput(BaseModel):
+class CreateFilterInput(BaseModel):
     """
     Input for CreateFilter.  # noqa: E501
     """
-    integration_id: StrictStr = Field(..., alias="integrationId", description="The Space id to filer on.")
+    integration_id: StrictStr = Field(..., alias="integrationId", description="The Integration id of the resource.")
     enabled: Optional[StrictBool] = Field(None, description="Whether the filter is enabled.")
     name: StrictStr = Field(..., description="The name of the filter.")
     description: Optional[StrictStr] = Field(None, description="The description of the filter.")
@@ -50,8 +50,8 @@ class CreateFilterForSpaceInput(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> CreateFilterForSpaceInput:
-        """Create an instance of CreateFilterForSpaceInput from a JSON string"""
+    def from_json(cls, json_str: str) -> CreateFilterInput:
+        """Create an instance of CreateFilterInput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -63,15 +63,15 @@ class CreateFilterForSpaceInput(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> CreateFilterForSpaceInput:
-        """Create an instance of CreateFilterForSpaceInput from a dict"""
+    def from_dict(cls, obj: dict) -> CreateFilterInput:
+        """Create an instance of CreateFilterInput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return CreateFilterForSpaceInput.parse_obj(obj)
+            return CreateFilterInput.parse_obj(obj)
 
-        _obj = CreateFilterForSpaceInput.parse_obj({
+        _obj = CreateFilterInput.parse_obj({
             "integration_id": obj.get("integrationId"),
             "enabled": obj.get("enabled"),
             "name": obj.get("name"),
