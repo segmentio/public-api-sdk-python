@@ -4,21 +4,21 @@ All URIs are relative to *https://api.segmentapis.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**create_filter**](SpaceFiltersApi.md#create_filter) | **POST** /filters | Create Filter
+[**create_filter_for_space**](SpaceFiltersApi.md#create_filter_for_space) | **POST** /filters | Create Filter for Space
 [**delete_filter_by_id**](SpaceFiltersApi.md#delete_filter_by_id) | **DELETE** /filters/{id} | Delete Filter By Id
 [**get_filter_by_id**](SpaceFiltersApi.md#get_filter_by_id) | **GET** /filters/{id} | Get Filter By Id
-[**list_filters_by_integration_id**](SpaceFiltersApi.md#list_filters_by_integration_id) | **GET** /filters | List Filters By Integration Id
+[**list_filters_for_space**](SpaceFiltersApi.md#list_filters_for_space) | **GET** /filters | List Filters for Space
 [**update_filter_by_id**](SpaceFiltersApi.md#update_filter_by_id) | **PATCH** /filters/{id} | Update Filter By Id
 
 
 
-## Operation: create_filter
+## Operation: create_filter_for_space
 
-> CreateFilter200Response create_filter(create_filter_input)
+> CreateFilterForSpace200Response create_filter_for_space(create_filter_for_space_input)
 
-Create Filter
+Create Filter for Space
 
-Creates a filter.    • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.    • In order to successfully call this endpoint, the specified Workspace needs to have the Space Filters feature enabled. Please reach out to your customer success manager for more information.   • When called, this endpoint may generate the `Filter Created` event in the [audit trail](/tag/Audit-Trail).       
+Creates a filter for a space. A space filter applies to events coming from all Sources connected to a space.    • This endpoint is in **Beta** testing.  Please submit any feedback by sending an email to friends@segment.com.    • In order to successfully call this endpoint, the specified Workspace needs to have the Space Filters feature enabled. Please reach out to your customer success manager for more information.   • When called, this endpoint may generate the `Filter Created` event in the [audit trail](/tag/Audit-Trail).       
 
 ### Example
 
@@ -27,8 +27,8 @@ Creates a filter.    • This endpoint is in **Alpha** testing.  Please submit a
 import time
 import os
 import segment_public_api
-from segment_public_api.models.create_filter200_response import CreateFilter200Response
-from segment_public_api.models.create_filter_input import CreateFilterInput
+from segment_public_api.models.create_filter_for_space200_response import CreateFilterForSpace200Response
+from segment_public_api.models.create_filter_for_space_input import CreateFilterForSpaceInput
 from segment_public_api.rest import ApiException
 from pprint import pprint
 
@@ -43,15 +43,15 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.SpaceFiltersApi(api_client)
-    create_filter_input = {"integrationId":"<id>","name":"Test filter","if":"type = \"track\""} # CreateFilterInput | 
+    create_filter_for_space_input = {"integrationId":"<id>","name":"Test filter","if":"type = \"track\""} # CreateFilterForSpaceInput | 
 
     try:
-        # Create Filter
-        api_response = api_instance.create_filter(create_filter_input)
-        print("The response of SpaceFiltersApi->create_filter:\n")
+        # Create Filter for Space
+        api_response = api_instance.create_filter_for_space(create_filter_for_space_input)
+        print("The response of SpaceFiltersApi->create_filter_for_space:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling SpaceFiltersApi->create_filter: %s\n" % e)
+        print("Exception when calling SpaceFiltersApi->create_filter_for_space: %s\n" % e)
 ```
 
 
@@ -60,11 +60,11 @@ with segment_public_api.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **create_filter_input** | [**CreateFilterInput**](CreateFilterInput.md)|  | 
+ **create_filter_for_space_input** | [**CreateFilterForSpaceInput**](CreateFilterForSpaceInput.md)|  | 
 
 ### Return type
 
-[**CreateFilter200Response**](CreateFilter200Response.md)
+[**CreateFilterForSpace200Response**](CreateFilterForSpace200Response.md)
 
 ### Authorization
 
@@ -72,8 +72,8 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/vnd.segment.v1alpha+json
- - **Accept**: application/vnd.segment.v1alpha+json, application/json
+ - **Content-Type**: application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
+ - **Accept**: application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json, application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -92,7 +92,7 @@ Name | Type | Description  | Notes
 
 Delete Filter By Id
 
-Deletes a filter by id.    • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.    • In order to successfully call this endpoint, the specified Workspace needs to have the Space Filters feature enabled. Please reach out to your customer success manager for more information.   • When called, this endpoint may generate the `Filter Deleted` event in the [audit trail](/tag/Audit-Trail).       
+Deletes a filter by id.    • This endpoint is in **Beta** testing.  Please submit any feedback by sending an email to friends@segment.com.    • In order to successfully call this endpoint, the specified Workspace needs to have the Space Filters feature enabled. Please reach out to your customer success manager for more information.   • When called, this endpoint may generate the `Filter Deleted` event in the [audit trail](/tag/Audit-Trail).       
 
 ### Example
 
@@ -146,7 +146,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/vnd.segment.v1alpha+json, application/json
+ - **Accept**: application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json, application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -165,7 +165,7 @@ Name | Type | Description  | Notes
 
 Get Filter By Id
 
-Gets a filter by id.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Space Filters feature enabled. Please reach out to your customer success manager for more information.
+Gets a filter by id.  • This endpoint is in **Beta** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Space Filters feature enabled. Please reach out to your customer success manager for more information.
 
 ### Example
 
@@ -219,7 +219,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/vnd.segment.v1alpha+json, application/json
+ - **Accept**: application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json, application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -232,13 +232,13 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
-## Operation: list_filters_by_integration_id
+## Operation: list_filters_for_space
 
-> ListFiltersByIntegrationId200Response list_filters_by_integration_id(integration_id, pagination=pagination)
+> ListFiltersForSpace200Response list_filters_for_space(integration_id, pagination=pagination)
 
-List Filters By Integration Id
+List Filters for Space
 
-Lists filters by Integration id.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Space Filters feature enabled. Please reach out to your customer success manager for more information.
+Lists filters for a space.  • This endpoint is in **Beta** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Space Filters feature enabled. Please reach out to your customer success manager for more information.
 
 ### Example
 
@@ -247,7 +247,7 @@ Lists filters by Integration id.  • This endpoint is in **Alpha** testing.  Pl
 import time
 import os
 import segment_public_api
-from segment_public_api.models.list_filters_by_integration_id200_response import ListFiltersByIntegrationId200Response
+from segment_public_api.models.list_filters_for_space200_response import ListFiltersForSpace200Response
 from segment_public_api.models.list_filters_pagination_input import ListFiltersPaginationInput
 from segment_public_api.rest import ApiException
 from pprint import pprint
@@ -263,16 +263,16 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.SpaceFiltersApi(api_client)
-    integration_id = '<id>' # str | The integration id used to fetch filters.  This parameter exists in alpha.
-    pagination = segment_public_api.ListFiltersPaginationInput() # ListFiltersPaginationInput | Pagination parameters.  This parameter exists in alpha. (optional)
+    integration_id = '<id>' # str | The Space Id for which to fetch filters  This parameter exists in beta.
+    pagination = segment_public_api.ListFiltersPaginationInput() # ListFiltersPaginationInput | Pagination parameters.  This parameter exists in beta. (optional)
 
     try:
-        # List Filters By Integration Id
-        api_response = api_instance.list_filters_by_integration_id(integration_id, pagination=pagination)
-        print("The response of SpaceFiltersApi->list_filters_by_integration_id:\n")
+        # List Filters for Space
+        api_response = api_instance.list_filters_for_space(integration_id, pagination=pagination)
+        print("The response of SpaceFiltersApi->list_filters_for_space:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling SpaceFiltersApi->list_filters_by_integration_id: %s\n" % e)
+        print("Exception when calling SpaceFiltersApi->list_filters_for_space: %s\n" % e)
 ```
 
 
@@ -281,12 +281,12 @@ with segment_public_api.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **integration_id** | **str**| The integration id used to fetch filters.  This parameter exists in alpha. | 
- **pagination** | [**ListFiltersPaginationInput**](.md)| Pagination parameters.  This parameter exists in alpha. | [optional] 
+ **integration_id** | **str**| The Space Id for which to fetch filters  This parameter exists in beta. | 
+ **pagination** | [**ListFiltersPaginationInput**](.md)| Pagination parameters.  This parameter exists in beta. | [optional] 
 
 ### Return type
 
-[**ListFiltersByIntegrationId200Response**](ListFiltersByIntegrationId200Response.md)
+[**ListFiltersForSpace200Response**](ListFiltersForSpace200Response.md)
 
 ### Authorization
 
@@ -295,7 +295,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/vnd.segment.v1alpha+json, application/json
+ - **Accept**: application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json, application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -314,7 +314,7 @@ Name | Type | Description  | Notes
 
 Update Filter By Id
 
-Updates a filter by id and replaces the existing filter.    • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.    • In order to successfully call this endpoint, the specified Workspace needs to have the Space Filters feature enabled. Please reach out to your customer success manager for more information.   • When called, this endpoint may generate the `Filter Updated` event in the [audit trail](/tag/Audit-Trail).       
+Updates a filter by id and replaces the existing filter.    • This endpoint is in **Beta** testing.  Please submit any feedback by sending an email to friends@segment.com.    • In order to successfully call this endpoint, the specified Workspace needs to have the Space Filters feature enabled. Please reach out to your customer success manager for more information.   • When called, this endpoint may generate the `Filter Updated` event in the [audit trail](/tag/Audit-Trail).       
 
 ### Example
 
@@ -340,7 +340,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.SpaceFiltersApi(api_client)
     id = '<id>' # str | 
-    update_filter_by_id_input = {"integrationId":"<id>","name":"Test name","enabled":true,"description":"Changed description"} # UpdateFilterByIdInput | 
+    update_filter_by_id_input = {"integrationId":"<id>","if":"!(type = \"track\")","name":"Test name","enabled":true,"description":"Changed description"} # UpdateFilterByIdInput | 
 
     try:
         # Update Filter By Id
@@ -370,8 +370,8 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/vnd.segment.v1alpha+json
- - **Accept**: application/vnd.segment.v1alpha+json, application/json
+ - **Content-Type**: application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
+ - **Accept**: application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json, application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |

@@ -19,16 +19,16 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
-from pydantic import BaseModel
-from segment_public_api.models.create_filter_output import CreateFilterOutput
 
-class CreateFilter200Response(BaseModel):
+from pydantic import BaseModel, Field
+from segment_public_api.models.filter import Filter
+
+class CreateFilterForSpaceOutput(BaseModel):
     """
-    CreateFilter200Response
+    Output for CreateFilter.  # noqa: E501
     """
-    data: Optional[CreateFilterOutput] = None
-    __properties = ["data"]
+    filter: Filter = Field(...)
+    __properties = ["filter"]
 
     class Config:
         """Pydantic configuration"""
@@ -44,8 +44,8 @@ class CreateFilter200Response(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> CreateFilter200Response:
-        """Create an instance of CreateFilter200Response from a JSON string"""
+    def from_json(cls, json_str: str) -> CreateFilterForSpaceOutput:
+        """Create an instance of CreateFilterForSpaceOutput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -54,22 +54,22 @@ class CreateFilter200Response(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of data
-        if self.data:
-            _dict['data'] = self.data.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of filter
+        if self.filter:
+            _dict['filter'] = self.filter.to_dict()
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> CreateFilter200Response:
-        """Create an instance of CreateFilter200Response from a dict"""
+    def from_dict(cls, obj: dict) -> CreateFilterForSpaceOutput:
+        """Create an instance of CreateFilterForSpaceOutput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return CreateFilter200Response.parse_obj(obj)
+            return CreateFilterForSpaceOutput.parse_obj(obj)
 
-        _obj = CreateFilter200Response.parse_obj({
-            "data": CreateFilterOutput.from_dict(obj.get("data")) if obj.get("data") is not None else None
+        _obj = CreateFilterForSpaceOutput.parse_obj({
+            "filter": Filter.from_dict(obj.get("filter")) if obj.get("filter") is not None else None
         })
         return _obj
 

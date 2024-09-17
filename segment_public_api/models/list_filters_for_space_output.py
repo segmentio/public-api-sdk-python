@@ -19,16 +19,18 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
-from pydantic import BaseModel
-from segment_public_api.models.list_filters_by_integration_id_output import ListFiltersByIntegrationIdOutput
+from typing import List, Optional
+from pydantic import BaseModel, Field, conlist
+from segment_public_api.models.filter import Filter
+from segment_public_api.models.list_filters_pagination_output import ListFiltersPaginationOutput
 
-class ListFiltersByIntegrationId200Response(BaseModel):
+class ListFiltersForSpaceOutput(BaseModel):
     """
-    ListFiltersByIntegrationId200Response
+    Output for ListFiltersByIntegrationId.  # noqa: E501
     """
-    data: Optional[ListFiltersByIntegrationIdOutput] = None
-    __properties = ["data"]
+    filters: Optional[conlist(Filter)] = Field(None, description="Filter output.")
+    pagination: Optional[ListFiltersPaginationOutput] = None
+    __properties = ["filters", "pagination"]
 
     class Config:
         """Pydantic configuration"""
@@ -44,8 +46,8 @@ class ListFiltersByIntegrationId200Response(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> ListFiltersByIntegrationId200Response:
-        """Create an instance of ListFiltersByIntegrationId200Response from a JSON string"""
+    def from_json(cls, json_str: str) -> ListFiltersForSpaceOutput:
+        """Create an instance of ListFiltersForSpaceOutput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -54,22 +56,30 @@ class ListFiltersByIntegrationId200Response(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of data
-        if self.data:
-            _dict['data'] = self.data.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in filters (list)
+        _items = []
+        if self.filters:
+            for _item in self.filters:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['filters'] = _items
+        # override the default output from pydantic by calling `to_dict()` of pagination
+        if self.pagination:
+            _dict['pagination'] = self.pagination.to_dict()
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> ListFiltersByIntegrationId200Response:
-        """Create an instance of ListFiltersByIntegrationId200Response from a dict"""
+    def from_dict(cls, obj: dict) -> ListFiltersForSpaceOutput:
+        """Create an instance of ListFiltersForSpaceOutput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return ListFiltersByIntegrationId200Response.parse_obj(obj)
+            return ListFiltersForSpaceOutput.parse_obj(obj)
 
-        _obj = ListFiltersByIntegrationId200Response.parse_obj({
-            "data": ListFiltersByIntegrationIdOutput.from_dict(obj.get("data")) if obj.get("data") is not None else None
+        _obj = ListFiltersForSpaceOutput.parse_obj({
+            "filters": [Filter.from_dict(_item) for _item in obj.get("filters")] if obj.get("filters") is not None else None,
+            "pagination": ListFiltersPaginationOutput.from_dict(obj.get("pagination")) if obj.get("pagination") is not None else None
         })
         return _obj
 
