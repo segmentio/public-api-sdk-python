@@ -26,7 +26,7 @@ class CreateFilterForSpaceInput(BaseModel):
     """
     Input for CreateFilter.  # noqa: E501
     """
-    integration_id: StrictStr = Field(..., alias="integrationId", description="The Space id to filer on.")
+    integration_id: StrictStr = Field(..., alias="integrationId", description="The Space id to filter on.")
     enabled: Optional[StrictBool] = Field(None, description="Whether the filter is enabled.")
     name: StrictStr = Field(..., description="The name of the filter.")
     description: Optional[StrictStr] = Field(None, description="The description of the filter.")
