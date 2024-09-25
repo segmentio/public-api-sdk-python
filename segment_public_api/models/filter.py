@@ -36,7 +36,9 @@ class Filter(BaseModel):
     drop: Optional[StrictBool] = Field(None, description="Whether the event is dropped.")
     drop_properties: Optional[conlist(StrictStr)] = Field(None, alias="dropProperties", description="Describes the properties to be dropped on events that match the \"if\" statement.")
     allow_properties: Optional[conlist(StrictStr)] = Field(None, alias="allowProperties", description="Describes the properties allowed on events that match the \"if\" statement.")
-    __properties = ["id", "workspaceId", "integrationId", "enabled", "name", "description", "if", "drop", "dropProperties", "allowProperties"]
+    created_at: StrictStr = Field(..., alias="createdAt", description="The timestamp of this filter's creation.")
+    updated_at: StrictStr = Field(..., alias="updatedAt", description="The timestamp of this filter's last change.")
+    __properties = ["id", "workspaceId", "integrationId", "enabled", "name", "description", "if", "drop", "dropProperties", "allowProperties", "createdAt", "updatedAt"]
 
     class Config:
         """Pydantic configuration"""
@@ -83,7 +85,9 @@ class Filter(BaseModel):
             "var_if": obj.get("if"),
             "drop": obj.get("drop"),
             "drop_properties": obj.get("dropProperties"),
-            "allow_properties": obj.get("allowProperties")
+            "allow_properties": obj.get("allowProperties"),
+            "created_at": obj.get("createdAt"),
+            "updated_at": obj.get("updatedAt")
         })
         return _obj
 
