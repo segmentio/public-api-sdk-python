@@ -20,22 +20,15 @@ import json
 
 
 
-from pydantic import BaseModel, Field, StrictStr, validator
+from pydantic import BaseModel, Field, StrictStr
 
-class AudienceComputationDefinition(BaseModel):
+class ReverseEtlCronScheduleConfig(BaseModel):
     """
-    AudienceComputationDefinition
+    ReverseEtlCronScheduleConfig
     """
-    type: StrictStr = Field(..., description="The underlying data type being segmented for this audience.  Possible values: users, accounts.")
-    query: StrictStr = Field(..., description="The query language string defining the audience segmentation criteria.  For guidance on using the query language, see the [Segment documentation site](https://segment.com/docs/api/public-api/query-language).")
-    __properties = ["type", "query"]
-
-    @validator('type')
-    def type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in ('ACCOUNTS', 'USERS'):
-            raise ValueError("must be one of enum values ('ACCOUNTS', 'USERS')")
-        return value
+    spec: StrictStr = Field(..., description="5 field cron string expression. The cron expression must be larger than 15 minutes.")
+    timezone: StrictStr = Field(..., description="Timezone for the specified times.")
+    __properties = ["spec", "timezone"]
 
     class Config:
         """Pydantic configuration"""
@@ -51,8 +44,8 @@ class AudienceComputationDefinition(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> AudienceComputationDefinition:
-        """Create an instance of AudienceComputationDefinition from a JSON string"""
+    def from_json(cls, json_str: str) -> ReverseEtlCronScheduleConfig:
+        """Create an instance of ReverseEtlCronScheduleConfig from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -64,17 +57,17 @@ class AudienceComputationDefinition(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> AudienceComputationDefinition:
-        """Create an instance of AudienceComputationDefinition from a dict"""
+    def from_dict(cls, obj: dict) -> ReverseEtlCronScheduleConfig:
+        """Create an instance of ReverseEtlCronScheduleConfig from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return AudienceComputationDefinition.parse_obj(obj)
+            return ReverseEtlCronScheduleConfig.parse_obj(obj)
 
-        _obj = AudienceComputationDefinition.parse_obj({
-            "type": obj.get("type"),
-            "query": obj.get("query")
+        _obj = ReverseEtlCronScheduleConfig.parse_obj({
+            "spec": obj.get("spec"),
+            "timezone": obj.get("timezone")
         })
         return _obj
 
