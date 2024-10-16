@@ -55,8 +55,7 @@ class DestinationMetadataV1(BaseModel):
     partner_owned: Optional[StrictBool] = Field(None, alias="partnerOwned", description="Partner Owned flag.")
     supported_regions: Optional[conlist(StrictStr)] = Field(None, alias="supportedRegions", description="A list of supported regions for this Destination.")
     region_endpoints: Optional[conlist(StrictStr)] = Field(None, alias="regionEndpoints", description="The list of regional endpoints for this Destination.")
-    multi_instance_supported_version: Optional[StrictStr] = Field(None, alias="multiInstanceSupportedVersion", description="This Destination's support for multiple instance types.")
-    __properties = ["id", "name", "description", "slug", "logos", "options", "status", "previousNames", "categories", "website", "components", "supportedFeatures", "supportedMethods", "supportedPlatforms", "actions", "presets", "contacts", "partnerOwned", "supportedRegions", "regionEndpoints", "multiInstanceSupportedVersion"]
+    __properties = ["id", "name", "description", "slug", "logos", "options", "status", "previousNames", "categories", "website", "components", "supportedFeatures", "supportedMethods", "supportedPlatforms", "actions", "presets", "contacts", "partnerOwned", "supportedRegions", "regionEndpoints"]
 
     @validator('status')
     def status_validate_enum(cls, value):
@@ -167,8 +166,7 @@ class DestinationMetadataV1(BaseModel):
             "contacts": [Contact.from_dict(_item) for _item in obj.get("contacts")] if obj.get("contacts") is not None else None,
             "partner_owned": obj.get("partnerOwned"),
             "supported_regions": obj.get("supportedRegions"),
-            "region_endpoints": obj.get("regionEndpoints"),
-            "multi_instance_supported_version": obj.get("multiInstanceSupportedVersion")
+            "region_endpoints": obj.get("regionEndpoints")
         })
         return _obj
 
