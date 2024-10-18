@@ -802,8 +802,8 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.DestinationsApi(api_client)
-    destination_id = 'fP7qoQw2HTWt9WdMr718gn' # str | 
-    id = '3ELMSracBm5MMikXBYfo1c' # str | 
+    destination_id = 'qtiZHLLqqsHmpvLXNtP5du' # str | 
+    id = 'pJtn52LjrcD1TrQcm2ZSwp' # str | 
     update_subscription_for_destination_alpha_input = {"input":{"name":"Updated name"}} # UpdateSubscriptionForDestinationAlphaInput | 
 
     try:
