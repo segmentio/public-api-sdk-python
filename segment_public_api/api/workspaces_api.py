@@ -45,7 +45,7 @@ class WorkspacesApi:
     def get_workspace(self, **kwargs) -> GetWorkspace200Response:  # noqa: E501
         """Get Workspace  # noqa: E501
 
-        Returns the Workspace associated with the token used to access this resource.  # noqa: E501
+        Returns the Workspace associated with the token used to access this resource.   The rate limit for this endpoint is 5 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -73,7 +73,7 @@ class WorkspacesApi:
     def get_workspace_with_http_info(self, **kwargs) -> ApiResponse:  # noqa: E501
         """Get Workspace  # noqa: E501
 
-        Returns the Workspace associated with the token used to access this resource.  # noqa: E501
+        Returns the Workspace associated with the token used to access this resource.   The rate limit for this endpoint is 5 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
