@@ -27,7 +27,7 @@ class ReverseEtlCronScheduleConfig(BaseModel):
     ReverseEtlCronScheduleConfig
     """
     spec: StrictStr = Field(..., description="5 field cron string expression. The cron expression must be larger than 15 minutes.")
-    timezone: StrictStr = Field(..., description="Timezone for the specified times.")
+    timezone: StrictStr = Field(..., description="Timezone respected by the cron string. Format must be in IANA Timezone Identifier. Example: 'America/Los_Angeles'.")
     __properties = ["spec", "timezone"]
 
     class Config:

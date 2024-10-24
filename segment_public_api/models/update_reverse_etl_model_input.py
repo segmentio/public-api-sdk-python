@@ -19,8 +19,8 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, Optional
-from pydantic import BaseModel, Field, StrictBool, StrictStr, validator
+from typing import Optional
+from pydantic import BaseModel, Field, StrictBool, StrictStr
 
 class UpdateReverseEtlModelInput(BaseModel):
     """
@@ -29,21 +29,9 @@ class UpdateReverseEtlModelInput(BaseModel):
     name: Optional[StrictStr] = Field(None, description="A short, human-readable description of the Model.")
     description: Optional[StrictStr] = Field(None, description="A longer, more descriptive explanation of the Model.")
     enabled: Optional[StrictBool] = Field(None, description="Indicates whether the Model should have syncs enabled. When disabled, no syncs will be triggered, regardless of the enabled status of the attached destinations/subscriptions.")
-    schedule_strategy: Optional[StrictStr] = Field(None, alias="scheduleStrategy", description="Determines the strategy used for triggering syncs, which will be used in conjunction with scheduleConfig.")
-    schedule_config: Optional[Dict[str, Any]] = Field(None, alias="scheduleConfig", description="Defines a configuration object used for scheduling, which can vary depending on the configured strategy, but must always be an object with at least 1 level of keys.")
     query: Optional[StrictStr] = Field(None, description="The SQL query that will be executed to extract data from the connected Source.")
     query_identifier_column: Optional[StrictStr] = Field(None, alias="queryIdentifierColumn", description="Indicates the column named in `query` that should be used to uniquely identify the extracted records.")
-    __properties = ["name", "description", "enabled", "scheduleStrategy", "scheduleConfig", "query", "queryIdentifierColumn"]
-
-    @validator('schedule_strategy')
-    def schedule_strategy_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in ('MANUAL', 'PERIODIC', 'SPECIFIC_DAYS'):
-            raise ValueError("must be one of enum values ('MANUAL', 'PERIODIC', 'SPECIFIC_DAYS')")
-        return value
+    __properties = ["name", "description", "enabled", "query", "queryIdentifierColumn"]
 
     class Config:
         """Pydantic configuration"""
@@ -84,8 +72,6 @@ class UpdateReverseEtlModelInput(BaseModel):
             "name": obj.get("name"),
             "description": obj.get("description"),
             "enabled": obj.get("enabled"),
-            "schedule_strategy": obj.get("scheduleStrategy"),
-            "schedule_config": obj.get("scheduleConfig"),
             "query": obj.get("query"),
             "query_identifier_column": obj.get("queryIdentifierColumn")
         })

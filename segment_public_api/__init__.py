@@ -518,7 +518,6 @@ from segment_public_api.models.reverse_etl_specific_time_schedule_config import 
 from segment_public_api.models.role_v1 import RoleV1
 from segment_public_api.models.rule_input_v1 import RuleInputV1
 from segment_public_api.models.rule_v1 import RuleV1
-from segment_public_api.models.schedule_config import ScheduleConfig
 from segment_public_api.models.source_api_call_snapshot_v1 import SourceAPICallSnapshotV1
 from segment_public_api.models.source_alpha import SourceAlpha
 from segment_public_api.models.source_event_volume_datapoint_v1 import SourceEventVolumeDatapointV1

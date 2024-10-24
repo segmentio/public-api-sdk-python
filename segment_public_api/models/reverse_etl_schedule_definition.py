@@ -27,15 +27,15 @@ class ReverseEtlScheduleDefinition(BaseModel):
     """
     Defines a configuration object used for scheduling, which can vary depending on the configured strategy.  # noqa: E501
     """
-    strategy: StrictStr = Field(..., description="Strategy supports three modes: Periodic, Specific Days, or Manual.")
+    strategy: StrictStr = Field(..., description="Strategy supports: Periodic, Specific Days, Manual, CRON.")
     config: Optional[Config] = None
     __properties = ["strategy", "config"]
 
     @validator('strategy')
     def strategy_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in ('MANUAL', 'PERIODIC', 'SPECIFIC_DAYS'):
-            raise ValueError("must be one of enum values ('MANUAL', 'PERIODIC', 'SPECIFIC_DAYS')")
+        if value not in ('CRON', 'MANUAL', 'PERIODIC', 'SPECIFIC_DAYS'):
+            raise ValueError("must be one of enum values ('CRON', 'MANUAL', 'PERIODIC', 'SPECIFIC_DAYS')")
         return value
 
     class Config:
