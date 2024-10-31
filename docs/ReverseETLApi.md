@@ -120,7 +120,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.ReverseETLApi(api_client)
-    create_reverse_etl_model_input = {"sourceId":"qQEHquLrjRDN9j1ByrChyn","name":"Model 1","description":"This model is very useful.","enabled":true,"query":"SELECT 'user_1' AS id","queryIdentifierColumn":"id","scheduleStrategy":"MANUAL","scheduleConfig":{}} # CreateReverseEtlModelInput | 
+    create_reverse_etl_model_input = {"sourceId":"qQEHquLrjRDN9j1ByrChyn","name":"Model 1","description":"This model is very useful.","enabled":true,"query":"SELECT 'user_1' AS id","queryIdentifierColumn":"id"} # CreateReverseEtlModelInput | 
 
     try:
         # Create Reverse Etl Model
@@ -266,7 +266,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.ReverseETLApi(api_client)
-    model_id = 'dY1JLx4HgWHKUNsB76tEU' # str | 
+    model_id = 'jSAVzDH3z89geNDZwoNY9V' # str | 
 
     try:
         # Get Reverse Etl Model
@@ -568,8 +568,8 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.ReverseETLApi(api_client)
-    model_id = 'gFBTkmP2ENiu6BQRmdHBkr' # str | 
-    update_reverse_etl_model_input = {"name":"My Updated Model","scheduleStrategy":"MANUAL","scheduleConfig":{}} # UpdateReverseEtlModelInput | 
+    model_id = '6BthE21tPsXyA2cK3QPQFQ' # str | 
+    update_reverse_etl_model_input = {"name":"My Updated Model","query":"SELECT 'user_2' AS id"} # UpdateReverseEtlModelInput | 
 
     try:
         # Update Reverse Etl Model
