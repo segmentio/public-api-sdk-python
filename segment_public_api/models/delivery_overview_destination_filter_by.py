@@ -32,8 +32,8 @@ class DeliveryOverviewDestinationFilterBy(BaseModel):
     app_version: Optional[conlist(StrictStr)] = Field(None, alias="appVersion", description="A list of strings of app versions.")
     subscription_id: Optional[conlist(StrictStr)] = Field(None, alias="subscriptionId", description="A list of strings of subscription IDs for Actions Destinations.")
     activation_id: Optional[conlist(StrictStr)] = Field(None, alias="activationId", description="A list of strings of event context IDs from a Linked Audience mapping/activation.")
-    audience_id: Optional[conlist(StrictStr)] = Field(None, alias="audienceId", description="A list of strings of audience IDs for a Linked Audience.")
-    space_id: Optional[conlist(StrictStr)] = Field(None, alias="spaceId", description="A list of strings of space IDs for a Linked Audience.")
+    audience_id: Optional[conlist(StrictStr)] = Field(None, alias="audienceId", description="A list of strings of audienceIDs for a Linked Audience.")
+    space_id: Optional[conlist(StrictStr)] = Field(None, alias="spaceId", description="A list of strings of spaceIDs for a Linked Audience.")
     __properties = ["discardReason", "eventName", "eventType", "appVersion", "subscriptionId", "activationId", "audienceId", "spaceId"]
 
     class Config:

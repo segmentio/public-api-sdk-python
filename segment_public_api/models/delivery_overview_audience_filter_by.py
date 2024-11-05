@@ -19,20 +19,19 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
-from pydantic import BaseModel, Field, StrictBool
+from typing import List, Optional
+from pydantic import BaseModel, Field, StrictStr, conlist
 
-class DestinationMetadataPlatformsV1(BaseModel):
+class DeliveryOverviewAudienceFilterBy(BaseModel):
     """
-    Represents platforms that a given Destination supports.  # noqa: E501
+    The `DeliveryOverviewAudienceFilterBy` object is a map of the filterable fields and their values.  # noqa: E501
     """
-    browser: Optional[StrictBool] = Field(None, description="Whether this Destination supports browser events.")
-    server: Optional[StrictBool] = Field(None, description="Whether this Destination supports server events.")
-    mobile: Optional[StrictBool] = Field(None, description="Whether this Destination supports mobile events.")
-    warehouse: Optional[StrictBool] = Field(None, description="Whether this Destination supports Warehouse events.")
-    cloud_app_object: Optional[StrictBool] = Field(None, alias="cloudAppObject", description="Whether this Destination supports cloud app object events.")
-    linked_audiences: Optional[StrictBool] = Field(None, alias="linkedAudiences", description="Whether this Destination supports linked audiences.")
-    __properties = ["browser", "server", "mobile", "warehouse", "cloudAppObject", "linkedAudiences"]
+    event_name: Optional[conlist(StrictStr)] = Field(None, alias="eventName", description="A list of strings of event names.")
+    event_type: Optional[conlist(StrictStr)] = Field(None, alias="eventType", description="A list of strings of event types. Valid options are: `alias`, `group`, `identify`, `page`, `screen`, and `track`.")
+    activation_id: Optional[conlist(StrictStr)] = Field(None, alias="activationId", description="A list of strings of event context IDs from a Linked Audience mapping/activation.")
+    audience_id: Optional[conlist(StrictStr)] = Field(None, alias="audienceId", description="A list of strings of audience IDs for a Linked Audience.")
+    space_id: Optional[conlist(StrictStr)] = Field(None, alias="spaceId", description="A list of strings of space IDs for a Linked Audience.")
+    __properties = ["eventName", "eventType", "activationId", "audienceId", "spaceId"]
 
     class Config:
         """Pydantic configuration"""
@@ -48,8 +47,8 @@ class DestinationMetadataPlatformsV1(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> DestinationMetadataPlatformsV1:
-        """Create an instance of DestinationMetadataPlatformsV1 from a JSON string"""
+    def from_json(cls, json_str: str) -> DeliveryOverviewAudienceFilterBy:
+        """Create an instance of DeliveryOverviewAudienceFilterBy from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -61,21 +60,20 @@ class DestinationMetadataPlatformsV1(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> DestinationMetadataPlatformsV1:
-        """Create an instance of DestinationMetadataPlatformsV1 from a dict"""
+    def from_dict(cls, obj: dict) -> DeliveryOverviewAudienceFilterBy:
+        """Create an instance of DeliveryOverviewAudienceFilterBy from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return DestinationMetadataPlatformsV1.parse_obj(obj)
+            return DeliveryOverviewAudienceFilterBy.parse_obj(obj)
 
-        _obj = DestinationMetadataPlatformsV1.parse_obj({
-            "browser": obj.get("browser"),
-            "server": obj.get("server"),
-            "mobile": obj.get("mobile"),
-            "warehouse": obj.get("warehouse"),
-            "cloud_app_object": obj.get("cloudAppObject"),
-            "linked_audiences": obj.get("linkedAudiences")
+        _obj = DeliveryOverviewAudienceFilterBy.parse_obj({
+            "event_name": obj.get("eventName"),
+            "event_type": obj.get("eventType"),
+            "activation_id": obj.get("activationId"),
+            "audience_id": obj.get("audienceId"),
+            "space_id": obj.get("spaceId")
         })
         return _obj
 

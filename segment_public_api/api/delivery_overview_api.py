@@ -24,6 +24,7 @@ from pydantic import Field, StrictStr, conlist
 
 from typing import Optional
 
+from segment_public_api.models.delivery_overview_audience_filter_by import DeliveryOverviewAudienceFilterBy
 from segment_public_api.models.delivery_overview_destination_filter_by import DeliveryOverviewDestinationFilterBy
 from segment_public_api.models.delivery_overview_source_filter_by import DeliveryOverviewSourceFilterBy
 from segment_public_api.models.delivery_overview_successfully_received_filter_by import DeliveryOverviewSuccessfullyReceivedFilterBy
@@ -251,7 +252,7 @@ class DeliveryOverviewApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def get_egress_success_metrics_from_delivery_overview(self, source_id : Annotated[StrictStr, Field(..., description="The sourceId for the Workspace.  This parameter exists in beta.")], destination_config_id : Annotated[StrictStr, Field(..., description="The id tied to a Workspace Destination.  This parameter exists in beta.")], start_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta.")], end_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta.")], granularity : Annotated[StrictStr, Field(..., description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")], group_by : Annotated[Optional[conlist(StrictStr)], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.")] = None, filter : Annotated[Optional[DeliveryOverviewDestinationFilterBy], Field(description="An optional filter for `event Name`, `event Type`, `discard Reason`, `appVersion`, `subscription Id`, `activationId`, `audienceId`, or `spaceId` that can be applied in addition to a `group By`. If you would like to view retry attempts for a successful delivery, you can filter `discard Reason` from `successes.attempt.1` through `successes.attempt.10`.  This parameter exists in beta.")] = None, pagination : Annotated[Optional[PaginationInput], Field(description="Params to specify the page cursor and count.  This parameter exists in beta.")] = None, **kwargs) -> GetEgressFailedMetricsFromDeliveryOverview200Response:  # noqa: E501
+    def get_egress_success_metrics_from_delivery_overview(self, source_id : Annotated[StrictStr, Field(..., description="The sourceId for the Workspace.  This parameter exists in beta.")], destination_config_id : Annotated[StrictStr, Field(..., description="The id tied to a Workspace Destination.  This parameter exists in beta.")], start_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta.")], end_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta.")], granularity : Annotated[StrictStr, Field(..., description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")], group_by : Annotated[Optional[conlist(StrictStr)], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `eventName`, `eventType`, `discardReason`, `appVersion`, `subscriptionId`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.")] = None, filter : Annotated[Optional[DeliveryOverviewDestinationFilterBy], Field(description="An optional filter for `eventName`, `eventType`, `discardReason`, `appVersion`, `subscriptionId`, `activationId`, `audienceId`, and/or `spaceId` that can be applied in addition to a `groupBy`. If you would like to view retry attempts for a successful delivery, you can filter `discardReason` from `successes.attempt.1` through `successes.attempt.10`.  This parameter exists in beta.")] = None, pagination : Annotated[Optional[PaginationInput], Field(description="Params to specify the page cursor and count.  This parameter exists in beta.")] = None, **kwargs) -> GetEgressFailedMetricsFromDeliveryOverview200Response:  # noqa: E501
         """Get Egress Success Metrics from Delivery Overview  # noqa: E501
 
         Get events successfully delivered to Destination.  # noqa: E501
@@ -271,9 +272,9 @@ class DeliveryOverviewApi:
         :type end_time: str
         :param granularity: The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta. (required)
         :type granularity: str
-        :param group_by: A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.
+        :param group_by: A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `eventName`, `eventType`, `discardReason`, `appVersion`, `subscriptionId`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.
         :type group_by: List[str]
-        :param filter: An optional filter for `event Name`, `event Type`, `discard Reason`, `appVersion`, `subscription Id`, `activationId`, `audienceId`, or `spaceId` that can be applied in addition to a `group By`. If you would like to view retry attempts for a successful delivery, you can filter `discard Reason` from `successes.attempt.1` through `successes.attempt.10`.  This parameter exists in beta.
+        :param filter: An optional filter for `eventName`, `eventType`, `discardReason`, `appVersion`, `subscriptionId`, `activationId`, `audienceId`, and/or `spaceId` that can be applied in addition to a `groupBy`. If you would like to view retry attempts for a successful delivery, you can filter `discardReason` from `successes.attempt.1` through `successes.attempt.10`.  This parameter exists in beta.
         :type filter: DeliveryOverviewDestinationFilterBy
         :param pagination: Params to specify the page cursor and count.  This parameter exists in beta.
         :type pagination: PaginationInput
@@ -295,7 +296,7 @@ class DeliveryOverviewApi:
         return self.get_egress_success_metrics_from_delivery_overview_with_http_info(source_id, destination_config_id, start_time, end_time, granularity, group_by, filter, pagination, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_egress_success_metrics_from_delivery_overview_with_http_info(self, source_id : Annotated[StrictStr, Field(..., description="The sourceId for the Workspace.  This parameter exists in beta.")], destination_config_id : Annotated[StrictStr, Field(..., description="The id tied to a Workspace Destination.  This parameter exists in beta.")], start_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta.")], end_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta.")], granularity : Annotated[StrictStr, Field(..., description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")], group_by : Annotated[Optional[conlist(StrictStr)], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.")] = None, filter : Annotated[Optional[DeliveryOverviewDestinationFilterBy], Field(description="An optional filter for `event Name`, `event Type`, `discard Reason`, `appVersion`, `subscription Id`, `activationId`, `audienceId`, or `spaceId` that can be applied in addition to a `group By`. If you would like to view retry attempts for a successful delivery, you can filter `discard Reason` from `successes.attempt.1` through `successes.attempt.10`.  This parameter exists in beta.")] = None, pagination : Annotated[Optional[PaginationInput], Field(description="Params to specify the page cursor and count.  This parameter exists in beta.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def get_egress_success_metrics_from_delivery_overview_with_http_info(self, source_id : Annotated[StrictStr, Field(..., description="The sourceId for the Workspace.  This parameter exists in beta.")], destination_config_id : Annotated[StrictStr, Field(..., description="The id tied to a Workspace Destination.  This parameter exists in beta.")], start_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta.")], end_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta.")], granularity : Annotated[StrictStr, Field(..., description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")], group_by : Annotated[Optional[conlist(StrictStr)], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `eventName`, `eventType`, `discardReason`, `appVersion`, `subscriptionId`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.")] = None, filter : Annotated[Optional[DeliveryOverviewDestinationFilterBy], Field(description="An optional filter for `eventName`, `eventType`, `discardReason`, `appVersion`, `subscriptionId`, `activationId`, `audienceId`, and/or `spaceId` that can be applied in addition to a `groupBy`. If you would like to view retry attempts for a successful delivery, you can filter `discardReason` from `successes.attempt.1` through `successes.attempt.10`.  This parameter exists in beta.")] = None, pagination : Annotated[Optional[PaginationInput], Field(description="Params to specify the page cursor and count.  This parameter exists in beta.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Get Egress Success Metrics from Delivery Overview  # noqa: E501
 
         Get events successfully delivered to Destination.  # noqa: E501
@@ -315,9 +316,9 @@ class DeliveryOverviewApi:
         :type end_time: str
         :param granularity: The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta. (required)
         :type granularity: str
-        :param group_by: A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.
+        :param group_by: A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `eventName`, `eventType`, `discardReason`, `appVersion`, `subscriptionId`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.
         :type group_by: List[str]
-        :param filter: An optional filter for `event Name`, `event Type`, `discard Reason`, `appVersion`, `subscription Id`, `activationId`, `audienceId`, or `spaceId` that can be applied in addition to a `group By`. If you would like to view retry attempts for a successful delivery, you can filter `discard Reason` from `successes.attempt.1` through `successes.attempt.10`.  This parameter exists in beta.
+        :param filter: An optional filter for `eventName`, `eventType`, `discardReason`, `appVersion`, `subscriptionId`, `activationId`, `audienceId`, and/or `spaceId` that can be applied in addition to a `groupBy`. If you would like to view retry attempts for a successful delivery, you can filter `discardReason` from `successes.attempt.1` through `successes.attempt.10`.  This parameter exists in beta.
         :type filter: DeliveryOverviewDestinationFilterBy
         :param pagination: Params to specify the page cursor and count.  This parameter exists in beta.
         :type pagination: PaginationInput
@@ -451,7 +452,7 @@ class DeliveryOverviewApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def get_filtered_at_destination_metrics_from_delivery_overview(self, source_id : Annotated[StrictStr, Field(..., description="The sourceId for the Workspace.  This parameter exists in beta.")], destination_config_id : Annotated[StrictStr, Field(..., description="The id tied to a Workspace Destination.  This parameter exists in beta.")], start_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta.")], end_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta.")], granularity : Annotated[StrictStr, Field(..., description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")], group_by : Annotated[Optional[conlist(StrictStr)], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.")] = None, filter : Annotated[Optional[DeliveryOverviewDestinationFilterBy], Field(description="An optional filter for `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and/or `spaceId` that can be applied in addition to a `group By`.  This parameter exists in beta.")] = None, pagination : Annotated[Optional[PaginationInput], Field(description="Params to specify the page cursor and count.  This parameter exists in beta.")] = None, **kwargs) -> GetEgressFailedMetricsFromDeliveryOverview200Response:  # noqa: E501
+    def get_filtered_at_destination_metrics_from_delivery_overview(self, source_id : Annotated[StrictStr, Field(..., description="The sourceId for the Workspace.  This parameter exists in beta.")], destination_config_id : Annotated[StrictStr, Field(..., description="The id tied to a Workspace Destination.  This parameter exists in beta.")], start_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta.")], end_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta.")], granularity : Annotated[StrictStr, Field(..., description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")], group_by : Annotated[Optional[conlist(StrictStr)], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.")] = None, filter : Annotated[Optional[DeliveryOverviewDestinationFilterBy], Field(description="An optional filter for `eventName`, `eventType`, `discardReason`, `appVersion`, `subscriptionId`, `activationId`, `audienceId`, and/or `spaceId` that can be applied in addition to a `groupBy`.  This parameter exists in beta.")] = None, pagination : Annotated[Optional[PaginationInput], Field(description="Params to specify the page cursor and count.  This parameter exists in beta.")] = None, **kwargs) -> GetEgressFailedMetricsFromDeliveryOverview200Response:  # noqa: E501
         """Get Filtered At Destination Metrics from Delivery Overview  # noqa: E501
 
         Get events that were filtered at Destination.  # noqa: E501
@@ -473,7 +474,7 @@ class DeliveryOverviewApi:
         :type granularity: str
         :param group_by: A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.
         :type group_by: List[str]
-        :param filter: An optional filter for `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and/or `spaceId` that can be applied in addition to a `group By`.  This parameter exists in beta.
+        :param filter: An optional filter for `eventName`, `eventType`, `discardReason`, `appVersion`, `subscriptionId`, `activationId`, `audienceId`, and/or `spaceId` that can be applied in addition to a `groupBy`.  This parameter exists in beta.
         :type filter: DeliveryOverviewDestinationFilterBy
         :param pagination: Params to specify the page cursor and count.  This parameter exists in beta.
         :type pagination: PaginationInput
@@ -495,7 +496,7 @@ class DeliveryOverviewApi:
         return self.get_filtered_at_destination_metrics_from_delivery_overview_with_http_info(source_id, destination_config_id, start_time, end_time, granularity, group_by, filter, pagination, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_filtered_at_destination_metrics_from_delivery_overview_with_http_info(self, source_id : Annotated[StrictStr, Field(..., description="The sourceId for the Workspace.  This parameter exists in beta.")], destination_config_id : Annotated[StrictStr, Field(..., description="The id tied to a Workspace Destination.  This parameter exists in beta.")], start_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta.")], end_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta.")], granularity : Annotated[StrictStr, Field(..., description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")], group_by : Annotated[Optional[conlist(StrictStr)], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.")] = None, filter : Annotated[Optional[DeliveryOverviewDestinationFilterBy], Field(description="An optional filter for `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and/or `spaceId` that can be applied in addition to a `group By`.  This parameter exists in beta.")] = None, pagination : Annotated[Optional[PaginationInput], Field(description="Params to specify the page cursor and count.  This parameter exists in beta.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def get_filtered_at_destination_metrics_from_delivery_overview_with_http_info(self, source_id : Annotated[StrictStr, Field(..., description="The sourceId for the Workspace.  This parameter exists in beta.")], destination_config_id : Annotated[StrictStr, Field(..., description="The id tied to a Workspace Destination.  This parameter exists in beta.")], start_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta.")], end_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta.")], granularity : Annotated[StrictStr, Field(..., description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")], group_by : Annotated[Optional[conlist(StrictStr)], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.")] = None, filter : Annotated[Optional[DeliveryOverviewDestinationFilterBy], Field(description="An optional filter for `eventName`, `eventType`, `discardReason`, `appVersion`, `subscriptionId`, `activationId`, `audienceId`, and/or `spaceId` that can be applied in addition to a `groupBy`.  This parameter exists in beta.")] = None, pagination : Annotated[Optional[PaginationInput], Field(description="Params to specify the page cursor and count.  This parameter exists in beta.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Get Filtered At Destination Metrics from Delivery Overview  # noqa: E501
 
         Get events that were filtered at Destination.  # noqa: E501
@@ -517,7 +518,7 @@ class DeliveryOverviewApi:
         :type granularity: str
         :param group_by: A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.
         :type group_by: List[str]
-        :param filter: An optional filter for `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and/or `spaceId` that can be applied in addition to a `group By`.  This parameter exists in beta.
+        :param filter: An optional filter for `eventName`, `eventType`, `discardReason`, `appVersion`, `subscriptionId`, `activationId`, `audienceId`, and/or `spaceId` that can be applied in addition to a `groupBy`.  This parameter exists in beta.
         :type filter: DeliveryOverviewDestinationFilterBy
         :param pagination: Params to specify the page cursor and count.  This parameter exists in beta.
         :type pagination: PaginationInput
@@ -1211,6 +1212,206 @@ class DeliveryOverviewApi:
 
         return self.api_client.call_api(
             '/delivery-overview/successfully-received', 'GET',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @validate_arguments
+    def get_linked_audience_success_metrics_from_delivery_overview(self, source_id : Annotated[StrictStr, Field(..., description="The sourceId for the Workspace.  This parameter exists in beta.")], destination_config_id : Annotated[StrictStr, Field(..., description="The id tied to a Workspace Destination.  This parameter exists in beta.")], start_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the beginning of the requested timeframe, inclusive.  This parameter exists in beta.")], end_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the end of the requested timeframe, noninclusive.  This parameter exists in beta.")], granularity : Annotated[StrictStr, Field(..., description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")], group_by : Annotated[Optional[conlist(StrictStr)], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `eventName`, `eventType`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.")] = None, filter : Annotated[Optional[DeliveryOverviewAudienceFilterBy], Field(description="An optional filter for `eventName`, `eventType`, `activationId`, `audienceId`, and/or `spaceId` that can be applied in addition to a `groupBy`.  This parameter exists in beta.")] = None, pagination : Annotated[Optional[PaginationInput], Field(description="Params to specify the page cursor and count.  This parameter exists in beta.")] = None, **kwargs) -> GetEgressFailedMetricsFromDeliveryOverview200Response:  # noqa: E501
+        """Get Linked Audience Success Metrics from Delivery Overview  # noqa: E501
+
+        Get events successfully delivered for Linked Audiences.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.get_linked_audience_success_metrics_from_delivery_overview(source_id, destination_config_id, start_time, end_time, granularity, group_by, filter, pagination, async_req=True)
+        >>> result = thread.get()
+
+        :param source_id: The sourceId for the Workspace.  This parameter exists in beta. (required)
+        :type source_id: str
+        :param destination_config_id: The id tied to a Workspace Destination.  This parameter exists in beta. (required)
+        :type destination_config_id: str
+        :param start_time: The ISO8601 formatted timestamp corresponding to the beginning of the requested timeframe, inclusive.  This parameter exists in beta. (required)
+        :type start_time: str
+        :param end_time: The ISO8601 formatted timestamp corresponding to the end of the requested timeframe, noninclusive.  This parameter exists in beta. (required)
+        :type end_time: str
+        :param granularity: The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta. (required)
+        :type granularity: str
+        :param group_by: A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `eventName`, `eventType`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.
+        :type group_by: List[str]
+        :param filter: An optional filter for `eventName`, `eventType`, `activationId`, `audienceId`, and/or `spaceId` that can be applied in addition to a `groupBy`.  This parameter exists in beta.
+        :type filter: DeliveryOverviewAudienceFilterBy
+        :param pagination: Params to specify the page cursor and count.  This parameter exists in beta.
+        :type pagination: PaginationInput
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: GetEgressFailedMetricsFromDeliveryOverview200Response
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the get_linked_audience_success_metrics_from_delivery_overview_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        return self.get_linked_audience_success_metrics_from_delivery_overview_with_http_info(source_id, destination_config_id, start_time, end_time, granularity, group_by, filter, pagination, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def get_linked_audience_success_metrics_from_delivery_overview_with_http_info(self, source_id : Annotated[StrictStr, Field(..., description="The sourceId for the Workspace.  This parameter exists in beta.")], destination_config_id : Annotated[StrictStr, Field(..., description="The id tied to a Workspace Destination.  This parameter exists in beta.")], start_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the beginning of the requested timeframe, inclusive.  This parameter exists in beta.")], end_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the end of the requested timeframe, noninclusive.  This parameter exists in beta.")], granularity : Annotated[StrictStr, Field(..., description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")], group_by : Annotated[Optional[conlist(StrictStr)], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `eventName`, `eventType`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.")] = None, filter : Annotated[Optional[DeliveryOverviewAudienceFilterBy], Field(description="An optional filter for `eventName`, `eventType`, `activationId`, `audienceId`, and/or `spaceId` that can be applied in addition to a `groupBy`.  This parameter exists in beta.")] = None, pagination : Annotated[Optional[PaginationInput], Field(description="Params to specify the page cursor and count.  This parameter exists in beta.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """Get Linked Audience Success Metrics from Delivery Overview  # noqa: E501
+
+        Get events successfully delivered for Linked Audiences.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.get_linked_audience_success_metrics_from_delivery_overview_with_http_info(source_id, destination_config_id, start_time, end_time, granularity, group_by, filter, pagination, async_req=True)
+        >>> result = thread.get()
+
+        :param source_id: The sourceId for the Workspace.  This parameter exists in beta. (required)
+        :type source_id: str
+        :param destination_config_id: The id tied to a Workspace Destination.  This parameter exists in beta. (required)
+        :type destination_config_id: str
+        :param start_time: The ISO8601 formatted timestamp corresponding to the beginning of the requested timeframe, inclusive.  This parameter exists in beta. (required)
+        :type start_time: str
+        :param end_time: The ISO8601 formatted timestamp corresponding to the end of the requested timeframe, noninclusive.  This parameter exists in beta. (required)
+        :type end_time: str
+        :param granularity: The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta. (required)
+        :type granularity: str
+        :param group_by: A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `eventName`, `eventType`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.
+        :type group_by: List[str]
+        :param filter: An optional filter for `eventName`, `eventType`, `activationId`, `audienceId`, and/or `spaceId` that can be applied in addition to a `groupBy`.  This parameter exists in beta.
+        :type filter: DeliveryOverviewAudienceFilterBy
+        :param pagination: Params to specify the page cursor and count.  This parameter exists in beta.
+        :type pagination: PaginationInput
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(GetEgressFailedMetricsFromDeliveryOverview200Response, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'source_id',
+            'destination_config_id',
+            'start_time',
+            'end_time',
+            'granularity',
+            'group_by',
+            'filter',
+            'pagination'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method get_linked_audience_success_metrics_from_delivery_overview" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+
+        # process the query parameters
+        _query_params = []
+        if _params.get('source_id') is not None:  # noqa: E501
+            _query_params.append(('sourceId', _params['source_id']))
+
+        if _params.get('destination_config_id') is not None:  # noqa: E501
+            _query_params.append(('destinationConfigId', _params['destination_config_id']))
+
+        if _params.get('start_time') is not None:  # noqa: E501
+            _query_params.append(('startTime', _params['start_time']))
+
+        if _params.get('end_time') is not None:  # noqa: E501
+            _query_params.append(('endTime', _params['end_time']))
+
+        if _params.get('group_by') is not None:  # noqa: E501
+            _query_params.append(('groupBy', _params['group_by']))
+            _collection_formats['groupBy'] = 'multi'
+
+        if _params.get('granularity') is not None:  # noqa: E501
+            _query_params.append(('granularity', _params['granularity']))
+
+        if _params.get('filter') is not None:  # noqa: E501
+            _query_params.append(('filter', _params['filter']))
+
+        if _params.get('pagination') is not None:  # noqa: E501
+            _query_params.append(('pagination', _params['pagination']))
+
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/vnd.segment.v1beta+json', 'application/json'])  # noqa: E501
+
+        # authentication setting
+        _auth_settings = ['token']  # noqa: E501
+
+        _response_types_map = {
+            '200': "GetEgressFailedMetricsFromDeliveryOverview200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+
+        return self.api_client.call_api(
+            '/delivery-overview/audience/success', 'GET',
             _path_params,
             _query_params,
             _header_params,

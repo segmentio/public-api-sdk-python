@@ -26,7 +26,7 @@ from segment_public_api.models.pagination_output import PaginationOutput
 
 class GetDeliveryOverviewMetricsBetaOutput(BaseModel):
     """
-    Output of the Delivery Overview public API endpoints.  # noqa: E501
+    Output of the Delivery Overview public api endpoints.  # noqa: E501
     """
     total: Union[StrictFloat, StrictInt] = Field(..., description="The total number of events for the returned dataset.")
     dataset: conlist(DeliveryOverviewMetricsDataset) = Field(..., description="Represents the list of series broken down by the dimensions and time frame requested.")
