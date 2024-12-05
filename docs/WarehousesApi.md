@@ -197,7 +197,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.WarehousesApi(api_client)
-    create_warehouse_v1_input = {"metadataId":"CCIl4HLQPz","settings":{}} # CreateWarehouseV1Input | 
+    create_warehouse_v1_input = {"metadataId":"CCIl4HLQPz","settings":{"username":"CONNECTOR_UNIT_TEST_USER","password":"test_pass","auth_type":"password_auth","account":"segment","warehouse":"ENGINEERING","database":"TEST_DB"}} # CreateWarehouseV1Input | 
 
     try:
         # Create Warehouse

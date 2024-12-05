@@ -45,7 +45,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.ProfilesSyncApi(api_client)
     space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
-    create_profiles_warehouse_alpha_input = {"metadataId":"CCIl4HLQPz","settings":{},"enabled":true} # CreateProfilesWarehouseAlphaInput | 
+    create_profiles_warehouse_alpha_input = {"metadataId":"CCIl4HLQPz","settings":{"username":"CONNECTOR_UNIT_TEST_USER","password":"test_password","auth_type":"password_auth","account":"segment","warehouse":"ENGINEERING","database":"TEST_DB"},"enabled":true} # CreateProfilesWarehouseAlphaInput | 
 
     try:
         # Create Profiles Warehouse
