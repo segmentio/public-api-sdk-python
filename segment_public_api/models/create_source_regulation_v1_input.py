@@ -34,15 +34,15 @@ class CreateSourceRegulationV1Input(BaseModel):
     @validator('regulation_type')
     def regulation_type_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in ('DELETE_INTERNAL', 'DELETE_ONLY', 'SUPPRESS_ONLY', 'SUPPRESS_WITH_DELETE', 'SUPPRESS_WITH_DELETE_INTERNAL', 'UNSUPPRESS'):
-            raise ValueError("must be one of enum values ('DELETE_INTERNAL', 'DELETE_ONLY', 'SUPPRESS_ONLY', 'SUPPRESS_WITH_DELETE', 'SUPPRESS_WITH_DELETE_INTERNAL', 'UNSUPPRESS')")
+        if value not in ('DELETE_ARCHIVE_ONLY', 'DELETE_INTERNAL', 'DELETE_ONLY', 'SUPPRESS_ONLY', 'SUPPRESS_WITH_DELETE', 'SUPPRESS_WITH_DELETE_INTERNAL', 'UNSUPPRESS'):
+            raise ValueError("must be one of enum values ('DELETE_ARCHIVE_ONLY', 'DELETE_INTERNAL', 'DELETE_ONLY', 'SUPPRESS_ONLY', 'SUPPRESS_WITH_DELETE', 'SUPPRESS_WITH_DELETE_INTERNAL', 'UNSUPPRESS')")
         return value
 
     @validator('subject_type')
     def subject_type_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in ('USER_ID'):
-            raise ValueError("must be one of enum values ('USER_ID')")
+        if value not in ('ANONYMOUS_ID', 'USER_ID'):
+            raise ValueError("must be one of enum values ('ANONYMOUS_ID', 'USER_ID')")
         return value
 
     class Config:
