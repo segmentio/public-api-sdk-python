@@ -22,12 +22,13 @@ import re  # noqa: F401
 from typing import Optional
 from pydantic import BaseModel, Field, StrictStr, ValidationError, validator
 from segment_public_api.models.reverse_etl_cron_schedule_config import ReverseEtlCronScheduleConfig
+from segment_public_api.models.reverse_etl_dbt_cloud_schedule_config import ReverseEtlDbtCloudScheduleConfig
 from segment_public_api.models.reverse_etl_periodic_schedule_config import ReverseEtlPeriodicScheduleConfig
 from segment_public_api.models.reverse_etl_specific_time_schedule_config import ReverseEtlSpecificTimeScheduleConfig
 from typing import Union, Any, List, TYPE_CHECKING
 from pydantic import StrictStr, Field
 
-REVERSEETLSCHEDULECONFIG_ANY_OF_SCHEMAS = ["ReverseEtlCronScheduleConfig", "ReverseEtlPeriodicScheduleConfig", "ReverseEtlSpecificTimeScheduleConfig"]
+REVERSEETLSCHEDULECONFIG_ANY_OF_SCHEMAS = ["ReverseEtlCronScheduleConfig", "ReverseEtlDbtCloudScheduleConfig", "ReverseEtlPeriodicScheduleConfig", "ReverseEtlSpecificTimeScheduleConfig"]
 
 class ReverseEtlScheduleConfig(BaseModel):
     """
@@ -40,8 +41,10 @@ class ReverseEtlScheduleConfig(BaseModel):
     anyof_schema_2_validator: Optional[ReverseEtlSpecificTimeScheduleConfig] = None
     # data type: ReverseEtlCronScheduleConfig
     anyof_schema_3_validator: Optional[ReverseEtlCronScheduleConfig] = None
+    # data type: ReverseEtlDbtCloudScheduleConfig
+    anyof_schema_4_validator: Optional[ReverseEtlDbtCloudScheduleConfig] = None
     if TYPE_CHECKING:
-        actual_instance: Union[ReverseEtlCronScheduleConfig, ReverseEtlPeriodicScheduleConfig, ReverseEtlSpecificTimeScheduleConfig]
+        actual_instance: Union[ReverseEtlCronScheduleConfig, ReverseEtlDbtCloudScheduleConfig, ReverseEtlPeriodicScheduleConfig, ReverseEtlSpecificTimeScheduleConfig]
     else:
         actual_instance: Any
     any_of_schemas: List[str] = Field(REVERSEETLSCHEDULECONFIG_ANY_OF_SCHEMAS, const=True)
@@ -81,9 +84,15 @@ class ReverseEtlScheduleConfig(BaseModel):
         else:
             return v
 
+        # validate data type: ReverseEtlDbtCloudScheduleConfig
+        if not isinstance(v, ReverseEtlDbtCloudScheduleConfig):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `ReverseEtlDbtCloudScheduleConfig`")
+        else:
+            return v
+
         if error_messages:
             # no match
-            raise ValueError("No match found when setting the actual_instance in ReverseEtlScheduleConfig with anyOf schemas: ReverseEtlCronScheduleConfig, ReverseEtlPeriodicScheduleConfig, ReverseEtlSpecificTimeScheduleConfig. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when setting the actual_instance in ReverseEtlScheduleConfig with anyOf schemas: ReverseEtlCronScheduleConfig, ReverseEtlDbtCloudScheduleConfig, ReverseEtlPeriodicScheduleConfig, ReverseEtlSpecificTimeScheduleConfig. Details: " + ", ".join(error_messages))
         else:
             return v
 
@@ -114,10 +123,16 @@ class ReverseEtlScheduleConfig(BaseModel):
             return instance
         except (ValidationError, ValueError) as e:
              error_messages.append(str(e))
+        # anyof_schema_4_validator: Optional[ReverseEtlDbtCloudScheduleConfig] = None
+        try:
+            instance.actual_instance = ReverseEtlDbtCloudScheduleConfig.from_json(json_str)
+            return instance
+        except (ValidationError, ValueError) as e:
+             error_messages.append(str(e))
 
         if error_messages:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into ReverseEtlScheduleConfig with anyOf schemas: ReverseEtlCronScheduleConfig, ReverseEtlPeriodicScheduleConfig, ReverseEtlSpecificTimeScheduleConfig. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when deserializing the JSON string into ReverseEtlScheduleConfig with anyOf schemas: ReverseEtlCronScheduleConfig, ReverseEtlDbtCloudScheduleConfig, ReverseEtlPeriodicScheduleConfig, ReverseEtlSpecificTimeScheduleConfig. Details: " + ", ".join(error_messages))
         else:
             return instance
 

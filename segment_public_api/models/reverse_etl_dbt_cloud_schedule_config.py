@@ -19,24 +19,16 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
-from pydantic import BaseModel, Field, StrictStr, validator
-from segment_public_api.models.config import Config
 
-class ReverseEtlScheduleDefinition(BaseModel):
-    """
-    Defines a configuration object used for scheduling, which can vary depending on the configured strategy.  # noqa: E501
-    """
-    strategy: StrictStr = Field(..., description="Strategy supports: Periodic, Specific Days, Manual, CRON and DBT_CLOUD.")
-    config: Optional[Config] = None
-    __properties = ["strategy", "config"]
+from pydantic import BaseModel, Field, StrictStr
 
-    @validator('strategy')
-    def strategy_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in ('CRON', 'DBT_CLOUD', 'MANUAL', 'PERIODIC', 'SPECIFIC_DAYS'):
-            raise ValueError("must be one of enum values ('CRON', 'DBT_CLOUD', 'MANUAL', 'PERIODIC', 'SPECIFIC_DAYS')")
-        return value
+class ReverseEtlDbtCloudScheduleConfig(BaseModel):
+    """
+    Definition for dbt cloud job event schedule.  # noqa: E501
+    """
+    job_id: StrictStr = Field(..., alias="jobId", description="The dbt cloud job id used to start a reverse ETL sync.")
+    account_id: StrictStr = Field(..., alias="accountId", description="The dbt cloud account id where the job belongs to.")
+    __properties = ["jobId", "accountId"]
 
     class Config:
         """Pydantic configuration"""
@@ -52,8 +44,8 @@ class ReverseEtlScheduleDefinition(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> ReverseEtlScheduleDefinition:
-        """Create an instance of ReverseEtlScheduleDefinition from a JSON string"""
+    def from_json(cls, json_str: str) -> ReverseEtlDbtCloudScheduleConfig:
+        """Create an instance of ReverseEtlDbtCloudScheduleConfig from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -62,28 +54,20 @@ class ReverseEtlScheduleDefinition(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of config
-        if self.config:
-            _dict['config'] = self.config.to_dict()
-        # set to None if config (nullable) is None
-        # and __fields_set__ contains the field
-        if self.config is None and "config" in self.__fields_set__:
-            _dict['config'] = None
-
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> ReverseEtlScheduleDefinition:
-        """Create an instance of ReverseEtlScheduleDefinition from a dict"""
+    def from_dict(cls, obj: dict) -> ReverseEtlDbtCloudScheduleConfig:
+        """Create an instance of ReverseEtlDbtCloudScheduleConfig from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return ReverseEtlScheduleDefinition.parse_obj(obj)
+            return ReverseEtlDbtCloudScheduleConfig.parse_obj(obj)
 
-        _obj = ReverseEtlScheduleDefinition.parse_obj({
-            "strategy": obj.get("strategy"),
-            "config": Config.from_dict(obj.get("config")) if obj.get("config") is not None else None
+        _obj = ReverseEtlDbtCloudScheduleConfig.parse_obj({
+            "job_id": obj.get("jobId"),
+            "account_id": obj.get("accountId")
         })
         return _obj
 
