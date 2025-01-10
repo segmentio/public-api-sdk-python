@@ -6,7 +6,6 @@ from segment_public_api.api.audiences_api import AudiencesApi
 from segment_public_api.api.audit_trail_api import AuditTrailApi
 from segment_public_api.api.catalog_api import CatalogApi
 from segment_public_api.api.computed_traits_api import ComputedTraitsApi
-from segment_public_api.api.dbt_api import DBTApi
 from segment_public_api.api.deletion_and_suppression_api import DeletionAndSuppressionApi
 from segment_public_api.api.delivery_overview_api import DeliveryOverviewApi
 from segment_public_api.api.destination_filters_api import DestinationFiltersApi
@@ -30,4 +29,5 @@ from segment_public_api.api.tracking_plans_api import TrackingPlansApi
 from segment_public_api.api.transformations_api import TransformationsApi
 from segment_public_api.api.warehouses_api import WarehousesApi
 from segment_public_api.api.workspaces_api import WorkspacesApi
+from segment_public_api.api.dbt_api import DbtApi
 
