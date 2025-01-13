@@ -1,10 +1,10 @@
-# segment_public_api.DBTApi
+# segment_public_api.DbtApi
 
 All URIs are relative to *https://api.segmentapis.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**create_dbt_model_sync_trigger**](DBTApi.md#create_dbt_model_sync_trigger) | **POST** /dbt-model-syncs/trigger | Create Dbt Model Sync Trigger
+[**create_dbt_model_sync_trigger**](DbtApi.md#create_dbt_model_sync_trigger) | **POST** /dbt-model-syncs/trigger | Create Dbt Model Sync Trigger
 
 
 
@@ -38,16 +38,16 @@ configuration = segment_public_api.Configuration(
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = segment_public_api.DBTApi(api_client)
+    api_instance = segment_public_api.DbtApi(api_client)
     create_dbt_model_sync_trigger_input = {"sourceId":"source-id"} # CreateDbtModelSyncTriggerInput | 
 
     try:
         # Create Dbt Model Sync Trigger
         api_response = api_instance.create_dbt_model_sync_trigger(create_dbt_model_sync_trigger_input)
-        print("The response of DBTApi->create_dbt_model_sync_trigger:\n")
+        print("The response of DbtApi->create_dbt_model_sync_trigger:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling DBTApi->create_dbt_model_sync_trigger: %s\n" % e)
+        print("Exception when calling DbtApi->create_dbt_model_sync_trigger: %s\n" % e)
 ```
 
 

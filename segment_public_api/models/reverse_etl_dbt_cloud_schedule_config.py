@@ -19,23 +19,16 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, Optional
-from pydantic import BaseModel, Field, StrictBool, StrictStr
 
-class InsertFunctionInstanceAlpha(BaseModel):
+from pydantic import BaseModel, Field, StrictStr
+
+class ReverseEtlDbtCloudScheduleConfig(BaseModel):
     """
-    InsertFunctionInstanceAlpha
+    Definition for a schedule triggered by dbt Cloud job events.  # noqa: E501
     """
-    id: StrictStr = Field(...)
-    name: Optional[StrictStr] = None
-    integration_id: StrictStr = Field(..., alias="integrationId")
-    class_id: StrictStr = Field(..., alias="classId")
-    enabled: StrictBool = Field(...)
-    created_at: StrictStr = Field(..., alias="createdAt")
-    updated_at: StrictStr = Field(..., alias="updatedAt")
-    settings: Dict[str, Any] = Field(...)
-    encrypted_settings: Dict[str, Any] = Field(..., alias="encryptedSettings")
-    __properties = ["id", "name", "integrationId", "classId", "enabled", "createdAt", "updatedAt", "settings", "encryptedSettings"]
+    job_id: StrictStr = Field(..., alias="jobId", description="The dbt Cloud job used to trigger a sync for a Reverse ETL Connection.")
+    account_id: StrictStr = Field(..., alias="accountId", description="The dbt Cloud account where the job belongs to.")
+    __properties = ["jobId", "accountId"]
 
     class Config:
         """Pydantic configuration"""
@@ -51,8 +44,8 @@ class InsertFunctionInstanceAlpha(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> InsertFunctionInstanceAlpha:
-        """Create an instance of InsertFunctionInstanceAlpha from a JSON string"""
+    def from_json(cls, json_str: str) -> ReverseEtlDbtCloudScheduleConfig:
+        """Create an instance of ReverseEtlDbtCloudScheduleConfig from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -64,24 +57,17 @@ class InsertFunctionInstanceAlpha(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> InsertFunctionInstanceAlpha:
-        """Create an instance of InsertFunctionInstanceAlpha from a dict"""
+    def from_dict(cls, obj: dict) -> ReverseEtlDbtCloudScheduleConfig:
+        """Create an instance of ReverseEtlDbtCloudScheduleConfig from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return InsertFunctionInstanceAlpha.parse_obj(obj)
+            return ReverseEtlDbtCloudScheduleConfig.parse_obj(obj)
 
-        _obj = InsertFunctionInstanceAlpha.parse_obj({
-            "id": obj.get("id"),
-            "name": obj.get("name"),
-            "integration_id": obj.get("integrationId"),
-            "class_id": obj.get("classId"),
-            "enabled": obj.get("enabled"),
-            "created_at": obj.get("createdAt"),
-            "updated_at": obj.get("updatedAt"),
-            "settings": obj.get("settings"),
-            "encrypted_settings": obj.get("encryptedSettings")
+        _obj = ReverseEtlDbtCloudScheduleConfig.parse_obj({
+            "job_id": obj.get("jobId"),
+            "account_id": obj.get("accountId")
         })
         return _obj
 
