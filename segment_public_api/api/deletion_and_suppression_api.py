@@ -61,7 +61,7 @@ class DeletionAndSuppressionApi:
     def create_cloud_source_regulation(self, source_id : constr(strict=True), create_cloud_source_regulation_v1_input : CreateCloudSourceRegulationV1Input, **kwargs) -> CreateCloudSourceRegulation200Response:  # noqa: E501
         """Create Cloud Source Regulation  # noqa: E501
 
-        Creates a Source-scoped regulation.        Please Note: Suppression rules at the workspace level take precedence over those at the source level. If a user has been suppressed at the workspace level, any attempt to unsuppress them at the source level is not supported and the processing of the request will fail in the Segment        Config API omitted fields: - `attributes`, - `userAgent`         # noqa: E501
+        Creates a Source-scoped regulation.        Please Note: Suppression rules at the Workspace level take precedence over those at the Source level. If a user has been suppressed at the Workspace level, any attempt to un-suppress at the Source level is not supported and the processing of the request will fail in Segment        Config API omitted fields: - `attributes`, - `userAgent`         # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -93,7 +93,7 @@ class DeletionAndSuppressionApi:
     def create_cloud_source_regulation_with_http_info(self, source_id : constr(strict=True), create_cloud_source_regulation_v1_input : CreateCloudSourceRegulationV1Input, **kwargs) -> ApiResponse:  # noqa: E501
         """Create Cloud Source Regulation  # noqa: E501
 
-        Creates a Source-scoped regulation.        Please Note: Suppression rules at the workspace level take precedence over those at the source level. If a user has been suppressed at the workspace level, any attempt to unsuppress them at the source level is not supported and the processing of the request will fail in the Segment        Config API omitted fields: - `attributes`, - `userAgent`         # noqa: E501
+        Creates a Source-scoped regulation.        Please Note: Suppression rules at the Workspace level take precedence over those at the Source level. If a user has been suppressed at the Workspace level, any attempt to un-suppress at the Source level is not supported and the processing of the request will fail in Segment        Config API omitted fields: - `attributes`, - `userAgent`         # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -219,7 +219,7 @@ class DeletionAndSuppressionApi:
     def create_source_regulation(self, source_id : constr(strict=True), create_source_regulation_v1_input : CreateSourceRegulationV1Input, **kwargs) -> CreateSourceRegulation200Response:  # noqa: E501
         """Create Source Regulation  # noqa: E501
 
-        Creates a Source-scoped regulation.        Please Note: Suppression rules at the workspace level take precedence over those at the source level. If a user has been suppressed at the workspace level, any attempt to unsuppress them at the source level is not supported and the processing of the request will fail in the Segment    • When called, this endpoint may generate the `Source Regulation Created` event in the [audit trail](/tag/Audit-Trail).  Config API omitted fields: - `attributes`, - `userAgent`         # noqa: E501
+        Creates a Source-scoped regulation.        Please Note: Suppression rules at the Workspace level take precedence over those at the Source level. If a user has been suppressed at the Workspace level, any attempt to un-suppress at the Source level is not supported and the processing of the request will fail in Segment     • When called, this endpoint may generate the `Source Regulation Created` event in the [audit trail](/tag/Audit-Trail).  Config API omitted fields: - `attributes`, - `userAgent`         # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -251,7 +251,7 @@ class DeletionAndSuppressionApi:
     def create_source_regulation_with_http_info(self, source_id : constr(strict=True), create_source_regulation_v1_input : CreateSourceRegulationV1Input, **kwargs) -> ApiResponse:  # noqa: E501
         """Create Source Regulation  # noqa: E501
 
-        Creates a Source-scoped regulation.        Please Note: Suppression rules at the workspace level take precedence over those at the source level. If a user has been suppressed at the workspace level, any attempt to unsuppress them at the source level is not supported and the processing of the request will fail in the Segment    • When called, this endpoint may generate the `Source Regulation Created` event in the [audit trail](/tag/Audit-Trail).  Config API omitted fields: - `attributes`, - `userAgent`         # noqa: E501
+        Creates a Source-scoped regulation.        Please Note: Suppression rules at the Workspace level take precedence over those at the Source level. If a user has been suppressed at the Workspace level, any attempt to un-suppress at the Source level is not supported and the processing of the request will fail in Segment     • When called, this endpoint may generate the `Source Regulation Created` event in the [audit trail](/tag/Audit-Trail).  Config API omitted fields: - `attributes`, - `userAgent`         # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
