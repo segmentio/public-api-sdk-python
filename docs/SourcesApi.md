@@ -127,7 +127,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.SourcesApi(api_client)
-    create_source_v1_input = {"slug":"my-test-source-s3_e9_","enabled":true,"metadataId":"IqDTy1TpoU","settings":{}} # CreateSourceV1Input | 
+    create_source_v1_input = {"slug":"my-test-source-2gwoon","enabled":true,"metadataId":"IqDTy1TpoU","settings":{}} # CreateSourceV1Input | 
 
     try:
         # Create Source
@@ -946,7 +946,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.SourcesApi(api_client)
-    source_id = '87jXXk8QSLFPfMDGa6mtS3' # str | 
+    source_id = '44LMHs8Wf5vidxba4kN52J' # str | 
     update_source_v1_input = {"name":"My updated source","enabled":false} # UpdateSourceV1Input | 
 
     try:
