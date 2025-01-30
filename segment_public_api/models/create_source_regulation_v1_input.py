@@ -27,8 +27,8 @@ class CreateSourceRegulationV1Input(BaseModel):
     The input to create a Source-scoped regulation.  # noqa: E501
     """
     regulation_type: StrictStr = Field(..., alias="regulationType", description="The regulation type to create. Please note that `DELETE_ARCHIVE_ONLY` is only supported for limited Workspaces for Source-scoped regulations.")
-    subject_type: StrictStr = Field(..., alias="subjectType", description="The subject type.")
-    subject_ids: conlist(StrictStr) = Field(..., alias="subjectIds", description="The list of `userId` or `objectId` values of the subjects to regulate.  Config API note: equal to `parent` but allows an array.")
+    subject_type: StrictStr = Field(..., alias="subjectType", description="The subject type. Note: `ANONYMOUS_ID` is only supported for limited Workspaces for Source-scoped regulations. `ANONYMOUS_ID` is only supported when regulationType is `DELETE_ARCHIVE_ONLY`.")
+    subject_ids: conlist(StrictStr) = Field(..., alias="subjectIds", description="The list of `userId` or `objectId` or `anonymousId` values of the subjects to regulate.  Config API note: equal to `parent` but allows an array.")
     __properties = ["regulationType", "subjectType", "subjectIds"]
 
     @validator('regulation_type')
