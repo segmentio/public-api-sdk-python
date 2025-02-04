@@ -38,8 +38,8 @@ class Regulation(BaseModel):
     @validator('overall_status')
     def overall_status_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in ('FAILED', 'FINISHED', 'INITIALIZED', 'INVALID', 'NOT_SUPPORTED', 'PARTIAL_SUCCESS', 'RUNNING'):
-            raise ValueError("must be one of enum values ('FAILED', 'FINISHED', 'INITIALIZED', 'INVALID', 'NOT_SUPPORTED', 'PARTIAL_SUCCESS', 'RUNNING')")
+        if value not in ('FAILED', 'FINISHED', 'INITIALIZED', 'INVALID', 'IN_PROGRESS', 'NOT_SUPPORTED', 'PARTIAL_SUCCESS'):
+            raise ValueError("must be one of enum values ('FAILED', 'FINISHED', 'INITIALIZED', 'INVALID', 'IN_PROGRESS', 'NOT_SUPPORTED', 'PARTIAL_SUCCESS')")
         return value
 
     class Config:
