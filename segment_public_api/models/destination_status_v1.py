@@ -36,8 +36,8 @@ class DestinationStatusV1(BaseModel):
     @validator('status')
     def status_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in ('FAILED', 'FINISHED', 'INITIALIZED', 'INVALID', 'IN_PROGRESS', 'NOT_SUPPORTED', 'PARTIAL_SUCCESS'):
-            raise ValueError("must be one of enum values ('FAILED', 'FINISHED', 'INITIALIZED', 'INVALID', 'IN_PROGRESS', 'NOT_SUPPORTED', 'PARTIAL_SUCCESS')")
+        if value not in ('FAILED', 'FINISHED', 'INITIALIZED', 'INVALID', 'NOT_SUPPORTED', 'PARTIAL_SUCCESS', 'RUNNING'):
+            raise ValueError("must be one of enum values ('FAILED', 'FINISHED', 'INITIALIZED', 'INVALID', 'NOT_SUPPORTED', 'PARTIAL_SUCCESS', 'RUNNING')")
         return value
 
     class Config:
