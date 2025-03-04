@@ -21,13 +21,14 @@ import re  # noqa: F401
 
 from typing import Any, List, Optional
 from pydantic import BaseModel, Field, StrictStr, ValidationError, validator
+from segment_public_api.models.exit_destination_state import ExitDestinationState
 from segment_public_api.models.exit_rule import ExitRule
 from segment_public_api.models.exit_state import ExitState
 from segment_public_api.models.transition_state import TransitionState
 from typing import Union, Any, List, TYPE_CHECKING
 from pydantic import StrictStr, Field
 
-BASESTATE_ONE_OF_SCHEMAS = ["ExitRule", "ExitState", "TransitionState"]
+BASESTATE_ONE_OF_SCHEMAS = ["ExitDestinationState", "ExitRule", "ExitState", "TransitionState"]
 
 class BaseState(BaseModel):
     """
@@ -37,10 +38,12 @@ class BaseState(BaseModel):
     oneof_schema_1_validator: Optional[TransitionState] = None
     # data type: ExitState
     oneof_schema_2_validator: Optional[ExitState] = None
+    # data type: ExitDestinationState
+    oneof_schema_3_validator: Optional[ExitDestinationState] = None
     # data type: ExitRule
-    oneof_schema_3_validator: Optional[ExitRule] = None
+    oneof_schema_4_validator: Optional[ExitRule] = None
     if TYPE_CHECKING:
-        actual_instance: Union[ExitRule, ExitState, TransitionState]
+        actual_instance: Union[ExitDestinationState, ExitRule, ExitState, TransitionState]
     else:
         actual_instance: Any
     one_of_schemas: List[str] = Field(BASESTATE_ONE_OF_SCHEMAS, const=True)
@@ -73,6 +76,11 @@ class BaseState(BaseModel):
             error_messages.append(f"Error! Input type `{type(v)}` is not `ExitState`")
         else:
             match += 1
+        # validate data type: ExitDestinationState
+        if not isinstance(v, ExitDestinationState):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `ExitDestinationState`")
+        else:
+            match += 1
         # validate data type: ExitRule
         if not isinstance(v, ExitRule):
             error_messages.append(f"Error! Input type `{type(v)}` is not `ExitRule`")
@@ -80,10 +88,10 @@ class BaseState(BaseModel):
             match += 1
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in BaseState with oneOf schemas: ExitRule, ExitState, TransitionState. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when setting `actual_instance` in BaseState with oneOf schemas: ExitDestinationState, ExitRule, ExitState, TransitionState. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when setting `actual_instance` in BaseState with oneOf schemas: ExitRule, ExitState, TransitionState. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when setting `actual_instance` in BaseState with oneOf schemas: ExitDestinationState, ExitRule, ExitState, TransitionState. Details: " + ", ".join(error_messages))
         else:
             return v
 
@@ -110,6 +118,12 @@ class BaseState(BaseModel):
             match += 1
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
+        # deserialize data into ExitDestinationState
+        try:
+            instance.actual_instance = ExitDestinationState.from_json(json_str)
+            match += 1
+        except (ValidationError, ValueError) as e:
+            error_messages.append(str(e))
         # deserialize data into ExitRule
         try:
             instance.actual_instance = ExitRule.from_json(json_str)
@@ -119,10 +133,10 @@ class BaseState(BaseModel):
 
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into BaseState with oneOf schemas: ExitRule, ExitState, TransitionState. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when deserializing the JSON string into BaseState with oneOf schemas: ExitDestinationState, ExitRule, ExitState, TransitionState. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into BaseState with oneOf schemas: ExitRule, ExitState, TransitionState. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when deserializing the JSON string into BaseState with oneOf schemas: ExitDestinationState, ExitRule, ExitState, TransitionState. Details: " + ", ".join(error_messages))
         else:
             return instance
 

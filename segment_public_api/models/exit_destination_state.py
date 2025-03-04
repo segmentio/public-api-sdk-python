@@ -19,34 +19,25 @@ import re  # noqa: F401
 import json
 
 
-from typing import List, Optional
-from pydantic import BaseModel, Field, StrictBool, StrictStr, conlist, validator
+from typing import List
+from pydantic import BaseModel, Field, StrictStr, conlist, validator
+from segment_public_api.models.destination import Destination
 from segment_public_api.models.key import Key
 
-class ExitRule(BaseModel):
+class ExitDestinationState(BaseModel):
     """
-    ExitRule
+    ExitDestinationState
     """
     type: StrictStr = Field(...)
-    exit_type: StrictStr = Field(..., alias="exitType")
-    enabled: StrictBool = Field(...)
-    concurrency_enabled: StrictBool = Field(..., alias="concurrencyEnabled")
-    connected_destinations: Optional[conlist(StrictStr)] = Field(None, alias="connectedDestinations")
+    destinations: conlist(Destination) = Field(...)
     key: Key = Field(...)
-    __properties = ["type", "exitType", "enabled", "concurrencyEnabled", "connectedDestinations", "key"]
+    __properties = ["type", "destinations", "key"]
 
     @validator('type')
     def type_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in ('EXIT_RULE'):
-            raise ValueError("must be one of enum values ('EXIT_RULE')")
-        return value
-
-    @validator('exit_type')
-    def exit_type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in ('AUDIENCE_MEMBERSHIP_CHANGE', 'CONDITION_UNMATCH', 'EVENT_PERFORMED'):
-            raise ValueError("must be one of enum values ('AUDIENCE_MEMBERSHIP_CHANGE', 'CONDITION_UNMATCH', 'EVENT_PERFORMED')")
+        if value not in ('DESTINATION'):
+            raise ValueError("must be one of enum values ('DESTINATION')")
         return value
 
     class Config:
@@ -63,8 +54,8 @@ class ExitRule(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> ExitRule:
-        """Create an instance of ExitRule from a JSON string"""
+    def from_json(cls, json_str: str) -> ExitDestinationState:
+        """Create an instance of ExitDestinationState from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -73,26 +64,30 @@ class ExitRule(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # override the default output from pydantic by calling `to_dict()` of each item in destinations (list)
+        _items = []
+        if self.destinations:
+            for _item in self.destinations:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['destinations'] = _items
         # override the default output from pydantic by calling `to_dict()` of key
         if self.key:
             _dict['key'] = self.key.to_dict()
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> ExitRule:
-        """Create an instance of ExitRule from a dict"""
+    def from_dict(cls, obj: dict) -> ExitDestinationState:
+        """Create an instance of ExitDestinationState from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return ExitRule.parse_obj(obj)
+            return ExitDestinationState.parse_obj(obj)
 
-        _obj = ExitRule.parse_obj({
+        _obj = ExitDestinationState.parse_obj({
             "type": obj.get("type"),
-            "exit_type": obj.get("exitType"),
-            "enabled": obj.get("enabled"),
-            "concurrency_enabled": obj.get("concurrencyEnabled"),
-            "connected_destinations": obj.get("connectedDestinations"),
+            "destinations": [Destination.from_dict(_item) for _item in obj.get("destinations")] if obj.get("destinations") is not None else None,
             "key": Key.from_dict(obj.get("key")) if obj.get("key") is not None else None
         })
         return _obj

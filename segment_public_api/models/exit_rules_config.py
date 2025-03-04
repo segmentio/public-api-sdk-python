@@ -19,17 +19,19 @@ import re  # noqa: F401
 import json
 
 
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel, Field, StrictBool, conlist
-from segment_public_api.models.states_inner import StatesInner
+from segment_public_api.models.exit_destination_state import ExitDestinationState
+from segment_public_api.models.rules_inner import RulesInner
 
 class ExitRulesConfig(BaseModel):
     """
     The exit rules configuration.  # noqa: E501
     """
     enabled: StrictBool = Field(...)
-    states: conlist(StatesInner) = Field(...)
-    __properties = ["enabled", "states"]
+    rules: conlist(RulesInner) = Field(...)
+    related_destinations: Optional[conlist(ExitDestinationState)] = Field(None, alias="relatedDestinations")
+    __properties = ["enabled", "rules", "relatedDestinations"]
 
     class Config:
         """Pydantic configuration"""
@@ -55,13 +57,20 @@ class ExitRulesConfig(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of each item in states (list)
+        # override the default output from pydantic by calling `to_dict()` of each item in rules (list)
         _items = []
-        if self.states:
-            for _item in self.states:
+        if self.rules:
+            for _item in self.rules:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict['states'] = _items
+            _dict['rules'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in related_destinations (list)
+        _items = []
+        if self.related_destinations:
+            for _item in self.related_destinations:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['relatedDestinations'] = _items
         return _dict
 
     @classmethod
@@ -75,7 +84,8 @@ class ExitRulesConfig(BaseModel):
 
         _obj = ExitRulesConfig.parse_obj({
             "enabled": obj.get("enabled"),
-            "states": [StatesInner.from_dict(_item) for _item in obj.get("states")] if obj.get("states") is not None else None
+            "rules": [RulesInner.from_dict(_item) for _item in obj.get("rules")] if obj.get("rules") is not None else None,
+            "related_destinations": [ExitDestinationState.from_dict(_item) for _item in obj.get("relatedDestinations")] if obj.get("relatedDestinations") is not None else None
         })
         return _obj
 

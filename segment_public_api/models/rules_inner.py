@@ -22,29 +22,26 @@ import re  # noqa: F401
 from typing import Optional
 from pydantic import BaseModel, Field, StrictStr, ValidationError, validator
 from segment_public_api.models.audience_exit_rule import AudienceExitRule
-from segment_public_api.models.destination_state import DestinationState
 from segment_public_api.models.event_exit_rule import EventExitRule
 from typing import Union, Any, List, TYPE_CHECKING
 from pydantic import StrictStr, Field
 
-STATESINNER_ANY_OF_SCHEMAS = ["AudienceExitRule", "DestinationState", "EventExitRule"]
+RULESINNER_ANY_OF_SCHEMAS = ["AudienceExitRule", "EventExitRule"]
 
-class StatesInner(BaseModel):
+class RulesInner(BaseModel):
     """
-    StatesInner
+    RulesInner
     """
 
-    # data type: DestinationState
-    anyof_schema_1_validator: Optional[DestinationState] = None
     # data type: EventExitRule
-    anyof_schema_2_validator: Optional[EventExitRule] = None
+    anyof_schema_1_validator: Optional[EventExitRule] = None
     # data type: AudienceExitRule
-    anyof_schema_3_validator: Optional[AudienceExitRule] = None
+    anyof_schema_2_validator: Optional[AudienceExitRule] = None
     if TYPE_CHECKING:
-        actual_instance: Union[AudienceExitRule, DestinationState, EventExitRule]
+        actual_instance: Union[AudienceExitRule, EventExitRule]
     else:
         actual_instance: Any
-    any_of_schemas: List[str] = Field(STATESINNER_ANY_OF_SCHEMAS, const=True)
+    any_of_schemas: List[str] = Field(RULESINNER_ANY_OF_SCHEMAS, const=True)
 
     class Config:
         validate_assignment = True
@@ -61,14 +58,8 @@ class StatesInner(BaseModel):
 
     @validator('actual_instance')
     def actual_instance_must_validate_anyof(cls, v):
-        instance = StatesInner.construct()
+        instance = RulesInner.construct()
         error_messages = []
-        # validate data type: DestinationState
-        if not isinstance(v, DestinationState):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `DestinationState`")
-        else:
-            return v
-
         # validate data type: EventExitRule
         if not isinstance(v, EventExitRule):
             error_messages.append(f"Error! Input type `{type(v)}` is not `EventExitRule`")
@@ -83,32 +74,26 @@ class StatesInner(BaseModel):
 
         if error_messages:
             # no match
-            raise ValueError("No match found when setting the actual_instance in StatesInner with anyOf schemas: AudienceExitRule, DestinationState, EventExitRule. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when setting the actual_instance in RulesInner with anyOf schemas: AudienceExitRule, EventExitRule. Details: " + ", ".join(error_messages))
         else:
             return v
 
     @classmethod
-    def from_dict(cls, obj: dict) -> StatesInner:
+    def from_dict(cls, obj: dict) -> RulesInner:
         return cls.from_json(json.dumps(obj))
 
     @classmethod
-    def from_json(cls, json_str: str) -> StatesInner:
+    def from_json(cls, json_str: str) -> RulesInner:
         """Returns the object represented by the json string"""
-        instance = StatesInner.construct()
+        instance = RulesInner.construct()
         error_messages = []
-        # anyof_schema_1_validator: Optional[DestinationState] = None
-        try:
-            instance.actual_instance = DestinationState.from_json(json_str)
-            return instance
-        except (ValidationError, ValueError) as e:
-             error_messages.append(str(e))
-        # anyof_schema_2_validator: Optional[EventExitRule] = None
+        # anyof_schema_1_validator: Optional[EventExitRule] = None
         try:
             instance.actual_instance = EventExitRule.from_json(json_str)
             return instance
         except (ValidationError, ValueError) as e:
              error_messages.append(str(e))
-        # anyof_schema_3_validator: Optional[AudienceExitRule] = None
+        # anyof_schema_2_validator: Optional[AudienceExitRule] = None
         try:
             instance.actual_instance = AudienceExitRule.from_json(json_str)
             return instance
@@ -117,7 +102,7 @@ class StatesInner(BaseModel):
 
         if error_messages:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into StatesInner with anyOf schemas: AudienceExitRule, DestinationState, EventExitRule. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when deserializing the JSON string into RulesInner with anyOf schemas: AudienceExitRule, EventExitRule. Details: " + ", ".join(error_messages))
         else:
             return instance
 

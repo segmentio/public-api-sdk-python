@@ -22,7 +22,6 @@ import json
 from typing import List, Optional
 from pydantic import BaseModel, Field, StrictBool, StrictStr, conlist, validator
 from segment_public_api.models.key import Key
-from segment_public_api.models.transitions import Transitions
 
 class EventExitRule(BaseModel):
     """
@@ -33,9 +32,9 @@ class EventExitRule(BaseModel):
     type: StrictStr = Field(...)
     enabled: StrictBool = Field(...)
     concurrency_enabled: StrictBool = Field(..., alias="concurrencyEnabled")
-    transitions: Optional[conlist(Transitions)] = None
+    connected_destinations: Optional[conlist(StrictStr)] = Field(None, alias="connectedDestinations")
     key: Key = Field(...)
-    __properties = ["exitType", "condition", "type", "enabled", "concurrencyEnabled", "transitions", "key"]
+    __properties = ["exitType", "condition", "type", "enabled", "concurrencyEnabled", "connectedDestinations", "key"]
 
     @validator('exit_type')
     def exit_type_validate_enum(cls, value):
@@ -75,13 +74,6 @@ class EventExitRule(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of each item in transitions (list)
-        _items = []
-        if self.transitions:
-            for _item in self.transitions:
-                if _item:
-                    _items.append(_item.to_dict())
-            _dict['transitions'] = _items
         # override the default output from pydantic by calling `to_dict()` of key
         if self.key:
             _dict['key'] = self.key.to_dict()
@@ -102,7 +94,7 @@ class EventExitRule(BaseModel):
             "type": obj.get("type"),
             "enabled": obj.get("enabled"),
             "concurrency_enabled": obj.get("concurrencyEnabled"),
-            "transitions": [Transitions.from_dict(_item) for _item in obj.get("transitions")] if obj.get("transitions") is not None else None,
+            "connected_destinations": obj.get("connectedDestinations"),
             "key": Key.from_dict(obj.get("key")) if obj.get("key") is not None else None
         })
         return _obj

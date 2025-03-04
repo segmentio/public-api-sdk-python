@@ -38,8 +38,8 @@ class DestinationState(BaseModel):
     @validator('type')
     def type_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in ('DESTINATION', 'EXIT_RULE'):
-            raise ValueError("must be one of enum values ('DESTINATION', 'EXIT_RULE')")
+        if value not in ('DESTINATION'):
+            raise ValueError("must be one of enum values ('DESTINATION')")
         return value
 
     class Config:

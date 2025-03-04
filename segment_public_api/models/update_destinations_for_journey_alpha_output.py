@@ -21,7 +21,7 @@ import json
 
 from typing import List, Optional, Union
 from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr, conlist
-from segment_public_api.models.destination_state import DestinationState
+from segment_public_api.models.destinations_inner import DestinationsInner
 
 class UpdateDestinationsForJourneyAlphaOutput(BaseModel):
     """
@@ -29,7 +29,7 @@ class UpdateDestinationsForJourneyAlphaOutput(BaseModel):
     """
     container_id: StrictStr = Field(..., alias="containerId", description="The journey container id.")
     version: Optional[Union[StrictFloat, StrictInt]] = Field(None, description="The version of journey.")
-    destinations: conlist(DestinationState) = Field(..., description="The updated DESTINATIONS.")
+    destinations: conlist(DestinationsInner) = Field(..., description="The updated DESTINATIONS.")
     __properties = ["containerId", "version", "destinations"]
 
     class Config:
@@ -77,7 +77,7 @@ class UpdateDestinationsForJourneyAlphaOutput(BaseModel):
         _obj = UpdateDestinationsForJourneyAlphaOutput.parse_obj({
             "container_id": obj.get("containerId"),
             "version": obj.get("version"),
-            "destinations": [DestinationState.from_dict(_item) for _item in obj.get("destinations")] if obj.get("destinations") is not None else None
+            "destinations": [DestinationsInner.from_dict(_item) for _item in obj.get("destinations")] if obj.get("destinations") is not None else None
         })
         return _obj
 

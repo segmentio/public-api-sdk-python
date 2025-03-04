@@ -36,8 +36,8 @@ class RandomSplitState(BaseModel):
     @validator('type')
     def type_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in ('RANDOM_SPLIT', 'EXIT', 'EXIT_RULE'):
-            raise ValueError("must be one of enum values ('RANDOM_SPLIT', 'EXIT', 'EXIT_RULE')")
+        if value not in ('RANDOM_SPLIT', 'EXIT', 'DESTINATION', 'EXIT_RULE'):
+            raise ValueError("must be one of enum values ('RANDOM_SPLIT', 'EXIT', 'DESTINATION', 'EXIT_RULE')")
         return value
 
     class Config:
