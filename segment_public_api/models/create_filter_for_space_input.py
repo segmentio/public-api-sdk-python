@@ -19,8 +19,8 @@ import re  # noqa: F401
 import json
 
 
-from typing import List, Optional
-from pydantic import BaseModel, Field, StrictBool, StrictStr, conlist
+from typing import Optional
+from pydantic import BaseModel, Field, StrictBool, StrictStr
 
 class CreateFilterForSpaceInput(BaseModel):
     """
@@ -32,9 +32,7 @@ class CreateFilterForSpaceInput(BaseModel):
     description: Optional[StrictStr] = Field(None, description="The description of the filter.")
     var_if: StrictStr = Field(..., alias="if", description="The \"if\" statement for a filter.")
     drop: Optional[StrictBool] = Field(None, description="Whether the event is dropped.")
-    drop_properties: Optional[conlist(StrictStr)] = Field(None, alias="dropProperties", description="Describes the properties to be dropped on events that match the \"if\" statement.")
-    allow_properties: Optional[conlist(StrictStr)] = Field(None, alias="allowProperties", description="Describes the properties allowed on events that match the \"if\" statement.")
-    __properties = ["integrationId", "enabled", "name", "description", "if", "drop", "dropProperties", "allowProperties"]
+    __properties = ["integrationId", "enabled", "name", "description", "if", "drop"]
 
     class Config:
         """Pydantic configuration"""
@@ -77,9 +75,7 @@ class CreateFilterForSpaceInput(BaseModel):
             "name": obj.get("name"),
             "description": obj.get("description"),
             "var_if": obj.get("if"),
-            "drop": obj.get("drop"),
-            "drop_properties": obj.get("dropProperties"),
-            "allow_properties": obj.get("allowProperties")
+            "drop": obj.get("drop")
         })
         return _obj
 
