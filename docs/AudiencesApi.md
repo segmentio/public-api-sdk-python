@@ -6,7 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**create_audience**](AudiencesApi.md#create_audience) | **POST** /spaces/{spaceId}/audiences | Create Audience
 [**get_audience**](AudiencesApi.md#get_audience) | **GET** /spaces/{spaceId}/audiences/{id} | Get Audience
-[**list_audience_consumers_from_space_and_audience**](AudiencesApi.md#list_audience_consumers_from_space_and_audience) | **GET** /spaces/{spaceId}/audiences/{id}/consumers | List Audience Consumers from Space And Audience
+[**list_audience_consumers_from_space_and_audience**](AudiencesApi.md#list_audience_consumers_from_space_and_audience) | **GET** /spaces/{spaceId}/audiences/{id}/audience-references | List Audience Consumers from Space And Audience
 [**list_audiences**](AudiencesApi.md#list_audiences) | **GET** /spaces/{spaceId}/audiences | List Audiences
 [**remove_audience_from_space**](AudiencesApi.md#remove_audience_from_space) | **DELETE** /spaces/{spaceId}/audiences/{id} | Remove Audience from Space
 [**update_audience_for_space**](AudiencesApi.md#update_audience_for_space) | **PATCH** /spaces/{spaceId}/audiences/{id} | Update Audience for Space

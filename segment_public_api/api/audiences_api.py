@@ -506,7 +506,7 @@ class AudiencesApi:
         }
 
         return self.api_client.call_api(
-            '/spaces/{spaceId}/audiences/{id}/consumers', 'GET',
+            '/spaces/{spaceId}/audiences/{id}/audience-references', 'GET',
             _path_params,
             _query_params,
             _header_params,
