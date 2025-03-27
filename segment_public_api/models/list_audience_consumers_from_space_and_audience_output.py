@@ -26,9 +26,9 @@ from segment_public_api.models.pagination_output import PaginationOutput
 
 class ListAudienceConsumersFromSpaceAndAudienceOutput(BaseModel):
     """
-    List the audience consumers endpoint output.  # noqa: E501
+    List Audience consumers output.  # noqa: E501
     """
-    audiences: conlist(AudienceSummary) = Field(..., description="A list of audience summary results.")
+    audiences: conlist(AudienceSummary) = Field(..., description="The list of audience consumers.")
     pagination: PaginationOutput = Field(...)
     __properties = ["audiences", "pagination"]
 
