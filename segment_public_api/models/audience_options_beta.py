@@ -20,15 +20,15 @@ import json
 
 
 from typing import Optional
-from pydantic import BaseModel
-from segment_public_api.models.get_audience_beta_output import GetAudienceBetaOutput
+from pydantic import BaseModel, Field, StrictBool
 
-class GetAudience200Response(BaseModel):
+class AudienceOptionsBeta(BaseModel):
     """
-    GetAudience200Response
+    AudienceOptionsBeta
     """
-    data: Optional[GetAudienceBetaOutput] = None
-    __properties = ["data"]
+    include_historical_data: Optional[StrictBool] = Field(None, alias="includeHistoricalData", description="Determines whether data prior to the audience being created is included when determining audience membership. Note that including historical data may be needed in order to properly handle the definition specified. In these cases, Segment will automatically handle including historical data and the response will return the includeHistoricalData parameter as true.")
+    include_anonymous_users: Optional[StrictBool] = Field(None, alias="includeAnonymousUsers", description="Determines whether anonymous users should be included when determining audience membership.")
+    __properties = ["includeHistoricalData", "includeAnonymousUsers"]
 
     class Config:
         """Pydantic configuration"""
@@ -44,8 +44,8 @@ class GetAudience200Response(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> GetAudience200Response:
-        """Create an instance of GetAudience200Response from a JSON string"""
+    def from_json(cls, json_str: str) -> AudienceOptionsBeta:
+        """Create an instance of AudienceOptionsBeta from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -54,22 +54,20 @@ class GetAudience200Response(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of data
-        if self.data:
-            _dict['data'] = self.data.to_dict()
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> GetAudience200Response:
-        """Create an instance of GetAudience200Response from a dict"""
+    def from_dict(cls, obj: dict) -> AudienceOptionsBeta:
+        """Create an instance of AudienceOptionsBeta from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return GetAudience200Response.parse_obj(obj)
+            return AudienceOptionsBeta.parse_obj(obj)
 
-        _obj = GetAudience200Response.parse_obj({
-            "data": GetAudienceBetaOutput.from_dict(obj.get("data")) if obj.get("data") is not None else None
+        _obj = AudienceOptionsBeta.parse_obj({
+            "include_historical_data": obj.get("includeHistoricalData"),
+            "include_anonymous_users": obj.get("includeAnonymousUsers")
         })
         return _obj
 
