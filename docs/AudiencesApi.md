@@ -196,7 +196,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.AudiencesApi(api_client)
     space_id = 'spaceId' # str | 
-    id = 'id' # str | 
+    id = 'ReferencedAudienceId' # str | 
     pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Information about the pagination of this response.  [See pagination](https://docs.segmentapis.com/tag/Pagination/#section/Pagination-parameters) for more info.  This parameter exists in alpha. (optional)
 
     try:

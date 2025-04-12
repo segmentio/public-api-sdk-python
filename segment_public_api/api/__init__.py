@@ -16,7 +16,6 @@ from segment_public_api.api.functions_api import FunctionsApi
 from segment_public_api.api.iam_groups_api import IAMGroupsApi
 from segment_public_api.api.iam_roles_api import IAMRolesApi
 from segment_public_api.api.iam_users_api import IAMUsersApi
-from segment_public_api.api.journeys_api import JourneysApi
 from segment_public_api.api.labels_api import LabelsApi
 from segment_public_api.api.monthly_tracked_users_api import MonthlyTrackedUsersApi
 from segment_public_api.api.profiles_sync_api import ProfilesSyncApi
