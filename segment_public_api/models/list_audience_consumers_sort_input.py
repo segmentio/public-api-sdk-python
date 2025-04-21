@@ -22,19 +22,26 @@ import json
 
 from pydantic import BaseModel, Field, StrictStr, validator
 
-class AudienceDefinitionBeta(BaseModel):
+class ListAudienceConsumersSortInput(BaseModel):
     """
-    Defines an audience definition.  # noqa: E501
+    Sort criteria input for list audience consumers.  # noqa: E501
     """
-    query: StrictStr = Field(..., description="The query language string defining the audience segmentation criteria.")
-    type: StrictStr = Field(..., description="The underlying data type being segmented for this audience.  Possible values: users, accounts.")
-    __properties = ["query", "type"]
+    field: StrictStr = Field(..., description="Field to sort by.")
+    direction: StrictStr = Field(..., description="Sort direction (ascending or descending).")
+    __properties = ["field", "direction"]
 
-    @validator('type')
-    def type_validate_enum(cls, value):
+    @validator('field')
+    def field_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in ('ACCOUNTS', 'USERS'):
-            raise ValueError("must be one of enum values ('ACCOUNTS', 'USERS')")
+        if value not in ('CREATED_AT', 'NAME', 'UPDATED_AT'):
+            raise ValueError("must be one of enum values ('CREATED_AT', 'NAME', 'UPDATED_AT')")
+        return value
+
+    @validator('direction')
+    def direction_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in ('ASC', 'DESC'):
+            raise ValueError("must be one of enum values ('ASC', 'DESC')")
         return value
 
     class Config:
@@ -51,8 +58,8 @@ class AudienceDefinitionBeta(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> AudienceDefinitionBeta:
-        """Create an instance of AudienceDefinitionBeta from a JSON string"""
+    def from_json(cls, json_str: str) -> ListAudienceConsumersSortInput:
+        """Create an instance of ListAudienceConsumersSortInput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -64,17 +71,17 @@ class AudienceDefinitionBeta(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> AudienceDefinitionBeta:
-        """Create an instance of AudienceDefinitionBeta from a dict"""
+    def from_dict(cls, obj: dict) -> ListAudienceConsumersSortInput:
+        """Create an instance of ListAudienceConsumersSortInput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return AudienceDefinitionBeta.parse_obj(obj)
+            return ListAudienceConsumersSortInput.parse_obj(obj)
 
-        _obj = AudienceDefinitionBeta.parse_obj({
-            "query": obj.get("query"),
-            "type": obj.get("type")
+        _obj = ListAudienceConsumersSortInput.parse_obj({
+            "field": obj.get("field"),
+            "direction": obj.get("direction")
         })
         return _obj
 

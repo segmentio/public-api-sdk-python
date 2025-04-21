@@ -24,11 +24,11 @@ from pydantic import BaseModel, Field, StrictStr, validator
 
 class AudienceDefinition(BaseModel):
     """
-    Defines an audience definition.  # noqa: E501
+    AudienceDefinition
     """
-    query: StrictStr = Field(..., description="The query language string defining the audience segmentation criteria.")
     type: StrictStr = Field(..., description="The underlying data type being segmented for this audience.  Possible values: users, accounts.")
-    __properties = ["query", "type"]
+    query: StrictStr = Field(..., description="The query language string defining the audience segmentation criteria.  For guidance on using the query language, see the [Segment documentation site](https://segment.com/docs/api/public-api/query-language).")
+    __properties = ["type", "query"]
 
     @validator('type')
     def type_validate_enum(cls, value):
@@ -73,8 +73,8 @@ class AudienceDefinition(BaseModel):
             return AudienceDefinition.parse_obj(obj)
 
         _obj = AudienceDefinition.parse_obj({
-            "query": obj.get("query"),
-            "type": obj.get("type")
+            "type": obj.get("type"),
+            "query": obj.get("query")
         })
         return _obj
 

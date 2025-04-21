@@ -21,13 +21,13 @@ import json
 
 
 from pydantic import BaseModel, Field
-from segment_public_api.models.audience_summary_beta import AudienceSummaryBeta
+from segment_public_api.models.audience_summary import AudienceSummary
 
 class GetAudienceBetaOutput(BaseModel):
     """
     Audience output for get.  # noqa: E501
     """
-    audience: AudienceSummaryBeta = Field(...)
+    audience: AudienceSummary = Field(...)
     __properties = ["audience"]
 
     class Config:
@@ -69,7 +69,7 @@ class GetAudienceBetaOutput(BaseModel):
             return GetAudienceBetaOutput.parse_obj(obj)
 
         _obj = GetAudienceBetaOutput.parse_obj({
-            "audience": AudienceSummaryBeta.from_dict(obj.get("audience")) if obj.get("audience") is not None else None
+            "audience": AudienceSummary.from_dict(obj.get("audience")) if obj.get("audience") is not None else None
         })
         return _obj
 

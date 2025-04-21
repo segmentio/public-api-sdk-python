@@ -166,7 +166,7 @@ Name | Type | Description  | Notes
 
 ## Operation: list_audience_consumers_from_space_and_audience
 
-> ListAudienceConsumersFromSpaceAndAudience200Response list_audience_consumers_from_space_and_audience(space_id, id, pagination=pagination)
+> ListAudienceConsumersFromSpaceAndAudience200Response list_audience_consumers_from_space_and_audience(space_id, id, pagination=pagination, search=search, sort=sort)
 
 List Audience Consumers from Space And Audience
 
@@ -180,6 +180,8 @@ import time
 import os
 import segment_public_api
 from segment_public_api.models.list_audience_consumers_from_space_and_audience200_response import ListAudienceConsumersFromSpaceAndAudience200Response
+from segment_public_api.models.list_audience_consumers_search_input import ListAudienceConsumersSearchInput
+from segment_public_api.models.list_audience_consumers_sort_input import ListAudienceConsumersSortInput
 from segment_public_api.models.pagination_input import PaginationInput
 from segment_public_api.rest import ApiException
 from pprint import pprint
@@ -198,10 +200,12 @@ with segment_public_api.ApiClient(configuration) as api_client:
     space_id = 'spaceId' # str | 
     id = 'ReferencedAudienceId' # str | 
     pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Information about the pagination of this response.  [See pagination](https://docs.segmentapis.com/tag/Pagination/#section/Pagination-parameters) for more info.  This parameter exists in alpha. (optional)
+    search = segment_public_api.ListAudienceConsumersSearchInput() # ListAudienceConsumersSearchInput | Optional search criteria  This parameter exists in alpha. (optional)
+    sort = segment_public_api.ListAudienceConsumersSortInput() # ListAudienceConsumersSortInput | Optional sort criteria  This parameter exists in alpha. (optional)
 
     try:
         # List Audience Consumers from Space And Audience
-        api_response = api_instance.list_audience_consumers_from_space_and_audience(space_id, id, pagination=pagination)
+        api_response = api_instance.list_audience_consumers_from_space_and_audience(space_id, id, pagination=pagination, search=search, sort=sort)
         print("The response of AudiencesApi->list_audience_consumers_from_space_and_audience:\n")
         pprint(api_response)
     except Exception as e:
@@ -217,6 +221,8 @@ Name | Type | Description  | Notes
  **space_id** | **str**|  | 
  **id** | **str**|  | 
  **pagination** | [**PaginationInput**](.md)| Information about the pagination of this response.  [See pagination](https://docs.segmentapis.com/tag/Pagination/#section/Pagination-parameters) for more info.  This parameter exists in alpha. | [optional] 
+ **search** | [**ListAudienceConsumersSearchInput**](.md)| Optional search criteria  This parameter exists in alpha. | [optional] 
+ **sort** | [**ListAudienceConsumersSortInput**](.md)| Optional sort criteria  This parameter exists in alpha. | [optional] 
 
 ### Return type
 
@@ -395,7 +401,7 @@ Name | Type | Description  | Notes
 
 ## Operation: update_audience_for_space
 
-> UpdateAudienceForSpace200Response update_audience_for_space(space_id, id, update_audience_for_space_input)
+> UpdateAudienceForSpace200Response update_audience_for_space(space_id, id, update_audience_for_space_alpha_input)
 
 Update Audience for Space
 
@@ -409,7 +415,7 @@ import time
 import os
 import segment_public_api
 from segment_public_api.models.update_audience_for_space200_response import UpdateAudienceForSpace200Response
-from segment_public_api.models.update_audience_for_space_input import UpdateAudienceForSpaceInput
+from segment_public_api.models.update_audience_for_space_alpha_input import UpdateAudienceForSpaceAlphaInput
 from segment_public_api.rest import ApiException
 from pprint import pprint
 
@@ -426,11 +432,11 @@ with segment_public_api.ApiClient(configuration) as api_client:
     api_instance = segment_public_api.AudiencesApi(api_client)
     space_id = 'spaceId' # str | 
     id = 'id' # str | 
-    update_audience_for_space_input = {"enabled":false} # UpdateAudienceForSpaceInput | 
+    update_audience_for_space_alpha_input = {"enabled":false} # UpdateAudienceForSpaceAlphaInput | 
 
     try:
         # Update Audience for Space
-        api_response = api_instance.update_audience_for_space(space_id, id, update_audience_for_space_input)
+        api_response = api_instance.update_audience_for_space(space_id, id, update_audience_for_space_alpha_input)
         print("The response of AudiencesApi->update_audience_for_space:\n")
         pprint(api_response)
     except Exception as e:
@@ -445,7 +451,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **space_id** | **str**|  | 
  **id** | **str**|  | 
- **update_audience_for_space_input** | [**UpdateAudienceForSpaceInput**](UpdateAudienceForSpaceInput.md)|  | 
+ **update_audience_for_space_alpha_input** | [**UpdateAudienceForSpaceAlphaInput**](UpdateAudienceForSpaceAlphaInput.md)|  | 
 
 ### Return type
 

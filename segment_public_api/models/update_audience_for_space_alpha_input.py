@@ -21,16 +21,16 @@ import json
 
 from typing import Optional
 from pydantic import BaseModel, Field, StrictBool, StrictStr
-from segment_public_api.models.audience_computation_definition import AudienceComputationDefinition
+from segment_public_api.models.audience_definition import AudienceDefinition
 
-class UpdateAudienceForSpaceInput(BaseModel):
+class UpdateAudienceForSpaceAlphaInput(BaseModel):
     """
     Input to update an audience.  # noqa: E501
     """
     enabled: Optional[StrictBool] = Field(None, description="Enabled/disabled status for the audience.")
     name: Optional[StrictStr] = Field(None, description="The name of the computation.")
     description: Optional[StrictStr] = Field(None, description="The description of the computation.")
-    definition: Optional[AudienceComputationDefinition] = None
+    definition: Optional[AudienceDefinition] = None
     __properties = ["enabled", "name", "description", "definition"]
 
     class Config:
@@ -47,8 +47,8 @@ class UpdateAudienceForSpaceInput(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> UpdateAudienceForSpaceInput:
-        """Create an instance of UpdateAudienceForSpaceInput from a JSON string"""
+    def from_json(cls, json_str: str) -> UpdateAudienceForSpaceAlphaInput:
+        """Create an instance of UpdateAudienceForSpaceAlphaInput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -63,19 +63,19 @@ class UpdateAudienceForSpaceInput(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> UpdateAudienceForSpaceInput:
-        """Create an instance of UpdateAudienceForSpaceInput from a dict"""
+    def from_dict(cls, obj: dict) -> UpdateAudienceForSpaceAlphaInput:
+        """Create an instance of UpdateAudienceForSpaceAlphaInput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return UpdateAudienceForSpaceInput.parse_obj(obj)
+            return UpdateAudienceForSpaceAlphaInput.parse_obj(obj)
 
-        _obj = UpdateAudienceForSpaceInput.parse_obj({
+        _obj = UpdateAudienceForSpaceAlphaInput.parse_obj({
             "enabled": obj.get("enabled"),
             "name": obj.get("name"),
             "description": obj.get("description"),
-            "definition": AudienceComputationDefinition.from_dict(obj.get("definition")) if obj.get("definition") is not None else None
+            "definition": AudienceDefinition.from_dict(obj.get("definition")) if obj.get("definition") is not None else None
         })
         return _obj
 

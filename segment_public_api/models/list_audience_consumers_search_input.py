@@ -19,16 +19,23 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
-from pydantic import BaseModel, Field, StrictBool
 
-class AudienceOptionsBeta(BaseModel):
+from pydantic import BaseModel, Field, StrictStr, validator
+
+class ListAudienceConsumersSearchInput(BaseModel):
     """
-    AudienceOptionsBeta
+    Search criteria input for list audience consumers.  # noqa: E501
     """
-    include_historical_data: Optional[StrictBool] = Field(None, alias="includeHistoricalData", description="Determines whether data prior to the audience being created is included when determining audience membership. Note that including historical data may be needed in order to properly handle the definition specified. In these cases, Segment will automatically handle including historical data and the response will return the includeHistoricalData parameter as true.")
-    include_anonymous_users: Optional[StrictBool] = Field(None, alias="includeAnonymousUsers", description="Determines whether anonymous users should be included when determining audience membership.")
-    __properties = ["includeHistoricalData", "includeAnonymousUsers"]
+    type: StrictStr = Field(..., description="Field to filter by.")
+    query: StrictStr = Field(..., description="Text to match the field value.")
+    __properties = ["type", "query"]
+
+    @validator('type')
+    def type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in ('DEFINITION', 'NAME'):
+            raise ValueError("must be one of enum values ('DEFINITION', 'NAME')")
+        return value
 
     class Config:
         """Pydantic configuration"""
@@ -44,8 +51,8 @@ class AudienceOptionsBeta(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> AudienceOptionsBeta:
-        """Create an instance of AudienceOptionsBeta from a JSON string"""
+    def from_json(cls, json_str: str) -> ListAudienceConsumersSearchInput:
+        """Create an instance of ListAudienceConsumersSearchInput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -57,17 +64,17 @@ class AudienceOptionsBeta(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> AudienceOptionsBeta:
-        """Create an instance of AudienceOptionsBeta from a dict"""
+    def from_dict(cls, obj: dict) -> ListAudienceConsumersSearchInput:
+        """Create an instance of ListAudienceConsumersSearchInput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return AudienceOptionsBeta.parse_obj(obj)
+            return ListAudienceConsumersSearchInput.parse_obj(obj)
 
-        _obj = AudienceOptionsBeta.parse_obj({
-            "include_historical_data": obj.get("includeHistoricalData"),
-            "include_anonymous_users": obj.get("includeAnonymousUsers")
+        _obj = ListAudienceConsumersSearchInput.parse_obj({
+            "type": obj.get("type"),
+            "query": obj.get("query")
         })
         return _obj
 

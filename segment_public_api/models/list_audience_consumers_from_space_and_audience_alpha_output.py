@@ -24,7 +24,7 @@ from pydantic import BaseModel, Field, conlist
 from segment_public_api.models.audience_summary import AudienceSummary
 from segment_public_api.models.pagination_output import PaginationOutput
 
-class ListAudienceConsumersFromSpaceAndAudienceOutput(BaseModel):
+class ListAudienceConsumersFromSpaceAndAudienceAlphaOutput(BaseModel):
     """
     List Audience consumers output.  # noqa: E501
     """
@@ -46,8 +46,8 @@ class ListAudienceConsumersFromSpaceAndAudienceOutput(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> ListAudienceConsumersFromSpaceAndAudienceOutput:
-        """Create an instance of ListAudienceConsumersFromSpaceAndAudienceOutput from a JSON string"""
+    def from_json(cls, json_str: str) -> ListAudienceConsumersFromSpaceAndAudienceAlphaOutput:
+        """Create an instance of ListAudienceConsumersFromSpaceAndAudienceAlphaOutput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -69,15 +69,15 @@ class ListAudienceConsumersFromSpaceAndAudienceOutput(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> ListAudienceConsumersFromSpaceAndAudienceOutput:
-        """Create an instance of ListAudienceConsumersFromSpaceAndAudienceOutput from a dict"""
+    def from_dict(cls, obj: dict) -> ListAudienceConsumersFromSpaceAndAudienceAlphaOutput:
+        """Create an instance of ListAudienceConsumersFromSpaceAndAudienceAlphaOutput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return ListAudienceConsumersFromSpaceAndAudienceOutput.parse_obj(obj)
+            return ListAudienceConsumersFromSpaceAndAudienceAlphaOutput.parse_obj(obj)
 
-        _obj = ListAudienceConsumersFromSpaceAndAudienceOutput.parse_obj({
+        _obj = ListAudienceConsumersFromSpaceAndAudienceAlphaOutput.parse_obj({
             "audiences": [AudienceSummary.from_dict(_item) for _item in obj.get("audiences")] if obj.get("audiences") is not None else None,
             "pagination": PaginationOutput.from_dict(obj.get("pagination")) if obj.get("pagination") is not None else None
         })
