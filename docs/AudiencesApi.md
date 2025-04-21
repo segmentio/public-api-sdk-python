@@ -401,7 +401,7 @@ Name | Type | Description  | Notes
 
 ## Operation: update_audience_for_space
 
-> UpdateAudienceForSpace200Response update_audience_for_space(space_id, id, update_audience_for_space_input)
+> UpdateAudienceForSpace200Response update_audience_for_space(space_id, id, update_audience_for_space_alpha_input)
 
 Update Audience for Space
 
@@ -415,7 +415,7 @@ import time
 import os
 import segment_public_api
 from segment_public_api.models.update_audience_for_space200_response import UpdateAudienceForSpace200Response
-from segment_public_api.models.update_audience_for_space_input import UpdateAudienceForSpaceInput
+from segment_public_api.models.update_audience_for_space_alpha_input import UpdateAudienceForSpaceAlphaInput
 from segment_public_api.rest import ApiException
 from pprint import pprint
 
@@ -432,11 +432,11 @@ with segment_public_api.ApiClient(configuration) as api_client:
     api_instance = segment_public_api.AudiencesApi(api_client)
     space_id = 'spaceId' # str | 
     id = 'id' # str | 
-    update_audience_for_space_input = {"enabled":false} # UpdateAudienceForSpaceInput | 
+    update_audience_for_space_alpha_input = {"enabled":false} # UpdateAudienceForSpaceAlphaInput | 
 
     try:
         # Update Audience for Space
-        api_response = api_instance.update_audience_for_space(space_id, id, update_audience_for_space_input)
+        api_response = api_instance.update_audience_for_space(space_id, id, update_audience_for_space_alpha_input)
         print("The response of AudiencesApi->update_audience_for_space:\n")
         pprint(api_response)
     except Exception as e:
@@ -451,7 +451,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **space_id** | **str**|  | 
  **id** | **str**|  | 
- **update_audience_for_space_input** | [**UpdateAudienceForSpaceInput**](UpdateAudienceForSpaceInput.md)|  | 
+ **update_audience_for_space_alpha_input** | [**UpdateAudienceForSpaceAlphaInput**](UpdateAudienceForSpaceAlphaInput.md)|  | 
 
 ### Return type
 

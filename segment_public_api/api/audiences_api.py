@@ -34,7 +34,7 @@ from segment_public_api.models.list_audiences200_response import ListAudiences20
 from segment_public_api.models.pagination_input import PaginationInput
 from segment_public_api.models.remove_audience_from_space200_response import RemoveAudienceFromSpace200Response
 from segment_public_api.models.update_audience_for_space200_response import UpdateAudienceForSpace200Response
-from segment_public_api.models.update_audience_for_space_input import UpdateAudienceForSpaceInput
+from segment_public_api.models.update_audience_for_space_alpha_input import UpdateAudienceForSpaceAlphaInput
 
 from segment_public_api.api_client import ApiClient
 from segment_public_api.api_response import ApiResponse
@@ -843,22 +843,22 @@ class AudiencesApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def update_audience_for_space(self, space_id : constr(strict=True), id : constr(strict=True), update_audience_for_space_input : UpdateAudienceForSpaceInput, **kwargs) -> UpdateAudienceForSpace200Response:  # noqa: E501
+    def update_audience_for_space(self, space_id : constr(strict=True), id : constr(strict=True), update_audience_for_space_alpha_input : UpdateAudienceForSpaceAlphaInput, **kwargs) -> UpdateAudienceForSpace200Response:  # noqa: E501
         """Update Audience for Space  # noqa: E501
 
         Updates the Audience.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Audience Modified` event in the [audit trail](/tag/Audit-Trail).  • Note that when an Audience is updated, the Audience will be locked from future edits until the changes have been incorporated. You can find more information [in the Segment docs](https://segment-docs.netlify.app/docs/engage/audiences/#editing-realtime-audiences-and-traits).  Note: The definition for an Audience updated using the API is not editable through the Segment App.   The rate limit for this endpoint is 10 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.update_audience_for_space(space_id, id, update_audience_for_space_input, async_req=True)
+        >>> thread = api.update_audience_for_space(space_id, id, update_audience_for_space_alpha_input, async_req=True)
         >>> result = thread.get()
 
         :param space_id: (required)
         :type space_id: str
         :param id: (required)
         :type id: str
-        :param update_audience_for_space_input: (required)
-        :type update_audience_for_space_input: UpdateAudienceForSpaceInput
+        :param update_audience_for_space_alpha_input: (required)
+        :type update_audience_for_space_alpha_input: UpdateAudienceForSpaceAlphaInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _request_timeout: timeout setting for this request.
@@ -874,25 +874,25 @@ class AudiencesApi:
         if '_preload_content' in kwargs:
             message = "Error! Please call the update_audience_for_space_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.update_audience_for_space_with_http_info(space_id, id, update_audience_for_space_input, **kwargs)  # noqa: E501
+        return self.update_audience_for_space_with_http_info(space_id, id, update_audience_for_space_alpha_input, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def update_audience_for_space_with_http_info(self, space_id : constr(strict=True), id : constr(strict=True), update_audience_for_space_input : UpdateAudienceForSpaceInput, **kwargs) -> ApiResponse:  # noqa: E501
+    def update_audience_for_space_with_http_info(self, space_id : constr(strict=True), id : constr(strict=True), update_audience_for_space_alpha_input : UpdateAudienceForSpaceAlphaInput, **kwargs) -> ApiResponse:  # noqa: E501
         """Update Audience for Space  # noqa: E501
 
         Updates the Audience.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Audience Modified` event in the [audit trail](/tag/Audit-Trail).  • Note that when an Audience is updated, the Audience will be locked from future edits until the changes have been incorporated. You can find more information [in the Segment docs](https://segment-docs.netlify.app/docs/engage/audiences/#editing-realtime-audiences-and-traits).  Note: The definition for an Audience updated using the API is not editable through the Segment App.   The rate limit for this endpoint is 10 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.update_audience_for_space_with_http_info(space_id, id, update_audience_for_space_input, async_req=True)
+        >>> thread = api.update_audience_for_space_with_http_info(space_id, id, update_audience_for_space_alpha_input, async_req=True)
         >>> result = thread.get()
 
         :param space_id: (required)
         :type space_id: str
         :param id: (required)
         :type id: str
-        :param update_audience_for_space_input: (required)
-        :type update_audience_for_space_input: UpdateAudienceForSpaceInput
+        :param update_audience_for_space_alpha_input: (required)
+        :type update_audience_for_space_alpha_input: UpdateAudienceForSpaceAlphaInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _preload_content: if False, the ApiResponse.data will
@@ -923,7 +923,7 @@ class AudiencesApi:
         _all_params = [
             'space_id',
             'id',
-            'update_audience_for_space_input'
+            'update_audience_for_space_alpha_input'
         ]
         _all_params.extend(
             [
@@ -967,8 +967,8 @@ class AudiencesApi:
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params['update_audience_for_space_input'] is not None:
-            _body_params = _params['update_audience_for_space_input']
+        if _params['update_audience_for_space_alpha_input'] is not None:
+            _body_params = _params['update_audience_for_space_alpha_input']
 
         # set the HTTP header `Accept`
         _header_params['Accept'] = self.api_client.select_header_accept(

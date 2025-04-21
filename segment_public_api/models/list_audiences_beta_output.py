@@ -21,14 +21,14 @@ import json
 
 from typing import List
 from pydantic import BaseModel, Field, conlist
-from segment_public_api.models.audience_summary_beta import AudienceSummaryBeta
+from segment_public_api.models.audience_summary import AudienceSummary
 from segment_public_api.models.pagination_output import PaginationOutput
 
 class ListAudiencesBetaOutput(BaseModel):
     """
     List audiences endpoint output.  # noqa: E501
     """
-    audiences: conlist(AudienceSummaryBeta) = Field(..., description="A list of audience summary results.")
+    audiences: conlist(AudienceSummary) = Field(..., description="A list of audience summary results.")
     pagination: PaginationOutput = Field(...)
     __properties = ["audiences", "pagination"]
 
@@ -78,7 +78,7 @@ class ListAudiencesBetaOutput(BaseModel):
             return ListAudiencesBetaOutput.parse_obj(obj)
 
         _obj = ListAudiencesBetaOutput.parse_obj({
-            "audiences": [AudienceSummaryBeta.from_dict(_item) for _item in obj.get("audiences")] if obj.get("audiences") is not None else None,
+            "audiences": [AudienceSummary.from_dict(_item) for _item in obj.get("audiences")] if obj.get("audiences") is not None else None,
             "pagination": PaginationOutput.from_dict(obj.get("pagination")) if obj.get("pagination") is not None else None
         })
         return _obj

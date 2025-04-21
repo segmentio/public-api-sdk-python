@@ -19,23 +19,19 @@ import re  # noqa: F401
 import json
 
 
+from typing import Optional
+from pydantic import BaseModel, Field, StrictBool, StrictStr
+from segment_public_api.models.audience_definition import AudienceDefinition
 
-from pydantic import BaseModel, Field, StrictStr, validator
-
-class AudienceDefinitionBeta(BaseModel):
+class UpdateAudienceForSpaceAlphaInput(BaseModel):
     """
-    Defines an audience definition.  # noqa: E501
+    Input to update an audience.  # noqa: E501
     """
-    query: StrictStr = Field(..., description="The query language string defining the audience segmentation criteria.")
-    type: StrictStr = Field(..., description="The underlying data type being segmented for this audience.  Possible values: users, accounts.")
-    __properties = ["query", "type"]
-
-    @validator('type')
-    def type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in ('ACCOUNTS', 'USERS'):
-            raise ValueError("must be one of enum values ('ACCOUNTS', 'USERS')")
-        return value
+    enabled: Optional[StrictBool] = Field(None, description="Enabled/disabled status for the audience.")
+    name: Optional[StrictStr] = Field(None, description="The name of the computation.")
+    description: Optional[StrictStr] = Field(None, description="The description of the computation.")
+    definition: Optional[AudienceDefinition] = None
+    __properties = ["enabled", "name", "description", "definition"]
 
     class Config:
         """Pydantic configuration"""
@@ -51,8 +47,8 @@ class AudienceDefinitionBeta(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> AudienceDefinitionBeta:
-        """Create an instance of AudienceDefinitionBeta from a JSON string"""
+    def from_json(cls, json_str: str) -> UpdateAudienceForSpaceAlphaInput:
+        """Create an instance of UpdateAudienceForSpaceAlphaInput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -61,20 +57,25 @@ class AudienceDefinitionBeta(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # override the default output from pydantic by calling `to_dict()` of definition
+        if self.definition:
+            _dict['definition'] = self.definition.to_dict()
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> AudienceDefinitionBeta:
-        """Create an instance of AudienceDefinitionBeta from a dict"""
+    def from_dict(cls, obj: dict) -> UpdateAudienceForSpaceAlphaInput:
+        """Create an instance of UpdateAudienceForSpaceAlphaInput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return AudienceDefinitionBeta.parse_obj(obj)
+            return UpdateAudienceForSpaceAlphaInput.parse_obj(obj)
 
-        _obj = AudienceDefinitionBeta.parse_obj({
-            "query": obj.get("query"),
-            "type": obj.get("type")
+        _obj = UpdateAudienceForSpaceAlphaInput.parse_obj({
+            "enabled": obj.get("enabled"),
+            "name": obj.get("name"),
+            "description": obj.get("description"),
+            "definition": AudienceDefinition.from_dict(obj.get("definition")) if obj.get("definition") is not None else None
         })
         return _obj
 
