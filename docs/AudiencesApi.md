@@ -264,7 +264,7 @@ import time
 import os
 import segment_public_api
 from segment_public_api.models.list_audiences200_response import ListAudiences200Response
-from segment_public_api.models.list_audiences_pagination_input import ListAudiencesPaginationInput
+from segment_public_api.models.pagination_input import PaginationInput
 from segment_public_api.rest import ApiException
 from pprint import pprint
 
@@ -280,7 +280,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.AudiencesApi(api_client)
     space_id = 'spaceId' # str | 
-    pagination = segment_public_api.ListAudiencesPaginationInput() # ListAudiencesPaginationInput | Information about the pagination of this response.  [See pagination](https://docs.segmentapis.com/tag/Pagination/#section/Pagination-parameters) for more info.  This parameter exists in alpha. (optional)
+    pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Information about the pagination of this response.  [See pagination](https://docs.segmentapis.com/tag/Pagination/#section/Pagination-parameters) for more info.  This parameter exists in alpha. (optional)
 
     try:
         # List Audiences
@@ -298,7 +298,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **space_id** | **str**|  | 
- **pagination** | [**ListAudiencesPaginationInput**](.md)| Information about the pagination of this response.  [See pagination](https://docs.segmentapis.com/tag/Pagination/#section/Pagination-parameters) for more info.  This parameter exists in alpha. | [optional] 
+ **pagination** | [**PaginationInput**](.md)| Information about the pagination of this response.  [See pagination](https://docs.segmentapis.com/tag/Pagination/#section/Pagination-parameters) for more info.  This parameter exists in alpha. | [optional] 
 
 ### Return type
 
