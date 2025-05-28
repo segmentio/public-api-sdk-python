@@ -45,7 +45,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.AudiencesApi(api_client)
-    space_id = 'spaceId' # str | 
+    space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
     create_audience_alpha_input = {"name":"name","description":"description","enabled":false,"definition":{"query":"event('Shoes Bought').count() >= 1","type":"USERS"},"options":{"includeAnonymousUsers":true,"includeHistoricalData":true}} # CreateAudienceAlphaInput | 
 
     try:
@@ -120,7 +120,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.AudiencesApi(api_client)
-    space_id = 'spaceId' # str | 
+    space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
     id = 'id' # str | 
 
     try:
@@ -198,8 +198,8 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.AudiencesApi(api_client)
-    space_id = 'spaceId' # str | 
-    id = 'ReferencedAudienceId' # str | 
+    space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
+    id = 'aud_0ujsswThIGTUYm2K8FjOOfXtY1K' # str | 
     pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Information about the pagination of this response.  [See pagination](https://docs.segmentapis.com/tag/Pagination/#section/Pagination-parameters) for more info.  This parameter exists in alpha. (optional)
     search = segment_public_api.ListAudienceConsumersSearchInput() # ListAudienceConsumersSearchInput | Optional search criteria  This parameter exists in alpha. (optional)
     sort = segment_public_api.ListAudienceConsumersSortInput() # ListAudienceConsumersSortInput | Optional sort criteria  This parameter exists in alpha. (optional)
@@ -280,7 +280,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.AudiencesApi(api_client)
-    space_id = 'spaceId' # str | 
+    space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
     pagination = segment_public_api.ListAudiencesPaginationInput() # ListAudiencesPaginationInput | Information about the pagination of this response.  [See pagination](https://docs.segmentapis.com/tag/Pagination/#section/Pagination-parameters) for more info.  This parameter exists in alpha. (optional)
 
     try:
@@ -356,7 +356,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.AudiencesApi(api_client)
-    space_id = 'spaceId' # str | 
+    space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
     preview_audience_input = {"definition":{"query":"event('Shoes Bought').count() >= 1"},"audienceType":"USERS","options":{"filterByExternalIds":["android.idfa","anonymous_id","email","ios.idfa","user_id"],"includeAnonymousUsers":true,"includeHistoricalData":true,"backfillEventDataDays":7}} # PreviewAudienceInput | 
 
     try:
@@ -431,8 +431,8 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.AudiencesApi(api_client)
-    space_id = 'spaceId' # str | 
-    id = 'id' # str | 
+    space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
+    id = 'aud_0ujsswThIGTUYm2K8FjOOfXtY1K' # str | 
 
     try:
         # Remove Audience from Space
@@ -507,8 +507,8 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.AudiencesApi(api_client)
-    space_id = 'spaceId' # str | 
-    id = 'id' # str | 
+    space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
+    id = 'aud_0ujsswThIGTUYm2K8FjOOfXtY1K' # str | 
     update_audience_for_space_alpha_input = {"enabled":false} # UpdateAudienceForSpaceAlphaInput | 
 
     try:
