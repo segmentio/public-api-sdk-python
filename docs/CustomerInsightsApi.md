@@ -39,7 +39,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.CustomerInsightsApi(api_client)
-    create_download_alpha_input = {"collectionId":"2wmpXTGB69A8BwGJ4hD5XvQ03aD","workspaceId":"9y433Y71snvrWKfchyBbu9","startTime":"2006-01-02T15:04:05.000Z"} # CreateDownloadAlphaInput | 
+    create_download_alpha_input = {"collectionId":"2wmpXTGB69A8BwGJ4hD5XvQ03aD","workspaceId":"9y433Y71snvrWKfchyBbu9","hour":"2006-01-02T15:04:05.000Z"} # CreateDownloadAlphaInput | 
 
     try:
         # Create Download
