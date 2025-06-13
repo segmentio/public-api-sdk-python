@@ -14,137 +14,107 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
-import json
 import pprint
 import re  # noqa: F401
+import json
 
-from typing import Optional
-from pydantic import BaseModel, Field, StrictStr, ValidationError, validator
-from segment_public_api.models.completed_audience_preview import CompletedAudiencePreview
-from segment_public_api.models.failed_audience_preview import FailedAudiencePreview
-from segment_public_api.models.running_audience_preview import RunningAudiencePreview
-from typing import Union, Any, List, TYPE_CHECKING
-from pydantic import StrictStr, Field
 
-AUDIENCEPREVIEW_ANY_OF_SCHEMAS = ["CompletedAudiencePreview", "FailedAudiencePreview", "RunningAudiencePreview"]
+from typing import List, Optional
+from pydantic import BaseModel, Field, StrictStr, conlist, validator
+from segment_public_api.models.audience_definition_without_type import AudienceDefinitionWithoutType
+from segment_public_api.models.audience_preview_options import AudiencePreviewOptions
+from segment_public_api.models.audience_preview_result import AudiencePreviewResult
+from segment_public_api.models.audience_size import AudienceSize
 
 class AudiencePreview(BaseModel):
     """
-    Audience preview that can be in one of the three states: completed, running, or failed.
+    An audience preview.  # noqa: E501
     """
+    id: StrictStr = Field(..., description="Unique identifier for tracking and retrieving results of an audience preview.")
+    audience_type: StrictStr = Field(..., alias="audienceType", description="The audience type of the preview.")
+    definition: AudienceDefinitionWithoutType = Field(...)
+    options: AudiencePreviewOptions = Field(...)
+    status: StrictStr = Field(..., description="Status for the audience preview.")
+    results: Optional[conlist(AudiencePreviewResult)] = Field(None, description="Sampled result membership for the audience preview. Only has a value if the status is 'COMPLETED'.")
+    size: Optional[AudienceSize] = None
+    failure_reason: Optional[StrictStr] = Field(None, alias="failureReason", description="Explanation of why the audience preview failed. Only has a value if status is 'FAILED'.")
+    __properties = ["id", "audienceType", "definition", "options", "status", "results", "size", "failureReason"]
 
-    # data type: CompletedAudiencePreview
-    anyof_schema_1_validator: Optional[CompletedAudiencePreview] = None
-    # data type: RunningAudiencePreview
-    anyof_schema_2_validator: Optional[RunningAudiencePreview] = None
-    # data type: FailedAudiencePreview
-    anyof_schema_3_validator: Optional[FailedAudiencePreview] = None
-    if TYPE_CHECKING:
-        actual_instance: Union[CompletedAudiencePreview, FailedAudiencePreview, RunningAudiencePreview]
-    else:
-        actual_instance: Any
-    any_of_schemas: List[str] = Field(AUDIENCEPREVIEW_ANY_OF_SCHEMAS, const=True)
+    @validator('audience_type')
+    def audience_type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in ('ACCOUNTS', 'USERS'):
+            raise ValueError("must be one of enum values ('ACCOUNTS', 'USERS')")
+        return value
+
+    @validator('status')
+    def status_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in ('COMPLETED', 'FAILED', 'RUNNING'):
+            raise ValueError("must be one of enum values ('COMPLETED', 'FAILED', 'RUNNING')")
+        return value
 
     class Config:
+        """Pydantic configuration"""
+        allow_population_by_field_name = True
         validate_assignment = True
 
-    def __init__(self, *args, **kwargs) -> None:
-        if args:
-            if len(args) > 1:
-                raise ValueError("If a position argument is used, only 1 is allowed to set `actual_instance`")
-            if kwargs:
-                raise ValueError("If a position argument is used, keyword arguments cannot be used.")
-            super().__init__(actual_instance=args[0])
-        else:
-            super().__init__(**kwargs)
+    def to_str(self) -> str:
+        """Returns the string representation of the model using alias"""
+        return pprint.pformat(self.dict(by_alias=True))
 
-    @validator('actual_instance')
-    def actual_instance_must_validate_anyof(cls, v):
-        instance = AudiencePreview.construct()
-        error_messages = []
-        # validate data type: CompletedAudiencePreview
-        if not isinstance(v, CompletedAudiencePreview):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `CompletedAudiencePreview`")
-        else:
-            return v
-
-        # validate data type: RunningAudiencePreview
-        if not isinstance(v, RunningAudiencePreview):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `RunningAudiencePreview`")
-        else:
-            return v
-
-        # validate data type: FailedAudiencePreview
-        if not isinstance(v, FailedAudiencePreview):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `FailedAudiencePreview`")
-        else:
-            return v
-
-        if error_messages:
-            # no match
-            raise ValueError("No match found when setting the actual_instance in AudiencePreview with anyOf schemas: CompletedAudiencePreview, FailedAudiencePreview, RunningAudiencePreview. Details: " + ", ".join(error_messages))
-        else:
-            return v
-
-    @classmethod
-    def from_dict(cls, obj: dict) -> AudiencePreview:
-        return cls.from_json(json.dumps(obj))
+    def to_json(self) -> str:
+        """Returns the JSON representation of the model using alias"""
+        return json.dumps(self.to_dict())
 
     @classmethod
     def from_json(cls, json_str: str) -> AudiencePreview:
-        """Returns the object represented by the json string"""
-        instance = AudiencePreview.construct()
-        error_messages = []
-        # anyof_schema_1_validator: Optional[CompletedAudiencePreview] = None
-        try:
-            instance.actual_instance = CompletedAudiencePreview.from_json(json_str)
-            return instance
-        except (ValidationError, ValueError) as e:
-             error_messages.append(str(e))
-        # anyof_schema_2_validator: Optional[RunningAudiencePreview] = None
-        try:
-            instance.actual_instance = RunningAudiencePreview.from_json(json_str)
-            return instance
-        except (ValidationError, ValueError) as e:
-             error_messages.append(str(e))
-        # anyof_schema_3_validator: Optional[FailedAudiencePreview] = None
-        try:
-            instance.actual_instance = FailedAudiencePreview.from_json(json_str)
-            return instance
-        except (ValidationError, ValueError) as e:
-             error_messages.append(str(e))
+        """Create an instance of AudiencePreview from a JSON string"""
+        return cls.from_dict(json.loads(json_str))
 
-        if error_messages:
-            # no match
-            raise ValueError("No match found when deserializing the JSON string into AudiencePreview with anyOf schemas: CompletedAudiencePreview, FailedAudiencePreview, RunningAudiencePreview. Details: " + ", ".join(error_messages))
-        else:
-            return instance
+    def to_dict(self):
+        """Returns the dictionary representation of the model using alias"""
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
+        # override the default output from pydantic by calling `to_dict()` of definition
+        if self.definition:
+            _dict['definition'] = self.definition.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of options
+        if self.options:
+            _dict['options'] = self.options.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in results (list)
+        _items = []
+        if self.results:
+            for _item in self.results:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['results'] = _items
+        # override the default output from pydantic by calling `to_dict()` of size
+        if self.size:
+            _dict['size'] = self.size.to_dict()
+        return _dict
 
-    def to_json(self) -> str:
-        """Returns the JSON representation of the actual instance"""
-        if self.actual_instance is None:
-            return "null"
+    @classmethod
+    def from_dict(cls, obj: dict) -> AudiencePreview:
+        """Create an instance of AudiencePreview from a dict"""
+        if obj is None:
+            return None
 
-        to_json = getattr(self.actual_instance, "to_json", None)
-        if callable(to_json):
-            return self.actual_instance.to_json()
-        else:
-            return json.dumps(self.actual_instance)
+        if not isinstance(obj, dict):
+            return AudiencePreview.parse_obj(obj)
 
-    def to_dict(self) -> dict:
-        """Returns the dict representation of the actual instance"""
-        if self.actual_instance is None:
-            return "null"
-
-        to_json = getattr(self.actual_instance, "to_json", None)
-        if callable(to_json):
-            return self.actual_instance.to_dict()
-        else:
-            return json.dumps(self.actual_instance)
-
-    def to_str(self) -> str:
-        """Returns the string representation of the actual instance"""
-        return pprint.pformat(self.dict())
+        _obj = AudiencePreview.parse_obj({
+            "id": obj.get("id"),
+            "audience_type": obj.get("audienceType"),
+            "definition": AudienceDefinitionWithoutType.from_dict(obj.get("definition")) if obj.get("definition") is not None else None,
+            "options": AudiencePreviewOptions.from_dict(obj.get("options")) if obj.get("options") is not None else None,
+            "status": obj.get("status"),
+            "results": [AudiencePreviewResult.from_dict(_item) for _item in obj.get("results")] if obj.get("results") is not None else None,
+            "size": AudienceSize.from_dict(obj.get("size")) if obj.get("size") is not None else None,
+            "failure_reason": obj.get("failureReason")
+        })
+        return _obj
 
 
