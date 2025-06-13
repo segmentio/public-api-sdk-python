@@ -21,27 +21,27 @@ import re  # noqa: F401
 
 from typing import Optional
 from pydantic import BaseModel, Field, StrictStr, ValidationError, validator
-from segment_public_api.models.audience_preview_any_of import AudiencePreviewAnyOf
-from segment_public_api.models.audience_preview_any_of1 import AudiencePreviewAnyOf1
-from segment_public_api.models.audience_preview_any_of2 import AudiencePreviewAnyOf2
+from segment_public_api.models.completed_audience_preview import CompletedAudiencePreview
+from segment_public_api.models.failed_audience_preview import FailedAudiencePreview
+from segment_public_api.models.running_audience_preview import RunningAudiencePreview
 from typing import Union, Any, List, TYPE_CHECKING
 from pydantic import StrictStr, Field
 
-AUDIENCEPREVIEW_ANY_OF_SCHEMAS = ["AudiencePreviewAnyOf", "AudiencePreviewAnyOf1", "AudiencePreviewAnyOf2"]
+AUDIENCEPREVIEW_ANY_OF_SCHEMAS = ["CompletedAudiencePreview", "FailedAudiencePreview", "RunningAudiencePreview"]
 
 class AudiencePreview(BaseModel):
     """
     Audience preview that can be in one of the three states: completed, running, or failed.
     """
 
-    # data type: AudiencePreviewAnyOf
-    anyof_schema_1_validator: Optional[AudiencePreviewAnyOf] = None
-    # data type: AudiencePreviewAnyOf1
-    anyof_schema_2_validator: Optional[AudiencePreviewAnyOf1] = None
-    # data type: AudiencePreviewAnyOf2
-    anyof_schema_3_validator: Optional[AudiencePreviewAnyOf2] = None
+    # data type: CompletedAudiencePreview
+    anyof_schema_1_validator: Optional[CompletedAudiencePreview] = None
+    # data type: RunningAudiencePreview
+    anyof_schema_2_validator: Optional[RunningAudiencePreview] = None
+    # data type: FailedAudiencePreview
+    anyof_schema_3_validator: Optional[FailedAudiencePreview] = None
     if TYPE_CHECKING:
-        actual_instance: Union[AudiencePreviewAnyOf, AudiencePreviewAnyOf1, AudiencePreviewAnyOf2]
+        actual_instance: Union[CompletedAudiencePreview, FailedAudiencePreview, RunningAudiencePreview]
     else:
         actual_instance: Any
     any_of_schemas: List[str] = Field(AUDIENCEPREVIEW_ANY_OF_SCHEMAS, const=True)
@@ -63,27 +63,27 @@ class AudiencePreview(BaseModel):
     def actual_instance_must_validate_anyof(cls, v):
         instance = AudiencePreview.construct()
         error_messages = []
-        # validate data type: AudiencePreviewAnyOf
-        if not isinstance(v, AudiencePreviewAnyOf):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `AudiencePreviewAnyOf`")
+        # validate data type: CompletedAudiencePreview
+        if not isinstance(v, CompletedAudiencePreview):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `CompletedAudiencePreview`")
         else:
             return v
 
-        # validate data type: AudiencePreviewAnyOf1
-        if not isinstance(v, AudiencePreviewAnyOf1):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `AudiencePreviewAnyOf1`")
+        # validate data type: RunningAudiencePreview
+        if not isinstance(v, RunningAudiencePreview):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `RunningAudiencePreview`")
         else:
             return v
 
-        # validate data type: AudiencePreviewAnyOf2
-        if not isinstance(v, AudiencePreviewAnyOf2):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `AudiencePreviewAnyOf2`")
+        # validate data type: FailedAudiencePreview
+        if not isinstance(v, FailedAudiencePreview):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `FailedAudiencePreview`")
         else:
             return v
 
         if error_messages:
             # no match
-            raise ValueError("No match found when setting the actual_instance in AudiencePreview with anyOf schemas: AudiencePreviewAnyOf, AudiencePreviewAnyOf1, AudiencePreviewAnyOf2. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when setting the actual_instance in AudiencePreview with anyOf schemas: CompletedAudiencePreview, FailedAudiencePreview, RunningAudiencePreview. Details: " + ", ".join(error_messages))
         else:
             return v
 
@@ -96,28 +96,28 @@ class AudiencePreview(BaseModel):
         """Returns the object represented by the json string"""
         instance = AudiencePreview.construct()
         error_messages = []
-        # anyof_schema_1_validator: Optional[AudiencePreviewAnyOf] = None
+        # anyof_schema_1_validator: Optional[CompletedAudiencePreview] = None
         try:
-            instance.actual_instance = AudiencePreviewAnyOf.from_json(json_str)
+            instance.actual_instance = CompletedAudiencePreview.from_json(json_str)
             return instance
         except (ValidationError, ValueError) as e:
              error_messages.append(str(e))
-        # anyof_schema_2_validator: Optional[AudiencePreviewAnyOf1] = None
+        # anyof_schema_2_validator: Optional[RunningAudiencePreview] = None
         try:
-            instance.actual_instance = AudiencePreviewAnyOf1.from_json(json_str)
+            instance.actual_instance = RunningAudiencePreview.from_json(json_str)
             return instance
         except (ValidationError, ValueError) as e:
              error_messages.append(str(e))
-        # anyof_schema_3_validator: Optional[AudiencePreviewAnyOf2] = None
+        # anyof_schema_3_validator: Optional[FailedAudiencePreview] = None
         try:
-            instance.actual_instance = AudiencePreviewAnyOf2.from_json(json_str)
+            instance.actual_instance = FailedAudiencePreview.from_json(json_str)
             return instance
         except (ValidationError, ValueError) as e:
              error_messages.append(str(e))
 
         if error_messages:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into AudiencePreview with anyOf schemas: AudiencePreviewAnyOf, AudiencePreviewAnyOf1, AudiencePreviewAnyOf2. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when deserializing the JSON string into AudiencePreview with anyOf schemas: CompletedAudiencePreview, FailedAudiencePreview, RunningAudiencePreview. Details: " + ", ".join(error_messages))
         else:
             return instance
 
