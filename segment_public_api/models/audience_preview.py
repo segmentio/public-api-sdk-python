@@ -31,7 +31,7 @@ AUDIENCEPREVIEW_ANY_OF_SCHEMAS = ["CompletedAudiencePreview", "FailedAudiencePre
 
 class AudiencePreview(BaseModel):
     """
-    AudiencePreview
+    Audience preview that can be in one of the three states: completed, running, or failed.
     """
 
     # data type: CompletedAudiencePreview

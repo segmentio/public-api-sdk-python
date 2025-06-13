@@ -93,6 +93,7 @@ from segment_public_api.models.audience_options import AudienceOptions
 from segment_public_api.models.audience_options_with_lookback import AudienceOptionsWithLookback
 from segment_public_api.models.audience_preview import AudiencePreview
 from segment_public_api.models.audience_preview_identifier import AudiencePreviewIdentifier
+from segment_public_api.models.audience_preview_options import AudiencePreviewOptions
 from segment_public_api.models.audience_preview_result import AudiencePreviewResult
 from segment_public_api.models.audience_size import AudienceSize
 from segment_public_api.models.audience_summary import AudienceSummary

@@ -22,7 +22,7 @@ import json
 
 from pydantic import BaseModel, Field, StrictStr, validator
 from segment_public_api.models.audience_definition_without_type import AudienceDefinitionWithoutType
-from segment_public_api.models.audience_options_with_lookback import AudienceOptionsWithLookback
+from segment_public_api.models.audience_preview_options import AudiencePreviewOptions
 
 class CommonAudiencePreview(BaseModel):
     """
@@ -31,7 +31,7 @@ class CommonAudiencePreview(BaseModel):
     id: StrictStr = Field(..., description="Unique identifier for tracking and retrieving results of an audience preview.")
     audience_type: StrictStr = Field(..., alias="audienceType", description="The audience type of the preview.")
     definition: AudienceDefinitionWithoutType = Field(...)
-    options: AudienceOptionsWithLookback = Field(...)
+    options: AudiencePreviewOptions = Field(...)
     __properties = ["id", "audienceType", "definition", "options"]
 
     @validator('audience_type')
@@ -86,7 +86,7 @@ class CommonAudiencePreview(BaseModel):
             "id": obj.get("id"),
             "audience_type": obj.get("audienceType"),
             "definition": AudienceDefinitionWithoutType.from_dict(obj.get("definition")) if obj.get("definition") is not None else None,
-            "options": AudienceOptionsWithLookback.from_dict(obj.get("options")) if obj.get("options") is not None else None
+            "options": AudiencePreviewOptions.from_dict(obj.get("options")) if obj.get("options") is not None else None
         })
         return _obj
 

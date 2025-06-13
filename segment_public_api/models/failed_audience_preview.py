@@ -22,18 +22,18 @@ import json
 from typing import Optional
 from pydantic import BaseModel, Field, StrictStr, validator
 from segment_public_api.models.audience_definition_without_type import AudienceDefinitionWithoutType
-from segment_public_api.models.audience_options_with_lookback import AudienceOptionsWithLookback
+from segment_public_api.models.audience_preview_options import AudiencePreviewOptions
 
 class FailedAudiencePreview(BaseModel):
     """
-    FailedAudiencePreview
+    Audience preview that has failed to calculate.  # noqa: E501
     """
     status: StrictStr = Field(..., description="Status for the audience preview.")
     failure_reason: Optional[StrictStr] = Field(None, alias="failureReason", description="Explanation of why the audience preview failed, if available.")
     id: StrictStr = Field(..., description="Unique identifier for tracking and retrieving results of an audience preview.")
     audience_type: StrictStr = Field(..., alias="audienceType", description="The audience type of the preview.")
     definition: AudienceDefinitionWithoutType = Field(...)
-    options: AudienceOptionsWithLookback = Field(...)
+    options: AudiencePreviewOptions = Field(...)
     __properties = ["status", "failureReason", "id", "audienceType", "definition", "options"]
 
     @validator('status')
@@ -97,7 +97,7 @@ class FailedAudiencePreview(BaseModel):
             "id": obj.get("id"),
             "audience_type": obj.get("audienceType"),
             "definition": AudienceDefinitionWithoutType.from_dict(obj.get("definition")) if obj.get("definition") is not None else None,
-            "options": AudienceOptionsWithLookback.from_dict(obj.get("options")) if obj.get("options") is not None else None
+            "options": AudiencePreviewOptions.from_dict(obj.get("options")) if obj.get("options") is not None else None
         })
         return _obj
 
