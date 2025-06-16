@@ -27,9 +27,8 @@ class CreateDownloadAlphaInput(BaseModel):
     Input to create presigned URLs for Granular Observability Collection logs.  # noqa: E501
     """
     collection_id: StrictStr = Field(..., alias="collectionId", description="The collection's unique id.")
-    workspace_id: StrictStr = Field(..., alias="workspaceId", description="The Workspace id for the collection.")
     hour: StrictStr = Field(..., description="The ISO8601 formatted timestamp corresponding to a specific hour and day to retrieve data for. E.g.: 2025-05-07T23:00:00Z Objects are bucketed by hour and a month of data is retained.")
-    __properties = ["collectionId", "workspaceId", "hour"]
+    __properties = ["collectionId", "hour"]
 
     class Config:
         """Pydantic configuration"""
@@ -68,7 +67,6 @@ class CreateDownloadAlphaInput(BaseModel):
 
         _obj = CreateDownloadAlphaInput.parse_obj({
             "collection_id": obj.get("collectionId"),
-            "workspace_id": obj.get("workspaceId"),
             "hour": obj.get("hour")
         })
         return _obj

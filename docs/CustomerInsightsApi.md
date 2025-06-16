@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 Create Download
 
-Create Customer Insights Presigned URLs   The rate limit for this endpoint is 1 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
+Create Customer Insights Presigned URLsThe rate limit for this endpoint is 30 requests per day per workspaceId, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
 
 ### Example
 
@@ -39,7 +39,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.CustomerInsightsApi(api_client)
-    create_download_alpha_input = {"collectionId":"2wmpXTGB69A8BwGJ4hD5XvQ03aD","workspaceId":"9y433Y71snvrWKfchyBbu9","hour":"2006-01-02T15:04:05.000Z"} # CreateDownloadAlphaInput | 
+    create_download_alpha_input = {"collectionId":"2wmpXTGB69A8BwGJ4hD5XvQ03aD","hour":"2006-01-02T15:04:05.000Z"} # CreateDownloadAlphaInput | 
 
     try:
         # Create Download
