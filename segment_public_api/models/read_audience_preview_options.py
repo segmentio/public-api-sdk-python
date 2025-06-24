@@ -20,15 +20,16 @@ import json
 
 
 from typing import List, Optional, Union
-from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr, conlist
+from pydantic import BaseModel, Field, StrictBool, StrictFloat, StrictInt, StrictStr, conlist
 
-class AudiencePreviewOptions(BaseModel):
+class ReadAudiencePreviewOptions(BaseModel):
     """
     Options which should be applied when segmenting audience previews.  # noqa: E501
     """
-    filter_by_external_ids: Optional[conlist(StrictStr)] = Field(None, alias="filterByExternalIds", description="The set of profile external identifiers being used to determine audience preview membership. Profiles will only be considered for audience preview membership if the profile has at least one external id whose key matches a value in this set. If unspecified, a default set of external identifiers will be used: `['user_id', 'email', 'android.idfa', 'ios.idfa']`.")
-    backfill_event_data_days: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="backfillEventDataDays", description="If specified, the value of this field indicates the number of days (specified from the date the audience preview was created) that event data will be included from when determining audience preview membership. If unspecified, event data will not be included when determining audience preview membership.")
-    __properties = ["filterByExternalIds", "backfillEventDataDays"]
+    filter_by_external_ids: conlist(StrictStr) = Field(..., alias="filterByExternalIds", description="The set of profile external identifiers being used to determine audience preview membership. Profiles will only be considered for audience preview membership if the profile has at least one external id whose key matches a value in this set.")
+    include_historical_data: StrictBool = Field(..., alias="includeHistoricalData", description="Determines whether data prior to the audience preview being created is included when determining audience preview membership. Note that including historical data may be needed in order to properly handle the definition specified. In these cases, Segment will automatically handle including historical data and the response will return the includeHistoricalData parameter as true.")
+    backfill_event_data_days: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="backfillEventDataDays", description="If specified, the value of this field indicates the number of days (specified from the date the audience preview was created) that event data will be included from when determining audience preview membership. If unspecified, defer to the value of `includeHistoricalData` to determine whether historical data is either entirely included or entirely excluded when determining audience preview membership.")
+    __properties = ["filterByExternalIds", "includeHistoricalData", "backfillEventDataDays"]
 
     class Config:
         """Pydantic configuration"""
@@ -44,8 +45,8 @@ class AudiencePreviewOptions(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> AudiencePreviewOptions:
-        """Create an instance of AudiencePreviewOptions from a JSON string"""
+    def from_json(cls, json_str: str) -> ReadAudiencePreviewOptions:
+        """Create an instance of ReadAudiencePreviewOptions from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -57,16 +58,17 @@ class AudiencePreviewOptions(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> AudiencePreviewOptions:
-        """Create an instance of AudiencePreviewOptions from a dict"""
+    def from_dict(cls, obj: dict) -> ReadAudiencePreviewOptions:
+        """Create an instance of ReadAudiencePreviewOptions from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return AudiencePreviewOptions.parse_obj(obj)
+            return ReadAudiencePreviewOptions.parse_obj(obj)
 
-        _obj = AudiencePreviewOptions.parse_obj({
+        _obj = ReadAudiencePreviewOptions.parse_obj({
             "filter_by_external_ids": obj.get("filterByExternalIds"),
+            "include_historical_data": obj.get("includeHistoricalData"),
             "backfill_event_data_days": obj.get("backfillEventDataDays")
         })
         return _obj

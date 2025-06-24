@@ -22,9 +22,9 @@ import json
 from typing import List, Optional
 from pydantic import BaseModel, Field, StrictStr, conlist, validator
 from segment_public_api.models.audience_definition_without_type import AudienceDefinitionWithoutType
-from segment_public_api.models.audience_preview_options import AudiencePreviewOptions
 from segment_public_api.models.audience_preview_result import AudiencePreviewResult
 from segment_public_api.models.audience_size import AudienceSize
+from segment_public_api.models.read_audience_preview_options import ReadAudiencePreviewOptions
 
 class AudiencePreview(BaseModel):
     """
@@ -33,7 +33,7 @@ class AudiencePreview(BaseModel):
     id: StrictStr = Field(..., description="Unique identifier for tracking and retrieving results of an audience preview.")
     audience_type: StrictStr = Field(..., alias="audienceType", description="The audience type of the preview.")
     definition: AudienceDefinitionWithoutType = Field(...)
-    options: AudiencePreviewOptions = Field(...)
+    options: ReadAudiencePreviewOptions = Field(...)
     status: StrictStr = Field(..., description="Status for the audience preview.")
     results: Optional[conlist(AudiencePreviewResult)] = Field(None, description="Sampled result membership for the audience preview. Only has a value if the status is 'COMPLETED'.")
     size: Optional[AudienceSize] = None
@@ -109,7 +109,7 @@ class AudiencePreview(BaseModel):
             "id": obj.get("id"),
             "audience_type": obj.get("audienceType"),
             "definition": AudienceDefinitionWithoutType.from_dict(obj.get("definition")) if obj.get("definition") is not None else None,
-            "options": AudiencePreviewOptions.from_dict(obj.get("options")) if obj.get("options") is not None else None,
+            "options": ReadAudiencePreviewOptions.from_dict(obj.get("options")) if obj.get("options") is not None else None,
             "status": obj.get("status"),
             "results": [AudiencePreviewResult.from_dict(_item) for _item in obj.get("results")] if obj.get("results") is not None else None,
             "size": AudienceSize.from_dict(obj.get("size")) if obj.get("size") is not None else None,
