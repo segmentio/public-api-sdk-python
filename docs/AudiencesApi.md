@@ -198,7 +198,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.AudiencesApi(api_client)
     space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
-    id = 'aud_171sV3fzJkiY2PnlbpMZJRbrgSW' # str | 
+    id = 'id' # str | 
 
     try:
         # Get Audience
@@ -508,7 +508,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.AudiencesApi(api_client)
     space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
-    id = 'aud_0ujsszwN8NRY24YaXiTIE2VWDTS' # str | 
+    id = 'aud_0ujsswThIGTUYm2K8FjOOfXtY1K' # str | 
 
     try:
         # Remove Audience from Space
@@ -584,8 +584,8 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.AudiencesApi(api_client)
     space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
-    id = 'aud_0ujsszwN8NRY24YaXiTIE2VWDTS' # str | 
-    update_audience_for_space_alpha_input = {"enabled":true} # UpdateAudienceForSpaceAlphaInput | 
+    id = 'aud_0ujsswThIGTUYm2K8FjOOfXtY1K' # str | 
+    update_audience_for_space_alpha_input = {"enabled":false} # UpdateAudienceForSpaceAlphaInput | 
 
     try:
         # Update Audience for Space
