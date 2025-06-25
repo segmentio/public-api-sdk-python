@@ -24,6 +24,7 @@ from pydantic import BaseModel, Field, StrictBool, StrictStr, validator
 from segment_public_api.models.audience_compute_cadence import AudienceComputeCadence
 from segment_public_api.models.audience_definition import AudienceDefinition
 from segment_public_api.models.audience_options_with_lookback import AudienceOptionsWithLookback
+from segment_public_api.models.audience_size import AudienceSize
 
 class AudienceSummaryWithAudienceTypeAndLookback(BaseModel):
     """
@@ -31,6 +32,7 @@ class AudienceSummaryWithAudienceTypeAndLookback(BaseModel):
     """
     audience_type: StrictStr = Field(..., alias="audienceType", description="Discriminator denoting the audience's product type.")
     compute_cadence: AudienceComputeCadence = Field(..., alias="computeCadence")
+    size: Optional[AudienceSize] = None
     options: Optional[AudienceOptionsWithLookback] = None
     id: StrictStr = Field(..., description="Audience id.")
     space_id: StrictStr = Field(..., alias="spaceId", description="Space id for the audience.")
@@ -44,7 +46,7 @@ class AudienceSummaryWithAudienceTypeAndLookback(BaseModel):
     updated_by: StrictStr = Field(..., alias="updatedBy", description="User id who last updated the audience.")
     created_at: StrictStr = Field(..., alias="createdAt", description="Date the audience was created.")
     updated_at: StrictStr = Field(..., alias="updatedAt", description="Date the audience was last updated.")
-    __properties = ["audienceType", "computeCadence", "options", "id", "spaceId", "name", "description", "key", "enabled", "definition", "status", "createdBy", "updatedBy", "createdAt", "updatedAt"]
+    __properties = ["audienceType", "computeCadence", "size", "options", "id", "spaceId", "name", "description", "key", "enabled", "definition", "status", "createdBy", "updatedBy", "createdAt", "updatedAt"]
 
     @validator('audience_type')
     def audience_type_validate_enum(cls, value):
@@ -80,6 +82,9 @@ class AudienceSummaryWithAudienceTypeAndLookback(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of compute_cadence
         if self.compute_cadence:
             _dict['computeCadence'] = self.compute_cadence.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of size
+        if self.size:
+            _dict['size'] = self.size.to_dict()
         # override the default output from pydantic by calling `to_dict()` of options
         if self.options:
             _dict['options'] = self.options.to_dict()
@@ -105,6 +110,7 @@ class AudienceSummaryWithAudienceTypeAndLookback(BaseModel):
         _obj = AudienceSummaryWithAudienceTypeAndLookback.parse_obj({
             "audience_type": obj.get("audienceType"),
             "compute_cadence": AudienceComputeCadence.from_dict(obj.get("computeCadence")) if obj.get("computeCadence") is not None else None,
+            "size": AudienceSize.from_dict(obj.get("size")) if obj.get("size") is not None else None,
             "options": AudienceOptionsWithLookback.from_dict(obj.get("options")) if obj.get("options") is not None else None,
             "id": obj.get("id"),
             "space_id": obj.get("spaceId"),
