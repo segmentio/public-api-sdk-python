@@ -200,7 +200,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.AudiencesApi(api_client)
     space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
-    id = 'aud_0ujsszwN8NRY24YaXiTIE2VWDTS' # str | 
+    id = 'aud_171sV3fzJkiY2PnlbpMZJRbrgSW' # str | 
     include = 'include_example' # str | Additional resource to include, support schedules only.  This parameter exists in alpha. (optional)
 
     try:
@@ -352,8 +352,8 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.AudiencesApi(api_client)
     space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
-    id = 'aud_0ujsszwN8NRY24YaXiTIE2VWDTS' # str | 
-    schedule_id = 'sch_0ujsszwN8NRY24YaXiTIE2VWDTS' # str | 
+    id = 'aud_171sV3fzJkiY2PnlbpMZJRbrgSW' # str | 
+    schedule_id = 'sch_171sV3fzJkiY2PnlbpMZJRbrgSW' # str | 
 
     try:
         # Get Audience Schedule from Space And Audience
@@ -513,7 +513,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.AudiencesApi(api_client)
     space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
-    id = 'aud_0ujsszwN8NRY24YaXiTIE2VWDTS' # str | 
+    id = 'aud_171sV3fzJkiY2PnlbpMZJRbrgSW' # str | 
 
     try:
         # List Audience Schedules from Space And Audience
