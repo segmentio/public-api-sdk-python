@@ -46,7 +46,7 @@ class CustomerInsightsApi:
     def create_download(self, create_download_alpha_input : CreateDownloadAlphaInput, **kwargs) -> CreateDownload200Response:  # noqa: E501
         """Create Download  # noqa: E501
 
-        Create Customer Insights Presigned URLsThe rate limit for this endpoint is 30 requests per day per workspaceId, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
+        Create Customer Insights Presigned URLsThe rate limit for this endpoint is 120 requests per day per workspaceId, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -76,7 +76,7 @@ class CustomerInsightsApi:
     def create_download_with_http_info(self, create_download_alpha_input : CreateDownloadAlphaInput, **kwargs) -> ApiResponse:  # noqa: E501
         """Create Download  # noqa: E501
 
-        Create Customer Insights Presigned URLsThe rate limit for this endpoint is 30 requests per day per workspaceId, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
+        Create Customer Insights Presigned URLsThe rate limit for this endpoint is 120 requests per day per workspaceId, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
