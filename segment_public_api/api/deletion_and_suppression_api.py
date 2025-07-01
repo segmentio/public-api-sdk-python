@@ -525,9 +525,9 @@ class DeletionAndSuppressionApi:
 
     @validate_arguments
     def delete_regulation(self, regulate_id : constr(strict=True), **kwargs) -> DeleteRegulation200Response:  # noqa: E501
-        """Delete Regulation  # noqa: E501
+        """(Deprecated) Delete Regulation  # noqa: E501
 
-        Deletes a regulation from the Workspace. The regulation must be in the initialized state to be deleted.    • When called, this endpoint may generate the `Regulation Deleted` event in the [audit trail](/tag/Audit-Trail).         # noqa: E501
+        Deletes a regulation from the Workspace. The regulation must be in the initialized state to be deleted.    • When called, this endpoint may generate the `Regulation Deleted` event in the [audit trail](/tag/Audit-Trail).         **DEPRECATED**: this endpoint has been deprecated according to the guidelines, and may experience reduced SLA guarantees.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -555,9 +555,9 @@ class DeletionAndSuppressionApi:
 
     @validate_arguments
     def delete_regulation_with_http_info(self, regulate_id : constr(strict=True), **kwargs) -> ApiResponse:  # noqa: E501
-        """Delete Regulation  # noqa: E501
+        """(Deprecated) Delete Regulation  # noqa: E501
 
-        Deletes a regulation from the Workspace. The regulation must be in the initialized state to be deleted.    • When called, this endpoint may generate the `Regulation Deleted` event in the [audit trail](/tag/Audit-Trail).         # noqa: E501
+        Deletes a regulation from the Workspace. The regulation must be in the initialized state to be deleted.    • When called, this endpoint may generate the `Regulation Deleted` event in the [audit trail](/tag/Audit-Trail).         **DEPRECATED**: this endpoint has been deprecated according to the guidelines, and may experience reduced SLA guarantees.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -590,6 +590,8 @@ class DeletionAndSuppressionApi:
                  returns the request thread.
         :rtype: tuple(DeleteRegulation200Response, status_code(int), headers(HTTPHeaderDict))
         """
+
+        warnings.warn("DELETE /regulations/{regulateId} is deprecated.", DeprecationWarning)
 
         _params = locals()
 
