@@ -43,8 +43,8 @@ class AudiencePreview(BaseModel):
     @validator('audience_type')
     def audience_type_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in ('ACCOUNTS', 'USERS'):
-            raise ValueError("must be one of enum values ('ACCOUNTS', 'USERS')")
+        if value not in ('ACCOUNTS', 'LINKED', 'USERS'):
+            raise ValueError("must be one of enum values ('ACCOUNTS', 'LINKED', 'USERS')")
         return value
 
     @validator('status')

@@ -92,7 +92,9 @@ from segment_public_api.models.audience_definition_without_type import AudienceD
 from segment_public_api.models.audience_options import AudienceOptions
 from segment_public_api.models.audience_options_with_lookback import AudienceOptionsWithLookback
 from segment_public_api.models.audience_preview import AudiencePreview
+from segment_public_api.models.audience_preview_account_result import AudiencePreviewAccountResult
 from segment_public_api.models.audience_preview_identifier import AudiencePreviewIdentifier
+from segment_public_api.models.audience_preview_profile_result import AudiencePreviewProfileResult
 from segment_public_api.models.audience_preview_result import AudiencePreviewResult
 from segment_public_api.models.audience_schedule import AudienceSchedule
 from segment_public_api.models.audience_size import AudienceSize
@@ -263,6 +265,7 @@ from segment_public_api.models.echo200_response1 import Echo200Response1
 from segment_public_api.models.echo_alpha_output import EchoAlphaOutput
 from segment_public_api.models.echo_v1_output import EchoV1Output
 from segment_public_api.models.edge_functions_alpha import EdgeFunctionsAlpha
+from segment_public_api.models.entity_details import EntityDetails
 from segment_public_api.models.event_source_v1 import EventSourceV1
 from segment_public_api.models.fql_defined_property_v1 import FQLDefinedPropertyV1
 from segment_public_api.models.filter import Filter

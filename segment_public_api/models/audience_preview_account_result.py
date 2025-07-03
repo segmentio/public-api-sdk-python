@@ -19,17 +19,15 @@ import re  # noqa: F401
 import json
 
 
-from typing import List, Union
-from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr, conlist
 
-class SpecificDaysConfig(BaseModel):
+from pydantic import BaseModel, Field, StrictStr
+
+class AudiencePreviewAccountResult(BaseModel):
     """
-    Configures a schedule for specific days and times.  # noqa: E501
+    Result membership object for an audience preview with `audienceType: ACCOUNTS`.  # noqa: E501
     """
-    days: conlist(Union[StrictFloat, StrictInt]) = Field(..., description="Days of week for schedule (0=Sunday, 6=Saturday).")
-    hours: conlist(Union[StrictFloat, StrictInt]) = Field(..., description="Hours of day for schedule (0-23).")
-    timezone: StrictStr = Field(..., description="TZ database time zone identifier; for example, America/New_York.")
-    __properties = ["days", "hours", "timezone"]
+    id: StrictStr = Field(..., description="Account id.")
+    __properties = ["id"]
 
     class Config:
         """Pydantic configuration"""
@@ -45,8 +43,8 @@ class SpecificDaysConfig(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> SpecificDaysConfig:
-        """Create an instance of SpecificDaysConfig from a JSON string"""
+    def from_json(cls, json_str: str) -> AudiencePreviewAccountResult:
+        """Create an instance of AudiencePreviewAccountResult from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -58,18 +56,16 @@ class SpecificDaysConfig(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> SpecificDaysConfig:
-        """Create an instance of SpecificDaysConfig from a dict"""
+    def from_dict(cls, obj: dict) -> AudiencePreviewAccountResult:
+        """Create an instance of AudiencePreviewAccountResult from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return SpecificDaysConfig.parse_obj(obj)
+            return AudiencePreviewAccountResult.parse_obj(obj)
 
-        _obj = SpecificDaysConfig.parse_obj({
-            "days": obj.get("days"),
-            "hours": obj.get("hours"),
-            "timezone": obj.get("timezone")
+        _obj = AudiencePreviewAccountResult.parse_obj({
+            "id": obj.get("id")
         })
         return _obj
 

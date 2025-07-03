@@ -29,15 +29,15 @@ class CreateAudiencePreviewAlphaInput(BaseModel):
     Input to create an audience preview.  # noqa: E501
     """
     definition: AudienceDefinitionWithoutType = Field(...)
-    audience_type: StrictStr = Field(..., alias="audienceType", description="Discriminator denoting the audience's product type.  Possible values: USERS, ACCOUNTS.")
+    audience_type: StrictStr = Field(..., alias="audienceType", description="Discriminator denoting the audience's product type.  Possible values: USERS, ACCOUNTS, LINKED.")
     options: Optional[CreateAudiencePreviewOptions] = None
     __properties = ["definition", "audienceType", "options"]
 
     @validator('audience_type')
     def audience_type_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in ('ACCOUNTS', 'USERS'):
-            raise ValueError("must be one of enum values ('ACCOUNTS', 'USERS')")
+        if value not in ('ACCOUNTS', 'LINKED', 'USERS'):
+            raise ValueError("must be one of enum values ('ACCOUNTS', 'LINKED', 'USERS')")
         return value
 
     class Config:

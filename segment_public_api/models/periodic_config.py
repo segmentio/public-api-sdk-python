@@ -26,7 +26,7 @@ class PeriodicConfig(BaseModel):
     """
     Configures a periodic schedule interval.  # noqa: E501
     """
-    interval: StrictStr = Field(..., description="Go duration format string, only supporting units \"h\" (hours) and \"m\" (minutes).")
+    interval: StrictStr = Field(..., description="Go duration format string, only supporting units \"day\" (days), \"h\" (hours) and \"m\" (minutes).")
     __properties = ["interval"]
 
     class Config:
