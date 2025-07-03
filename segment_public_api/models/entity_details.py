@@ -30,7 +30,7 @@ class EntityDetails(BaseModel):
     id_property: StrictStr = Field(..., alias="idProperty", description="The entity primary key column name.")
     relationship_slug: StrictStr = Field(..., alias="relationshipSlug", description="The entity relationship slug.")
     properties: Optional[Dict[str, Any]] = Field(None, description="Entity properties.")
-    entities: Optional[Dict[str, Any]] = Field(None, description="The related entities one level deeper into an entity branch.")
+    entities: Optional[Dict[str, Any]] = Field(None, description="Related entities that are one level deeper will only be returned if those entities are referenced in the audience definition.")
     __properties = ["id", "idProperty", "relationshipSlug", "properties", "entities"]
 
     class Config:
