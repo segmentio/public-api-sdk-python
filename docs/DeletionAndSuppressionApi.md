@@ -247,7 +247,7 @@ Name | Type | Description  | Notes
 
 Delete Regulation
 
-Deletes a regulation from the Workspace. The regulation must be in the initialized state to be deleted.    • When called, this endpoint may generate the `Regulation Deleted` event in the [audit trail](/tag/Audit-Trail).       
+Deletes a regulation from the Workspace. The regulation must be in the initialized state to be deleted.    • When called, this endpoint may generate the `Regulation Deleted` event in the [audit trail](/tag/Audit-Trail).         **DEPRECATED**: this endpoint has been deprecated according to the guidelines, and may experience reduced SLA guarantees.
 
 ### Example
 
