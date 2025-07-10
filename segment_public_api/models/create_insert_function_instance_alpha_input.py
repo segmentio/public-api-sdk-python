@@ -26,7 +26,7 @@ class CreateInsertFunctionInstanceAlphaInput(BaseModel):
     """
     Creates an insert Function instance.  # noqa: E501
     """
-    function_id: StrictStr = Field(..., alias="functionId", description="Insert Function id to which this instance is associated.")
+    function_id: StrictStr = Field(..., alias="functionId", description="Insert Function id to which this instance is associated.  Note: Remove the ifnd_/ifns_ prefix from the id.")
     integration_id: StrictStr = Field(..., alias="integrationId", description="The Source or Destination id to be connected.")
     enabled: Optional[StrictBool] = Field(None, description="Whether this insert Function instance should be enabled for the Destination.")
     name: StrictStr = Field(..., description="Defines the display name of the insert Function instance.")
