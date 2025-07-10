@@ -32,9 +32,9 @@ from segment_public_api.models.get_audience200_response import GetAudience200Res
 from segment_public_api.models.get_audience_preview200_response import GetAudiencePreview200Response
 from segment_public_api.models.get_audience_schedule_from_space_and_audience200_response import GetAudienceScheduleFromSpaceAndAudience200Response
 from segment_public_api.models.list_audience_consumers_from_space_and_audience200_response import ListAudienceConsumersFromSpaceAndAudience200Response
-from segment_public_api.models.list_audience_consumers_search_input import ListAudienceConsumersSearchInput
 from segment_public_api.models.list_audience_consumers_sort_input import ListAudienceConsumersSortInput
 from segment_public_api.models.list_audience_schedules_from_space_and_audience200_response import ListAudienceSchedulesFromSpaceAndAudience200Response
+from segment_public_api.models.list_audience_search_input import ListAudienceSearchInput
 from segment_public_api.models.list_audiences200_response import ListAudiences200Response
 from segment_public_api.models.list_audiences_pagination_input import ListAudiencesPaginationInput
 from segment_public_api.models.pagination_input import PaginationInput
@@ -848,7 +848,7 @@ class AudiencesApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_audience_consumers_from_space_and_audience(self, space_id : constr(strict=True), id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Information about the pagination of this response.  [See pagination](https://docs.segmentapis.com/tag/Pagination/#section/Pagination-parameters) for more info.  This parameter exists in alpha.")] = None, search : Annotated[Optional[ListAudienceConsumersSearchInput], Field(description="Optional search criteria  This parameter exists in alpha.")] = None, sort : Annotated[Optional[ListAudienceConsumersSortInput], Field(description="Optional sort criteria  This parameter exists in alpha.")] = None, **kwargs) -> ListAudienceConsumersFromSpaceAndAudience200Response:  # noqa: E501
+    def list_audience_consumers_from_space_and_audience(self, space_id : constr(strict=True), id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Information about the pagination of this response.  [See pagination](https://docs.segmentapis.com/tag/Pagination/#section/Pagination-parameters) for more info.  This parameter exists in alpha.")] = None, search : Annotated[Optional[ListAudienceSearchInput], Field(description="Optional search criteria  This parameter exists in alpha.")] = None, sort : Annotated[Optional[ListAudienceConsumersSortInput], Field(description="Optional sort criteria  This parameter exists in alpha.")] = None, **kwargs) -> ListAudienceConsumersFromSpaceAndAudience200Response:  # noqa: E501
         """List Audience Consumers from Space And Audience  # noqa: E501
 
         Returns the list of consumers for the given audience.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.   The rate limit for this endpoint is 25 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
@@ -865,7 +865,7 @@ class AudiencesApi:
         :param pagination: Information about the pagination of this response.  [See pagination](https://docs.segmentapis.com/tag/Pagination/#section/Pagination-parameters) for more info.  This parameter exists in alpha.
         :type pagination: PaginationInput
         :param search: Optional search criteria  This parameter exists in alpha.
-        :type search: ListAudienceConsumersSearchInput
+        :type search: ListAudienceSearchInput
         :param sort: Optional sort criteria  This parameter exists in alpha.
         :type sort: ListAudienceConsumersSortInput
         :param async_req: Whether to execute the request asynchronously.
@@ -886,7 +886,7 @@ class AudiencesApi:
         return self.list_audience_consumers_from_space_and_audience_with_http_info(space_id, id, pagination, search, sort, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_audience_consumers_from_space_and_audience_with_http_info(self, space_id : constr(strict=True), id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Information about the pagination of this response.  [See pagination](https://docs.segmentapis.com/tag/Pagination/#section/Pagination-parameters) for more info.  This parameter exists in alpha.")] = None, search : Annotated[Optional[ListAudienceConsumersSearchInput], Field(description="Optional search criteria  This parameter exists in alpha.")] = None, sort : Annotated[Optional[ListAudienceConsumersSortInput], Field(description="Optional sort criteria  This parameter exists in alpha.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def list_audience_consumers_from_space_and_audience_with_http_info(self, space_id : constr(strict=True), id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Information about the pagination of this response.  [See pagination](https://docs.segmentapis.com/tag/Pagination/#section/Pagination-parameters) for more info.  This parameter exists in alpha.")] = None, search : Annotated[Optional[ListAudienceSearchInput], Field(description="Optional search criteria  This parameter exists in alpha.")] = None, sort : Annotated[Optional[ListAudienceConsumersSortInput], Field(description="Optional sort criteria  This parameter exists in alpha.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Audience Consumers from Space And Audience  # noqa: E501
 
         Returns the list of consumers for the given audience.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.   The rate limit for this endpoint is 25 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
@@ -903,7 +903,7 @@ class AudiencesApi:
         :param pagination: Information about the pagination of this response.  [See pagination](https://docs.segmentapis.com/tag/Pagination/#section/Pagination-parameters) for more info.  This parameter exists in alpha.
         :type pagination: PaginationInput
         :param search: Optional search criteria  This parameter exists in alpha.
-        :type search: ListAudienceConsumersSearchInput
+        :type search: ListAudienceSearchInput
         :param sort: Optional sort criteria  This parameter exists in alpha.
         :type sort: ListAudienceConsumersSortInput
         :param async_req: Whether to execute the request asynchronously.
@@ -1174,18 +1174,20 @@ class AudiencesApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_audiences(self, space_id : constr(strict=True), pagination : Annotated[Optional[ListAudiencesPaginationInput], Field(description="Information about the pagination of this response.  [See pagination](https://docs.segmentapis.com/tag/Pagination/#section/Pagination-parameters) for more info.  This parameter exists in alpha.")] = None, include : Annotated[Optional[StrictStr], Field(description="Additional resource to include, support schedules only.  This parameter exists in alpha.")] = None, **kwargs) -> ListAudiences200Response:  # noqa: E501
+    def list_audiences(self, space_id : constr(strict=True), search : Annotated[Optional[ListAudienceSearchInput], Field(description="Optional search criteria  This parameter exists in alpha.")] = None, pagination : Annotated[Optional[ListAudiencesPaginationInput], Field(description="Information about the pagination of this response.  [See pagination](https://docs.segmentapis.com/tag/Pagination/#section/Pagination-parameters) for more info.  This parameter exists in alpha.")] = None, include : Annotated[Optional[StrictStr], Field(description="Additional resource to include, support schedules only.  This parameter exists in alpha.")] = None, **kwargs) -> ListAudiences200Response:  # noqa: E501
         """List Audiences  # noqa: E501
 
         Returns Audiences by spaceId. Supports including audience schedules via `?include=schedules`.  • This endpoint is in **Beta** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.   The rate limit for this endpoint is 25 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.list_audiences(space_id, pagination, include, async_req=True)
+        >>> thread = api.list_audiences(space_id, search, pagination, include, async_req=True)
         >>> result = thread.get()
 
         :param space_id: (required)
         :type space_id: str
+        :param search: Optional search criteria  This parameter exists in alpha.
+        :type search: ListAudienceSearchInput
         :param pagination: Information about the pagination of this response.  [See pagination](https://docs.segmentapis.com/tag/Pagination/#section/Pagination-parameters) for more info.  This parameter exists in alpha.
         :type pagination: ListAudiencesPaginationInput
         :param include: Additional resource to include, support schedules only.  This parameter exists in alpha.
@@ -1205,21 +1207,23 @@ class AudiencesApi:
         if '_preload_content' in kwargs:
             message = "Error! Please call the list_audiences_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.list_audiences_with_http_info(space_id, pagination, include, **kwargs)  # noqa: E501
+        return self.list_audiences_with_http_info(space_id, search, pagination, include, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_audiences_with_http_info(self, space_id : constr(strict=True), pagination : Annotated[Optional[ListAudiencesPaginationInput], Field(description="Information about the pagination of this response.  [See pagination](https://docs.segmentapis.com/tag/Pagination/#section/Pagination-parameters) for more info.  This parameter exists in alpha.")] = None, include : Annotated[Optional[StrictStr], Field(description="Additional resource to include, support schedules only.  This parameter exists in alpha.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def list_audiences_with_http_info(self, space_id : constr(strict=True), search : Annotated[Optional[ListAudienceSearchInput], Field(description="Optional search criteria  This parameter exists in alpha.")] = None, pagination : Annotated[Optional[ListAudiencesPaginationInput], Field(description="Information about the pagination of this response.  [See pagination](https://docs.segmentapis.com/tag/Pagination/#section/Pagination-parameters) for more info.  This parameter exists in alpha.")] = None, include : Annotated[Optional[StrictStr], Field(description="Additional resource to include, support schedules only.  This parameter exists in alpha.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Audiences  # noqa: E501
 
         Returns Audiences by spaceId. Supports including audience schedules via `?include=schedules`.  • This endpoint is in **Beta** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.   The rate limit for this endpoint is 25 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.list_audiences_with_http_info(space_id, pagination, include, async_req=True)
+        >>> thread = api.list_audiences_with_http_info(space_id, search, pagination, include, async_req=True)
         >>> result = thread.get()
 
         :param space_id: (required)
         :type space_id: str
+        :param search: Optional search criteria  This parameter exists in alpha.
+        :type search: ListAudienceSearchInput
         :param pagination: Information about the pagination of this response.  [See pagination](https://docs.segmentapis.com/tag/Pagination/#section/Pagination-parameters) for more info.  This parameter exists in alpha.
         :type pagination: ListAudiencesPaginationInput
         :param include: Additional resource to include, support schedules only.  This parameter exists in alpha.
@@ -1253,6 +1257,7 @@ class AudiencesApi:
 
         _all_params = [
             'space_id',
+            'search',
             'pagination',
             'include'
         ]
@@ -1288,6 +1293,9 @@ class AudiencesApi:
 
         # process the query parameters
         _query_params = []
+        if _params.get('search') is not None:  # noqa: E501
+            _query_params.append(('search', _params['search']))
+
         if _params.get('pagination') is not None:  # noqa: E501
             _query_params.append(('pagination', _params['pagination']))
 

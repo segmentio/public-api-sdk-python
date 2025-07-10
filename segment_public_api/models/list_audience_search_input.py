@@ -22,7 +22,7 @@ import json
 
 from pydantic import BaseModel, Field, StrictStr, validator
 
-class ListAudienceConsumersSearchInput(BaseModel):
+class ListAudienceSearchInput(BaseModel):
     """
     Search criteria input for list audience consumers.  # noqa: E501
     """
@@ -33,8 +33,8 @@ class ListAudienceConsumersSearchInput(BaseModel):
     @validator('type')
     def type_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in ('DEFINITION', 'NAME'):
-            raise ValueError("must be one of enum values ('DEFINITION', 'NAME')")
+        if value not in ('DEFINITION', 'KEY', 'NAME'):
+            raise ValueError("must be one of enum values ('DEFINITION', 'KEY', 'NAME')")
         return value
 
     class Config:
@@ -51,8 +51,8 @@ class ListAudienceConsumersSearchInput(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> ListAudienceConsumersSearchInput:
-        """Create an instance of ListAudienceConsumersSearchInput from a JSON string"""
+    def from_json(cls, json_str: str) -> ListAudienceSearchInput:
+        """Create an instance of ListAudienceSearchInput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -64,15 +64,15 @@ class ListAudienceConsumersSearchInput(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> ListAudienceConsumersSearchInput:
-        """Create an instance of ListAudienceConsumersSearchInput from a dict"""
+    def from_dict(cls, obj: dict) -> ListAudienceSearchInput:
+        """Create an instance of ListAudienceSearchInput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return ListAudienceConsumersSearchInput.parse_obj(obj)
+            return ListAudienceSearchInput.parse_obj(obj)
 
-        _obj = ListAudienceConsumersSearchInput.parse_obj({
+        _obj = ListAudienceSearchInput.parse_obj({
             "type": obj.get("type"),
             "query": obj.get("query")
         })
