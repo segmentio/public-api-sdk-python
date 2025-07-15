@@ -2,6 +2,7 @@
 
 # import apis into api package
 from segment_public_api.api.api_calls_api import APICallsApi
+from segment_public_api.api.activations_api import ActivationsApi
 from segment_public_api.api.audiences_api import AudiencesApi
 from segment_public_api.api.audit_trail_api import AuditTrailApi
 from segment_public_api.api.catalog_api import CatalogApi
