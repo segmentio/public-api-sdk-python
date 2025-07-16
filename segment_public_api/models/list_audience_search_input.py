@@ -27,7 +27,7 @@ class ListAudienceSearchInput(BaseModel):
     Search criteria input for list audience consumers.  # noqa: E501
     """
     type: StrictStr = Field(..., description="Field to filter by.")
-    query: StrictStr = Field(..., description="Text to match the field value.")
+    query: StrictStr = Field(..., description="Text to match against the selected field (max 255 characters).")
     __properties = ["type", "query"]
 
     @validator('type')
