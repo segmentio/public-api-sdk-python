@@ -542,7 +542,7 @@ class AudiencesApi:
     def get_audience_echo(self, space_id : constr(strict=True), message : Annotated[Optional[StrictStr], Field(description="Optional message to echo back.  This parameter exists in alpha.")] = None, **kwargs) -> GetAudienceEcho200Response:  # noqa: E501
         """Get Audience Echo  # noqa: E501
 
-        Get Audience Echo test endpoint for rate limiting per spaceId. Returns an echo response from the control plane service.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.  This endpoint has a rate limit of 5 requests per day per spaceId for testing purposes.  # noqa: E501
+        Get Audience Echo test endpoint for rate limiting per spaceId. Returns an echo response from the control plane service.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.  This endpoint has a rate limit of 5 requests per day per spaceId for testing rate limiting functionality.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -574,7 +574,7 @@ class AudiencesApi:
     def get_audience_echo_with_http_info(self, space_id : constr(strict=True), message : Annotated[Optional[StrictStr], Field(description="Optional message to echo back.  This parameter exists in alpha.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Get Audience Echo  # noqa: E501
 
-        Get Audience Echo test endpoint for rate limiting per spaceId. Returns an echo response from the control plane service.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.  This endpoint has a rate limit of 5 requests per day per spaceId for testing purposes.  # noqa: E501
+        Get Audience Echo test endpoint for rate limiting per spaceId. Returns an echo response from the control plane service.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.  This endpoint has a rate limit of 5 requests per day per spaceId for testing rate limiting functionality.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
