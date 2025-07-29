@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 
-
+from typing import Optional
 from pydantic import BaseModel, Field, StrictStr
 
 class AudienceDefinitionWithoutType(BaseModel):
@@ -27,7 +27,8 @@ class AudienceDefinitionWithoutType(BaseModel):
     AudienceDefinitionWithoutType
     """
     query: StrictStr = Field(..., description="The query language string defining the audience segmentation criteria.  For guidance on using the query language, see the [Segment documentation site](https://segment.com/docs/api/public-api/query-language).")
-    __properties = ["query"]
+    target_entity: Optional[StrictStr] = Field(None, alias="targetEntity", description="The target entity slug.")
+    __properties = ["query", "targetEntity"]
 
     class Config:
         """Pydantic configuration"""
@@ -65,7 +66,8 @@ class AudienceDefinitionWithoutType(BaseModel):
             return AudienceDefinitionWithoutType.parse_obj(obj)
 
         _obj = AudienceDefinitionWithoutType.parse_obj({
-            "query": obj.get("query")
+            "query": obj.get("query"),
+            "target_entity": obj.get("targetEntity")
         })
         return _obj
 

@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 
-
+from typing import Optional
 from pydantic import BaseModel, Field, StrictStr, validator
 
 class AudienceDefinition(BaseModel):
@@ -28,7 +28,8 @@ class AudienceDefinition(BaseModel):
     """
     type: StrictStr = Field(..., description="The underlying data type being segmented for this audience.  Possible values: users, accounts.")
     query: StrictStr = Field(..., description="The query language string defining the audience segmentation criteria.  For guidance on using the query language, see the [Segment documentation site](https://segment.com/docs/api/public-api/query-language).")
-    __properties = ["type", "query"]
+    target_entity: Optional[StrictStr] = Field(None, alias="targetEntity", description="The target entity slug.")
+    __properties = ["type", "query", "targetEntity"]
 
     @validator('type')
     def type_validate_enum(cls, value):
@@ -74,7 +75,8 @@ class AudienceDefinition(BaseModel):
 
         _obj = AudienceDefinition.parse_obj({
             "type": obj.get("type"),
-            "query": obj.get("query")
+            "query": obj.get("query"),
+            "target_entity": obj.get("targetEntity")
         })
         return _obj
 
