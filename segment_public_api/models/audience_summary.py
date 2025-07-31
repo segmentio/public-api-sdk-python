@@ -20,7 +20,7 @@ import json
 
 
 from typing import Optional
-from pydantic import BaseModel, Field, StrictBool, StrictStr
+from pydantic import BaseModel, Field, StrictBool, StrictStr, validator
 from segment_public_api.models.audience_definition import AudienceDefinition
 from segment_public_api.models.audience_options import AudienceOptions
 
@@ -40,8 +40,16 @@ class AudienceSummary(BaseModel):
     updated_by: StrictStr = Field(..., alias="updatedBy", description="User id who last updated the audience.")
     created_at: StrictStr = Field(..., alias="createdAt", description="Date the audience was created.")
     updated_at: StrictStr = Field(..., alias="updatedAt", description="Date the audience was last updated.")
+    audience_type: StrictStr = Field(..., alias="audienceType", description="Discriminator denoting the audience's product type.")
     options: Optional[AudienceOptions] = None
-    __properties = ["id", "spaceId", "name", "description", "key", "enabled", "definition", "status", "createdBy", "updatedBy", "createdAt", "updatedAt", "options"]
+    __properties = ["id", "spaceId", "name", "description", "key", "enabled", "definition", "status", "createdBy", "updatedBy", "createdAt", "updatedAt", "audienceType", "options"]
+
+    @validator('audience_type')
+    def audience_type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in ('ACCOUNTS', 'LINKED', 'USERS'):
+            raise ValueError("must be one of enum values ('ACCOUNTS', 'LINKED', 'USERS')")
+        return value
 
     class Config:
         """Pydantic configuration"""
@@ -102,6 +110,7 @@ class AudienceSummary(BaseModel):
             "updated_by": obj.get("updatedBy"),
             "created_at": obj.get("createdAt"),
             "updated_at": obj.get("updatedAt"),
+            "audience_type": obj.get("audienceType"),
             "options": AudienceOptions.from_dict(obj.get("options")) if obj.get("options") is not None else None
         })
         return _obj

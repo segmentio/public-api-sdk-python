@@ -27,10 +27,10 @@ class AudienceOptionsWithLookback(BaseModel):
     AudienceOptionsWithLookback
     """
     filter_by_external_ids: conlist(StrictStr) = Field(..., alias="filterByExternalIds", description="The set of profile external identifiers being used to determine audience membership. Profiles will only be considered for audience membership if the profile has at least one external id whose key matches a value in this set.")
-    backfill_event_data_days: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="backfillEventDataDays", description="If specified, the value of this field indicates the number of days, specified from the date the audience was created, that event data will be included from when determining audience membership. If unspecified, defer to the value of `includeHistoricalData` to determine whether historical data is either entirely included or entirely excluded when determining audience membership.")
     include_historical_data: Optional[StrictBool] = Field(None, alias="includeHistoricalData", description="Determines whether data prior to the audience being created is included when determining audience membership. Note that including historical data may be needed in order to properly handle the definition specified. In these cases, Segment will automatically handle including historical data and the response will return the includeHistoricalData parameter as true.")
     include_anonymous_users: Optional[StrictBool] = Field(None, alias="includeAnonymousUsers", description="Determines whether anonymous users should be included when determining audience membership.")
-    __properties = ["filterByExternalIds", "backfillEventDataDays", "includeHistoricalData", "includeAnonymousUsers"]
+    backfill_event_data_days: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="backfillEventDataDays", description="If specified, the value of this field indicates the number of days, specified from the date the audience was created, that event data will be included from when determining audience membership. If unspecified, defer to the value of `includeHistoricalData` to determine whether historical data is either entirely included or entirely excluded when determining audience membership.")
+    __properties = ["filterByExternalIds", "includeHistoricalData", "includeAnonymousUsers", "backfillEventDataDays"]
 
     class Config:
         """Pydantic configuration"""
@@ -69,9 +69,9 @@ class AudienceOptionsWithLookback(BaseModel):
 
         _obj = AudienceOptionsWithLookback.parse_obj({
             "filter_by_external_ids": obj.get("filterByExternalIds"),
-            "backfill_event_data_days": obj.get("backfillEventDataDays"),
             "include_historical_data": obj.get("includeHistoricalData"),
-            "include_anonymous_users": obj.get("includeAnonymousUsers")
+            "include_anonymous_users": obj.get("includeAnonymousUsers"),
+            "backfill_event_data_days": obj.get("backfillEventDataDays")
         })
         return _obj
 

@@ -19,8 +19,8 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
-from pydantic import BaseModel, Field, StrictBool
+from typing import List, Optional, Union
+from pydantic import BaseModel, Field, StrictBool, StrictFloat, StrictInt, StrictStr, conlist
 
 class AudienceOptions(BaseModel):
     """
@@ -28,7 +28,9 @@ class AudienceOptions(BaseModel):
     """
     include_historical_data: Optional[StrictBool] = Field(None, alias="includeHistoricalData", description="Determines whether data prior to the audience being created is included when determining audience membership. Note that including historical data may be needed in order to properly handle the definition specified. In these cases, Segment will automatically handle including historical data and the response will return the includeHistoricalData parameter as true.")
     include_anonymous_users: Optional[StrictBool] = Field(None, alias="includeAnonymousUsers", description="Determines whether anonymous users should be included when determining audience membership.")
-    __properties = ["includeHistoricalData", "includeAnonymousUsers"]
+    filter_by_external_ids: Optional[conlist(StrictStr)] = Field(None, alias="filterByExternalIds", description="The set of profile external identifiers being used to determine audience membership. Profiles will only be considered for audience membership if the profile has at least one external id whose key matches a value in this set.")
+    backfill_event_data_days: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="backfillEventDataDays", description="If specified, the value of this field indicates the number of days, specified from the date the audience was created, that event data will be included from when determining audience membership. If unspecified, defer to the value of `includeHistoricalData` to determine whether historical data is either entirely included or entirely excluded when determining audience membership.")
+    __properties = ["includeHistoricalData", "includeAnonymousUsers", "filterByExternalIds", "backfillEventDataDays"]
 
     class Config:
         """Pydantic configuration"""
@@ -67,7 +69,9 @@ class AudienceOptions(BaseModel):
 
         _obj = AudienceOptions.parse_obj({
             "include_historical_data": obj.get("includeHistoricalData"),
-            "include_anonymous_users": obj.get("includeAnonymousUsers")
+            "include_anonymous_users": obj.get("includeAnonymousUsers"),
+            "filter_by_external_ids": obj.get("filterByExternalIds"),
+            "backfill_event_data_days": obj.get("backfillEventDataDays")
         })
         return _obj
 
