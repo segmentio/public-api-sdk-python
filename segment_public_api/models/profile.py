@@ -19,24 +19,15 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
-from pydantic import BaseModel, Field, StrictStr, validator
 
-class AudienceDefinition(BaseModel):
-    """
-    AudienceDefinition
-    """
-    type: StrictStr = Field(..., description="The underlying data type being segmented for this audience.  Possible values: users, accounts.")
-    query: StrictStr = Field(..., description="The query language string defining the audience segmentation criteria.  For guidance on using the query language, see the [Segment documentation site](https://segment.com/docs/api/public-api/query-language).")
-    target_entity: Optional[StrictStr] = Field(None, alias="targetEntity", description="The target entity slug.")
-    __properties = ["type", "query", "targetEntity"]
+from pydantic import BaseModel, Field, StrictStr
 
-    @validator('type')
-    def type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in ('ACCOUNTS', 'USERS'):
-            raise ValueError("must be one of enum values ('ACCOUNTS', 'USERS')")
-        return value
+class Profile(BaseModel):
+    """
+    Profile
+    """
+    id: StrictStr = Field(..., description="The id of the profile.")
+    __properties = ["id"]
 
     class Config:
         """Pydantic configuration"""
@@ -52,8 +43,8 @@ class AudienceDefinition(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> AudienceDefinition:
-        """Create an instance of AudienceDefinition from a JSON string"""
+    def from_json(cls, json_str: str) -> Profile:
+        """Create an instance of Profile from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -65,18 +56,16 @@ class AudienceDefinition(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> AudienceDefinition:
-        """Create an instance of AudienceDefinition from a dict"""
+    def from_dict(cls, obj: dict) -> Profile:
+        """Create an instance of Profile from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return AudienceDefinition.parse_obj(obj)
+            return Profile.parse_obj(obj)
 
-        _obj = AudienceDefinition.parse_obj({
-            "type": obj.get("type"),
-            "query": obj.get("query"),
-            "target_entity": obj.get("targetEntity")
+        _obj = Profile.parse_obj({
+            "id": obj.get("id")
         })
         return _obj
 

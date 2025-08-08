@@ -19,22 +19,23 @@ import re  # noqa: F401
 import json
 
 
-from typing import Union
+from typing import Optional, Union
 from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr, validator
 
 class AudienceSize(BaseModel):
     """
     AudienceSize
     """
-    count: Union[StrictFloat, StrictInt] = Field(..., description="The total audience membership count. Refer to the type field to determine the unit for this field (profiles, accounts, etc).")
+    count: Optional[Union[StrictFloat, StrictInt]] = Field(None, description="The total audience membership count. Refer to the type field to determine the unit for this field (profiles, accounts, etc).")
     type: StrictStr = Field(..., description="The unit type for the count(s) being returned.")
-    __properties = ["count", "type"]
+    unique_count: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="uniqueCount", description="The unique audience membership count.")
+    __properties = ["count", "type", "uniqueCount"]
 
     @validator('type')
     def type_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in ('ACCOUNTS', 'USERS'):
-            raise ValueError("must be one of enum values ('ACCOUNTS', 'USERS')")
+        if value not in ('ACCOUNTS', 'ENTITIES', 'USERS'):
+            raise ValueError("must be one of enum values ('ACCOUNTS', 'ENTITIES', 'USERS')")
         return value
 
     class Config:
@@ -74,7 +75,8 @@ class AudienceSize(BaseModel):
 
         _obj = AudienceSize.parse_obj({
             "count": obj.get("count"),
-            "type": obj.get("type")
+            "type": obj.get("type"),
+            "unique_count": obj.get("uniqueCount")
         })
         return _obj
 

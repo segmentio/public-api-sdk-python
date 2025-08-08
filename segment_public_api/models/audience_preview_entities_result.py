@@ -19,24 +19,16 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
-from pydantic import BaseModel, Field, StrictStr, validator
+from typing import Dict, List, Optional
+from pydantic import BaseModel, conlist
+from segment_public_api.models.entity_profile_details import EntityProfileDetails
 
-class AudienceDefinition(BaseModel):
+class AudiencePreviewEntitiesResult(BaseModel):
     """
-    AudienceDefinition
+    Result membership object for an audience preview with `audienceType: USERS` or `audienceType: LINKED`.  # noqa: E501
     """
-    type: StrictStr = Field(..., description="The underlying data type being segmented for this audience.  Possible values: users, accounts.")
-    query: StrictStr = Field(..., description="The query language string defining the audience segmentation criteria.  For guidance on using the query language, see the [Segment documentation site](https://segment.com/docs/api/public-api/query-language).")
-    target_entity: Optional[StrictStr] = Field(None, alias="targetEntity", description="The target entity slug.")
-    __properties = ["type", "query", "targetEntity"]
-
-    @validator('type')
-    def type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in ('ACCOUNTS', 'USERS'):
-            raise ValueError("must be one of enum values ('ACCOUNTS', 'USERS')")
-        return value
+    entities: Optional[Dict[str, conlist(EntityProfileDetails)]] = None
+    __properties = ["entities"]
 
     class Config:
         """Pydantic configuration"""
@@ -52,8 +44,8 @@ class AudienceDefinition(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> AudienceDefinition:
-        """Create an instance of AudienceDefinition from a JSON string"""
+    def from_json(cls, json_str: str) -> AudiencePreviewEntitiesResult:
+        """Create an instance of AudiencePreviewEntitiesResult from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -62,21 +54,35 @@ class AudienceDefinition(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # override the default output from pydantic by calling `to_dict()` of each value in entities (dict of array)
+        _field_dict_of_array = {}
+        if self.entities:
+            for _key in self.entities:
+                if self.entities[_key]:
+                    _field_dict_of_array[_key] = [
+                        _item.to_dict() for _item in self.entities[_key]
+                    ]
+            _dict['entities'] = _field_dict_of_array
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> AudienceDefinition:
-        """Create an instance of AudienceDefinition from a dict"""
+    def from_dict(cls, obj: dict) -> AudiencePreviewEntitiesResult:
+        """Create an instance of AudiencePreviewEntitiesResult from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return AudienceDefinition.parse_obj(obj)
+            return AudiencePreviewEntitiesResult.parse_obj(obj)
 
-        _obj = AudienceDefinition.parse_obj({
-            "type": obj.get("type"),
-            "query": obj.get("query"),
-            "target_entity": obj.get("targetEntity")
+        _obj = AudiencePreviewEntitiesResult.parse_obj({
+            "entities": dict(
+                (_k,
+                        [EntityProfileDetails.from_dict(_item) for _item in _v]
+                        if _v is not None
+                        else None
+                )
+                for _k, _v in obj.get("entities").items()
+            )
         })
         return _obj
 
