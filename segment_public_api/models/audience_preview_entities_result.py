@@ -19,16 +19,22 @@ import re  # noqa: F401
 import json
 
 
-from typing import Dict, List, Optional
-from pydantic import BaseModel, conlist
-from segment_public_api.models.entity_profile_details import EntityProfileDetails
+from typing import Any, Dict, List, Optional
+from pydantic import BaseModel, Field, StrictBool, StrictStr, conlist
+from segment_public_api.models.profile import Profile
 
 class AudiencePreviewEntitiesResult(BaseModel):
     """
     Result membership object for an audience preview with `audienceType: USERS` or `audienceType: LINKED`.  # noqa: E501
     """
-    entities: Optional[Dict[str, conlist(EntityProfileDetails)]] = None
-    __properties = ["entities"]
+    id: StrictStr = Field(..., description="The entities associated with the profile. Will only have a value if the audience preview has `audienceType: LINKED` and entities are referenced in the audience preview's definition.")
+    id_property: StrictStr = Field(..., alias="idProperty", description="The entity primary key column name.")
+    relationship_slug: StrictStr = Field(..., alias="relationshipSlug", description="The entity relationship slug.")
+    properties: Optional[Dict[str, Any]] = Field(None, description="Entity properties.")
+    entities: Optional[Dict[str, Any]] = Field(None, description="Related entities that are one level deeper will only be returned if those entities are referenced in the audience definition.")
+    profiles: Optional[conlist(Profile)] = Field(None, description="List of profiles.")
+    profiles_truncated: StrictBool = Field(..., alias="profilesTruncated", description="Indicates if only a subset of the profiles associated with the entity were returned.")
+    __properties = ["id", "idProperty", "relationshipSlug", "properties", "entities", "profiles", "profilesTruncated"]
 
     class Config:
         """Pydantic configuration"""
@@ -54,15 +60,13 @@ class AudiencePreviewEntitiesResult(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of each value in entities (dict of array)
-        _field_dict_of_array = {}
-        if self.entities:
-            for _key in self.entities:
-                if self.entities[_key]:
-                    _field_dict_of_array[_key] = [
-                        _item.to_dict() for _item in self.entities[_key]
-                    ]
-            _dict['entities'] = _field_dict_of_array
+        # override the default output from pydantic by calling `to_dict()` of each item in profiles (list)
+        _items = []
+        if self.profiles:
+            for _item in self.profiles:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['profiles'] = _items
         return _dict
 
     @classmethod
@@ -75,14 +79,13 @@ class AudiencePreviewEntitiesResult(BaseModel):
             return AudiencePreviewEntitiesResult.parse_obj(obj)
 
         _obj = AudiencePreviewEntitiesResult.parse_obj({
-            "entities": dict(
-                (_k,
-                        [EntityProfileDetails.from_dict(_item) for _item in _v]
-                        if _v is not None
-                        else None
-                )
-                for _k, _v in obj.get("entities").items()
-            )
+            "id": obj.get("id"),
+            "id_property": obj.get("idProperty"),
+            "relationship_slug": obj.get("relationshipSlug"),
+            "properties": obj.get("properties"),
+            "entities": obj.get("entities"),
+            "profiles": [Profile.from_dict(_item) for _item in obj.get("profiles")] if obj.get("profiles") is not None else None,
+            "profiles_truncated": obj.get("profilesTruncated")
         })
         return _obj
 

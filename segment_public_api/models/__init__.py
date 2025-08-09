@@ -231,7 +231,6 @@ from segment_public_api.models.echo_alpha_output import EchoAlphaOutput
 from segment_public_api.models.echo_v1_output import EchoV1Output
 from segment_public_api.models.edge_functions_alpha import EdgeFunctionsAlpha
 from segment_public_api.models.entity_details import EntityDetails
-from segment_public_api.models.entity_profile_details import EntityProfileDetails
 from segment_public_api.models.event_source_v1 import EventSourceV1
 from segment_public_api.models.fql_defined_property_v1 import FQLDefinedPropertyV1
 from segment_public_api.models.filter import Filter
