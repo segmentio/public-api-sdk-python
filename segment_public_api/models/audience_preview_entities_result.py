@@ -32,7 +32,7 @@ class AudiencePreviewEntitiesResult(BaseModel):
     relationship_slug: StrictStr = Field(..., alias="relationshipSlug", description="The entity relationship slug.")
     properties: Optional[Dict[str, Any]] = Field(None, description="Entity properties.")
     entities: Optional[Dict[str, Any]] = Field(None, description="Related entities that are one level deeper will only be returned if those entities are referenced in the audience definition.")
-    profiles: Optional[conlist(Profile)] = Field(None, description="List of profiles.")
+    profiles: Optional[conlist(Profile)] = Field(None, description="Related list of profiles.")
     profiles_truncated: StrictBool = Field(..., alias="profilesTruncated", description="Indicates if only a subset of the profiles associated with the entity were returned.")
     __properties = ["id", "idProperty", "relationshipSlug", "properties", "entities", "profiles", "profilesTruncated"]
 
