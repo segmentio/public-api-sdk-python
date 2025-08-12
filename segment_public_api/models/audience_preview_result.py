@@ -22,11 +22,12 @@ import re  # noqa: F401
 from typing import Optional
 from pydantic import BaseModel, Field, StrictStr, ValidationError, validator
 from segment_public_api.models.audience_preview_account_result import AudiencePreviewAccountResult
+from segment_public_api.models.audience_preview_entities_result import AudiencePreviewEntitiesResult
 from segment_public_api.models.audience_preview_profile_result import AudiencePreviewProfileResult
 from typing import Union, Any, List, TYPE_CHECKING
 from pydantic import StrictStr, Field
 
-AUDIENCEPREVIEWRESULT_ANY_OF_SCHEMAS = ["AudiencePreviewAccountResult", "AudiencePreviewProfileResult"]
+AUDIENCEPREVIEWRESULT_ANY_OF_SCHEMAS = ["AudiencePreviewAccountResult", "AudiencePreviewEntitiesResult", "AudiencePreviewProfileResult"]
 
 class AudiencePreviewResult(BaseModel):
     """
@@ -37,8 +38,10 @@ class AudiencePreviewResult(BaseModel):
     anyof_schema_1_validator: Optional[AudiencePreviewAccountResult] = None
     # data type: AudiencePreviewProfileResult
     anyof_schema_2_validator: Optional[AudiencePreviewProfileResult] = None
+    # data type: AudiencePreviewEntitiesResult
+    anyof_schema_3_validator: Optional[AudiencePreviewEntitiesResult] = None
     if TYPE_CHECKING:
-        actual_instance: Union[AudiencePreviewAccountResult, AudiencePreviewProfileResult]
+        actual_instance: Union[AudiencePreviewAccountResult, AudiencePreviewEntitiesResult, AudiencePreviewProfileResult]
     else:
         actual_instance: Any
     any_of_schemas: List[str] = Field(AUDIENCEPREVIEWRESULT_ANY_OF_SCHEMAS, const=True)
@@ -72,9 +75,15 @@ class AudiencePreviewResult(BaseModel):
         else:
             return v
 
+        # validate data type: AudiencePreviewEntitiesResult
+        if not isinstance(v, AudiencePreviewEntitiesResult):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `AudiencePreviewEntitiesResult`")
+        else:
+            return v
+
         if error_messages:
             # no match
-            raise ValueError("No match found when setting the actual_instance in AudiencePreviewResult with anyOf schemas: AudiencePreviewAccountResult, AudiencePreviewProfileResult. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when setting the actual_instance in AudiencePreviewResult with anyOf schemas: AudiencePreviewAccountResult, AudiencePreviewEntitiesResult, AudiencePreviewProfileResult. Details: " + ", ".join(error_messages))
         else:
             return v
 
@@ -99,10 +108,16 @@ class AudiencePreviewResult(BaseModel):
             return instance
         except (ValidationError, ValueError) as e:
              error_messages.append(str(e))
+        # anyof_schema_3_validator: Optional[AudiencePreviewEntitiesResult] = None
+        try:
+            instance.actual_instance = AudiencePreviewEntitiesResult.from_json(json_str)
+            return instance
+        except (ValidationError, ValueError) as e:
+             error_messages.append(str(e))
 
         if error_messages:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into AudiencePreviewResult with anyOf schemas: AudiencePreviewAccountResult, AudiencePreviewProfileResult. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when deserializing the JSON string into AudiencePreviewResult with anyOf schemas: AudiencePreviewAccountResult, AudiencePreviewEntitiesResult, AudiencePreviewProfileResult. Details: " + ", ".join(error_messages))
         else:
             return instance
 
