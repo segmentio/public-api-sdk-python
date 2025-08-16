@@ -33,10 +33,9 @@ class AddActivationToAudienceAlphaInput(BaseModel):
     perform_first_sync: StrictBool = Field(..., alias="performFirstSync", description="Whether to skip the first sync so the activation events are not generated on the first audience sync.")
     activation_type: StrictStr = Field(..., alias="activationType", description="Type of activation trigger.")
     activation_name: StrictStr = Field(..., alias="activationName", description="Name of the activation.")
-    segment_event: StrictStr = Field(..., alias="segmentEvent", description="Segment event type to emit.")
-    personalization: Optional[PersonalizationInput] = None
+    personalization: PersonalizationInput = Field(...)
     destination_mapping: DestinationSubscriptionConfiguration = Field(..., alias="destinationMapping")
-    __properties = ["destinationId", "enabled", "performFirstSync", "activationType", "activationName", "segmentEvent", "personalization", "destinationMapping"]
+    __properties = ["destinationId", "enabled", "performFirstSync", "activationType", "activationName", "personalization", "destinationMapping"]
 
     class Config:
         """Pydantic configuration"""
@@ -85,7 +84,6 @@ class AddActivationToAudienceAlphaInput(BaseModel):
             "perform_first_sync": obj.get("performFirstSync"),
             "activation_type": obj.get("activationType"),
             "activation_name": obj.get("activationName"),
-            "segment_event": obj.get("segmentEvent"),
             "personalization": PersonalizationInput.from_dict(obj.get("personalization")) if obj.get("personalization") is not None else None,
             "destination_mapping": DestinationSubscriptionConfiguration.from_dict(obj.get("destinationMapping")) if obj.get("destinationMapping") is not None else None
         })
