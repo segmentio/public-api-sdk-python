@@ -4,8 +4,8 @@ All URIs are relative to *https://api.segmentapis.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**add_activation_to_audience**](ActivationsApi.md#add_activation_to_audience) | **POST** /spaces/{spaceId}/audiences/{audienceId}/{connectionId}/activations | Add Activation to Audience
-[**add_destination_to_audience**](ActivationsApi.md#add_destination_to_audience) | **POST** /spaces/{spaceId}/audiences/{audienceId}/destinations | Add Destination to Audience
+[**add_activation_to_audience**](ActivationsApi.md#add_activation_to_audience) | **POST** /spaces/{spaceId}/audiences/{audienceId}/destination-connections/{connectionId}/activations | Add Activation to Audience
+[**add_destination_to_audience**](ActivationsApi.md#add_destination_to_audience) | **POST** /spaces/{spaceId}/audiences/{audienceId}/destination-connections | Add Destination to Audience
 [**get_activation_from_audience**](ActivationsApi.md#get_activation_from_audience) | **GET** /spaces/{spaceId}/audiences/{audienceId}/activations/{id} | Get Activation from Audience
 [**list_activations_from_audience**](ActivationsApi.md#list_activations_from_audience) | **GET** /spaces/{spaceId}/audiences/{audienceId}/activations | List Activations from Audience
 [**remove_activation_from_audience**](ActivationsApi.md#remove_activation_from_audience) | **DELETE** /spaces/{spaceId}/audiences/{audienceId}/activations/{id} | Remove Activation from Audience
@@ -47,7 +47,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     space_id = 'spa_9aQ1Lj62S4bomZKLF4DPqW' # str | 
     audience_id = 'aud_0ujsszwN8NRY24YaXiTIE2VWDTS' # str | 
     connection_id = 'ii_123456789' # str | 
-    add_activation_to_audience_alpha_input = {"versionSchema":"v1","workspaceId":"LF4DPqW","destinationId":"684758860892086596310ac","enabled":true,"hasEnabledResync":false,"emitEntityContext":"on_profile_change","eventEmitter":{"name":"Test Event Emitter","description":"Test event emitter for activation"},"subscription":{"name":"Test Subscription","trigger":"audienceEntered"}} # AddActivationToAudienceAlphaInput | 
+    add_activation_to_audience_alpha_input = {"destinationId":"684758860892086596310ac","activationType":"Audience Entered","activationName":"Test Activation","enabled":true,"performFirstSync":true,"personalization":{"profile":{"properties":["mountain_bikers_2023","game_boy_color_owners"]},"entities":[{"properties":["ID","LAST_ACTIVITY_TIME","BALANCE"],"relationshipSlug":"owned-accounts-copy"}]},"destinationMapping":{"actionId":"action_123","settings":{"webhookUrl":"https://example.com/webhook","method":"POST"}}} # AddActivationToAudienceAlphaInput | 
 
     try:
         # Add Activation to Audience
@@ -126,7 +126,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     api_instance = segment_public_api.ActivationsApi(api_client)
     space_id = 'spa_9aQ1Lj62S4bomZKLF4DPqW' # str | 
     audience_id = 'aud_0ujsszwN8NRY24YaXiTIE2VWDTS' # str | 
-    add_destination_to_audience_alpha_input = {"versionSchema":"v1","workspaceId":"LF4DPqW","destination":{"id":"684758860892086596310ac","type":"destination"}} # AddDestinationToAudienceAlphaInput | 
+    add_destination_to_audience_alpha_input = {"destination":{"id":"684758860892086596310ac","type":"destination"}} # AddDestinationToAudienceAlphaInput | 
 
     try:
         # Add Destination to Audience
@@ -173,7 +173,7 @@ Name | Type | Description  | Notes
 
 ## Operation: get_activation_from_audience
 
-> GetActivationFromAudience200Response get_activation_from_audience(space_id, audience_id, id, workspace_id)
+> GetActivationFromAudience200Response get_activation_from_audience(space_id, audience_id, id)
 
 Get Activation from Audience
 
@@ -204,11 +204,10 @@ with segment_public_api.ApiClient(configuration) as api_client:
     space_id = 'spa_9aQ1Lj62S4bomZKLF4DPqW' # str | 
     audience_id = 'aud_0ujsszwN8NRY24YaXiTIE2VWDTS' # str | 
     id = 'act_987654321' # str | 
-    workspace_id = 'LF4DPqW' # str | The workspace id  This parameter exists in alpha.
 
     try:
         # Get Activation from Audience
-        api_response = api_instance.get_activation_from_audience(space_id, audience_id, id, workspace_id)
+        api_response = api_instance.get_activation_from_audience(space_id, audience_id, id)
         print("The response of ActivationsApi->get_activation_from_audience:\n")
         pprint(api_response)
     except Exception as e:
@@ -224,7 +223,6 @@ Name | Type | Description  | Notes
  **space_id** | **str**|  | 
  **audience_id** | **str**|  | 
  **id** | **str**|  | 
- **workspace_id** | **str**| The workspace id  This parameter exists in alpha. | 
 
 ### Return type
 
@@ -252,7 +250,7 @@ Name | Type | Description  | Notes
 
 ## Operation: list_activations_from_audience
 
-> ListActivationsFromAudience200Response list_activations_from_audience(space_id, audience_id, workspace_id, pagination=pagination)
+> ListActivationsFromAudience200Response list_activations_from_audience(space_id, audience_id, pagination=pagination)
 
 List Activations from Audience
 
@@ -283,12 +281,11 @@ with segment_public_api.ApiClient(configuration) as api_client:
     api_instance = segment_public_api.ActivationsApi(api_client)
     space_id = 'spa_9aQ1Lj62S4bomZKLF4DPqW' # str | 
     audience_id = 'aud_0ujsszwN8NRY24YaXiTIE2VWDTS' # str | 
-    workspace_id = 'LF4DPqW' # str | The workspace id  This parameter exists in alpha.
     pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Optional pagination.  This parameter exists in alpha. (optional)
 
     try:
         # List Activations from Audience
-        api_response = api_instance.list_activations_from_audience(space_id, audience_id, workspace_id, pagination=pagination)
+        api_response = api_instance.list_activations_from_audience(space_id, audience_id, pagination=pagination)
         print("The response of ActivationsApi->list_activations_from_audience:\n")
         pprint(api_response)
     except Exception as e:
@@ -303,7 +300,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **space_id** | **str**|  | 
  **audience_id** | **str**|  | 
- **workspace_id** | **str**| The workspace id  This parameter exists in alpha. | 
  **pagination** | [**PaginationInput**](.md)| Optional pagination.  This parameter exists in alpha. | [optional] 
 
 ### Return type
@@ -332,7 +328,7 @@ Name | Type | Description  | Notes
 
 ## Operation: remove_activation_from_audience
 
-> RemoveActivationFromAudience200Response remove_activation_from_audience(space_id, audience_id, id, workspace_id)
+> RemoveActivationFromAudience200Response remove_activation_from_audience(space_id, audience_id, id)
 
 Remove Activation from Audience
 
@@ -363,11 +359,10 @@ with segment_public_api.ApiClient(configuration) as api_client:
     space_id = 'spa_9aQ1Lj62S4bomZKLF4DPqW' # str | 
     audience_id = 'aud_0ujsszwN8NRY24YaXiTIE2VWDTS' # str | 
     id = 'act_987654321' # str | 
-    workspace_id = 'LF4DPqW' # str | The workspace id  This parameter exists in alpha.
 
     try:
         # Remove Activation from Audience
-        api_response = api_instance.remove_activation_from_audience(space_id, audience_id, id, workspace_id)
+        api_response = api_instance.remove_activation_from_audience(space_id, audience_id, id)
         print("The response of ActivationsApi->remove_activation_from_audience:\n")
         pprint(api_response)
     except Exception as e:
@@ -383,7 +378,6 @@ Name | Type | Description  | Notes
  **space_id** | **str**|  | 
  **audience_id** | **str**|  | 
  **id** | **str**|  | 
- **workspace_id** | **str**| The workspace id  This parameter exists in alpha. | 
 
 ### Return type
 
@@ -443,7 +437,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     space_id = 'spa_9aQ1Lj62S4bomZKLF4DPqW' # str | 
     audience_id = 'aud_0ujsszwN8NRY24YaXiTIE2VWDTS' # str | 
     id = 'act_987654321' # str | 
-    update_activation_for_audience_alpha_input = {"workspaceId":"LF4DPqW","enabled":false,"eventEmitter":{"name":"Updated Event Emitter","description":"Updated event emitter for activation"},"subscription":{"name":"Updated Subscription","trigger":"audienceExited"}} # UpdateActivationForAudienceAlphaInput | 
+    update_activation_for_audience_alpha_input = {"activationName":"Updated Test Activation","enabled":false,"performFirstSync":false,"personalization":{"profile":{"properties":["updated_mountain_bikers_2023","updated_game_boy_color_owners"]},"entities":[{"properties":["ID","UPDATED_BALANCE"],"relationshipSlug":"owned-accounts-updated"}]},"destinationMapping":{"actionId":"action_456","settings":{"webhookUrl":"https://example.com/updated-webhook","method":"PUT"}}} # UpdateActivationForAudienceAlphaInput | 
 
     try:
         # Update Activation for Audience
