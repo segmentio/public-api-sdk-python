@@ -30,7 +30,7 @@ class AddActivationToAudienceAlphaInput(BaseModel):
     """
     destination_id: StrictStr = Field(..., alias="destinationId", description="The Destination id.")
     enabled: Optional[StrictBool] = Field(None, description="Whether the event emitter should be created in an enabled state. Will trigger an audience run if enabled.")
-    perform_first_sync: StrictBool = Field(..., alias="performFirstSync", description="Whether to skip the first sync so the activation events are not generated on the first audience sync.")
+    perform_first_sync: StrictBool = Field(..., alias="performFirstSync", description="Whether to perform the first sync so the activation events are generated on the first audience sync.")
     activation_type: StrictStr = Field(..., alias="activationType", description="Type of activation trigger.")
     activation_name: StrictStr = Field(..., alias="activationName", description="Name of the activation.")
     personalization: PersonalizationInput = Field(...)

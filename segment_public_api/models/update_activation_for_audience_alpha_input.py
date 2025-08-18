@@ -32,7 +32,7 @@ class UpdateActivationForAudienceAlphaInput(BaseModel):
     activation_name: Optional[StrictStr] = Field(None, alias="activationName", description="Activation name.")
     personalization: Optional[PersonalizationInput] = None
     destination_mapping: Optional[DestinationSubscriptionConfiguration] = Field(None, alias="destinationMapping")
-    perform_first_sync: Optional[StrictBool] = Field(None, alias="performFirstSync", description="Whether to skip the first sync so the activation events are not generated on the first audience sync. Will only work if the Audience has not already synced.")
+    perform_first_sync: Optional[StrictBool] = Field(None, alias="performFirstSync", description="Whether to perform the first sync so the activation events are generated on the first audience sync.")
     __properties = ["enabled", "activationName", "personalization", "destinationMapping", "performFirstSync"]
 
     class Config:
