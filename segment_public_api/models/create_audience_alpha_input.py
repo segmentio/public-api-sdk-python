@@ -20,7 +20,7 @@ import json
 
 
 from typing import Optional
-from pydantic import BaseModel, Field, StrictBool, StrictStr
+from pydantic import BaseModel, Field, StrictBool, StrictStr, validator
 from segment_public_api.models.audience_definition import AudienceDefinition
 from segment_public_api.models.audience_options import AudienceOptions
 
@@ -32,8 +32,19 @@ class CreateAudienceAlphaInput(BaseModel):
     enabled: Optional[StrictBool] = Field(None, description="Determines whether a computation is enabled.")
     description: Optional[StrictStr] = Field(None, description="Description of the audience.")
     definition: AudienceDefinition = Field(...)
+    audience_type: Optional[StrictStr] = Field(None, alias="audienceType", description="Denotes the type of audience product.  Possible values: USERS, ACCOUNTS.")
     options: Optional[AudienceOptions] = None
-    __properties = ["name", "enabled", "description", "definition", "options"]
+    __properties = ["name", "enabled", "description", "definition", "audienceType", "options"]
+
+    @validator('audience_type')
+    def audience_type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('ACCOUNTS', 'USERS'):
+            raise ValueError("must be one of enum values ('ACCOUNTS', 'USERS')")
+        return value
 
     class Config:
         """Pydantic configuration"""
@@ -81,6 +92,7 @@ class CreateAudienceAlphaInput(BaseModel):
             "enabled": obj.get("enabled"),
             "description": obj.get("description"),
             "definition": AudienceDefinition.from_dict(obj.get("definition")) if obj.get("definition") is not None else None,
+            "audience_type": obj.get("audienceType"),
             "options": AudienceOptions.from_dict(obj.get("options")) if obj.get("options") is not None else None
         })
         return _obj

@@ -49,7 +49,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.AudiencesApi(api_client)
     space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
-    create_audience_alpha_input = {"name":"name","description":"description","enabled":false,"definition":{"query":"event('Shoes Bought').count() >= 1","type":"USERS"},"options":{"includeAnonymousUsers":true,"includeHistoricalData":true}} # CreateAudienceAlphaInput | 
+    create_audience_alpha_input = {"name":"name","description":"description","enabled":false,"audienceType":"USERS","definition":{"query":"event('Shoes Bought').count() >= 1"},"options":{"includeHistoricalData":true}} # CreateAudienceAlphaInput | 
 
     try:
         # Create Audience

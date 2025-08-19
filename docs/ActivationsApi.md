@@ -47,7 +47,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     space_id = 'spa_9aQ1Lj62S4bomZKLF4DPqW' # str | 
     audience_id = 'aud_0ujsszwN8NRY24YaXiTIE2VWDTS' # str | 
     connection_id = 'ii_123456789' # str | 
-    add_activation_to_audience_alpha_input = {"destinationId":"684758860892086596310ac","activationType":"Audience Entered","activationName":"Test Activation","enabled":true,"performFirstSync":true,"personalization":{"profile":{"properties":["mountain_bikers_2023","game_boy_color_owners"]},"entities":[{"properties":["ID","LAST_ACTIVITY_TIME","BALANCE"],"relationshipSlug":"owned-accounts-copy"}]},"destinationMapping":{"actionId":"action_123","settings":{"webhookUrl":"https://example.com/webhook","method":"POST"}}} # AddActivationToAudienceAlphaInput | 
+    add_activation_to_audience_alpha_input = {"destinationId":"684758860892086596310ac","activationType":"Audience Entered","activationName":"Test Activation","enabled":true,"performFirstSync":true,"personalization":{"profile":{"properties":["mountain_bikers_2023","game_boy_color_owners"],"mapping":{"mountain_bikers_2023":"bikers_segment","game_boy_color_owners":"retro_gamers"}},"entities":[{"properties":["ID","LAST_ACTIVITY_TIME","BALANCE"],"relationshipSlug":"owned-accounts-copy"}]},"destinationMapping":{"actionId":"action_123","settings":{"webhookUrl":"https://example.com/webhook","method":"POST"}}} # AddActivationToAudienceAlphaInput | 
 
     try:
         # Add Activation to Audience
@@ -437,7 +437,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     space_id = 'spa_9aQ1Lj62S4bomZKLF4DPqW' # str | 
     audience_id = 'aud_0ujsszwN8NRY24YaXiTIE2VWDTS' # str | 
     id = 'act_987654321' # str | 
-    update_activation_for_audience_alpha_input = {"activationName":"Updated Test Activation","enabled":false,"performFirstSync":false,"personalization":{"profile":{"properties":["updated_mountain_bikers_2023","updated_game_boy_color_owners"]},"entities":[{"properties":["ID","UPDATED_BALANCE"],"relationshipSlug":"owned-accounts-updated"}]},"destinationMapping":{"actionId":"action_456","settings":{"webhookUrl":"https://example.com/updated-webhook","method":"PUT"}}} # UpdateActivationForAudienceAlphaInput | 
+    update_activation_for_audience_alpha_input = {"activationName":"Updated Test Activation","enabled":false,"performFirstSync":false,"personalization":{"profile":{"properties":["updated_mountain_bikers_2023","updated_game_boy_color_owners"],"mapping":{"updated_mountain_bikers_2023":"updated_bikers","updated_game_boy_color_owners":"updated_gamers"}},"entities":[{"properties":["ID","UPDATED_BALANCE"],"relationshipSlug":"owned-accounts-updated"}]},"destinationMapping":{"actionId":"action_456","settings":{"webhookUrl":"https://example.com/updated-webhook","method":"PUT"}}} # UpdateActivationForAudienceAlphaInput | 
 
     try:
         # Update Activation for Audience

@@ -29,7 +29,7 @@ class CreateAudiencePreviewAlphaInput(BaseModel):
     Input to create an audience preview.  # noqa: E501
     """
     definition: AudienceDefinitionWithoutType = Field(...)
-    audience_type: StrictStr = Field(..., alias="audienceType", description="Discriminator denoting the audience's product type.  Possible values: USERS, ACCOUNTS, LINKED.")
+    audience_type: StrictStr = Field(..., alias="audienceType", description="Denotes the type of audience product.  Possible values: USERS, ACCOUNTS, LINKED.")
     options: Optional[CreateAudiencePreviewOptions] = None
     __properties = ["definition", "audienceType", "options"]
 
