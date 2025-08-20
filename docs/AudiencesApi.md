@@ -125,7 +125,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.AudiencesApi(api_client)
     space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
-    create_audience_preview_alpha_input = {"definition":{"query":"event('Shoes Bought').count() >= 1"},"audienceType":"USERS","options":{"filterByExternalIds":["android.idfa","anonymous_id","email","ios.idfa","user_id"],"backfillEventDataDays":7}} # CreateAudiencePreviewAlphaInput | 
+    create_audience_preview_alpha_input = {"definition":{"query":"entity('owned-accounts').count() >= 1","targetEntity":"owned-accounts"},"audienceType":"LINKED","options":{"filterByExternalIds":["android.idfa","anonymous_id","email","ios.idfa","user_id"]}} # CreateAudiencePreviewAlphaInput | 
 
     try:
         # Create Audience Preview
@@ -277,7 +277,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.AudiencesApi(api_client)
     space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
-    id = '2yKFfGeS62yzGxQSAieVOvsPOha-compute_preview_execution-dws3UdTNsppL5dRGsagFpP-compute_preview_execution' # str | 
+    id = '31XR7mRsdw3vz3ZqvRa1623re0q-compute_preview_execution-9aQ1Lj62S4bomZKLF4DPqW-compute_preview_execution' # str | 
 
     try:
         # Get Audience Preview
