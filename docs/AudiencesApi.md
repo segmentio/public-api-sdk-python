@@ -95,11 +95,11 @@ Name | Type | Description  | Notes
 
 ## Operation: create_audience_preview
 
-> CreateAudiencePreview200Response create_audience_preview(space_id, create_audience_preview_alpha_input)
+> CreateAudiencePreview200Response create_audience_preview(space_id, create_audience_preview_beta_input)
 
 Create Audience Preview
 
-Previews Audience.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Audience Preview Created` event in the [audit trail](/tag/Audit-Trail).   The rate limit for this endpoint is 5 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information. This endpoint also has a rate limit of 700 requests per month per spaceId, which is lower than the default due to access pattern restrictions.
+Previews Audience.  • This endpoint is in **Beta** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Audience Preview Created` event in the [audit trail](/tag/Audit-Trail).   The rate limit for this endpoint is 5 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information. This endpoint also has a rate limit of 700 requests per month per spaceId, which is lower than the default due to access pattern restrictions.
 
 ### Example
 
@@ -109,7 +109,7 @@ import time
 import os
 import segment_public_api
 from segment_public_api.models.create_audience_preview200_response import CreateAudiencePreview200Response
-from segment_public_api.models.create_audience_preview_alpha_input import CreateAudiencePreviewAlphaInput
+from segment_public_api.models.create_audience_preview_beta_input import CreateAudiencePreviewBetaInput
 from segment_public_api.rest import ApiException
 from pprint import pprint
 
@@ -125,11 +125,11 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.AudiencesApi(api_client)
     space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
-    create_audience_preview_alpha_input = {"definition":{"query":"entity('owned-accounts').count() >= 1","targetEntity":"owned-accounts"},"audienceType":"LINKED","options":{"filterByExternalIds":["android.idfa","anonymous_id","email","ios.idfa","user_id"]}} # CreateAudiencePreviewAlphaInput | 
+    create_audience_preview_beta_input = {"definition":{"query":"entity('owned-accounts').count() >= 1","targetEntity":"owned-accounts"},"audienceType":"LINKED","options":{"filterByExternalIds":["android.idfa","anonymous_id","email","ios.idfa","user_id"]}} # CreateAudiencePreviewBetaInput | 
 
     try:
         # Create Audience Preview
-        api_response = api_instance.create_audience_preview(space_id, create_audience_preview_alpha_input)
+        api_response = api_instance.create_audience_preview(space_id, create_audience_preview_beta_input)
         print("The response of AudiencesApi->create_audience_preview:\n")
         pprint(api_response)
     except Exception as e:
@@ -143,7 +143,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **space_id** | **str**|  | 
- **create_audience_preview_alpha_input** | [**CreateAudiencePreviewAlphaInput**](CreateAudiencePreviewAlphaInput.md)|  | 
+ **create_audience_preview_beta_input** | [**CreateAudiencePreviewBetaInput**](CreateAudiencePreviewBetaInput.md)|  | 
 
 ### Return type
 
@@ -155,8 +155,8 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/vnd.segment.v1alpha+json
- - **Accept**: application/vnd.segment.v1alpha+json, application/json
+ - **Content-Type**: application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
+ - **Accept**: application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json, application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -252,7 +252,7 @@ Name | Type | Description  | Notes
 
 Get Audience Preview
 
-Reads the results of an audience preview.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.   The rate limit for this endpoint is 100 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
+Reads the results of an audience preview.  • This endpoint is in **Beta** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.   The rate limit for this endpoint is 100 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
 
 ### Example
 
@@ -308,7 +308,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/vnd.segment.v1alpha+json, application/json
+ - **Accept**: application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json, application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
