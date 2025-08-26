@@ -34,10 +34,10 @@ class AudiencePreviewResult(BaseModel):
     AudiencePreviewResult
     """
 
-    # data type: AudiencePreviewAccountResult
-    anyof_schema_1_validator: Optional[AudiencePreviewAccountResult] = None
     # data type: AudiencePreviewProfileResult
-    anyof_schema_2_validator: Optional[AudiencePreviewProfileResult] = None
+    anyof_schema_1_validator: Optional[AudiencePreviewProfileResult] = None
+    # data type: AudiencePreviewAccountResult
+    anyof_schema_2_validator: Optional[AudiencePreviewAccountResult] = None
     # data type: AudiencePreviewEntitiesResult
     anyof_schema_3_validator: Optional[AudiencePreviewEntitiesResult] = None
     if TYPE_CHECKING:
@@ -63,15 +63,15 @@ class AudiencePreviewResult(BaseModel):
     def actual_instance_must_validate_anyof(cls, v):
         instance = AudiencePreviewResult.construct()
         error_messages = []
-        # validate data type: AudiencePreviewAccountResult
-        if not isinstance(v, AudiencePreviewAccountResult):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `AudiencePreviewAccountResult`")
-        else:
-            return v
-
         # validate data type: AudiencePreviewProfileResult
         if not isinstance(v, AudiencePreviewProfileResult):
             error_messages.append(f"Error! Input type `{type(v)}` is not `AudiencePreviewProfileResult`")
+        else:
+            return v
+
+        # validate data type: AudiencePreviewAccountResult
+        if not isinstance(v, AudiencePreviewAccountResult):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `AudiencePreviewAccountResult`")
         else:
             return v
 
@@ -96,15 +96,15 @@ class AudiencePreviewResult(BaseModel):
         """Returns the object represented by the json string"""
         instance = AudiencePreviewResult.construct()
         error_messages = []
-        # anyof_schema_1_validator: Optional[AudiencePreviewAccountResult] = None
+        # anyof_schema_1_validator: Optional[AudiencePreviewProfileResult] = None
         try:
-            instance.actual_instance = AudiencePreviewAccountResult.from_json(json_str)
+            instance.actual_instance = AudiencePreviewProfileResult.from_json(json_str)
             return instance
         except (ValidationError, ValueError) as e:
              error_messages.append(str(e))
-        # anyof_schema_2_validator: Optional[AudiencePreviewProfileResult] = None
+        # anyof_schema_2_validator: Optional[AudiencePreviewAccountResult] = None
         try:
-            instance.actual_instance = AudiencePreviewProfileResult.from_json(json_str)
+            instance.actual_instance = AudiencePreviewAccountResult.from_json(json_str)
             return instance
         except (ValidationError, ValueError) as e:
              error_messages.append(str(e))

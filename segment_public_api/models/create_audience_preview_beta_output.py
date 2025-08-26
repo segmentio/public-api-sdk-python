@@ -19,16 +19,16 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
-from pydantic import BaseModel
-from segment_public_api.models.get_audience_preview_beta_output import GetAudiencePreviewBetaOutput
 
-class GetAudiencePreview200Response(BaseModel):
+from pydantic import BaseModel, Field
+from segment_public_api.models.audience_preview_identifier import AudiencePreviewIdentifier
+
+class CreateAudiencePreviewBetaOutput(BaseModel):
     """
-    GetAudiencePreview200Response
+    Output when creating an audience preview.  # noqa: E501
     """
-    data: Optional[GetAudiencePreviewBetaOutput] = None
-    __properties = ["data"]
+    audience_preview: AudiencePreviewIdentifier = Field(..., alias="audiencePreview")
+    __properties = ["audiencePreview"]
 
     class Config:
         """Pydantic configuration"""
@@ -44,8 +44,8 @@ class GetAudiencePreview200Response(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> GetAudiencePreview200Response:
-        """Create an instance of GetAudiencePreview200Response from a JSON string"""
+    def from_json(cls, json_str: str) -> CreateAudiencePreviewBetaOutput:
+        """Create an instance of CreateAudiencePreviewBetaOutput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -54,22 +54,22 @@ class GetAudiencePreview200Response(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of data
-        if self.data:
-            _dict['data'] = self.data.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of audience_preview
+        if self.audience_preview:
+            _dict['audiencePreview'] = self.audience_preview.to_dict()
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> GetAudiencePreview200Response:
-        """Create an instance of GetAudiencePreview200Response from a dict"""
+    def from_dict(cls, obj: dict) -> CreateAudiencePreviewBetaOutput:
+        """Create an instance of CreateAudiencePreviewBetaOutput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return GetAudiencePreview200Response.parse_obj(obj)
+            return CreateAudiencePreviewBetaOutput.parse_obj(obj)
 
-        _obj = GetAudiencePreview200Response.parse_obj({
-            "data": GetAudiencePreviewBetaOutput.from_dict(obj.get("data")) if obj.get("data") is not None else None
+        _obj = CreateAudiencePreviewBetaOutput.parse_obj({
+            "audience_preview": AudiencePreviewIdentifier.from_dict(obj.get("audiencePreview")) if obj.get("audiencePreview") is not None else None
         })
         return _obj
 

@@ -21,13 +21,13 @@ import json
 
 from typing import Optional
 from pydantic import BaseModel
-from segment_public_api.models.get_audience_preview_beta_output import GetAudiencePreviewBetaOutput
+from segment_public_api.models.get_audience_preview_alpha_output import GetAudiencePreviewAlphaOutput
 
-class GetAudiencePreview200Response(BaseModel):
+class GetAudiencePreview200Response1(BaseModel):
     """
-    GetAudiencePreview200Response
+    GetAudiencePreview200Response1
     """
-    data: Optional[GetAudiencePreviewBetaOutput] = None
+    data: Optional[GetAudiencePreviewAlphaOutput] = None
     __properties = ["data"]
 
     class Config:
@@ -44,8 +44,8 @@ class GetAudiencePreview200Response(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> GetAudiencePreview200Response:
-        """Create an instance of GetAudiencePreview200Response from a JSON string"""
+    def from_json(cls, json_str: str) -> GetAudiencePreview200Response1:
+        """Create an instance of GetAudiencePreview200Response1 from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -60,16 +60,16 @@ class GetAudiencePreview200Response(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> GetAudiencePreview200Response:
-        """Create an instance of GetAudiencePreview200Response from a dict"""
+    def from_dict(cls, obj: dict) -> GetAudiencePreview200Response1:
+        """Create an instance of GetAudiencePreview200Response1 from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return GetAudiencePreview200Response.parse_obj(obj)
+            return GetAudiencePreview200Response1.parse_obj(obj)
 
-        _obj = GetAudiencePreview200Response.parse_obj({
-            "data": GetAudiencePreviewBetaOutput.from_dict(obj.get("data")) if obj.get("data") is not None else None
+        _obj = GetAudiencePreview200Response1.parse_obj({
+            "data": GetAudiencePreviewAlphaOutput.from_dict(obj.get("data")) if obj.get("data") is not None else None
         })
         return _obj
 
