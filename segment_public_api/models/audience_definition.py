@@ -26,7 +26,7 @@ class AudienceDefinition(BaseModel):
     """
     AudienceDefinition
     """
-    type: StrictStr = Field(..., description="The underlying data type being segmented for this audience.  Possible values: users, accounts.")
+    type: Optional[StrictStr] = Field(None, description="The underlying data type being segmented for this audience.  Possible values: users, accounts.")
     query: StrictStr = Field(..., description="The query language string defining the audience segmentation criteria.  For guidance on using the query language, see the [Segment documentation site](https://segment.com/docs/api/public-api/query-language).")
     target_entity: Optional[StrictStr] = Field(None, alias="targetEntity", description="The target entity slug.")
     __properties = ["type", "query", "targetEntity"]
@@ -34,6 +34,9 @@ class AudienceDefinition(BaseModel):
     @validator('type')
     def type_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('ACCOUNTS', 'USERS'):
             raise ValueError("must be one of enum values ('ACCOUNTS', 'USERS')")
         return value

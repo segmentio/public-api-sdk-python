@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 
-from typing import List
+from typing import Dict, List, Optional
 from pydantic import BaseModel, Field, StrictStr, conlist
 
 class Profile(BaseModel):
@@ -27,7 +27,8 @@ class Profile(BaseModel):
     Profile Object.  # noqa: E501
     """
     properties: conlist(StrictStr) = Field(...)
-    __properties = ["properties"]
+    mapping: Optional[Dict[str, StrictStr]] = None
+    __properties = ["properties", "mapping"]
 
     class Config:
         """Pydantic configuration"""
@@ -65,7 +66,8 @@ class Profile(BaseModel):
             return Profile.parse_obj(obj)
 
         _obj = Profile.parse_obj({
-            "properties": obj.get("properties")
+            "properties": obj.get("properties"),
+            "mapping": obj.get("mapping")
         })
         return _obj
 

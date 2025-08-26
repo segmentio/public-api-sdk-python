@@ -31,7 +31,7 @@ class AudiencePreview(BaseModel):
     An audience preview.  # noqa: E501
     """
     id: StrictStr = Field(..., description="Unique identifier for tracking and retrieving results of an audience preview.")
-    audience_type: StrictStr = Field(..., alias="audienceType", description="The audience type of the preview.")
+    audience_type: StrictStr = Field(..., alias="audienceType", description="The audience type of the preview.  Possible values: USERS, ACCOUNTS, LINKED.")
     definition: AudienceDefinitionWithoutType = Field(...)
     options: ReadAudiencePreviewOptions = Field(...)
     status: StrictStr = Field(..., description="Status for the audience preview.")

@@ -47,7 +47,7 @@ class AudienceSummaryWithAudienceTypeAndLookback(BaseModel):
     updated_by: StrictStr = Field(..., alias="updatedBy", description="User id who last updated the audience.")
     created_at: StrictStr = Field(..., alias="createdAt", description="Date the audience was created.")
     updated_at: StrictStr = Field(..., alias="updatedAt", description="Date the audience was last updated.")
-    audience_type: StrictStr = Field(..., alias="audienceType", description="Discriminator denoting the audience's product type.")
+    audience_type: StrictStr = Field(..., alias="audienceType", description="Denotes the type of audience product.")
     __properties = ["computeCadence", "size", "options", "schedules", "id", "spaceId", "name", "description", "key", "enabled", "definition", "status", "createdBy", "updatedBy", "createdAt", "updatedAt", "audienceType"]
 
     @validator('audience_type')
