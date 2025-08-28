@@ -28,14 +28,13 @@ class AddActivationToAudienceAlphaInput(BaseModel):
     """
     Input to create an activation.  # noqa: E501
     """
-    destination_id: StrictStr = Field(..., alias="destinationId", description="The Destination id.")
     enabled: Optional[StrictBool] = Field(None, description="Whether the event emitter should be created in an enabled state. Will trigger an audience run if enabled.")
     perform_first_sync: StrictBool = Field(..., alias="performFirstSync", description="Whether to perform the first sync so the activation events are generated on the first audience sync.")
     activation_type: StrictStr = Field(..., alias="activationType", description="Type of activation trigger.")
     activation_name: StrictStr = Field(..., alias="activationName", description="Name of the activation.")
     personalization: PersonalizationInput = Field(...)
     destination_mapping: DestinationSubscriptionConfiguration = Field(..., alias="destinationMapping")
-    __properties = ["destinationId", "enabled", "performFirstSync", "activationType", "activationName", "personalization", "destinationMapping"]
+    __properties = ["enabled", "performFirstSync", "activationType", "activationName", "personalization", "destinationMapping"]
 
     class Config:
         """Pydantic configuration"""
@@ -79,7 +78,6 @@ class AddActivationToAudienceAlphaInput(BaseModel):
             return AddActivationToAudienceAlphaInput.parse_obj(obj)
 
         _obj = AddActivationToAudienceAlphaInput.parse_obj({
-            "destination_id": obj.get("destinationId"),
             "enabled": obj.get("enabled"),
             "perform_first_sync": obj.get("performFirstSync"),
             "activation_type": obj.get("activationType"),
