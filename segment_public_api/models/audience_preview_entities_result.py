@@ -27,7 +27,7 @@ class AudiencePreviewEntitiesResult(BaseModel):
     """
     Result membership object for an audience preview with `audienceType: USERS` or `audienceType: LINKED`.  # noqa: E501
     """
-    id: StrictStr = Field(..., description="The entities associated with the profile. Will only have a value if the audience preview has `audienceType: LINKED` and entities are referenced in the audience preview's definition.")
+    id: StrictStr = Field(..., description="Entity id.")
     id_property: StrictStr = Field(..., alias="idProperty", description="The entity primary key column name.")
     relationship_slug: StrictStr = Field(..., alias="relationshipSlug", description="The entity relationship slug.")
     properties: Optional[Dict[str, Any]] = Field(None, description="Entity properties.")

@@ -21,13 +21,13 @@ import json
 
 from typing import Optional
 from pydantic import BaseModel
-from segment_public_api.models.create_audience_beta_output import CreateAudienceBetaOutput
+from segment_public_api.models.create_audience_alpha_output import CreateAudienceAlphaOutput
 
-class CreateAudience200Response(BaseModel):
+class CreateAudience200Response1(BaseModel):
     """
-    CreateAudience200Response
+    CreateAudience200Response1
     """
-    data: Optional[CreateAudienceBetaOutput] = None
+    data: Optional[CreateAudienceAlphaOutput] = None
     __properties = ["data"]
 
     class Config:
@@ -44,8 +44,8 @@ class CreateAudience200Response(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> CreateAudience200Response:
-        """Create an instance of CreateAudience200Response from a JSON string"""
+    def from_json(cls, json_str: str) -> CreateAudience200Response1:
+        """Create an instance of CreateAudience200Response1 from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -60,16 +60,16 @@ class CreateAudience200Response(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> CreateAudience200Response:
-        """Create an instance of CreateAudience200Response from a dict"""
+    def from_dict(cls, obj: dict) -> CreateAudience200Response1:
+        """Create an instance of CreateAudience200Response1 from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return CreateAudience200Response.parse_obj(obj)
+            return CreateAudience200Response1.parse_obj(obj)
 
-        _obj = CreateAudience200Response.parse_obj({
-            "data": CreateAudienceBetaOutput.from_dict(obj.get("data")) if obj.get("data") is not None else None
+        _obj = CreateAudience200Response1.parse_obj({
+            "data": CreateAudienceAlphaOutput.from_dict(obj.get("data")) if obj.get("data") is not None else None
         })
         return _obj
 
