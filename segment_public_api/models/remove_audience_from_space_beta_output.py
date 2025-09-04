@@ -19,16 +19,22 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
-from pydantic import BaseModel
-from segment_public_api.models.remove_audience_from_space_beta_output import RemoveAudienceFromSpaceBetaOutput
 
-class RemoveAudienceFromSpace200Response(BaseModel):
+from pydantic import BaseModel, Field, StrictStr, validator
+
+class RemoveAudienceFromSpaceBetaOutput(BaseModel):
     """
-    RemoveAudienceFromSpace200Response
+    Delete audience endpoint output.  # noqa: E501
     """
-    data: Optional[RemoveAudienceFromSpaceBetaOutput] = None
-    __properties = ["data"]
+    status: StrictStr = Field(..., description="The status of the operation.")
+    __properties = ["status"]
+
+    @validator('status')
+    def status_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in ('SUCCESS'):
+            raise ValueError("must be one of enum values ('SUCCESS')")
+        return value
 
     class Config:
         """Pydantic configuration"""
@@ -44,8 +50,8 @@ class RemoveAudienceFromSpace200Response(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> RemoveAudienceFromSpace200Response:
-        """Create an instance of RemoveAudienceFromSpace200Response from a JSON string"""
+    def from_json(cls, json_str: str) -> RemoveAudienceFromSpaceBetaOutput:
+        """Create an instance of RemoveAudienceFromSpaceBetaOutput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -54,22 +60,19 @@ class RemoveAudienceFromSpace200Response(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of data
-        if self.data:
-            _dict['data'] = self.data.to_dict()
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> RemoveAudienceFromSpace200Response:
-        """Create an instance of RemoveAudienceFromSpace200Response from a dict"""
+    def from_dict(cls, obj: dict) -> RemoveAudienceFromSpaceBetaOutput:
+        """Create an instance of RemoveAudienceFromSpaceBetaOutput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return RemoveAudienceFromSpace200Response.parse_obj(obj)
+            return RemoveAudienceFromSpaceBetaOutput.parse_obj(obj)
 
-        _obj = RemoveAudienceFromSpace200Response.parse_obj({
-            "data": RemoveAudienceFromSpaceBetaOutput.from_dict(obj.get("data")) if obj.get("data") is not None else None
+        _obj = RemoveAudienceFromSpaceBetaOutput.parse_obj({
+            "status": obj.get("status")
         })
         return _obj
 

@@ -21,13 +21,13 @@ import json
 
 from typing import Optional
 from pydantic import BaseModel
-from segment_public_api.models.remove_audience_from_space_beta_output import RemoveAudienceFromSpaceBetaOutput
+from segment_public_api.models.remove_audience_from_space_alpha_output import RemoveAudienceFromSpaceAlphaOutput
 
-class RemoveAudienceFromSpace200Response(BaseModel):
+class RemoveAudienceFromSpace200Response1(BaseModel):
     """
-    RemoveAudienceFromSpace200Response
+    RemoveAudienceFromSpace200Response1
     """
-    data: Optional[RemoveAudienceFromSpaceBetaOutput] = None
+    data: Optional[RemoveAudienceFromSpaceAlphaOutput] = None
     __properties = ["data"]
 
     class Config:
@@ -44,8 +44,8 @@ class RemoveAudienceFromSpace200Response(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> RemoveAudienceFromSpace200Response:
-        """Create an instance of RemoveAudienceFromSpace200Response from a JSON string"""
+    def from_json(cls, json_str: str) -> RemoveAudienceFromSpace200Response1:
+        """Create an instance of RemoveAudienceFromSpace200Response1 from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -60,16 +60,16 @@ class RemoveAudienceFromSpace200Response(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> RemoveAudienceFromSpace200Response:
-        """Create an instance of RemoveAudienceFromSpace200Response from a dict"""
+    def from_dict(cls, obj: dict) -> RemoveAudienceFromSpace200Response1:
+        """Create an instance of RemoveAudienceFromSpace200Response1 from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return RemoveAudienceFromSpace200Response.parse_obj(obj)
+            return RemoveAudienceFromSpace200Response1.parse_obj(obj)
 
-        _obj = RemoveAudienceFromSpace200Response.parse_obj({
-            "data": RemoveAudienceFromSpaceBetaOutput.from_dict(obj.get("data")) if obj.get("data") is not None else None
+        _obj = RemoveAudienceFromSpace200Response1.parse_obj({
+            "data": RemoveAudienceFromSpaceAlphaOutput.from_dict(obj.get("data")) if obj.get("data") is not None else None
         })
         return _obj
 
