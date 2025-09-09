@@ -21,13 +21,13 @@ import json
 
 from typing import Optional
 from pydantic import BaseModel
-from segment_public_api.models.create_audience_beta_output import CreateAudienceBetaOutput
+from segment_public_api.models.create_audience_alpha_output import CreateAudienceAlphaOutput
 
 class CreateAudience200Response(BaseModel):
     """
     CreateAudience200Response
     """
-    data: Optional[CreateAudienceBetaOutput] = None
+    data: Optional[CreateAudienceAlphaOutput] = None
     __properties = ["data"]
 
     class Config:
@@ -69,7 +69,7 @@ class CreateAudience200Response(BaseModel):
             return CreateAudience200Response.parse_obj(obj)
 
         _obj = CreateAudience200Response.parse_obj({
-            "data": CreateAudienceBetaOutput.from_dict(obj.get("data")) if obj.get("data") is not None else None
+            "data": CreateAudienceAlphaOutput.from_dict(obj.get("data")) if obj.get("data") is not None else None
         })
         return _obj
 
