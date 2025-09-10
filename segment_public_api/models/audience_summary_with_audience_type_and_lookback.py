@@ -22,6 +22,7 @@ import json
 from typing import List, Optional
 from pydantic import BaseModel, Field, StrictBool, StrictStr, conlist, validator
 from segment_public_api.models.audience_compute_cadence import AudienceComputeCadence
+from segment_public_api.models.audience_conditions_wrapper import AudienceConditionsWrapper
 from segment_public_api.models.audience_definition import AudienceDefinition
 from segment_public_api.models.audience_options_with_lookback import AudienceOptionsWithLookback
 from segment_public_api.models.audience_schedule import AudienceSchedule
@@ -42,13 +43,14 @@ class AudienceSummaryWithAudienceTypeAndLookback(BaseModel):
     key: StrictStr = Field(..., description="Key for the audience.")
     enabled: StrictBool = Field(..., description="Enabled/disabled status for the audience.")
     definition: Optional[AudienceDefinition] = Field(...)
+    conditions: Optional[conlist(AudienceConditionsWrapper)] = Field(None, description="Array of conditions in different formats (AST, CQL) - Enhanced format.")
     status: Optional[StrictStr] = Field(None, description="Status for the audience.  Possible values: Backfilling, Computing, Failed, Live, Awaiting Destinations, Disabled.")
     created_by: StrictStr = Field(..., alias="createdBy", description="User id who created the audience.")
     updated_by: StrictStr = Field(..., alias="updatedBy", description="User id who last updated the audience.")
     created_at: StrictStr = Field(..., alias="createdAt", description="Date the audience was created.")
     updated_at: StrictStr = Field(..., alias="updatedAt", description="Date the audience was last updated.")
     audience_type: StrictStr = Field(..., alias="audienceType", description="Denotes the type of audience product.")
-    __properties = ["computeCadence", "size", "options", "schedules", "id", "spaceId", "name", "description", "key", "enabled", "definition", "status", "createdBy", "updatedBy", "createdAt", "updatedAt", "audienceType"]
+    __properties = ["computeCadence", "size", "options", "schedules", "id", "spaceId", "name", "description", "key", "enabled", "definition", "conditions", "status", "createdBy", "updatedBy", "createdAt", "updatedAt", "audienceType"]
 
     @validator('audience_type')
     def audience_type_validate_enum(cls, value):
@@ -100,6 +102,13 @@ class AudienceSummaryWithAudienceTypeAndLookback(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of definition
         if self.definition:
             _dict['definition'] = self.definition.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in conditions (list)
+        _items = []
+        if self.conditions:
+            for _item in self.conditions:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['conditions'] = _items
         # set to None if definition (nullable) is None
         # and __fields_set__ contains the field
         if self.definition is None and "definition" in self.__fields_set__:
@@ -128,6 +137,7 @@ class AudienceSummaryWithAudienceTypeAndLookback(BaseModel):
             "key": obj.get("key"),
             "enabled": obj.get("enabled"),
             "definition": AudienceDefinition.from_dict(obj.get("definition")) if obj.get("definition") is not None else None,
+            "conditions": [AudienceConditionsWrapper.from_dict(_item) for _item in obj.get("conditions")] if obj.get("conditions") is not None else None,
             "status": obj.get("status"),
             "created_by": obj.get("createdBy"),
             "updated_by": obj.get("updatedBy"),

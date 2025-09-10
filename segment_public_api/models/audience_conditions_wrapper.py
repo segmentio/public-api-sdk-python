@@ -19,16 +19,23 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
-from pydantic import BaseModel
-from segment_public_api.models.create_audience_beta_output import CreateAudienceBetaOutput
+from typing import Any, Dict, Optional
+from pydantic import BaseModel, Field, StrictStr, validator
 
-class CreateAudience200Response(BaseModel):
+class AudienceConditionsWrapper(BaseModel):
     """
-    CreateAudience200Response
+    A wrapper object containing compute conditions in a specific format.  # noqa: E501
     """
-    data: Optional[CreateAudienceBetaOutput] = None
-    __properties = ["data"]
+    format: StrictStr = Field(..., description="Discriminator field denoting what format the compute conditions are specified in.")
+    conditions: Optional[Dict[str, Any]] = Field(..., description="Compute conditions specified in the form denoted by the 'format' discriminator field.")
+    __properties = ["format", "conditions"]
+
+    @validator('format')
+    def format_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in ('AST', 'CQL'):
+            raise ValueError("must be one of enum values ('AST', 'CQL')")
+        return value
 
     class Config:
         """Pydantic configuration"""
@@ -44,8 +51,8 @@ class CreateAudience200Response(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> CreateAudience200Response:
-        """Create an instance of CreateAudience200Response from a JSON string"""
+    def from_json(cls, json_str: str) -> AudienceConditionsWrapper:
+        """Create an instance of AudienceConditionsWrapper from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -54,22 +61,25 @@ class CreateAudience200Response(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of data
-        if self.data:
-            _dict['data'] = self.data.to_dict()
+        # set to None if conditions (nullable) is None
+        # and __fields_set__ contains the field
+        if self.conditions is None and "conditions" in self.__fields_set__:
+            _dict['conditions'] = None
+
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> CreateAudience200Response:
-        """Create an instance of CreateAudience200Response from a dict"""
+    def from_dict(cls, obj: dict) -> AudienceConditionsWrapper:
+        """Create an instance of AudienceConditionsWrapper from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return CreateAudience200Response.parse_obj(obj)
+            return AudienceConditionsWrapper.parse_obj(obj)
 
-        _obj = CreateAudience200Response.parse_obj({
-            "data": CreateAudienceBetaOutput.from_dict(obj.get("data")) if obj.get("data") is not None else None
+        _obj = AudienceConditionsWrapper.parse_obj({
+            "format": obj.get("format"),
+            "conditions": obj.get("conditions")
         })
         return _obj
 
