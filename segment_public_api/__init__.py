@@ -64,6 +64,7 @@ from segment_public_api.exceptions import ApiException
 # import models into sdk package
 from segment_public_api.models.api_call_snapshot_v1 import APICallSnapshotV1
 from segment_public_api.models.access_permission_v1 import AccessPermissionV1
+from segment_public_api.models.activation_output import ActivationOutput
 from segment_public_api.models.activation_summary_output import ActivationSummaryOutput
 from segment_public_api.models.add_activation_to_audience200_response import AddActivationToAudience200Response
 from segment_public_api.models.add_activation_to_audience_alpha_input import AddActivationToAudienceAlphaInput

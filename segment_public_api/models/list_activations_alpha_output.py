@@ -21,14 +21,14 @@ import json
 
 from typing import List, Optional
 from pydantic import BaseModel, Field, conlist
-from segment_public_api.models.activation_summary_output import ActivationSummaryOutput
+from segment_public_api.models.activation_output import ActivationOutput
 from segment_public_api.models.pagination_output import PaginationOutput
 
 class ListActivationsAlphaOutput(BaseModel):
     """
     Output for listing all activations.  # noqa: E501
     """
-    activations: conlist(ActivationSummaryOutput) = Field(..., description="A list of activation results.")
+    activations: conlist(ActivationOutput) = Field(..., description="A list of activation results.")
     pagination: Optional[PaginationOutput] = None
     __properties = ["activations", "pagination"]
 
@@ -78,7 +78,7 @@ class ListActivationsAlphaOutput(BaseModel):
             return ListActivationsAlphaOutput.parse_obj(obj)
 
         _obj = ListActivationsAlphaOutput.parse_obj({
-            "activations": [ActivationSummaryOutput.from_dict(_item) for _item in obj.get("activations")] if obj.get("activations") is not None else None,
+            "activations": [ActivationOutput.from_dict(_item) for _item in obj.get("activations")] if obj.get("activations") is not None else None,
             "pagination": PaginationOutput.from_dict(obj.get("pagination")) if obj.get("pagination") is not None else None
         })
         return _obj

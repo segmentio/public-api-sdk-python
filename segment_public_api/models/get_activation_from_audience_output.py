@@ -21,13 +21,13 @@ import json
 
 
 from pydantic import BaseModel, Field
-from segment_public_api.models.activation_summary_output import ActivationSummaryOutput
+from segment_public_api.models.activation_output import ActivationOutput
 
 class GetActivationFromAudienceOutput(BaseModel):
     """
     Output for getting an activation from space and audience.  # noqa: E501
     """
-    activation: ActivationSummaryOutput = Field(...)
+    activation: ActivationOutput = Field(...)
     __properties = ["activation"]
 
     class Config:
@@ -69,7 +69,7 @@ class GetActivationFromAudienceOutput(BaseModel):
             return GetActivationFromAudienceOutput.parse_obj(obj)
 
         _obj = GetActivationFromAudienceOutput.parse_obj({
-            "activation": ActivationSummaryOutput.from_dict(obj.get("activation")) if obj.get("activation") is not None else None
+            "activation": ActivationOutput.from_dict(obj.get("activation")) if obj.get("activation") is not None else None
         })
         return _obj
 

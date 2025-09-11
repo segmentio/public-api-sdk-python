@@ -24,7 +24,7 @@ from pydantic import BaseModel, Field, StrictBool, StrictStr
 
 class ActivationSummaryOutput(BaseModel):
     """
-    A class that encapsulates the output shared across endpoints for a given activation.  # noqa: E501
+    ActivationSummaryOutput
     """
     id: StrictStr = Field(..., description="The activation id.")
     enabled: StrictBool = Field(..., description="Activation Enabled Status.")
