@@ -24,16 +24,22 @@ from pydantic import BaseModel, Field, StrictBool, StrictStr
 from segment_public_api.models.destination_subscription_configuration import DestinationSubscriptionConfiguration
 from segment_public_api.models.personalization_input import PersonalizationInput
 
-class UpdateActivationForAudienceAlphaInput(BaseModel):
+class ActivationOutput(BaseModel):
     """
-    Input to update an activation.  # noqa: E501
+    A class that encapsulates the complete activation output with full details.  # noqa: E501
     """
-    enabled: Optional[StrictBool] = Field(None, description="Determines whether an activation is enabled.")
-    activation_name: Optional[StrictStr] = Field(None, alias="activationName", description="Activation name.")
-    personalization: Optional[PersonalizationInput] = None
-    destination_mapping: Optional[DestinationSubscriptionConfiguration] = Field(None, alias="destinationMapping")
+    id: StrictStr = Field(..., description="The activation id.")
+    enabled: StrictBool = Field(..., description="Activation Enabled Status.")
+    workspace_id: StrictStr = Field(..., alias="workspaceId", description="The WORKSPACE id.")
+    space_id: StrictStr = Field(..., alias="spaceId", description="The space id.")
+    audience_id: StrictStr = Field(..., alias="audienceId", description="The audience id.")
+    destination_connection_id: StrictStr = Field(..., alias="destinationConnectionId", description="The DESTINATION connection id (formerly integrationInstanceId).")
+    activation_type: StrictStr = Field(..., alias="activationType", description="Type of activation trigger.")
+    activation_name: StrictStr = Field(..., alias="activationName", description="Name of the activation.")
+    personalization: PersonalizationInput = Field(...)
+    destination_mapping: DestinationSubscriptionConfiguration = Field(..., alias="destinationMapping")
     perform_resync: Optional[StrictBool] = Field(None, alias="performResync", description="Whether to perform a resync after creation of the activation.")
-    __properties = ["enabled", "activationName", "personalization", "destinationMapping", "performResync"]
+    __properties = ["id", "enabled", "workspaceId", "spaceId", "audienceId", "destinationConnectionId", "activationType", "activationName", "personalization", "destinationMapping", "performResync"]
 
     class Config:
         """Pydantic configuration"""
@@ -49,8 +55,8 @@ class UpdateActivationForAudienceAlphaInput(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> UpdateActivationForAudienceAlphaInput:
-        """Create an instance of UpdateActivationForAudienceAlphaInput from a JSON string"""
+    def from_json(cls, json_str: str) -> ActivationOutput:
+        """Create an instance of ActivationOutput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -68,16 +74,22 @@ class UpdateActivationForAudienceAlphaInput(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> UpdateActivationForAudienceAlphaInput:
-        """Create an instance of UpdateActivationForAudienceAlphaInput from a dict"""
+    def from_dict(cls, obj: dict) -> ActivationOutput:
+        """Create an instance of ActivationOutput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return UpdateActivationForAudienceAlphaInput.parse_obj(obj)
+            return ActivationOutput.parse_obj(obj)
 
-        _obj = UpdateActivationForAudienceAlphaInput.parse_obj({
+        _obj = ActivationOutput.parse_obj({
+            "id": obj.get("id"),
             "enabled": obj.get("enabled"),
+            "workspace_id": obj.get("workspaceId"),
+            "space_id": obj.get("spaceId"),
+            "audience_id": obj.get("audienceId"),
+            "destination_connection_id": obj.get("destinationConnectionId"),
+            "activation_type": obj.get("activationType"),
             "activation_name": obj.get("activationName"),
             "personalization": PersonalizationInput.from_dict(obj.get("personalization")) if obj.get("personalization") is not None else None,
             "destination_mapping": DestinationSubscriptionConfiguration.from_dict(obj.get("destinationMapping")) if obj.get("destinationMapping") is not None else None,
