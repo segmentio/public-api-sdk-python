@@ -32,16 +32,13 @@ class CreateAudienceAlphaInput(BaseModel):
     enabled: Optional[StrictBool] = Field(None, description="Determines whether a computation is enabled.")
     description: Optional[StrictStr] = Field(None, description="Description of the audience.")
     definition: AudienceDefinition = Field(...)
-    audience_type: Optional[StrictStr] = Field(None, alias="audienceType", description="Denotes the type of audience product.  Possible values: USERS, ACCOUNTS.")
+    audience_type: StrictStr = Field(..., alias="audienceType", description="Denotes the type of audience product.  Possible values: USERS, ACCOUNTS.")
     options: Optional[AudienceOptions] = None
     __properties = ["name", "enabled", "description", "definition", "audienceType", "options"]
 
     @validator('audience_type')
     def audience_type_validate_enum(cls, value):
         """Validates the enum"""
-        if value is None:
-            return value
-
         if value not in ('ACCOUNTS', 'USERS'):
             raise ValueError("must be one of enum values ('ACCOUNTS', 'USERS')")
         return value
