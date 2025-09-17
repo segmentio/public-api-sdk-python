@@ -21,14 +21,14 @@ import json
 
 from typing import Optional
 from pydantic import BaseModel, Field, StrictStr, validator
-from segment_public_api.models.audience_definition_without_type import AudienceDefinitionWithoutType
+from segment_public_api.models.audience_definition import AudienceDefinition
 from segment_public_api.models.create_audience_preview_options import CreateAudiencePreviewOptions
 
 class CreateAudiencePreviewBetaInput(BaseModel):
     """
     Input to create an audience preview.  # noqa: E501
     """
-    definition: AudienceDefinitionWithoutType = Field(...)
+    definition: AudienceDefinition = Field(...)
     audience_type: StrictStr = Field(..., alias="audienceType", description="Denotes the type of audience product.  Possible values: USERS, ACCOUNTS, LINKED.")
     options: Optional[CreateAudiencePreviewOptions] = None
     __properties = ["definition", "audienceType", "options"]
@@ -82,7 +82,7 @@ class CreateAudiencePreviewBetaInput(BaseModel):
             return CreateAudiencePreviewBetaInput.parse_obj(obj)
 
         _obj = CreateAudiencePreviewBetaInput.parse_obj({
-            "definition": AudienceDefinitionWithoutType.from_dict(obj.get("definition")) if obj.get("definition") is not None else None,
+            "definition": AudienceDefinition.from_dict(obj.get("definition")) if obj.get("definition") is not None else None,
             "audience_type": obj.get("audienceType"),
             "options": CreateAudiencePreviewOptions.from_dict(obj.get("options")) if obj.get("options") is not None else None
         })
