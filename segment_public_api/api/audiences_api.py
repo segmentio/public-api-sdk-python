@@ -25,7 +25,7 @@ from pydantic import Field, StrictStr, constr
 from typing import Optional
 
 from segment_public_api.models.create_audience200_response import CreateAudience200Response
-from segment_public_api.models.create_audience_alpha_input import CreateAudienceAlphaInput
+from segment_public_api.models.create_audience_beta_input import CreateAudienceBetaInput
 from segment_public_api.models.create_audience_preview200_response import CreateAudiencePreview200Response
 from segment_public_api.models.create_audience_preview_beta_input import CreateAudiencePreviewBetaInput
 from segment_public_api.models.get_audience200_response import GetAudience200Response
@@ -63,20 +63,20 @@ class AudiencesApi:
         self.api_client = api_client
 
     @validate_arguments
-    def create_audience(self, space_id : constr(strict=True), create_audience_alpha_input : CreateAudienceAlphaInput, **kwargs) -> CreateAudience200Response:  # noqa: E501
+    def create_audience(self, space_id : constr(strict=True), create_audience_beta_input : CreateAudienceBetaInput, **kwargs) -> CreateAudience200Response:  # noqa: E501
         """Create Audience  # noqa: E501
 
-        Creates Audience.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Audience Created` event in the [audit trail](/tag/Audit-Trail).  Note: The definition for an Audience created using the API is not editable through the Segment App.   The rate limit for this endpoint is 10 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
+        Creates Audience.  • This endpoint is in **Beta** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Audience Created` event in the [audit trail](/tag/Audit-Trail).  Note: The definition for an Audience created using the API is not editable through the Segment App.   The rate limit for this endpoint is 10 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.create_audience(space_id, create_audience_alpha_input, async_req=True)
+        >>> thread = api.create_audience(space_id, create_audience_beta_input, async_req=True)
         >>> result = thread.get()
 
         :param space_id: (required)
         :type space_id: str
-        :param create_audience_alpha_input: (required)
-        :type create_audience_alpha_input: CreateAudienceAlphaInput
+        :param create_audience_beta_input: (required)
+        :type create_audience_beta_input: CreateAudienceBetaInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _request_timeout: timeout setting for this request.
@@ -92,23 +92,23 @@ class AudiencesApi:
         if '_preload_content' in kwargs:
             message = "Error! Please call the create_audience_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.create_audience_with_http_info(space_id, create_audience_alpha_input, **kwargs)  # noqa: E501
+        return self.create_audience_with_http_info(space_id, create_audience_beta_input, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def create_audience_with_http_info(self, space_id : constr(strict=True), create_audience_alpha_input : CreateAudienceAlphaInput, **kwargs) -> ApiResponse:  # noqa: E501
+    def create_audience_with_http_info(self, space_id : constr(strict=True), create_audience_beta_input : CreateAudienceBetaInput, **kwargs) -> ApiResponse:  # noqa: E501
         """Create Audience  # noqa: E501
 
-        Creates Audience.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Audience Created` event in the [audit trail](/tag/Audit-Trail).  Note: The definition for an Audience created using the API is not editable through the Segment App.   The rate limit for this endpoint is 10 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
+        Creates Audience.  • This endpoint is in **Beta** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Audience Created` event in the [audit trail](/tag/Audit-Trail).  Note: The definition for an Audience created using the API is not editable through the Segment App.   The rate limit for this endpoint is 10 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.create_audience_with_http_info(space_id, create_audience_alpha_input, async_req=True)
+        >>> thread = api.create_audience_with_http_info(space_id, create_audience_beta_input, async_req=True)
         >>> result = thread.get()
 
         :param space_id: (required)
         :type space_id: str
-        :param create_audience_alpha_input: (required)
-        :type create_audience_alpha_input: CreateAudienceAlphaInput
+        :param create_audience_beta_input: (required)
+        :type create_audience_beta_input: CreateAudienceBetaInput
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _preload_content: if False, the ApiResponse.data will
@@ -138,7 +138,7 @@ class AudiencesApi:
 
         _all_params = [
             'space_id',
-            'create_audience_alpha_input'
+            'create_audience_beta_input'
         ]
         _all_params.extend(
             [
@@ -179,17 +179,17 @@ class AudiencesApi:
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params['create_audience_alpha_input'] is not None:
-            _body_params = _params['create_audience_alpha_input']
+        if _params['create_audience_beta_input'] is not None:
+            _body_params = _params['create_audience_beta_input']
 
         # set the HTTP header `Accept`
         _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/vnd.segment.v1alpha+json', 'application/json'])  # noqa: E501
+            ['application/vnd.segment.v1beta+json', 'application/vnd.segment.v1alpha+json', 'application/json'])  # noqa: E501
 
         # set the HTTP header `Content-Type`
         _content_types_list = _params.get('_content_type',
             self.api_client.select_header_content_type(
-                ['application/vnd.segment.v1alpha+json']))
+                ['application/vnd.segment.v1beta+json', 'application/vnd.segment.v1alpha+json']))
         if _content_types_list:
                 _header_params['Content-Type'] = _content_types_list
 
