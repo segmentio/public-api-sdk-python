@@ -20,18 +20,26 @@ import json
 
 
 from typing import Any, Dict, Optional
-from pydantic import BaseModel, Field, StrictBool, StrictStr
+from pydantic import BaseModel, Field, StrictBool, StrictStr, validator
 
 class CreateInsertFunctionInstanceAlphaInput(BaseModel):
     """
     Creates an insert Function instance.  # noqa: E501
     """
-    function_id: StrictStr = Field(..., alias="functionId", description="Insert Function id to which this instance is associated.  Note: Remove the ifnd_/ifns_ prefix from the id.")
+    function_id: StrictStr = Field(..., alias="functionId", description="Insert Function id to which this instance is associated.  Note: Remove the ifnd_/ifns_/ifn_ prefix from the id.")
     integration_id: StrictStr = Field(..., alias="integrationId", description="The Source or Destination id to be connected.")
     enabled: Optional[StrictBool] = Field(None, description="Whether this insert Function instance should be enabled for the Destination.")
     name: StrictStr = Field(..., description="Defines the display name of the insert Function instance.")
     settings: Dict[str, Any] = Field(..., description="An object that contains settings for this insert Function instance based on the settings present in the insert Function class.")
-    __properties = ["functionId", "integrationId", "enabled", "name", "settings"]
+    integration_type: StrictStr = Field(..., alias="integrationType", description="The Integration type for the insert Function instance.")
+    __properties = ["functionId", "integrationId", "enabled", "name", "settings", "integrationType"]
+
+    @validator('integration_type')
+    def integration_type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in ('DESTINATION', 'JOURNEY', 'SOURCE'):
+            raise ValueError("must be one of enum values ('DESTINATION', 'JOURNEY', 'SOURCE')")
+        return value
 
     class Config:
         """Pydantic configuration"""
@@ -73,7 +81,8 @@ class CreateInsertFunctionInstanceAlphaInput(BaseModel):
             "integration_id": obj.get("integrationId"),
             "enabled": obj.get("enabled"),
             "name": obj.get("name"),
-            "settings": obj.get("settings")
+            "settings": obj.get("settings"),
+            "integration_type": obj.get("integrationType")
         })
         return _obj
 
