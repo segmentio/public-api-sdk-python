@@ -19,16 +19,18 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
-from pydantic import BaseModel
-from segment_public_api.models.add_audience_schedule_to_audience_alpha_output import AddAudienceScheduleToAudienceAlphaOutput
+from typing import List, Optional
+from pydantic import BaseModel, Field, conlist
+from segment_public_api.models.pagination_output import PaginationOutput
+from segment_public_api.models.simple_destination import SimpleDestination
 
-class AddAudienceScheduleToAudience200Response(BaseModel):
+class ListDestinationsFromAudienceAlphaOutput(BaseModel):
     """
-    AddAudienceScheduleToAudience200Response
+    Output to List all Destinations from an Audience.  # noqa: E501
     """
-    data: Optional[AddAudienceScheduleToAudienceAlphaOutput] = None
-    __properties = ["data"]
+    connections: conlist(SimpleDestination) = Field(..., description="A list of connection results.")
+    pagination: Optional[PaginationOutput] = None
+    __properties = ["connections", "pagination"]
 
     class Config:
         """Pydantic configuration"""
@@ -44,8 +46,8 @@ class AddAudienceScheduleToAudience200Response(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> AddAudienceScheduleToAudience200Response:
-        """Create an instance of AddAudienceScheduleToAudience200Response from a JSON string"""
+    def from_json(cls, json_str: str) -> ListDestinationsFromAudienceAlphaOutput:
+        """Create an instance of ListDestinationsFromAudienceAlphaOutput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -54,22 +56,30 @@ class AddAudienceScheduleToAudience200Response(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of data
-        if self.data:
-            _dict['data'] = self.data.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in connections (list)
+        _items = []
+        if self.connections:
+            for _item in self.connections:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['connections'] = _items
+        # override the default output from pydantic by calling `to_dict()` of pagination
+        if self.pagination:
+            _dict['pagination'] = self.pagination.to_dict()
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> AddAudienceScheduleToAudience200Response:
-        """Create an instance of AddAudienceScheduleToAudience200Response from a dict"""
+    def from_dict(cls, obj: dict) -> ListDestinationsFromAudienceAlphaOutput:
+        """Create an instance of ListDestinationsFromAudienceAlphaOutput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return AddAudienceScheduleToAudience200Response.parse_obj(obj)
+            return ListDestinationsFromAudienceAlphaOutput.parse_obj(obj)
 
-        _obj = AddAudienceScheduleToAudience200Response.parse_obj({
-            "data": AddAudienceScheduleToAudienceAlphaOutput.from_dict(obj.get("data")) if obj.get("data") is not None else None
+        _obj = ListDestinationsFromAudienceAlphaOutput.parse_obj({
+            "connections": [SimpleDestination.from_dict(_item) for _item in obj.get("connections")] if obj.get("connections") is not None else None,
+            "pagination": PaginationOutput.from_dict(obj.get("pagination")) if obj.get("pagination") is not None else None
         })
         return _obj
 

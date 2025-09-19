@@ -35,8 +35,7 @@ class InsertFunctionInstanceAlpha(BaseModel):
     updated_at: StrictStr = Field(..., alias="updatedAt")
     settings: Dict[str, Any] = Field(...)
     encrypted_settings: Dict[str, Any] = Field(..., alias="encryptedSettings")
-    integration_type: Optional[Dict[str, Any]] = Field(None, alias="integrationType")
-    __properties = ["id", "name", "integrationId", "classId", "enabled", "createdAt", "updatedAt", "settings", "encryptedSettings", "integrationType"]
+    __properties = ["id", "name", "integrationId", "classId", "enabled", "createdAt", "updatedAt", "settings", "encryptedSettings"]
 
     class Config:
         """Pydantic configuration"""
@@ -62,11 +61,6 @@ class InsertFunctionInstanceAlpha(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # set to None if integration_type (nullable) is None
-        # and __fields_set__ contains the field
-        if self.integration_type is None and "integration_type" in self.__fields_set__:
-            _dict['integrationType'] = None
-
         return _dict
 
     @classmethod
@@ -87,8 +81,7 @@ class InsertFunctionInstanceAlpha(BaseModel):
             "created_at": obj.get("createdAt"),
             "updated_at": obj.get("updatedAt"),
             "settings": obj.get("settings"),
-            "encrypted_settings": obj.get("encryptedSettings"),
-            "integration_type": obj.get("integrationType")
+            "encrypted_settings": obj.get("encryptedSettings")
         })
         return _obj
 

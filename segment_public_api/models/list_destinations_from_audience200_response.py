@@ -19,19 +19,16 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, Optional
-from pydantic import BaseModel, Field, StrictBool, StrictStr
+from typing import Optional
+from pydantic import BaseModel
+from segment_public_api.models.list_destinations_from_audience_alpha_output import ListDestinationsFromAudienceAlphaOutput
 
-class CreateInsertFunctionInstanceAlphaInput(BaseModel):
+class ListDestinationsFromAudience200Response(BaseModel):
     """
-    Creates an insert Function instance.  # noqa: E501
+    ListDestinationsFromAudience200Response
     """
-    function_id: StrictStr = Field(..., alias="functionId", description="Insert Function id to which this instance is associated.  Note: Remove the ifnd_/ifns_ prefix from the id.")
-    integration_id: StrictStr = Field(..., alias="integrationId", description="The Source or Destination id to be connected.")
-    enabled: Optional[StrictBool] = Field(None, description="Whether this insert Function instance should be enabled for the Destination.")
-    name: StrictStr = Field(..., description="Defines the display name of the insert Function instance.")
-    settings: Dict[str, Any] = Field(..., description="An object that contains settings for this insert Function instance based on the settings present in the insert Function class.")
-    __properties = ["functionId", "integrationId", "enabled", "name", "settings"]
+    data: Optional[ListDestinationsFromAudienceAlphaOutput] = None
+    __properties = ["data"]
 
     class Config:
         """Pydantic configuration"""
@@ -47,8 +44,8 @@ class CreateInsertFunctionInstanceAlphaInput(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> CreateInsertFunctionInstanceAlphaInput:
-        """Create an instance of CreateInsertFunctionInstanceAlphaInput from a JSON string"""
+    def from_json(cls, json_str: str) -> ListDestinationsFromAudience200Response:
+        """Create an instance of ListDestinationsFromAudience200Response from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -57,23 +54,22 @@ class CreateInsertFunctionInstanceAlphaInput(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # override the default output from pydantic by calling `to_dict()` of data
+        if self.data:
+            _dict['data'] = self.data.to_dict()
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> CreateInsertFunctionInstanceAlphaInput:
-        """Create an instance of CreateInsertFunctionInstanceAlphaInput from a dict"""
+    def from_dict(cls, obj: dict) -> ListDestinationsFromAudience200Response:
+        """Create an instance of ListDestinationsFromAudience200Response from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return CreateInsertFunctionInstanceAlphaInput.parse_obj(obj)
+            return ListDestinationsFromAudience200Response.parse_obj(obj)
 
-        _obj = CreateInsertFunctionInstanceAlphaInput.parse_obj({
-            "function_id": obj.get("functionId"),
-            "integration_id": obj.get("integrationId"),
-            "enabled": obj.get("enabled"),
-            "name": obj.get("name"),
-            "settings": obj.get("settings")
+        _obj = ListDestinationsFromAudience200Response.parse_obj({
+            "data": ListDestinationsFromAudienceAlphaOutput.from_dict(obj.get("data")) if obj.get("data") is not None else None
         })
         return _obj
 

@@ -20,24 +20,15 @@ import json
 
 
 from typing import Optional
-from pydantic import BaseModel, Field, StrictBool, StrictStr, validator
-from segment_public_api.models.config import Config
+from pydantic import BaseModel, Field, StrictStr
 
-class AddAudienceScheduleToAudienceAlphaInput(BaseModel):
+class IDSyncConfig(BaseModel):
     """
-    Defines an Create Audience Schedule Input.  # noqa: E501
+    IDSyncConfig
     """
-    enabled: StrictBool = Field(..., description="The enabled status of the schedule to be created.")
-    strategy: StrictStr = Field(..., description="Strategy of the audience schedule (manual, periodic, or specific days).")
-    config: Optional[Config] = None
-    __properties = ["enabled", "strategy", "config"]
-
-    @validator('strategy')
-    def strategy_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in ('MANUAL', 'PERIODIC', 'SPECIFIC_DAYS'):
-            raise ValueError("must be one of enum values ('MANUAL', 'PERIODIC', 'SPECIFIC_DAYS')")
-        return value
+    strategy: StrictStr = Field(..., description="The strategy of the identifier.")
+    map_to: Optional[StrictStr] = Field(None, alias="mapTo", description="The property to map the identifier to.")
+    __properties = ["strategy", "mapTo"]
 
     class Config:
         """Pydantic configuration"""
@@ -53,8 +44,8 @@ class AddAudienceScheduleToAudienceAlphaInput(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> AddAudienceScheduleToAudienceAlphaInput:
-        """Create an instance of AddAudienceScheduleToAudienceAlphaInput from a JSON string"""
+    def from_json(cls, json_str: str) -> IDSyncConfig:
+        """Create an instance of IDSyncConfig from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -63,29 +54,20 @@ class AddAudienceScheduleToAudienceAlphaInput(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of config
-        if self.config:
-            _dict['config'] = self.config.to_dict()
-        # set to None if config (nullable) is None
-        # and __fields_set__ contains the field
-        if self.config is None and "config" in self.__fields_set__:
-            _dict['config'] = None
-
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> AddAudienceScheduleToAudienceAlphaInput:
-        """Create an instance of AddAudienceScheduleToAudienceAlphaInput from a dict"""
+    def from_dict(cls, obj: dict) -> IDSyncConfig:
+        """Create an instance of IDSyncConfig from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return AddAudienceScheduleToAudienceAlphaInput.parse_obj(obj)
+            return IDSyncConfig.parse_obj(obj)
 
-        _obj = AddAudienceScheduleToAudienceAlphaInput.parse_obj({
-            "enabled": obj.get("enabled"),
+        _obj = IDSyncConfig.parse_obj({
             "strategy": obj.get("strategy"),
-            "config": Config.from_dict(obj.get("config")) if obj.get("config") is not None else None
+            "map_to": obj.get("mapTo")
         })
         return _obj
 

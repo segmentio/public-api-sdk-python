@@ -19,16 +19,24 @@ import re  # noqa: F401
 import json
 
 
+from typing import Any, Dict, List
+from pydantic import BaseModel, Field, StrictStr, conlist, validator
 
-from pydantic import BaseModel, Field
-from segment_public_api.models.audience_schedule import AudienceSchedule
+class IDSyncOptions(BaseModel):
+    """
+    IDSyncOptions
+    """
+    trigger_on: conlist(StrictStr) = Field(..., alias="triggerOn", description="The list of trigger on conditions.")
+    ids: Dict[str, Any] = Field(..., description="The map of identifiers to the config.")
+    __properties = ["triggerOn", "ids"]
 
-class AddAudienceScheduleToAudienceAlphaOutput(BaseModel):
-    """
-    Defines an Create Audience Schedule Output.  # noqa: E501
-    """
-    audience_schedule: AudienceSchedule = Field(..., alias="audienceSchedule")
-    __properties = ["audienceSchedule"]
+    @validator('trigger_on')
+    def trigger_on_validate_enum(cls, value):
+        """Validates the enum"""
+        for i in value:
+            if i not in ('any', 'audience_exited', 'audience_joined', 'new_external_id_added'):
+                raise ValueError("each list item must be one of ('any', 'audience_exited', 'audience_joined', 'new_external_id_added')")
+        return value
 
     class Config:
         """Pydantic configuration"""
@@ -44,8 +52,8 @@ class AddAudienceScheduleToAudienceAlphaOutput(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> AddAudienceScheduleToAudienceAlphaOutput:
-        """Create an instance of AddAudienceScheduleToAudienceAlphaOutput from a JSON string"""
+    def from_json(cls, json_str: str) -> IDSyncOptions:
+        """Create an instance of IDSyncOptions from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -54,22 +62,20 @@ class AddAudienceScheduleToAudienceAlphaOutput(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of audience_schedule
-        if self.audience_schedule:
-            _dict['audienceSchedule'] = self.audience_schedule.to_dict()
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> AddAudienceScheduleToAudienceAlphaOutput:
-        """Create an instance of AddAudienceScheduleToAudienceAlphaOutput from a dict"""
+    def from_dict(cls, obj: dict) -> IDSyncOptions:
+        """Create an instance of IDSyncOptions from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return AddAudienceScheduleToAudienceAlphaOutput.parse_obj(obj)
+            return IDSyncOptions.parse_obj(obj)
 
-        _obj = AddAudienceScheduleToAudienceAlphaOutput.parse_obj({
-            "audience_schedule": AudienceSchedule.from_dict(obj.get("audienceSchedule")) if obj.get("audienceSchedule") is not None else None
+        _obj = IDSyncOptions.parse_obj({
+            "trigger_on": obj.get("triggerOn"),
+            "ids": obj.get("ids")
         })
         return _obj
 
