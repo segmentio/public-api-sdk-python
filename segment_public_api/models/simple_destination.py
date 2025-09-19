@@ -28,16 +28,17 @@ class SimpleDestination(BaseModel):
     """
     SimpleDestination
     """
-    id: StrictStr = Field(..., description="The id of the Destination.")
+    id: StrictStr = Field(..., description="The id of the Integration.")
     name: Optional[StrictStr] = Field(None, description="The name of the Destination.")
     source_id: StrictStr = Field(..., alias="sourceId", description="The Source of the Destination.")
-    enabled: StrictBool = Field(..., description="Enabled or not.")
+    enabled: StrictBool = Field(..., description="Whether the Integration is enabled or not.")
     created_at: StrictStr = Field(..., alias="createdAt", description="When the Integration connection was created.")
     updated_at: StrictStr = Field(..., alias="updatedAt", description="When the Integration connection was last updated.")
     settings: Dict[str, Any] = Field(..., description="The Destination settings.")
+    destination_id: StrictStr = Field(..., alias="destinationId", description="The Destination id.")
     metadata: Optional[Metadata] = None
     id_sync: Optional[IDSyncOptions] = Field(None, alias="idSync")
-    __properties = ["id", "name", "sourceId", "enabled", "createdAt", "updatedAt", "settings", "metadata", "idSync"]
+    __properties = ["id", "name", "sourceId", "enabled", "createdAt", "updatedAt", "settings", "destinationId", "metadata", "idSync"]
 
     class Config:
         """Pydantic configuration"""
@@ -88,6 +89,7 @@ class SimpleDestination(BaseModel):
             "created_at": obj.get("createdAt"),
             "updated_at": obj.get("updatedAt"),
             "settings": obj.get("settings"),
+            "destination_id": obj.get("destinationId"),
             "metadata": Metadata.from_dict(obj.get("metadata")) if obj.get("metadata") is not None else None,
             "id_sync": IDSyncOptions.from_dict(obj.get("idSync")) if obj.get("idSync") is not None else None
         })
