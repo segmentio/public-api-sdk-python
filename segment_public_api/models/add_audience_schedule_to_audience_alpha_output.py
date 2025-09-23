@@ -25,7 +25,7 @@ from segment_public_api.models.audience_schedule import AudienceSchedule
 
 class AddAudienceScheduleToAudienceAlphaOutput(BaseModel):
     """
-    Defines a Create Audience Schedule Output.  # noqa: E501
+    Defines the output of creating an audience schedule.  # noqa: E501
     """
     audience_schedule: AudienceSchedule = Field(..., alias="audienceSchedule")
     __properties = ["audienceSchedule"]

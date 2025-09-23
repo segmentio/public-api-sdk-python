@@ -25,7 +25,7 @@ from segment_public_api.models.config import Config
 
 class AddAudienceScheduleToAudienceAlphaInput(BaseModel):
     """
-    Defines a Create Audience Schedule Input.  # noqa: E501
+    Defines an input for creating an audience schedule.  # noqa: E501
     """
     enabled: StrictBool = Field(..., description="The enabled status of the schedule to be created.")
     strategy: StrictStr = Field(..., description="Strategy of the audience schedule (manual, periodic, or specific days).")
