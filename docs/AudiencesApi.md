@@ -128,7 +128,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.AudiencesApi(api_client)
     space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
-    create_audience_beta_input = {"name":"Linked Audience","description":"Test linked audience example","enabled":true,"audienceType":"LINKED","definition":{"query":"entity('owned-accounts').count() > 1","targetEntity":"owned-accounts"},"options":{"includeHistoricalData":true}} # CreateAudienceBetaInput | 
+    create_audience_beta_input = {"name":"Linked Audience","description":"Test linked audience example","enabled":true,"audienceType":"LINKED","definition":{"query":"entity('owned-accounts').count() > 1","targetEntity":"owned-accounts"},"options":{"filterByExternalIds":["user_id","email","ios.idfa","android.idfa"]}} # CreateAudienceBetaInput | 
 
     try:
         # Create Audience
