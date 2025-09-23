@@ -20,17 +20,16 @@ import json
 
 
 from typing import Optional
-from pydantic import BaseModel, Field, StrictBool, StrictStr, validator
+from pydantic import BaseModel, Field, StrictStr, validator
 from segment_public_api.models.config import Config
 
 class AddAudienceScheduleToAudienceAlphaInput(BaseModel):
     """
     Defines an input for creating an audience schedule.  # noqa: E501
     """
-    enabled: StrictBool = Field(..., description="The enabled status of the schedule to be created.")
     strategy: StrictStr = Field(..., description="Strategy of the audience schedule (manual, periodic, or specific days).")
     config: Optional[Config] = None
-    __properties = ["enabled", "strategy", "config"]
+    __properties = ["strategy", "config"]
 
     @validator('strategy')
     def strategy_validate_enum(cls, value):
@@ -83,7 +82,6 @@ class AddAudienceScheduleToAudienceAlphaInput(BaseModel):
             return AddAudienceScheduleToAudienceAlphaInput.parse_obj(obj)
 
         _obj = AddAudienceScheduleToAudienceAlphaInput.parse_obj({
-            "enabled": obj.get("enabled"),
             "strategy": obj.get("strategy"),
             "config": Config.from_dict(obj.get("config")) if obj.get("config") is not None else None
         })
