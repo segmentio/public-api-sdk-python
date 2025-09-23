@@ -25,7 +25,7 @@ Method | HTTP request | Description
 
 Add Audience Schedule to Audience
 
-Creates a schedule for the given audience.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.
+The ability to configure the run schedule for an Audience is limited to Linked Audiences (audienceType = LINKED).  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.
 
 ### Example
 
@@ -52,7 +52,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     api_instance = segment_public_api.AudiencesApi(api_client)
     space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
     id = 'aud_0ujsszwN8NRY24YaXiTIE2VWDTS' # str | 
-    add_audience_schedule_to_audience_alpha_input = {"enabled":true,"strategy":"SPECIFIC_DAYS","config":{"days":[1,3,5],"hours":[9,17],"timezone":"America/New_York"}} # AddAudienceScheduleToAudienceAlphaInput | 
+    add_audience_schedule_to_audience_alpha_input = {"strategy":"SPECIFIC_DAYS","config":{"days":[1,3,5],"hours":[9,17],"timezone":"America/New_York"}} # AddAudienceScheduleToAudienceAlphaInput | 
 
     try:
         # Add Audience Schedule to Audience
@@ -129,7 +129,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.AudiencesApi(api_client)
     space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
-    create_audience_beta_input = {"name":"Linked Audience","description":"Test linked audience example","enabled":true,"audienceType":"LINKED","definition":{"query":"entity('owned-accounts').count() > 1","targetEntity":"owned-accounts"},"options":{"includeHistoricalData":true}} # CreateAudienceBetaInput | 
+    create_audience_beta_input = {"name":"Linked Audience","description":"Test linked audience example","enabled":true,"audienceType":"LINKED","definition":{"query":"entity('owned-accounts').count() > 1","targetEntity":"owned-accounts"},"options":{"filterByExternalIds":["user_id","email","ios.idfa","android.idfa"]}} # CreateAudienceBetaInput | 
 
     try:
         # Create Audience
