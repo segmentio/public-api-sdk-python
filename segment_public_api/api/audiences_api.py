@@ -68,7 +68,7 @@ class AudiencesApi:
     def add_audience_schedule_to_audience(self, space_id : constr(strict=True), id : constr(strict=True), add_audience_schedule_to_audience_alpha_input : AddAudienceScheduleToAudienceAlphaInput, **kwargs) -> AddAudienceScheduleToAudience200Response:  # noqa: E501
         """Add Audience Schedule to Audience  # noqa: E501
 
-        The ability to configure the run schedule for an Audience is limited to Linked Audiences (for example audienceType = LINKED).  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
+        The ability to configure the run schedule for an Audience is limited to Linked Audiences (audienceType = LINKED).  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -102,7 +102,7 @@ class AudiencesApi:
     def add_audience_schedule_to_audience_with_http_info(self, space_id : constr(strict=True), id : constr(strict=True), add_audience_schedule_to_audience_alpha_input : AddAudienceScheduleToAudienceAlphaInput, **kwargs) -> ApiResponse:  # noqa: E501
         """Add Audience Schedule to Audience  # noqa: E501
 
-        The ability to configure the run schedule for an Audience is limited to Linked Audiences (for example audienceType = LINKED).  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
+        The ability to configure the run schedule for an Audience is limited to Linked Audiences (audienceType = LINKED).  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
