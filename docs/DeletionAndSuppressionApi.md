@@ -393,7 +393,7 @@ Name | Type | Description  | Notes
 
 List Regulations from Source
 
-Lists all Source-scoped regulations.
+Lists all Source-scoped regulations.    Please note: List regulations for Source only returns deletion requests from the past 90 days. Deletion requests older than 90 days are not retained and will result in 404 resource not found.
 
 ### Example
 
@@ -547,7 +547,7 @@ Name | Type | Description  | Notes
 
 List Workspace Regulations
 
-Lists all Workspace-scoped regulations.
+Lists all Workspace-scoped regulations.    Please note: List Workspace regulations only returns deletion requests from the past 90 days. Deletion requests older than 90 days are not retained and will result in 404 resource not found.
 
 ### Example
 
