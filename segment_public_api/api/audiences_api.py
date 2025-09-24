@@ -1831,7 +1831,7 @@ class AudiencesApi:
     def update_audience_schedule_for_audience(self, space_id : constr(strict=True), id : constr(strict=True), schedule_id : constr(strict=True), update_audience_schedule_for_audience_alpha_input : UpdateAudienceScheduleForAudienceAlphaInput, **kwargs) -> UpdateAudienceScheduleForAudience200Response:  # noqa: E501
         """Update Audience Schedule for Audience  # noqa: E501
 
-        Updates an audience schedule for the given audience id.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
+        Updates an audience schedule for a Linked Audience (audienceType = LINKED).  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1867,7 +1867,7 @@ class AudiencesApi:
     def update_audience_schedule_for_audience_with_http_info(self, space_id : constr(strict=True), id : constr(strict=True), schedule_id : constr(strict=True), update_audience_schedule_for_audience_alpha_input : UpdateAudienceScheduleForAudienceAlphaInput, **kwargs) -> ApiResponse:  # noqa: E501
         """Update Audience Schedule for Audience  # noqa: E501
 
-        Updates an audience schedule for the given audience id.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
+        Updates an audience schedule for a Linked Audience (audienceType = LINKED).  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
