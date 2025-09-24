@@ -4,6 +4,7 @@ All URIs are relative to *https://api.segmentapis.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**add_audience_schedule_to_audience**](AudiencesApi.md#add_audience_schedule_to_audience) | **POST** /spaces/{spaceId}/audiences/{id}/schedules | Add Audience Schedule to Audience
 [**create_audience**](AudiencesApi.md#create_audience) | **POST** /spaces/{spaceId}/audiences | Create Audience
 [**create_audience_preview**](AudiencesApi.md#create_audience_preview) | **POST** /spaces/{spaceId}/audiences/previews | Create Audience Preview
 [**get_audience**](AudiencesApi.md#get_audience) | **GET** /spaces/{spaceId}/audiences/{id} | Get Audience
@@ -15,6 +16,84 @@ Method | HTTP request | Description
 [**remove_audience_from_space**](AudiencesApi.md#remove_audience_from_space) | **DELETE** /spaces/{spaceId}/audiences/{id} | Remove Audience from Space
 [**update_audience_for_space**](AudiencesApi.md#update_audience_for_space) | **PATCH** /spaces/{spaceId}/audiences/{id} | Update Audience for Space
 
+
+
+## Operation: add_audience_schedule_to_audience
+
+> AddAudienceScheduleToAudience200Response add_audience_schedule_to_audience(space_id, id, add_audience_schedule_to_audience_alpha_input)
+
+Add Audience Schedule to Audience
+
+The ability to configure the run schedule for an Audience is limited to Linked Audiences (audienceType = LINKED).  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.
+
+### Example
+
+* Bearer Authentication (token):
+```python
+import time
+import os
+import segment_public_api
+from segment_public_api.models.add_audience_schedule_to_audience200_response import AddAudienceScheduleToAudience200Response
+from segment_public_api.models.add_audience_schedule_to_audience_alpha_input import AddAudienceScheduleToAudienceAlphaInput
+from segment_public_api.rest import ApiException
+from pprint import pprint
+
+
+
+# Configure Bearer authorization: token
+configuration = segment_public_api.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with segment_public_api.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = segment_public_api.AudiencesApi(api_client)
+    space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
+    id = 'aud_0ujsszwN8NRY24YaXiTIE2VWDTS' # str | 
+    add_audience_schedule_to_audience_alpha_input = {"strategy":"SPECIFIC_DAYS","config":{"days":[1,3,5],"hours":[9,17],"timezone":"America/New_York"}} # AddAudienceScheduleToAudienceAlphaInput | 
+
+    try:
+        # Add Audience Schedule to Audience
+        api_response = api_instance.add_audience_schedule_to_audience(space_id, id, add_audience_schedule_to_audience_alpha_input)
+        print("The response of AudiencesApi->add_audience_schedule_to_audience:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AudiencesApi->add_audience_schedule_to_audience: %s\n" % e)
+```
+
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **space_id** | **str**|  | 
+ **id** | **str**|  | 
+ **add_audience_schedule_to_audience_alpha_input** | [**AddAudienceScheduleToAudienceAlphaInput**](AddAudienceScheduleToAudienceAlphaInput.md)|  | 
+
+### Return type
+
+[**AddAudienceScheduleToAudience200Response**](AddAudienceScheduleToAudience200Response.md)
+
+### Authorization
+
+[token](../README.md#token)
+
+### HTTP request headers
+
+ - **Content-Type**: application/vnd.segment.v1alpha+json
+ - **Accept**: application/vnd.segment.v1alpha+json, application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**404** | Resource not found |  -  |
+**422** | Validation failure |  -  |
+**429** | Too many requests |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## Operation: create_audience
