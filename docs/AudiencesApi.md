@@ -15,6 +15,7 @@ Method | HTTP request | Description
 [**list_audiences**](AudiencesApi.md#list_audiences) | **GET** /spaces/{spaceId}/audiences | List Audiences
 [**remove_audience_from_space**](AudiencesApi.md#remove_audience_from_space) | **DELETE** /spaces/{spaceId}/audiences/{id} | Remove Audience from Space
 [**update_audience_for_space**](AudiencesApi.md#update_audience_for_space) | **PATCH** /spaces/{spaceId}/audiences/{id} | Update Audience for Space
+[**update_audience_schedule_for_audience**](AudiencesApi.md#update_audience_schedule_for_audience) | **PATCH** /spaces/{spaceId}/audiences/{id}/schedules/{scheduleId} | Update Audience Schedule for Audience
 
 
 
@@ -849,6 +850,86 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**UpdateAudienceForSpace200Response**](UpdateAudienceForSpace200Response.md)
+
+### Authorization
+
+[token](../README.md#token)
+
+### HTTP request headers
+
+ - **Content-Type**: application/vnd.segment.v1alpha+json
+ - **Accept**: application/vnd.segment.v1alpha+json, application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**404** | Resource not found |  -  |
+**422** | Validation failure |  -  |
+**429** | Too many requests |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## Operation: update_audience_schedule_for_audience
+
+> UpdateAudienceScheduleForAudience200Response update_audience_schedule_for_audience(space_id, id, schedule_id, update_audience_schedule_for_audience_alpha_input)
+
+Update Audience Schedule for Audience
+
+Updates an audience schedule for the given audience id.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.
+
+### Example
+
+* Bearer Authentication (token):
+```python
+import time
+import os
+import segment_public_api
+from segment_public_api.models.update_audience_schedule_for_audience200_response import UpdateAudienceScheduleForAudience200Response
+from segment_public_api.models.update_audience_schedule_for_audience_alpha_input import UpdateAudienceScheduleForAudienceAlphaInput
+from segment_public_api.rest import ApiException
+from pprint import pprint
+
+
+
+# Configure Bearer authorization: token
+configuration = segment_public_api.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with segment_public_api.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = segment_public_api.AudiencesApi(api_client)
+    space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
+    id = 'aud_0ujsszwN8NRY24YaXiTIE2VWDTS' # str | 
+    schedule_id = 'sch_0ujsszwN8NRY24YaXiTIE2VWDTS' # str | 
+    update_audience_schedule_for_audience_alpha_input = {"strategy":"SPECIFIC_DAYS","config":{"days":[1,3,4],"hours":[9,16],"timezone":"America/New_York"}} # UpdateAudienceScheduleForAudienceAlphaInput | 
+
+    try:
+        # Update Audience Schedule for Audience
+        api_response = api_instance.update_audience_schedule_for_audience(space_id, id, schedule_id, update_audience_schedule_for_audience_alpha_input)
+        print("The response of AudiencesApi->update_audience_schedule_for_audience:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AudiencesApi->update_audience_schedule_for_audience: %s\n" % e)
+```
+
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **space_id** | **str**|  | 
+ **id** | **str**|  | 
+ **schedule_id** | **str**|  | 
+ **update_audience_schedule_for_audience_alpha_input** | [**UpdateAudienceScheduleForAudienceAlphaInput**](UpdateAudienceScheduleForAudienceAlphaInput.md)|  | 
+
+### Return type
+
+[**UpdateAudienceScheduleForAudience200Response**](UpdateAudienceScheduleForAudience200Response.md)
 
 ### Authorization
 
