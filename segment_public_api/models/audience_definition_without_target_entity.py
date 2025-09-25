@@ -19,16 +19,15 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
-from pydantic import BaseModel
-from segment_public_api.models.update_audience_for_space_beta_output import UpdateAudienceForSpaceBetaOutput
 
-class UpdateAudienceForSpace200Response(BaseModel):
+from pydantic import BaseModel, Field, StrictStr
+
+class AudienceDefinitionWithoutTargetEntity(BaseModel):
     """
-    UpdateAudienceForSpace200Response
+    AudienceDefinitionWithoutTargetEntity
     """
-    data: Optional[UpdateAudienceForSpaceBetaOutput] = None
-    __properties = ["data"]
+    query: StrictStr = Field(..., description="The query language string defining the audience segmentation criteria.  For guidance on using the query language, see the [Segment documentation site](https://segment.com/docs/api/public-api/query-language).")
+    __properties = ["query"]
 
     class Config:
         """Pydantic configuration"""
@@ -44,8 +43,8 @@ class UpdateAudienceForSpace200Response(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> UpdateAudienceForSpace200Response:
-        """Create an instance of UpdateAudienceForSpace200Response from a JSON string"""
+    def from_json(cls, json_str: str) -> AudienceDefinitionWithoutTargetEntity:
+        """Create an instance of AudienceDefinitionWithoutTargetEntity from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -54,22 +53,19 @@ class UpdateAudienceForSpace200Response(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of data
-        if self.data:
-            _dict['data'] = self.data.to_dict()
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> UpdateAudienceForSpace200Response:
-        """Create an instance of UpdateAudienceForSpace200Response from a dict"""
+    def from_dict(cls, obj: dict) -> AudienceDefinitionWithoutTargetEntity:
+        """Create an instance of AudienceDefinitionWithoutTargetEntity from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return UpdateAudienceForSpace200Response.parse_obj(obj)
+            return AudienceDefinitionWithoutTargetEntity.parse_obj(obj)
 
-        _obj = UpdateAudienceForSpace200Response.parse_obj({
-            "data": UpdateAudienceForSpaceBetaOutput.from_dict(obj.get("data")) if obj.get("data") is not None else None
+        _obj = AudienceDefinitionWithoutTargetEntity.parse_obj({
+            "query": obj.get("query")
         })
         return _obj
 

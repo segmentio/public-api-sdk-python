@@ -19,16 +19,16 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
-from pydantic import BaseModel
-from segment_public_api.models.update_audience_for_space_beta_output import UpdateAudienceForSpaceBetaOutput
 
-class UpdateAudienceForSpace200Response(BaseModel):
+from pydantic import BaseModel, Field
+from segment_public_api.models.audience_summary import AudienceSummary
+
+class UpdateAudienceForSpaceBetaOutput(BaseModel):
     """
-    UpdateAudienceForSpace200Response
+    Audience output for update.  # noqa: E501
     """
-    data: Optional[UpdateAudienceForSpaceBetaOutput] = None
-    __properties = ["data"]
+    audience: AudienceSummary = Field(...)
+    __properties = ["audience"]
 
     class Config:
         """Pydantic configuration"""
@@ -44,8 +44,8 @@ class UpdateAudienceForSpace200Response(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> UpdateAudienceForSpace200Response:
-        """Create an instance of UpdateAudienceForSpace200Response from a JSON string"""
+    def from_json(cls, json_str: str) -> UpdateAudienceForSpaceBetaOutput:
+        """Create an instance of UpdateAudienceForSpaceBetaOutput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -54,22 +54,22 @@ class UpdateAudienceForSpace200Response(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of data
-        if self.data:
-            _dict['data'] = self.data.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of audience
+        if self.audience:
+            _dict['audience'] = self.audience.to_dict()
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> UpdateAudienceForSpace200Response:
-        """Create an instance of UpdateAudienceForSpace200Response from a dict"""
+    def from_dict(cls, obj: dict) -> UpdateAudienceForSpaceBetaOutput:
+        """Create an instance of UpdateAudienceForSpaceBetaOutput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return UpdateAudienceForSpace200Response.parse_obj(obj)
+            return UpdateAudienceForSpaceBetaOutput.parse_obj(obj)
 
-        _obj = UpdateAudienceForSpace200Response.parse_obj({
-            "data": UpdateAudienceForSpaceBetaOutput.from_dict(obj.get("data")) if obj.get("data") is not None else None
+        _obj = UpdateAudienceForSpaceBetaOutput.parse_obj({
+            "audience": AudienceSummary.from_dict(obj.get("audience")) if obj.get("audience") is not None else None
         })
         return _obj
 

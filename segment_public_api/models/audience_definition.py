@@ -26,9 +26,9 @@ class AudienceDefinition(BaseModel):
     """
     AudienceDefinition
     """
+    target_entity: Optional[StrictStr] = Field(None, alias="targetEntity", description="The target entity slug, required in creating a linked audience.")
     query: StrictStr = Field(..., description="The query language string defining the audience segmentation criteria.  For guidance on using the query language, see the [Segment documentation site](https://segment.com/docs/api/public-api/query-language).")
-    target_entity: Optional[StrictStr] = Field(None, alias="targetEntity", description="The target entity slug.")
-    __properties = ["query", "targetEntity"]
+    __properties = ["targetEntity", "query"]
 
     class Config:
         """Pydantic configuration"""
@@ -66,8 +66,8 @@ class AudienceDefinition(BaseModel):
             return AudienceDefinition.parse_obj(obj)
 
         _obj = AudienceDefinition.parse_obj({
-            "query": obj.get("query"),
-            "target_entity": obj.get("targetEntity")
+            "target_entity": obj.get("targetEntity"),
+            "query": obj.get("query")
         })
         return _obj
 
