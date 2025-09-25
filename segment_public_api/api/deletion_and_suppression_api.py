@@ -815,7 +815,7 @@ class DeletionAndSuppressionApi:
     def list_regulations_from_source(self, source_id : constr(strict=True), status : Annotated[Optional[StrictStr], Field(description="The status on which to filter returned regulations.  This parameter exists in v1.")] = None, regulation_types : Annotated[Optional[conlist(StrictStr)], Field(description="The regulation types on which to filter returned regulations.  This parameter exists in v1.")] = None, pagination : Annotated[Optional[PaginationInput], Field(description="Pagination parameters.  This parameter exists in v1.")] = None, **kwargs) -> ListRegulationsFromSource200Response:  # noqa: E501
         """List Regulations from Source  # noqa: E501
 
-        Lists all Source-scoped regulations.  # noqa: E501
+        Lists all Source-scoped regulations.    Please note: List regulations for Source only returns deletion requests from the past 90 days. Deletion requests older than 90 days are not retained and will result in 404 resource not found.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -851,7 +851,7 @@ class DeletionAndSuppressionApi:
     def list_regulations_from_source_with_http_info(self, source_id : constr(strict=True), status : Annotated[Optional[StrictStr], Field(description="The status on which to filter returned regulations.  This parameter exists in v1.")] = None, regulation_types : Annotated[Optional[conlist(StrictStr)], Field(description="The regulation types on which to filter returned regulations.  This parameter exists in v1.")] = None, pagination : Annotated[Optional[PaginationInput], Field(description="Pagination parameters.  This parameter exists in v1.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Regulations from Source  # noqa: E501
 
-        Lists all Source-scoped regulations.  # noqa: E501
+        Lists all Source-scoped regulations.    Please note: List regulations for Source only returns deletion requests from the past 90 days. Deletion requests older than 90 days are not retained and will result in 404 resource not found.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1126,7 +1126,7 @@ class DeletionAndSuppressionApi:
     def list_workspace_regulations(self, status : Annotated[Optional[StrictStr], Field(description="The status on which to filter the returned regulations.  This parameter exists in v1.")] = None, regulation_types : Annotated[Optional[conlist(StrictStr)], Field(description="The regulation types on which to filter returned regulations.  This parameter exists in v1.")] = None, pagination : Annotated[Optional[PaginationInput], Field(description="Pagination parameters.  This parameter exists in v1.")] = None, **kwargs) -> ListWorkspaceRegulations200Response:  # noqa: E501
         """List Workspace Regulations  # noqa: E501
 
-        Lists all Workspace-scoped regulations.  # noqa: E501
+        Lists all Workspace-scoped regulations.    Please note: List Workspace regulations only returns deletion requests from the past 90 days. Deletion requests older than 90 days are not retained and will result in 404 resource not found.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1160,7 +1160,7 @@ class DeletionAndSuppressionApi:
     def list_workspace_regulations_with_http_info(self, status : Annotated[Optional[StrictStr], Field(description="The status on which to filter the returned regulations.  This parameter exists in v1.")] = None, regulation_types : Annotated[Optional[conlist(StrictStr)], Field(description="The regulation types on which to filter returned regulations.  This parameter exists in v1.")] = None, pagination : Annotated[Optional[PaginationInput], Field(description="Pagination parameters.  This parameter exists in v1.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Workspace Regulations  # noqa: E501
 
-        Lists all Workspace-scoped regulations.  # noqa: E501
+        Lists all Workspace-scoped regulations.    Please note: List Workspace regulations only returns deletion requests from the past 90 days. Deletion requests older than 90 days are not retained and will result in 404 resource not found.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
