@@ -26,7 +26,7 @@ class AudienceDefinition(BaseModel):
     """
     AudienceDefinition
     """
-    target_entity: Optional[StrictStr] = Field(None, alias="targetEntity", description="The target entity slug, required in creating a linked audience.")
+    target_entity: Optional[StrictStr] = Field(None, alias="targetEntity", description="The target entity relationship slug, required in a linked audience, default to profile if not specified.")
     query: StrictStr = Field(..., description="The query language string defining the audience segmentation criteria.  For guidance on using the query language, see the [Segment documentation site](https://segment.com/docs/api/public-api/query-language).")
     __properties = ["targetEntity", "query"]
 
