@@ -15,7 +15,7 @@ Method | HTTP request | Description
 [**list_audience_schedules_from_space_and_audience**](AudiencesApi.md#list_audience_schedules_from_space_and_audience) | **GET** /spaces/{spaceId}/audiences/{id}/schedules | List Audience Schedules from Space And Audience
 [**list_audiences**](AudiencesApi.md#list_audiences) | **GET** /spaces/{spaceId}/audiences | List Audiences
 [**remove_audience_from_space**](AudiencesApi.md#remove_audience_from_space) | **DELETE** /spaces/{spaceId}/audiences/{id} | Remove Audience from Space
-[**remove_audience_schedule_from_audience**](AudiencesApi.md#remove_audience_schedule_from_audience) | **DELETE** /spaces/{spaceId}/audiences/{id}/schedules/{scheduleId} | Remove Audience Schedule from Audience
+[**remove_audience_schedule_from_audience**](AudiencesApi.md#remove_audience_schedule_from_audience) | **DELETE** /spaces/{spaceId}/audiences/{id}/schedules | Remove Audience Schedule from Audience
 [**update_audience_for_space**](AudiencesApi.md#update_audience_for_space) | **PATCH** /spaces/{spaceId}/audiences/{id} | Update Audience for Space
 [**update_audience_schedule_for_audience**](AudiencesApi.md#update_audience_schedule_for_audience) | **PATCH** /spaces/{spaceId}/audiences/{id}/schedules/{scheduleId} | Update Audience Schedule for Audience
 
@@ -872,7 +872,7 @@ Name | Type | Description  | Notes
 
 ## Operation: remove_audience_schedule_from_audience
 
-> RemoveAudienceScheduleFromAudience200Response remove_audience_schedule_from_audience(space_id, id, schedule_id)
+> RemoveAudienceScheduleFromAudience200Response remove_audience_schedule_from_audience(space_id, id, schedule_id=schedule_id)
 
 Remove Audience Schedule from Audience
 
@@ -902,11 +902,11 @@ with segment_public_api.ApiClient(configuration) as api_client:
     api_instance = segment_public_api.AudiencesApi(api_client)
     space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
     id = 'aud_0ujsszwN8NRY24YaXiTIE2VWDTS' # str | 
-    schedule_id = 'sch_0ujsszwN8NRY24YaXiTIE2VWDTS' # str | 
+    schedule_id = 'sch_0ujsszwN8NRY24YaXiTIE2VWDTS' # str | The ID of the schedule to delete  This parameter exists in alpha. (optional)
 
     try:
         # Remove Audience Schedule from Audience
-        api_response = api_instance.remove_audience_schedule_from_audience(space_id, id, schedule_id)
+        api_response = api_instance.remove_audience_schedule_from_audience(space_id, id, schedule_id=schedule_id)
         print("The response of AudiencesApi->remove_audience_schedule_from_audience:\n")
         pprint(api_response)
     except Exception as e:
@@ -921,7 +921,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **space_id** | **str**|  | 
  **id** | **str**|  | 
- **schedule_id** | **str**|  | 
+ **schedule_id** | **str**| The ID of the schedule to delete  This parameter exists in alpha. | [optional] 
 
 ### Return type
 

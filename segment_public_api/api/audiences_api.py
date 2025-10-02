@@ -1815,7 +1815,7 @@ class AudiencesApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def remove_audience_schedule_from_audience(self, space_id : constr(strict=True), id : constr(strict=True), schedule_id : constr(strict=True), **kwargs) -> RemoveAudienceScheduleFromAudience200Response:  # noqa: E501
+    def remove_audience_schedule_from_audience(self, space_id : constr(strict=True), id : constr(strict=True), schedule_id : Annotated[Optional[StrictStr], Field(description="The ID of the schedule to delete  This parameter exists in alpha.")] = None, **kwargs) -> RemoveAudienceScheduleFromAudience200Response:  # noqa: E501
         """Remove Audience Schedule from Audience  # noqa: E501
 
         Deletes an audience schedule for a Linked Audience (audienceType = LINKED).  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
@@ -1829,7 +1829,7 @@ class AudiencesApi:
         :type space_id: str
         :param id: (required)
         :type id: str
-        :param schedule_id: (required)
+        :param schedule_id: The ID of the schedule to delete  This parameter exists in alpha.
         :type schedule_id: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -1849,7 +1849,7 @@ class AudiencesApi:
         return self.remove_audience_schedule_from_audience_with_http_info(space_id, id, schedule_id, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def remove_audience_schedule_from_audience_with_http_info(self, space_id : constr(strict=True), id : constr(strict=True), schedule_id : constr(strict=True), **kwargs) -> ApiResponse:  # noqa: E501
+    def remove_audience_schedule_from_audience_with_http_info(self, space_id : constr(strict=True), id : constr(strict=True), schedule_id : Annotated[Optional[StrictStr], Field(description="The ID of the schedule to delete  This parameter exists in alpha.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Remove Audience Schedule from Audience  # noqa: E501
 
         Deletes an audience schedule for a Linked Audience (audienceType = LINKED).  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
@@ -1863,7 +1863,7 @@ class AudiencesApi:
         :type space_id: str
         :param id: (required)
         :type id: str
-        :param schedule_id: (required)
+        :param schedule_id: The ID of the schedule to delete  This parameter exists in alpha.
         :type schedule_id: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -1929,12 +1929,12 @@ class AudiencesApi:
         if _params['id']:
             _path_params['id'] = _params['id']
 
-        if _params['schedule_id']:
-            _path_params['scheduleId'] = _params['schedule_id']
-
 
         # process the query parameters
         _query_params = []
+        if _params.get('schedule_id') is not None:  # noqa: E501
+            _query_params.append(('scheduleId', _params['schedule_id']))
+
         # process the header parameters
         _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
@@ -1957,7 +1957,7 @@ class AudiencesApi:
         }
 
         return self.api_client.call_api(
-            '/spaces/{spaceId}/audiences/{id}/schedules/{scheduleId}', 'DELETE',
+            '/spaces/{spaceId}/audiences/{id}/schedules', 'DELETE',
             _path_params,
             _query_params,
             _header_params,
