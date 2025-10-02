@@ -14,6 +14,7 @@ Method | HTTP request | Description
 [**list_audience_schedules_from_space_and_audience**](AudiencesApi.md#list_audience_schedules_from_space_and_audience) | **GET** /spaces/{spaceId}/audiences/{id}/schedules | List Audience Schedules from Space And Audience
 [**list_audiences**](AudiencesApi.md#list_audiences) | **GET** /spaces/{spaceId}/audiences | List Audiences
 [**remove_audience_from_space**](AudiencesApi.md#remove_audience_from_space) | **DELETE** /spaces/{spaceId}/audiences/{id} | Remove Audience from Space
+[**remove_audience_schedule_from_audience**](AudiencesApi.md#remove_audience_schedule_from_audience) | **DELETE** /spaces/{spaceId}/audiences/{id}/schedules/{scheduleId} | Remove Audience Schedule from Audience
 [**update_audience_for_space**](AudiencesApi.md#update_audience_for_space) | **PATCH** /spaces/{spaceId}/audiences/{id} | Update Audience for Space
 [**update_audience_schedule_for_audience**](AudiencesApi.md#update_audience_schedule_for_audience) | **PATCH** /spaces/{spaceId}/audiences/{id}/schedules/{scheduleId} | Update Audience Schedule for Audience
 
@@ -781,6 +782,83 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: Not defined
  - **Accept**: application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json, application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**404** | Resource not found |  -  |
+**422** | Validation failure |  -  |
+**429** | Too many requests |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## Operation: remove_audience_schedule_from_audience
+
+> RemoveAudienceScheduleFromAudience200Response remove_audience_schedule_from_audience(space_id, id, schedule_id)
+
+Remove Audience Schedule from Audience
+
+Deletes an audience schedule for a Linked Audience (audienceType = LINKED).  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.
+
+### Example
+
+* Bearer Authentication (token):
+```python
+import time
+import os
+import segment_public_api
+from segment_public_api.models.remove_audience_schedule_from_audience200_response import RemoveAudienceScheduleFromAudience200Response
+from segment_public_api.rest import ApiException
+from pprint import pprint
+
+
+
+# Configure Bearer authorization: token
+configuration = segment_public_api.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with segment_public_api.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = segment_public_api.AudiencesApi(api_client)
+    space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
+    id = 'aud_0ujsszwN8NRY24YaXiTIE2VWDTS' # str | 
+    schedule_id = 'sch_0ujsszwN8NRY24YaXiTIE2VWDTS' # str | 
+
+    try:
+        # Remove Audience Schedule from Audience
+        api_response = api_instance.remove_audience_schedule_from_audience(space_id, id, schedule_id)
+        print("The response of AudiencesApi->remove_audience_schedule_from_audience:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AudiencesApi->remove_audience_schedule_from_audience: %s\n" % e)
+```
+
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **space_id** | **str**|  | 
+ **id** | **str**|  | 
+ **schedule_id** | **str**|  | 
+
+### Return type
+
+[**RemoveAudienceScheduleFromAudience200Response**](RemoveAudienceScheduleFromAudience200Response.md)
+
+### Authorization
+
+[token](../README.md#token)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/vnd.segment.v1alpha+json, application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
