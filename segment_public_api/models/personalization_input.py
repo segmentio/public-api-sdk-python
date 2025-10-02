@@ -20,7 +20,7 @@ import json
 
 
 from typing import List, Optional
-from pydantic import BaseModel, Field, conlist
+from pydantic import BaseModel, Field, StrictBool, conlist
 from segment_public_api.models.personalization_input_entity import PersonalizationInputEntity
 from segment_public_api.models.profile import Profile
 
@@ -30,7 +30,8 @@ class PersonalizationInput(BaseModel):
     """
     profile: Profile = Field(...)
     entities: Optional[conlist(PersonalizationInputEntity)] = Field(None, description="Entities V2 Object.")
-    __properties = ["profile", "entities"]
+    sync_entity_property_changes: Optional[StrictBool] = Field(None, alias="syncEntityPropertyChanges", description="Sync entity property changes back to Segment. Only applicable if activationType is \"Audience Membership Changed\" and segmentEvent is \"identify\".")
+    __properties = ["profile", "entities", "syncEntityPropertyChanges"]
 
     class Config:
         """Pydantic configuration"""
@@ -79,7 +80,8 @@ class PersonalizationInput(BaseModel):
 
         _obj = PersonalizationInput.parse_obj({
             "profile": Profile.from_dict(obj.get("profile")) if obj.get("profile") is not None else None,
-            "entities": [PersonalizationInputEntity.from_dict(_item) for _item in obj.get("entities")] if obj.get("entities") is not None else None
+            "entities": [PersonalizationInputEntity.from_dict(_item) for _item in obj.get("entities")] if obj.get("entities") is not None else None,
+            "sync_entity_property_changes": obj.get("syncEntityPropertyChanges")
         })
         return _obj
 
