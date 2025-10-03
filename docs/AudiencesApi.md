@@ -7,6 +7,7 @@ Method | HTTP request | Description
 [**add_audience_schedule_to_audience**](AudiencesApi.md#add_audience_schedule_to_audience) | **POST** /spaces/{spaceId}/audiences/{id}/schedules | Add Audience Schedule to Audience
 [**create_audience**](AudiencesApi.md#create_audience) | **POST** /spaces/{spaceId}/audiences | Create Audience
 [**create_audience_preview**](AudiencesApi.md#create_audience_preview) | **POST** /spaces/{spaceId}/audiences/previews | Create Audience Preview
+[**force_execute_audience_run**](AudiencesApi.md#force_execute_audience_run) | **POST** /spaces/{spaceId}/audiences/{audienceId}/runs | Force Execute Audience Run
 [**get_audience**](AudiencesApi.md#get_audience) | **GET** /spaces/{spaceId}/audiences/{id} | Get Audience
 [**get_audience_preview**](AudiencesApi.md#get_audience_preview) | **GET** /spaces/{spaceId}/audiences/previews/{id} | Get Audience Preview
 [**get_audience_schedule_from_space_and_audience**](AudiencesApi.md#get_audience_schedule_from_space_and_audience) | **GET** /spaces/{spaceId}/audiences/{id}/schedules/{scheduleId} | Get Audience Schedule from Space And Audience
@@ -237,6 +238,81 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
  - **Accept**: application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json, application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**404** | Resource not found |  -  |
+**422** | Validation failure |  -  |
+**429** | Too many requests |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## Operation: force_execute_audience_run
+
+> ForceExecuteAudienceRun200Response force_execute_audience_run(space_id, audience_id)
+
+Force Execute Audience Run
+
+The ability to force execute a run for an Audience is limited to Linked Audiences (audienceType = `LINKED`).  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Audience Run Forced` event in the [audit trail](/tag/Audit-Trail).
+
+### Example
+
+* Bearer Authentication (token):
+```python
+import time
+import os
+import segment_public_api
+from segment_public_api.models.force_execute_audience_run200_response import ForceExecuteAudienceRun200Response
+from segment_public_api.rest import ApiException
+from pprint import pprint
+
+
+
+# Configure Bearer authorization: token
+configuration = segment_public_api.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with segment_public_api.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = segment_public_api.AudiencesApi(api_client)
+    space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
+    audience_id = 'aud_0ujsszwN8NRY24YaXiTIE2VWDTS' # str | 
+
+    try:
+        # Force Execute Audience Run
+        api_response = api_instance.force_execute_audience_run(space_id, audience_id)
+        print("The response of AudiencesApi->force_execute_audience_run:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AudiencesApi->force_execute_audience_run: %s\n" % e)
+```
+
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **space_id** | **str**|  | 
+ **audience_id** | **str**|  | 
+
+### Return type
+
+[**ForceExecuteAudienceRun200Response**](ForceExecuteAudienceRun200Response.md)
+
+### Authorization
+
+[token](../README.md#token)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/vnd.segment.v1alpha+json, application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
