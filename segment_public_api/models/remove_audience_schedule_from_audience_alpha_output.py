@@ -24,7 +24,7 @@ from pydantic import BaseModel, Field, StrictStr, validator
 
 class RemoveAudienceScheduleFromAudienceAlphaOutput(BaseModel):
     """
-    Output to remove a RETL audience schedule.  # noqa: E501
+    Delete audience schedule endpoint output.  # noqa: E501
     """
     status: StrictStr = Field(..., description="The status of the operation.")
     __properties = ["status"]
