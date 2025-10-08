@@ -21,14 +21,14 @@ import json
 
 
 from pydantic import BaseModel, Field
-from segment_public_api.models.edge_functions_alpha import EdgeFunctionsAlpha
+from segment_public_api.models.live_plugins_alpha import LivePluginsAlpha
 
-class GetLatestFromEdgeFunctionsAlphaOutput(BaseModel):
+class CreateLivePluginAlphaOutput(BaseModel):
     """
-    Output for GetLatestFromEdgeFunctions.  # noqa: E501
+    Output for CreateLivePlugin.  # noqa: E501
     """
-    edge_functions: EdgeFunctionsAlpha = Field(..., alias="edgeFunctions")
-    __properties = ["edgeFunctions"]
+    live_plugin: LivePluginsAlpha = Field(..., alias="livePlugin")
+    __properties = ["livePlugin"]
 
     class Config:
         """Pydantic configuration"""
@@ -44,8 +44,8 @@ class GetLatestFromEdgeFunctionsAlphaOutput(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> GetLatestFromEdgeFunctionsAlphaOutput:
-        """Create an instance of GetLatestFromEdgeFunctionsAlphaOutput from a JSON string"""
+    def from_json(cls, json_str: str) -> CreateLivePluginAlphaOutput:
+        """Create an instance of CreateLivePluginAlphaOutput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -54,22 +54,22 @@ class GetLatestFromEdgeFunctionsAlphaOutput(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of edge_functions
-        if self.edge_functions:
-            _dict['edgeFunctions'] = self.edge_functions.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of live_plugin
+        if self.live_plugin:
+            _dict['livePlugin'] = self.live_plugin.to_dict()
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> GetLatestFromEdgeFunctionsAlphaOutput:
-        """Create an instance of GetLatestFromEdgeFunctionsAlphaOutput from a dict"""
+    def from_dict(cls, obj: dict) -> CreateLivePluginAlphaOutput:
+        """Create an instance of CreateLivePluginAlphaOutput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return GetLatestFromEdgeFunctionsAlphaOutput.parse_obj(obj)
+            return CreateLivePluginAlphaOutput.parse_obj(obj)
 
-        _obj = GetLatestFromEdgeFunctionsAlphaOutput.parse_obj({
-            "edge_functions": EdgeFunctionsAlpha.from_dict(obj.get("edgeFunctions")) if obj.get("edgeFunctions") is not None else None
+        _obj = CreateLivePluginAlphaOutput.parse_obj({
+            "live_plugin": LivePluginsAlpha.from_dict(obj.get("livePlugin")) if obj.get("livePlugin") is not None else None
         })
         return _obj
 

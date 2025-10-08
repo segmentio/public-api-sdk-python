@@ -21,13 +21,13 @@ import json
 
 from typing import Optional
 from pydantic import BaseModel
-from segment_public_api.models.create_edge_function_alpha_output import CreateEdgeFunctionAlphaOutput
+from segment_public_api.models.create_live_plugin_alpha_output import CreateLivePluginAlphaOutput
 
-class CreateEdgeFunction200Response(BaseModel):
+class CreateLivePlugin200Response(BaseModel):
     """
-    CreateEdgeFunction200Response
+    CreateLivePlugin200Response
     """
-    data: Optional[CreateEdgeFunctionAlphaOutput] = None
+    data: Optional[CreateLivePluginAlphaOutput] = None
     __properties = ["data"]
 
     class Config:
@@ -44,8 +44,8 @@ class CreateEdgeFunction200Response(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> CreateEdgeFunction200Response:
-        """Create an instance of CreateEdgeFunction200Response from a JSON string"""
+    def from_json(cls, json_str: str) -> CreateLivePlugin200Response:
+        """Create an instance of CreateLivePlugin200Response from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -60,16 +60,16 @@ class CreateEdgeFunction200Response(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> CreateEdgeFunction200Response:
-        """Create an instance of CreateEdgeFunction200Response from a dict"""
+    def from_dict(cls, obj: dict) -> CreateLivePlugin200Response:
+        """Create an instance of CreateLivePlugin200Response from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return CreateEdgeFunction200Response.parse_obj(obj)
+            return CreateLivePlugin200Response.parse_obj(obj)
 
-        _obj = CreateEdgeFunction200Response.parse_obj({
-            "data": CreateEdgeFunctionAlphaOutput.from_dict(obj.get("data")) if obj.get("data") is not None else None
+        _obj = CreateLivePlugin200Response.parse_obj({
+            "data": CreateLivePluginAlphaOutput.from_dict(obj.get("data")) if obj.get("data") is not None else None
         })
         return _obj
 

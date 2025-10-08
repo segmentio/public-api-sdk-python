@@ -21,13 +21,13 @@ import json
 
 from typing import Optional
 from pydantic import BaseModel
-from segment_public_api.models.disable_edge_functions_alpha_output import DisableEdgeFunctionsAlphaOutput
+from segment_public_api.models.get_latest_from_live_plugins_alpha_output import GetLatestFromLivePluginsAlphaOutput
 
-class DisableEdgeFunctions200Response(BaseModel):
+class GetLatestFromLivePlugins200Response(BaseModel):
     """
-    DisableEdgeFunctions200Response
+    GetLatestFromLivePlugins200Response
     """
-    data: Optional[DisableEdgeFunctionsAlphaOutput] = None
+    data: Optional[GetLatestFromLivePluginsAlphaOutput] = None
     __properties = ["data"]
 
     class Config:
@@ -44,8 +44,8 @@ class DisableEdgeFunctions200Response(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> DisableEdgeFunctions200Response:
-        """Create an instance of DisableEdgeFunctions200Response from a JSON string"""
+    def from_json(cls, json_str: str) -> GetLatestFromLivePlugins200Response:
+        """Create an instance of GetLatestFromLivePlugins200Response from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -60,16 +60,16 @@ class DisableEdgeFunctions200Response(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> DisableEdgeFunctions200Response:
-        """Create an instance of DisableEdgeFunctions200Response from a dict"""
+    def from_dict(cls, obj: dict) -> GetLatestFromLivePlugins200Response:
+        """Create an instance of GetLatestFromLivePlugins200Response from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return DisableEdgeFunctions200Response.parse_obj(obj)
+            return GetLatestFromLivePlugins200Response.parse_obj(obj)
 
-        _obj = DisableEdgeFunctions200Response.parse_obj({
-            "data": DisableEdgeFunctionsAlphaOutput.from_dict(obj.get("data")) if obj.get("data") is not None else None
+        _obj = GetLatestFromLivePlugins200Response.parse_obj({
+            "data": GetLatestFromLivePluginsAlphaOutput.from_dict(obj.get("data")) if obj.get("data") is not None else None
         })
         return _obj
 

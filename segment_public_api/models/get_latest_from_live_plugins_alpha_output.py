@@ -20,14 +20,15 @@ import json
 
 
 
-from pydantic import BaseModel, Field, StrictStr
+from pydantic import BaseModel, Field
+from segment_public_api.models.live_plugins_alpha import LivePluginsAlpha
 
-class GenerateUploadURLForEdgeFunctionsAlphaOutput(BaseModel):
+class GetLatestFromLivePluginsAlphaOutput(BaseModel):
     """
-    Output for GenerateSignedUrl.  # noqa: E501
+    Output for GetLatestFromLivePlugins.  # noqa: E501
     """
-    upload_url: StrictStr = Field(..., alias="uploadURL", description="A temporary URL that can be used to upload your Edge Functions bundle. Expires in 15 minutes.")
-    __properties = ["uploadURL"]
+    live_plugin: LivePluginsAlpha = Field(..., alias="livePlugin")
+    __properties = ["livePlugin"]
 
     class Config:
         """Pydantic configuration"""
@@ -43,8 +44,8 @@ class GenerateUploadURLForEdgeFunctionsAlphaOutput(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> GenerateUploadURLForEdgeFunctionsAlphaOutput:
-        """Create an instance of GenerateUploadURLForEdgeFunctionsAlphaOutput from a JSON string"""
+    def from_json(cls, json_str: str) -> GetLatestFromLivePluginsAlphaOutput:
+        """Create an instance of GetLatestFromLivePluginsAlphaOutput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -53,19 +54,22 @@ class GenerateUploadURLForEdgeFunctionsAlphaOutput(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # override the default output from pydantic by calling `to_dict()` of live_plugin
+        if self.live_plugin:
+            _dict['livePlugin'] = self.live_plugin.to_dict()
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> GenerateUploadURLForEdgeFunctionsAlphaOutput:
-        """Create an instance of GenerateUploadURLForEdgeFunctionsAlphaOutput from a dict"""
+    def from_dict(cls, obj: dict) -> GetLatestFromLivePluginsAlphaOutput:
+        """Create an instance of GetLatestFromLivePluginsAlphaOutput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return GenerateUploadURLForEdgeFunctionsAlphaOutput.parse_obj(obj)
+            return GetLatestFromLivePluginsAlphaOutput.parse_obj(obj)
 
-        _obj = GenerateUploadURLForEdgeFunctionsAlphaOutput.parse_obj({
-            "upload_url": obj.get("uploadURL")
+        _obj = GetLatestFromLivePluginsAlphaOutput.parse_obj({
+            "live_plugin": LivePluginsAlpha.from_dict(obj.get("livePlugin")) if obj.get("livePlugin") is not None else None
         })
         return _obj
 

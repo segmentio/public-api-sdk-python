@@ -19,16 +19,15 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
-from pydantic import BaseModel
-from segment_public_api.models.delete_edge_function_code_alpha_output import DeleteEdgeFunctionCodeAlphaOutput
 
-class DeleteEdgeFunctionCode200Response(BaseModel):
+from pydantic import BaseModel, Field, StrictStr
+
+class CreateLivePluginAlphaInput(BaseModel):
     """
-    DeleteEdgeFunctionCode200Response
+    Input for CreateLivePlugin.  # noqa: E501
     """
-    data: Optional[DeleteEdgeFunctionCodeAlphaOutput] = None
-    __properties = ["data"]
+    code: StrictStr = Field(..., description="The Live Plugin code to be uploaded.")
+    __properties = ["code"]
 
     class Config:
         """Pydantic configuration"""
@@ -44,8 +43,8 @@ class DeleteEdgeFunctionCode200Response(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> DeleteEdgeFunctionCode200Response:
-        """Create an instance of DeleteEdgeFunctionCode200Response from a JSON string"""
+    def from_json(cls, json_str: str) -> CreateLivePluginAlphaInput:
+        """Create an instance of CreateLivePluginAlphaInput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -54,22 +53,19 @@ class DeleteEdgeFunctionCode200Response(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of data
-        if self.data:
-            _dict['data'] = self.data.to_dict()
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> DeleteEdgeFunctionCode200Response:
-        """Create an instance of DeleteEdgeFunctionCode200Response from a dict"""
+    def from_dict(cls, obj: dict) -> CreateLivePluginAlphaInput:
+        """Create an instance of CreateLivePluginAlphaInput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return DeleteEdgeFunctionCode200Response.parse_obj(obj)
+            return CreateLivePluginAlphaInput.parse_obj(obj)
 
-        _obj = DeleteEdgeFunctionCode200Response.parse_obj({
-            "data": DeleteEdgeFunctionCodeAlphaOutput.from_dict(obj.get("data")) if obj.get("data") is not None else None
+        _obj = CreateLivePluginAlphaInput.parse_obj({
+            "code": obj.get("code")
         })
         return _obj
 

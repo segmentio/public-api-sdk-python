@@ -22,17 +22,17 @@ import json
 from typing import Optional, Union
 from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr
 
-class EdgeFunctionsAlpha(BaseModel):
+class LivePluginsAlpha(BaseModel):
     """
-    Represents an Edge Function bundle.  # noqa: E501
+    Represents a Live Plugin bundle.  # noqa: E501
     """
-    id: StrictStr = Field(..., description="The Edge Function id.")
+    id: StrictStr = Field(..., description="The Live Plugin id.")
     source_id: StrictStr = Field(..., alias="sourceId", description="The Source id.")
     created_at: StrictStr = Field(..., alias="createdAt", description="Creation date.")
     created_by: StrictStr = Field(..., alias="createdBy", description="Creating user's id.")
-    download_url: StrictStr = Field(..., alias="downloadURL", description="The CDN URL that can be used to fetch your latest EdgeFunctions bundle.")
-    version: Union[StrictFloat, StrictInt] = Field(..., description="Revision number associated with the latest Edge Function.")
-    code: Optional[StrictStr] = Field(None, description="The code of the Edge Function.")
+    download_url: StrictStr = Field(..., alias="downloadURL", description="The CDN URL that can be used to fetch your latest Live Plugin bundle.")
+    version: Union[StrictFloat, StrictInt] = Field(..., description="Revision number associated with the latest Live Plugin.")
+    code: Optional[StrictStr] = Field(None, description="The code of the Live Plugin.")
     __properties = ["id", "sourceId", "createdAt", "createdBy", "downloadURL", "version", "code"]
 
     class Config:
@@ -49,8 +49,8 @@ class EdgeFunctionsAlpha(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> EdgeFunctionsAlpha:
-        """Create an instance of EdgeFunctionsAlpha from a JSON string"""
+    def from_json(cls, json_str: str) -> LivePluginsAlpha:
+        """Create an instance of LivePluginsAlpha from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -67,15 +67,15 @@ class EdgeFunctionsAlpha(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> EdgeFunctionsAlpha:
-        """Create an instance of EdgeFunctionsAlpha from a dict"""
+    def from_dict(cls, obj: dict) -> LivePluginsAlpha:
+        """Create an instance of LivePluginsAlpha from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return EdgeFunctionsAlpha.parse_obj(obj)
+            return LivePluginsAlpha.parse_obj(obj)
 
-        _obj = EdgeFunctionsAlpha.parse_obj({
+        _obj = LivePluginsAlpha.parse_obj({
             "id": obj.get("id"),
             "source_id": obj.get("sourceId"),
             "created_at": obj.get("createdAt"),

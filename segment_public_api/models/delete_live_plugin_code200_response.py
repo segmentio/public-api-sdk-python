@@ -19,16 +19,16 @@ import re  # noqa: F401
 import json
 
 
+from typing import Optional
+from pydantic import BaseModel
+from segment_public_api.models.delete_live_plugin_code_alpha_output import DeleteLivePluginCodeAlphaOutput
 
-from pydantic import BaseModel, Field
-from segment_public_api.models.edge_functions_alpha import EdgeFunctionsAlpha
-
-class DisableEdgeFunctionsAlphaOutput(BaseModel):
+class DeleteLivePluginCode200Response(BaseModel):
     """
-    Output for DisableEdgeFunctions.  # noqa: E501
+    DeleteLivePluginCode200Response
     """
-    edge_functions: EdgeFunctionsAlpha = Field(..., alias="edgeFunctions")
-    __properties = ["edgeFunctions"]
+    data: Optional[DeleteLivePluginCodeAlphaOutput] = None
+    __properties = ["data"]
 
     class Config:
         """Pydantic configuration"""
@@ -44,8 +44,8 @@ class DisableEdgeFunctionsAlphaOutput(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> DisableEdgeFunctionsAlphaOutput:
-        """Create an instance of DisableEdgeFunctionsAlphaOutput from a JSON string"""
+    def from_json(cls, json_str: str) -> DeleteLivePluginCode200Response:
+        """Create an instance of DeleteLivePluginCode200Response from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -54,22 +54,22 @@ class DisableEdgeFunctionsAlphaOutput(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of edge_functions
-        if self.edge_functions:
-            _dict['edgeFunctions'] = self.edge_functions.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of data
+        if self.data:
+            _dict['data'] = self.data.to_dict()
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> DisableEdgeFunctionsAlphaOutput:
-        """Create an instance of DisableEdgeFunctionsAlphaOutput from a dict"""
+    def from_dict(cls, obj: dict) -> DeleteLivePluginCode200Response:
+        """Create an instance of DeleteLivePluginCode200Response from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return DisableEdgeFunctionsAlphaOutput.parse_obj(obj)
+            return DeleteLivePluginCode200Response.parse_obj(obj)
 
-        _obj = DisableEdgeFunctionsAlphaOutput.parse_obj({
-            "edge_functions": EdgeFunctionsAlpha.from_dict(obj.get("edgeFunctions")) if obj.get("edgeFunctions") is not None else None
+        _obj = DeleteLivePluginCode200Response.parse_obj({
+            "data": DeleteLivePluginCodeAlphaOutput.from_dict(obj.get("data")) if obj.get("data") is not None else None
         })
         return _obj
 

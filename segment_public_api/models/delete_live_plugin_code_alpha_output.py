@@ -20,15 +20,21 @@ import json
 
 
 
-from pydantic import BaseModel, Field
-from segment_public_api.models.edge_functions_alpha import EdgeFunctionsAlpha
+from pydantic import BaseModel, Field, StrictStr, validator
 
-class CreateEdgeFunctionAlphaOutput(BaseModel):
+class DeleteLivePluginCodeAlphaOutput(BaseModel):
     """
-    Output for CreateEdgeFunction.  # noqa: E501
+    Output for DeleteLivePlugin.  # noqa: E501
     """
-    edge_function: EdgeFunctionsAlpha = Field(..., alias="edgeFunction")
-    __properties = ["edgeFunction"]
+    status: StrictStr = Field(..., description="The status of the delete operation.")
+    __properties = ["status"]
+
+    @validator('status')
+    def status_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in ('SUCCESS'):
+            raise ValueError("must be one of enum values ('SUCCESS')")
+        return value
 
     class Config:
         """Pydantic configuration"""
@@ -44,8 +50,8 @@ class CreateEdgeFunctionAlphaOutput(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> CreateEdgeFunctionAlphaOutput:
-        """Create an instance of CreateEdgeFunctionAlphaOutput from a JSON string"""
+    def from_json(cls, json_str: str) -> DeleteLivePluginCodeAlphaOutput:
+        """Create an instance of DeleteLivePluginCodeAlphaOutput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -54,22 +60,19 @@ class CreateEdgeFunctionAlphaOutput(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of edge_function
-        if self.edge_function:
-            _dict['edgeFunction'] = self.edge_function.to_dict()
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> CreateEdgeFunctionAlphaOutput:
-        """Create an instance of CreateEdgeFunctionAlphaOutput from a dict"""
+    def from_dict(cls, obj: dict) -> DeleteLivePluginCodeAlphaOutput:
+        """Create an instance of DeleteLivePluginCodeAlphaOutput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return CreateEdgeFunctionAlphaOutput.parse_obj(obj)
+            return DeleteLivePluginCodeAlphaOutput.parse_obj(obj)
 
-        _obj = CreateEdgeFunctionAlphaOutput.parse_obj({
-            "edge_function": EdgeFunctionsAlpha.from_dict(obj.get("edgeFunction")) if obj.get("edgeFunction") is not None else None
+        _obj = DeleteLivePluginCodeAlphaOutput.parse_obj({
+            "status": obj.get("status")
         })
         return _obj
 
