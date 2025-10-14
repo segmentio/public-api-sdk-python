@@ -11,13 +11,13 @@ from segment_public_api.api.deletion_and_suppression_api import DeletionAndSuppr
 from segment_public_api.api.delivery_overview_api import DeliveryOverviewApi
 from segment_public_api.api.destination_filters_api import DestinationFiltersApi
 from segment_public_api.api.destinations_api import DestinationsApi
+from segment_public_api.api.edge_functions_api import EdgeFunctionsApi
 from segment_public_api.api.events_api import EventsApi
 from segment_public_api.api.functions_api import FunctionsApi
 from segment_public_api.api.iam_groups_api import IAMGroupsApi
 from segment_public_api.api.iam_roles_api import IAMRolesApi
 from segment_public_api.api.iam_users_api import IAMUsersApi
 from segment_public_api.api.labels_api import LabelsApi
-from segment_public_api.api.live_plugins_api import LivePluginsApi
 from segment_public_api.api.monthly_tracked_users_api import MonthlyTrackedUsersApi
 from segment_public_api.api.profiles_sync_api import ProfilesSyncApi
 from segment_public_api.api.reverse_etl_api import ReverseETLApi
