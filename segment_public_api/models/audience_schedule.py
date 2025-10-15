@@ -28,7 +28,7 @@ class AudienceSchedule(BaseModel):
     Defines an Audience Schedule.  # noqa: E501
     """
     id: StrictStr = Field(..., description="Distinct identifier for the schedule.")
-    strategy: StrictStr = Field(..., description="Strategy of the audience schedule (periodic or specific days).")
+    strategy: StrictStr = Field(..., description="Strategy of the audience schedule (manual, periodic or specific days).")
     config: Optional[Config] = None
     next_execution: Optional[StrictStr] = Field(None, alias="nextExecution", description="The next scheduled execution time (RFC3339).")
     __properties = ["id", "strategy", "config", "nextExecution"]
@@ -36,8 +36,8 @@ class AudienceSchedule(BaseModel):
     @validator('strategy')
     def strategy_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in ('PERIODIC', 'SPECIFIC_DAYS'):
-            raise ValueError("must be one of enum values ('PERIODIC', 'SPECIFIC_DAYS')")
+        if value not in ('MANUAL', 'PERIODIC', 'SPECIFIC_DAYS'):
+            raise ValueError("must be one of enum values ('MANUAL', 'PERIODIC', 'SPECIFIC_DAYS')")
         return value
 
     class Config:
