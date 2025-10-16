@@ -27,15 +27,15 @@ class AddAudienceScheduleToAudienceAlphaInput(BaseModel):
     """
     Defines an input for creating an audience schedule.  # noqa: E501
     """
-    strategy: StrictStr = Field(..., description="Strategy of the audience schedule (manual, periodic, or specific days).")
+    strategy: StrictStr = Field(..., description="Strategy of the audience schedule (periodic or specific days).")
     config: Optional[Config] = None
     __properties = ["strategy", "config"]
 
     @validator('strategy')
     def strategy_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in ('MANUAL', 'PERIODIC', 'SPECIFIC_DAYS'):
-            raise ValueError("must be one of enum values ('MANUAL', 'PERIODIC', 'SPECIFIC_DAYS')")
+        if value not in ('PERIODIC', 'SPECIFIC_DAYS'):
+            raise ValueError("must be one of enum values ('PERIODIC', 'SPECIFIC_DAYS')")
         return value
 
     class Config:
