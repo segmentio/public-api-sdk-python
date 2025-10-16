@@ -21,7 +21,7 @@ Method | HTTP request | Description
 
 Create Cloud Source Regulation
 
-Creates a Source-scoped regulation.    Please Note: Suppression rules at the Workspace level take precedence over those at the Source level. If a user has been suppressed at the Workspace level, any attempt to un-suppress at the Source level is not supported and the processing of the request will fail in Segment    Config API omitted fields: - `attributes`, - `userAgent`  Rate limit headers If the control plane returns limit metadata for the created regulation, the response will include rate-limit headers similar to the other create endpoints:  - X-Regulation-RateLimit-Segment-Remaining: remaining requests (string) - X-Regulation-RateLimit-Quota-Reset: reset time as an ISO 8601 timestamp (for example, 2024-12-31T23:59:59.000Z)  Header name casing may be normalized by intermediaries; use case-insensitive header access in clients.   
+Creates a Source-scoped regulation.    Please Note: Suppression rules at the Workspace level take precedence over those at the Source level. If a user has been suppressed at the Workspace level, any attempt to un-suppress at the Source level is not supported and the processing of the request will fail in Segment    Config API omitted fields: - `attributes`, - `userAgent`  Rate limit headers: - X-Regulation-RateLimit-Remaining: Remaining requests in the current period (stringified integer) - X-Regulation-RateLimit-Quota-Reset: ISO 8601 timestamp for when the quota resets (e.g., 2024-12-31T23:59:59.000Z)   
 
 ### Example
 
@@ -83,7 +83,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | OK |  * X-Regulation-RateLimit-Segment-Remaining - Remaining requests in the current period <br>  * X-Regulation-RateLimit-Quota-Reset - ISO 8601 timestamp for when the quota resets <br>  |
+**200** | OK |  * X-Regulation-RateLimit-Remaining - Remaining requests in the current period <br>  * X-Regulation-RateLimit-Quota-Reset - ISO 8601 timestamp for when the quota resets <br>  |
 **404** | Resource not found |  -  |
 **422** | Validation failure |  -  |
 **429** | Too many requests |  -  |
@@ -97,7 +97,7 @@ Name | Type | Description  | Notes
 
 Create Source Regulation
 
-Creates a Source-scoped regulation.    Please Note: Suppression rules at the Workspace level take precedence over those at the Source level. If a user has been suppressed at the Workspace level, any attempt to un-suppress at the Source level is not supported and the processing of the request will fail in Segment    • When called, this endpoint may generate the `Source Regulation Created` event in the [audit trail](/tag/Audit-Trail).  Config API omitted fields: - `attributes`, - `userAgent`  Rate limit headers When available, the response includes the following headers to indicate rate-limit state for the operation:  - X-Regulation-RateLimit-Segment-Remaining: remaining requests in the current period (string) - X-Regulation-RateLimit-Quota-Reset: ISO 8601 timestamp for when the quota resets (for example, 2024-12-31T23:59:59.000Z)  Treat header names as case-insensitive when reading these headers from HTTP client libraries.   
+Creates a Source-scoped regulation.    Please Note: Suppression rules at the Workspace level take precedence over those at the Source level. If a user has been suppressed at the Workspace level, any attempt to un-suppress at the Source level is not supported and the processing of the request will fail in Segment    • When called, this endpoint may generate the `Source Regulation Created` event in the [audit trail](/tag/Audit-Trail).  Config API omitted fields: - `attributes`, - `userAgent`  Rate limit headers: - X-Regulation-RateLimit-Remaining: Remaining requests in the current period (stringified integer) - X-Regulation-RateLimit-Quota-Reset: ISO 8601 timestamp for when the quota resets (e.g., 2024-12-31T23:59:59.000Z)   
 
 ### Example
 
@@ -159,7 +159,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | OK |  * X-Regulation-RateLimit-Segment-Remaining - Remaining requests in the current period <br>  * X-Regulation-RateLimit-Quota-Reset - ISO 8601 timestamp for when the quota resets <br>  |
+**200** | OK |  * X-Regulation-RateLimit-Remaining - Remaining requests in the current period <br>  * X-Regulation-RateLimit-Quota-Reset - ISO 8601 timestamp for when the quota resets <br>  |
 **404** | Resource not found |  -  |
 **422** | Validation failure |  -  |
 **429** | Too many requests |  -  |
@@ -173,7 +173,7 @@ Name | Type | Description  | Notes
 
 Create Workspace Regulation
 
-Creates a Workspace-scoped regulation.    • When called, this endpoint may generate the `Workspace Regulation Created` event in the [audit trail](/tag/Audit-Trail).  Config API omitted fields: - `attributes`, - `userAgent`  Rate limit headers: The handler sets rate-limit information on the response when the control plane returns limit metadata. These headers are useful for clients to understand remaining quota and reset times. Header names (examples):  - X-Regulation-RateLimit-Segment-Remaining: remaining requests in the current period (string) - X-Regulation-RateLimit-Quota-Reset: ISO 8601 timestamp for when the quota resets (for example, 2024-12-31T23:59:59.000Z)  Note: HTTP clients and proxies may normalize header name casing; consumers should treat header names as case-insensitive.   
+Creates a Workspace-scoped regulation.    • When called, this endpoint may generate the `Workspace Regulation Created` event in the [audit trail](/tag/Audit-Trail).  Config API omitted fields: - `attributes`, - `userAgent`  Rate limit headers: - X-Regulation-RateLimit-Remaining: Remaining requests in the current period (stringified integer) - X-Regulation-RateLimit-Quota-Reset: ISO 8601 timestamp for when the quota resets (e.g., 2024-12-31T23:59:59.000Z)   
 
 ### Example
 
@@ -233,7 +233,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | OK |  * X-Regulation-RateLimit-Segment-Remaining - Remaining requests in the current period <br>  * X-Regulation-RateLimit-Quota-Reset - ISO 8601 timestamp for when the quota resets <br>  |
+**200** | OK |  * X-Regulation-RateLimit-Remaining - Remaining requests in the current period <br>  * X-Regulation-RateLimit-Quota-Reset - ISO 8601 timestamp for when the quota resets <br>  |
 **404** | Resource not found |  -  |
 **422** | Validation failure |  -  |
 **429** | Too many requests |  -  |
