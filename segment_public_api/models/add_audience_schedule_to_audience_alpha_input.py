@@ -28,7 +28,7 @@ class AddAudienceScheduleToAudienceAlphaInput(BaseModel):
     Defines an input for creating an audience schedule.  # noqa: E501
     """
     strategy: StrictStr = Field(..., description="Strategy of the audience schedule (periodic or specific days).")
-    config: Optional[Config] = None
+    config: Optional[Config] = Field(...)
     __properties = ["strategy", "config"]
 
     @validator('strategy')

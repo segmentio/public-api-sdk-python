@@ -29,7 +29,7 @@ class AudienceSchedule(BaseModel):
     """
     id: StrictStr = Field(..., description="Distinct identifier for the schedule.")
     strategy: StrictStr = Field(..., description="Strategy of the audience schedule (periodic or specific days).")
-    config: Optional[Config] = None
+    config: Optional[Config] = Field(...)
     next_execution: Optional[StrictStr] = Field(None, alias="nextExecution", description="The next scheduled execution time (RFC3339).")
     __properties = ["id", "strategy", "config", "nextExecution"]
 
