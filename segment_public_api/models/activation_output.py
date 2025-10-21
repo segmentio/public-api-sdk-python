@@ -37,7 +37,7 @@ class ActivationOutput(BaseModel):
     activation_type: StrictStr = Field(..., alias="activationType", description="Type of activation trigger.")
     activation_name: StrictStr = Field(..., alias="activationName", description="Name of the activation.")
     personalization: PersonalizationInput = Field(...)
-    destination_mapping: DestinationSubscriptionConfiguration = Field(..., alias="destinationMapping")
+    destination_mapping: Optional[DestinationSubscriptionConfiguration] = Field(None, alias="destinationMapping")
     perform_resync: Optional[StrictBool] = Field(None, alias="performResync", description="Whether to perform a resync after creation of the activation.")
     __properties = ["id", "enabled", "workspaceId", "spaceId", "audienceId", "destinationConnectionId", "activationType", "activationName", "personalization", "destinationMapping", "performResync"]
 

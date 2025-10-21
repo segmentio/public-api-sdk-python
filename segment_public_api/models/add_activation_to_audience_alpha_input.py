@@ -33,7 +33,7 @@ class AddActivationToAudienceAlphaInput(BaseModel):
     activation_type: StrictStr = Field(..., alias="activationType", description="Type of activation trigger.")
     activation_name: StrictStr = Field(..., alias="activationName", description="Name of the activation.")
     personalization: PersonalizationInput = Field(...)
-    destination_mapping: DestinationSubscriptionConfiguration = Field(..., alias="destinationMapping")
+    destination_mapping: Optional[DestinationSubscriptionConfiguration] = Field(None, alias="destinationMapping")
     __properties = ["enabled", "performResync", "activationType", "activationName", "personalization", "destinationMapping"]
 
     class Config:
