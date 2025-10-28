@@ -37,8 +37,8 @@ class SimpleDestination(BaseModel):
     settings: Dict[str, Any] = Field(..., description="The Destination settings.")
     destination_id: StrictStr = Field(..., alias="destinationId", description="The Destination id.")
     metadata: Optional[Metadata] = None
-    id_sync: Optional[IDSyncOptions] = Field(None, alias="idSync")
-    __properties = ["id", "name", "sourceId", "enabled", "createdAt", "updatedAt", "settings", "destinationId", "metadata", "idSync"]
+    id_sync_configuration: Optional[IDSyncOptions] = Field(None, alias="idSyncConfiguration")
+    __properties = ["id", "name", "sourceId", "enabled", "createdAt", "updatedAt", "settings", "destinationId", "metadata", "idSyncConfiguration"]
 
     class Config:
         """Pydantic configuration"""
@@ -67,9 +67,9 @@ class SimpleDestination(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of metadata
         if self.metadata:
             _dict['metadata'] = self.metadata.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of id_sync
-        if self.id_sync:
-            _dict['idSync'] = self.id_sync.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of id_sync_configuration
+        if self.id_sync_configuration:
+            _dict['idSyncConfiguration'] = self.id_sync_configuration.to_dict()
         return _dict
 
     @classmethod
@@ -91,7 +91,7 @@ class SimpleDestination(BaseModel):
             "settings": obj.get("settings"),
             "destination_id": obj.get("destinationId"),
             "metadata": Metadata.from_dict(obj.get("metadata")) if obj.get("metadata") is not None else None,
-            "id_sync": IDSyncOptions.from_dict(obj.get("idSync")) if obj.get("idSync") is not None else None
+            "id_sync_configuration": IDSyncOptions.from_dict(obj.get("idSyncConfiguration")) if obj.get("idSyncConfiguration") is not None else None
         })
         return _obj
 
