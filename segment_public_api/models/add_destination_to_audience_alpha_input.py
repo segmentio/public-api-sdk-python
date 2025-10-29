@@ -19,16 +19,17 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, Optional
-from pydantic import BaseModel, Field
+from typing import Any, List, Optional
+from pydantic import BaseModel, Field, conlist
 from segment_public_api.models.destination_input import DestinationInput
+from segment_public_api.models.id_sync_configuration_input import IDSyncConfigurationInput
 
 class AddDestinationToAudienceAlphaInput(BaseModel):
     """
     Input to Add a Destination into an Audience.  # noqa: E501
     """
     destination: DestinationInput = Field(...)
-    id_sync_configuration: Optional[Dict[str, Any]] = Field(None, alias="idSyncConfiguration", description="The identifier sync configuration input.")
+    id_sync_configuration: Optional[conlist(IDSyncConfigurationInput)] = Field(None, alias="idSyncConfiguration", description="Identifier sync configuration - array of external IDs to sync with their strategies. Maximum 5 items allowed.")
     connection_settings: Optional[Any] = Field(None, alias="connectionSettings", description="The settings that a Destination requires to create audiences on a third-party platform. These settings are Destination-specific and thus are best defined as unknown.")
     __properties = ["destination", "idSyncConfiguration", "connectionSettings"]
 
@@ -59,6 +60,13 @@ class AddDestinationToAudienceAlphaInput(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of destination
         if self.destination:
             _dict['destination'] = self.destination.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in id_sync_configuration (list)
+        _items = []
+        if self.id_sync_configuration:
+            for _item in self.id_sync_configuration:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['idSyncConfiguration'] = _items
         # set to None if connection_settings (nullable) is None
         # and __fields_set__ contains the field
         if self.connection_settings is None and "connection_settings" in self.__fields_set__:
@@ -77,7 +85,7 @@ class AddDestinationToAudienceAlphaInput(BaseModel):
 
         _obj = AddDestinationToAudienceAlphaInput.parse_obj({
             "destination": DestinationInput.from_dict(obj.get("destination")) if obj.get("destination") is not None else None,
-            "id_sync_configuration": obj.get("idSyncConfiguration"),
+            "id_sync_configuration": [IDSyncConfigurationInput.from_dict(_item) for _item in obj.get("idSyncConfiguration")] if obj.get("idSyncConfiguration") is not None else None,
             "connection_settings": obj.get("connectionSettings")
         })
         return _obj
