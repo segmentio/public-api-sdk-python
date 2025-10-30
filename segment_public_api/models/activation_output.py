@@ -33,13 +33,13 @@ class ActivationOutput(BaseModel):
     workspace_id: StrictStr = Field(..., alias="workspaceId", description="The WORKSPACE id.")
     space_id: StrictStr = Field(..., alias="spaceId", description="The space id.")
     audience_id: StrictStr = Field(..., alias="audienceId", description="The audience id.")
-    destination_connection_id: StrictStr = Field(..., alias="destinationConnectionId", description="The DESTINATION connection id (formerly integrationInstanceId).")
+    connection_id: StrictStr = Field(..., alias="connectionId", description="The connection id.")
     activation_type: StrictStr = Field(..., alias="activationType", description="Type of activation trigger.")
     activation_name: StrictStr = Field(..., alias="activationName", description="Name of the activation.")
     personalization: PersonalizationInput = Field(...)
     destination_mapping: Optional[DestinationSubscriptionConfiguration] = Field(None, alias="destinationMapping")
     perform_resync: Optional[StrictBool] = Field(None, alias="performResync", description="Whether to perform a resync after creation of the activation.")
-    __properties = ["id", "enabled", "workspaceId", "spaceId", "audienceId", "destinationConnectionId", "activationType", "activationName", "personalization", "destinationMapping", "performResync"]
+    __properties = ["id", "enabled", "workspaceId", "spaceId", "audienceId", "connectionId", "activationType", "activationName", "personalization", "destinationMapping", "performResync"]
 
     class Config:
         """Pydantic configuration"""
@@ -88,7 +88,7 @@ class ActivationOutput(BaseModel):
             "workspace_id": obj.get("workspaceId"),
             "space_id": obj.get("spaceId"),
             "audience_id": obj.get("audienceId"),
-            "destination_connection_id": obj.get("destinationConnectionId"),
+            "connection_id": obj.get("connectionId"),
             "activation_type": obj.get("activationType"),
             "activation_name": obj.get("activationName"),
             "personalization": PersonalizationInput.from_dict(obj.get("personalization")) if obj.get("personalization") is not None else None,

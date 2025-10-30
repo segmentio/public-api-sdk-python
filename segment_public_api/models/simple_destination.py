@@ -19,9 +19,9 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, Optional
-from pydantic import BaseModel, Field, StrictBool, StrictStr
-from segment_public_api.models.id_sync_options import IDSyncOptions
+from typing import Any, Dict, List, Optional
+from pydantic import BaseModel, Field, StrictBool, StrictStr, conlist
+from segment_public_api.models.id_sync_configuration_input import IDSyncConfigurationInput
 from segment_public_api.models.metadata import Metadata
 
 class SimpleDestination(BaseModel):
@@ -37,7 +37,7 @@ class SimpleDestination(BaseModel):
     settings: Dict[str, Any] = Field(..., description="The Destination settings.")
     destination_id: StrictStr = Field(..., alias="destinationId", description="The Destination id.")
     metadata: Optional[Metadata] = None
-    id_sync_configuration: Optional[IDSyncOptions] = Field(None, alias="idSyncConfiguration")
+    id_sync_configuration: Optional[conlist(IDSyncConfigurationInput)] = Field(None, alias="idSyncConfiguration", description="ID Sync configuration - array of external IDs with their strategies.")
     __properties = ["id", "name", "sourceId", "enabled", "createdAt", "updatedAt", "settings", "destinationId", "metadata", "idSyncConfiguration"]
 
     class Config:
@@ -67,9 +67,13 @@ class SimpleDestination(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of metadata
         if self.metadata:
             _dict['metadata'] = self.metadata.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of id_sync_configuration
+        # override the default output from pydantic by calling `to_dict()` of each item in id_sync_configuration (list)
+        _items = []
         if self.id_sync_configuration:
-            _dict['idSyncConfiguration'] = self.id_sync_configuration.to_dict()
+            for _item in self.id_sync_configuration:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['idSyncConfiguration'] = _items
         return _dict
 
     @classmethod
@@ -91,7 +95,7 @@ class SimpleDestination(BaseModel):
             "settings": obj.get("settings"),
             "destination_id": obj.get("destinationId"),
             "metadata": Metadata.from_dict(obj.get("metadata")) if obj.get("metadata") is not None else None,
-            "id_sync_configuration": IDSyncOptions.from_dict(obj.get("idSyncConfiguration")) if obj.get("idSyncConfiguration") is not None else None
+            "id_sync_configuration": [IDSyncConfigurationInput.from_dict(_item) for _item in obj.get("idSyncConfiguration")] if obj.get("idSyncConfiguration") is not None else None
         })
         return _obj
 
