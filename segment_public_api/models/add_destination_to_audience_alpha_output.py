@@ -19,16 +19,18 @@ import re  # noqa: F401
 import json
 
 
-
-from pydantic import BaseModel, Field
+from typing import List
+from pydantic import BaseModel, Field, conlist
 from segment_public_api.models.connection import Connection
+from segment_public_api.models.id_sync_configuration_input import IDSyncConfigurationInput
 
 class AddDestinationToAudienceAlphaOutput(BaseModel):
     """
     AddDestinationToAudienceAlphaOutput
     """
     connection: Connection = Field(...)
-    __properties = ["connection"]
+    id_sync_configuration: conlist(IDSyncConfigurationInput) = Field(..., alias="idSyncConfiguration", description="The id sync configuration for the Destination - array of external ids with their strategies.")
+    __properties = ["connection", "idSyncConfiguration"]
 
     class Config:
         """Pydantic configuration"""
@@ -57,6 +59,13 @@ class AddDestinationToAudienceAlphaOutput(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of connection
         if self.connection:
             _dict['connection'] = self.connection.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in id_sync_configuration (list)
+        _items = []
+        if self.id_sync_configuration:
+            for _item in self.id_sync_configuration:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['idSyncConfiguration'] = _items
         return _dict
 
     @classmethod
@@ -69,7 +78,8 @@ class AddDestinationToAudienceAlphaOutput(BaseModel):
             return AddDestinationToAudienceAlphaOutput.parse_obj(obj)
 
         _obj = AddDestinationToAudienceAlphaOutput.parse_obj({
-            "connection": Connection.from_dict(obj.get("connection")) if obj.get("connection") is not None else None
+            "connection": Connection.from_dict(obj.get("connection")) if obj.get("connection") is not None else None,
+            "id_sync_configuration": [IDSyncConfigurationInput.from_dict(_item) for _item in obj.get("idSyncConfiguration")] if obj.get("idSyncConfiguration") is not None else None
         })
         return _obj
 

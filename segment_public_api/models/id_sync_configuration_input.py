@@ -19,16 +19,16 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
+
 from pydantic import BaseModel, Field, StrictStr
 
-class IDSyncConfig(BaseModel):
+class IDSyncConfigurationInput(BaseModel):
     """
-    IDSyncConfig
+    The identifier sync configuration input.  # noqa: E501
     """
-    strategy: StrictStr = Field(..., description="The strategy of the identifier.")
-    map_to: Optional[StrictStr] = Field(None, alias="mapTo", description="The property to map the identifier to.")
-    __properties = ["strategy", "mapTo"]
+    external_id: StrictStr = Field(..., alias="externalId", description="The external id to sync, for example \"user_id\" or \"email\".")
+    strategy: StrictStr = Field(..., description="The strategy for syncing this identifier. Valid values: \"first\", \"last\", \"all\".")
+    __properties = ["externalId", "strategy"]
 
     class Config:
         """Pydantic configuration"""
@@ -44,8 +44,8 @@ class IDSyncConfig(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> IDSyncConfig:
-        """Create an instance of IDSyncConfig from a JSON string"""
+    def from_json(cls, json_str: str) -> IDSyncConfigurationInput:
+        """Create an instance of IDSyncConfigurationInput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -57,17 +57,17 @@ class IDSyncConfig(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> IDSyncConfig:
-        """Create an instance of IDSyncConfig from a dict"""
+    def from_dict(cls, obj: dict) -> IDSyncConfigurationInput:
+        """Create an instance of IDSyncConfigurationInput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return IDSyncConfig.parse_obj(obj)
+            return IDSyncConfigurationInput.parse_obj(obj)
 
-        _obj = IDSyncConfig.parse_obj({
-            "strategy": obj.get("strategy"),
-            "map_to": obj.get("mapTo")
+        _obj = IDSyncConfigurationInput.parse_obj({
+            "external_id": obj.get("externalId"),
+            "strategy": obj.get("strategy")
         })
         return _obj
 
