@@ -49,8 +49,8 @@ class FunctionV1(BaseModel):
         if value is None:
             return value
 
-        if value not in ('DESTINATION', 'INSERT_DESTINATION', 'INSERT_SOURCE', 'SOURCE'):
-            raise ValueError("must be one of enum values ('DESTINATION', 'INSERT_DESTINATION', 'INSERT_SOURCE', 'SOURCE')")
+        if value not in ('DESTINATION', 'INSERT_DESTINATION', 'INSERT_SOURCE', 'INSERT_TRANSFORMATION', 'SOURCE'):
+            raise ValueError("must be one of enum values ('DESTINATION', 'INSERT_DESTINATION', 'INSERT_SOURCE', 'INSERT_TRANSFORMATION', 'SOURCE')")
         return value
 
     class Config:

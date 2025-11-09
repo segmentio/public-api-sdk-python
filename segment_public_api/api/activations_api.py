@@ -20,7 +20,7 @@ import warnings
 from pydantic import validate_arguments, ValidationError
 
 from typing_extensions import Annotated
-from pydantic import Field, constr
+from pydantic import Field, StrictStr, constr
 
 from typing import Optional
 
@@ -31,6 +31,7 @@ from segment_public_api.models.add_destination_to_audience_alpha_input import Ad
 from segment_public_api.models.get_activation_from_audience200_response import GetActivationFromAudience200Response
 from segment_public_api.models.list_activations_from_audience200_response import ListActivationsFromAudience200Response
 from segment_public_api.models.list_destinations_from_audience200_response import ListDestinationsFromAudience200Response
+from segment_public_api.models.list_supported_destinations_from_audience200_response import ListSupportedDestinationsFromAudience200Response
 from segment_public_api.models.pagination_input import PaginationInput
 from segment_public_api.models.remove_activation_from_audience200_response import RemoveActivationFromAudience200Response
 from segment_public_api.models.update_activation_for_audience200_response import UpdateActivationForAudience200Response
@@ -858,6 +859,173 @@ class ActivationsApi:
 
         return self.api_client.call_api(
             '/spaces/{spaceId}/audiences/{audienceId}/destination-connections', 'GET',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @validate_arguments
+    def list_supported_destinations_from_audience(self, space_id : constr(strict=True), audience_type : constr(strict=True), slug : Annotated[Optional[StrictStr], Field(description="Optional destination slug to filter results.  This parameter exists in alpha.")] = None, action_id : Annotated[Optional[StrictStr], Field(description="Optional destination action id to filter results.  This parameter exists in alpha.")] = None, **kwargs) -> ListSupportedDestinationsFromAudience200Response:  # noqa: E501
+        """List Supported Destinations from Audience  # noqa: E501
+
+        Lists all Supported Destinations for this audience type that can be activated.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Supported Destinations Listed For Audience` event in the [audit trail](/tag/Audit-Trail).   The rate limit for this endpoint is 60 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.list_supported_destinations_from_audience(space_id, audience_type, slug, action_id, async_req=True)
+        >>> result = thread.get()
+
+        :param space_id: (required)
+        :type space_id: str
+        :param audience_type: (required)
+        :type audience_type: str
+        :param slug: Optional destination slug to filter results.  This parameter exists in alpha.
+        :type slug: str
+        :param action_id: Optional destination action id to filter results.  This parameter exists in alpha.
+        :type action_id: str
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: ListSupportedDestinationsFromAudience200Response
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the list_supported_destinations_from_audience_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        return self.list_supported_destinations_from_audience_with_http_info(space_id, audience_type, slug, action_id, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def list_supported_destinations_from_audience_with_http_info(self, space_id : constr(strict=True), audience_type : constr(strict=True), slug : Annotated[Optional[StrictStr], Field(description="Optional destination slug to filter results.  This parameter exists in alpha.")] = None, action_id : Annotated[Optional[StrictStr], Field(description="Optional destination action id to filter results.  This parameter exists in alpha.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """List Supported Destinations from Audience  # noqa: E501
+
+        Lists all Supported Destinations for this audience type that can be activated.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Supported Destinations Listed For Audience` event in the [audit trail](/tag/Audit-Trail).   The rate limit for this endpoint is 60 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.list_supported_destinations_from_audience_with_http_info(space_id, audience_type, slug, action_id, async_req=True)
+        >>> result = thread.get()
+
+        :param space_id: (required)
+        :type space_id: str
+        :param audience_type: (required)
+        :type audience_type: str
+        :param slug: Optional destination slug to filter results.  This parameter exists in alpha.
+        :type slug: str
+        :param action_id: Optional destination action id to filter results.  This parameter exists in alpha.
+        :type action_id: str
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(ListSupportedDestinationsFromAudience200Response, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'space_id',
+            'audience_type',
+            'slug',
+            'action_id'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method list_supported_destinations_from_audience" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+        if _params['space_id']:
+            _path_params['spaceId'] = _params['space_id']
+
+        if _params['audience_type']:
+            _path_params['audienceType'] = _params['audience_type']
+
+
+        # process the query parameters
+        _query_params = []
+        if _params.get('slug') is not None:  # noqa: E501
+            _query_params.append(('slug', _params['slug']))
+
+        if _params.get('action_id') is not None:  # noqa: E501
+            _query_params.append(('actionId', _params['action_id']))
+
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/vnd.segment.v1alpha+json', 'application/json'])  # noqa: E501
+
+        # authentication setting
+        _auth_settings = ['token']  # noqa: E501
+
+        _response_types_map = {
+            '200': "ListSupportedDestinationsFromAudience200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+
+        return self.api_client.call_api(
+            '/spaces/{spaceId}/audienceType/{audienceType}/supported-destinations', 'GET',
             _path_params,
             _query_params,
             _header_params,
