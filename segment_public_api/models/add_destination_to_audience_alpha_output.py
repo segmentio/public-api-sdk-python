@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, List, Optional
+from typing import List
 from pydantic import BaseModel, Field, conlist
 from segment_public_api.models.connection import Connection
 from segment_public_api.models.id_sync_configuration_input import IDSyncConfigurationInput
@@ -30,8 +30,7 @@ class AddDestinationToAudienceAlphaOutput(BaseModel):
     """
     connection: Connection = Field(...)
     id_sync_configuration: conlist(IDSyncConfigurationInput) = Field(..., alias="idSyncConfiguration", description="The id sync configuration for the Destination - array of external ids with their strategies.")
-    connection_settings: Optional[Any] = Field(None, alias="connectionSettings", description="The settings that a Destination requires to create audiences on a third-party platform. These settings are Destination-specific and thus are best defined as unknown.")
-    __properties = ["connection", "idSyncConfiguration", "connectionSettings"]
+    __properties = ["connection", "idSyncConfiguration"]
 
     class Config:
         """Pydantic configuration"""
@@ -67,11 +66,6 @@ class AddDestinationToAudienceAlphaOutput(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['idSyncConfiguration'] = _items
-        # set to None if connection_settings (nullable) is None
-        # and __fields_set__ contains the field
-        if self.connection_settings is None and "connection_settings" in self.__fields_set__:
-            _dict['connectionSettings'] = None
-
         return _dict
 
     @classmethod
@@ -85,8 +79,7 @@ class AddDestinationToAudienceAlphaOutput(BaseModel):
 
         _obj = AddDestinationToAudienceAlphaOutput.parse_obj({
             "connection": Connection.from_dict(obj.get("connection")) if obj.get("connection") is not None else None,
-            "id_sync_configuration": [IDSyncConfigurationInput.from_dict(_item) for _item in obj.get("idSyncConfiguration")] if obj.get("idSyncConfiguration") is not None else None,
-            "connection_settings": obj.get("connectionSettings")
+            "id_sync_configuration": [IDSyncConfigurationInput.from_dict(_item) for _item in obj.get("idSyncConfiguration")] if obj.get("idSyncConfiguration") is not None else None
         })
         return _obj
 
