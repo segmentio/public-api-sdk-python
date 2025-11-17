@@ -38,7 +38,8 @@ class SimpleDestination(BaseModel):
     destination_id: StrictStr = Field(..., alias="destinationId", description="The Destination id.")
     metadata: Optional[Metadata] = None
     id_sync_configuration: Optional[conlist(IDSyncConfigurationInput)] = Field(None, alias="idSyncConfiguration", description="ID Sync configuration - array of external IDs with their strategies.")
-    __properties = ["id", "name", "sourceId", "enabled", "createdAt", "updatedAt", "settings", "destinationId", "metadata", "idSyncConfiguration"]
+    connection_settings: Optional[Any] = Field(None, alias="connectionSettings", description="The settings that a Destination requires to create audiences on a third-party platform. These settings are Destination-specific and thus are best defined as unknown.")
+    __properties = ["id", "name", "sourceId", "enabled", "createdAt", "updatedAt", "settings", "destinationId", "metadata", "idSyncConfiguration", "connectionSettings"]
 
     class Config:
         """Pydantic configuration"""
@@ -74,6 +75,11 @@ class SimpleDestination(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['idSyncConfiguration'] = _items
+        # set to None if connection_settings (nullable) is None
+        # and __fields_set__ contains the field
+        if self.connection_settings is None and "connection_settings" in self.__fields_set__:
+            _dict['connectionSettings'] = None
+
         return _dict
 
     @classmethod
@@ -95,7 +101,8 @@ class SimpleDestination(BaseModel):
             "settings": obj.get("settings"),
             "destination_id": obj.get("destinationId"),
             "metadata": Metadata.from_dict(obj.get("metadata")) if obj.get("metadata") is not None else None,
-            "id_sync_configuration": [IDSyncConfigurationInput.from_dict(_item) for _item in obj.get("idSyncConfiguration")] if obj.get("idSyncConfiguration") is not None else None
+            "id_sync_configuration": [IDSyncConfigurationInput.from_dict(_item) for _item in obj.get("idSyncConfiguration")] if obj.get("idSyncConfiguration") is not None else None,
+            "connection_settings": obj.get("connectionSettings")
         })
         return _obj
 
