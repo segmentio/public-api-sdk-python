@@ -38,8 +38,8 @@ class CreateFunctionV1Input(BaseModel):
     @validator('resource_type')
     def resource_type_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in ('DESTINATION', 'INSERT_DESTINATION', 'INSERT_SOURCE', 'INSERT_TRANSFORMATION', 'SOURCE'):
-            raise ValueError("must be one of enum values ('DESTINATION', 'INSERT_DESTINATION', 'INSERT_SOURCE', 'INSERT_TRANSFORMATION', 'SOURCE')")
+        if value not in ('DESTINATION', 'INSERT_DESTINATION', 'INSERT_SOURCE', 'SOURCE'):
+            raise ValueError("must be one of enum values ('DESTINATION', 'INSERT_DESTINATION', 'INSERT_SOURCE', 'SOURCE')")
         return value
 
     class Config:
