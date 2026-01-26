@@ -101,11 +101,11 @@ Name | Type | Description  | Notes
 
 ## Operation: create_audience
 
-> CreateAudience200Response create_audience(space_id, create_audience_beta_input)
+> CreateAudience200Response create_audience(space_id, create_audience_input)
 
 Create Audience
 
-Creates Audience.  • This endpoint is in **Beta** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Audience Created` event in the [audit trail](/tag/Audit-Trail).  Note: The definition for an Audience created using the API is not editable through the Segment App.   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
+Creates Audience.  • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Audience Created` event in the [audit trail](/tag/Audit-Trail).  Note: The definition for an Audience created using the API is not editable through the Segment App.   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
 
 ### Example
 
@@ -115,7 +115,7 @@ import time
 import os
 import segment_public_api
 from segment_public_api.models.create_audience200_response import CreateAudience200Response
-from segment_public_api.models.create_audience_beta_input import CreateAudienceBetaInput
+from segment_public_api.models.create_audience_input import CreateAudienceInput
 from segment_public_api.rest import ApiException
 from pprint import pprint
 
@@ -131,11 +131,11 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.AudiencesApi(api_client)
     space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
-    create_audience_beta_input = {"name":"Linked Audience","description":"Test linked audience example","enabled":true,"audienceType":"LINKED","definition":{"query":"entity('owned-accounts').count() > 1","targetEntity":"owned-accounts"},"options":{"filterByExternalIds":["user_id","email","ios.idfa","android.idfa"]}} # CreateAudienceBetaInput | 
+    create_audience_input = {"name":"Profiles Audience V1","description":"Test profiles audience v1 example","enabled":true,"audienceType":"USERS","definition":{"query":"event('Purchased').count() >= 1"},"options":{"includeHistoricalData":true}} # CreateAudienceInput | 
 
     try:
         # Create Audience
-        api_response = api_instance.create_audience(space_id, create_audience_beta_input)
+        api_response = api_instance.create_audience(space_id, create_audience_input)
         print("The response of AudiencesApi->create_audience:\n")
         pprint(api_response)
     except Exception as e:
@@ -149,7 +149,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **space_id** | **str**|  | 
- **create_audience_beta_input** | [**CreateAudienceBetaInput**](CreateAudienceBetaInput.md)|  | 
+ **create_audience_input** | [**CreateAudienceInput**](CreateAudienceInput.md)|  | 
 
 ### Return type
 
@@ -161,8 +161,8 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
- - **Accept**: application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json, application/json
+ - **Content-Type**: application/json, application/vnd.segment.v1+json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
+ - **Accept**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
 
 ### HTTP response details
 | Status code | Description | Response headers |
