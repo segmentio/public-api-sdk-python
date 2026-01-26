@@ -177,7 +177,7 @@ Name | Type | Description  | Notes
 
 ## Operation: create_audience_preview
 
-> CreateAudiencePreview200Response create_audience_preview(space_id, create_audience_preview_beta_input)
+> CreateAudiencePreview200Response create_audience_preview(space_id, create_audience_preview_input)
 
 Create Audience Preview
 
@@ -191,7 +191,7 @@ import time
 import os
 import segment_public_api
 from segment_public_api.models.create_audience_preview200_response import CreateAudiencePreview200Response
-from segment_public_api.models.create_audience_preview_beta_input import CreateAudiencePreviewBetaInput
+from segment_public_api.models.create_audience_preview_input import CreateAudiencePreviewInput
 from segment_public_api.rest import ApiException
 from pprint import pprint
 
@@ -207,11 +207,11 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.AudiencesApi(api_client)
     space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
-    create_audience_preview_beta_input = {"definition":{"query":"entity('owned-accounts').count() >= 1","targetEntity":"owned-accounts"},"audienceType":"LINKED","options":{"filterByExternalIds":["android.idfa","anonymous_id","email","ios.idfa","user_id"]}} # CreateAudiencePreviewBetaInput | 
+    create_audience_preview_input = {"definition":{"query":"event('Shoes Bought').count() >= 1"},"audienceType":"USERS","options":{"filterByExternalIds":["android.idfa","anonymous_id","email","ios.idfa","user_id"],"backfillEventDataDays":7}} # CreateAudiencePreviewInput | 
 
     try:
         # Create Audience Preview
-        api_response = api_instance.create_audience_preview(space_id, create_audience_preview_beta_input)
+        api_response = api_instance.create_audience_preview(space_id, create_audience_preview_input)
         print("The response of AudiencesApi->create_audience_preview:\n")
         pprint(api_response)
     except Exception as e:
@@ -225,7 +225,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **space_id** | **str**|  | 
- **create_audience_preview_beta_input** | [**CreateAudiencePreviewBetaInput**](CreateAudiencePreviewBetaInput.md)|  | 
+ **create_audience_preview_input** | [**CreateAudiencePreviewInput**](CreateAudiencePreviewInput.md)|  | 
 
 ### Return type
 
@@ -237,8 +237,8 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
- - **Accept**: application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json, application/json
+ - **Content-Type**: application/json, application/vnd.segment.v1+json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
+ - **Accept**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -390,7 +390,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json, application/json
+ - **Accept**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -465,7 +465,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json, application/json
+ - **Accept**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -782,7 +782,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json, application/json
+ - **Accept**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -949,7 +949,7 @@ Name | Type | Description  | Notes
 
 ## Operation: update_audience_for_space
 
-> UpdateAudienceForSpace200Response update_audience_for_space(space_id, id, update_audience_for_space_beta_input)
+> UpdateAudienceForSpace200Response update_audience_for_space(space_id, id, update_audience_for_space_input)
 
 Update Audience for Space
 
@@ -963,7 +963,7 @@ import time
 import os
 import segment_public_api
 from segment_public_api.models.update_audience_for_space200_response import UpdateAudienceForSpace200Response
-from segment_public_api.models.update_audience_for_space_beta_input import UpdateAudienceForSpaceBetaInput
+from segment_public_api.models.update_audience_for_space_input import UpdateAudienceForSpaceInput
 from segment_public_api.rest import ApiException
 from pprint import pprint
 
@@ -980,11 +980,11 @@ with segment_public_api.ApiClient(configuration) as api_client:
     api_instance = segment_public_api.AudiencesApi(api_client)
     space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
     id = 'aud_0ujsszwN8NRY24YaXiTIE2VWDTS' # str | 
-    update_audience_for_space_beta_input = {"name":"Linked Audience updated","description":"updated description","enabled":true,"definition":{"query":"entity('owned-accounts').count() > 2"},"options":{"filterByExternalIds":["user_id","email"]}} # UpdateAudienceForSpaceBetaInput | 
+    update_audience_for_space_input = {"name":"Profiles Audience V1 Updated","description":"Updated V1 description","enabled":true,"definition":{"query":"event('Purchased').count() >= 3"},"options":{"includeHistoricalData":false,"filterByExternalIds":["user_id","email"]}} # UpdateAudienceForSpaceInput | 
 
     try:
         # Update Audience for Space
-        api_response = api_instance.update_audience_for_space(space_id, id, update_audience_for_space_beta_input)
+        api_response = api_instance.update_audience_for_space(space_id, id, update_audience_for_space_input)
         print("The response of AudiencesApi->update_audience_for_space:\n")
         pprint(api_response)
     except Exception as e:
@@ -999,7 +999,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **space_id** | **str**|  | 
  **id** | **str**|  | 
- **update_audience_for_space_beta_input** | [**UpdateAudienceForSpaceBetaInput**](UpdateAudienceForSpaceBetaInput.md)|  | 
+ **update_audience_for_space_input** | [**UpdateAudienceForSpaceInput**](UpdateAudienceForSpaceInput.md)|  | 
 
 ### Return type
 
@@ -1011,8 +1011,8 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
- - **Accept**: application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json, application/json
+ - **Content-Type**: application/json, application/vnd.segment.v1+json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
+ - **Accept**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
 
 ### HTTP response details
 | Status code | Description | Response headers |
