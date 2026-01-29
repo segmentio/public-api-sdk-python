@@ -801,7 +801,7 @@ Name | Type | Description  | Notes
 
 Remove Audience from Space
 
-Deletes an Audience by id and spaceId.  • This endpoint is in **Beta** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Audience Deleted` event in the [audit trail](/tag/Audit-Trail).   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
+Deletes an Audience by id and spaceId.  • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Audience Deleted` event in the [audit trail](/tag/Audit-Trail).   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
 
 ### Example
 
@@ -949,11 +949,11 @@ Name | Type | Description  | Notes
 
 ## Operation: update_audience_for_space
 
-> UpdateAudienceForSpace200Response update_audience_for_space(space_id, id, update_audience_for_space_beta_input)
+> UpdateAudienceForSpace200Response update_audience_for_space(space_id, id, update_audience_for_space_input)
 
 Update Audience for Space
 
-Updates the Audience.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Audience Modified` event in the [audit trail](/tag/Audit-Trail).  • Note that when an Audience is updated, the Audience will be locked from future edits until the changes have been incorporated. You can find more information [in the Segment docs](https://segment-docs.netlify.app/docs/engage/audiences/#editing-realtime-audiences-and-traits).  Note: The definition for an Audience updated using the API is not editable through the Segment App.   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
+Updates the Audience.  • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Audience Modified` event in the [audit trail](/tag/Audit-Trail).  • Note that when an Audience is updated, the Audience will be locked from future edits until the changes have been incorporated. You can find more information [in the Segment docs](https://segment-docs.netlify.app/docs/engage/audiences/#editing-realtime-audiences-and-traits).  Note: The definition for an Audience updated using the API is not editable through the Segment App.   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
 
 ### Example
 
@@ -963,7 +963,7 @@ import time
 import os
 import segment_public_api
 from segment_public_api.models.update_audience_for_space200_response import UpdateAudienceForSpace200Response
-from segment_public_api.models.update_audience_for_space_beta_input import UpdateAudienceForSpaceBetaInput
+from segment_public_api.models.update_audience_for_space_input import UpdateAudienceForSpaceInput
 from segment_public_api.rest import ApiException
 from pprint import pprint
 
@@ -980,11 +980,11 @@ with segment_public_api.ApiClient(configuration) as api_client:
     api_instance = segment_public_api.AudiencesApi(api_client)
     space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
     id = 'aud_0ujsszwN8NRY24YaXiTIE2VWDTS' # str | 
-    update_audience_for_space_beta_input = {"name":"Linked Audience updated","description":"updated description","enabled":true,"definition":{"query":"entity('owned-accounts').count() > 2"},"options":{"filterByExternalIds":["user_id","email"]}} # UpdateAudienceForSpaceBetaInput | 
+    update_audience_for_space_input = {"name":"Profiles Audience V1 Updated","description":"Updated V1 description","enabled":true,"definition":{"query":"event('Purchased').count() >= 3"},"options":{"includeHistoricalData":false,"filterByExternalIds":["user_id","email"]}} # UpdateAudienceForSpaceInput | 
 
     try:
         # Update Audience for Space
-        api_response = api_instance.update_audience_for_space(space_id, id, update_audience_for_space_beta_input)
+        api_response = api_instance.update_audience_for_space(space_id, id, update_audience_for_space_input)
         print("The response of AudiencesApi->update_audience_for_space:\n")
         pprint(api_response)
     except Exception as e:
@@ -999,7 +999,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **space_id** | **str**|  | 
  **id** | **str**|  | 
- **update_audience_for_space_beta_input** | [**UpdateAudienceForSpaceBetaInput**](UpdateAudienceForSpaceBetaInput.md)|  | 
+ **update_audience_for_space_input** | [**UpdateAudienceForSpaceInput**](UpdateAudienceForSpaceInput.md)|  | 
 
 ### Return type
 
@@ -1011,8 +1011,8 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
- - **Accept**: application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json, application/json
+ - **Content-Type**: application/json, application/vnd.segment.v1+json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
+ - **Accept**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
 
 ### HTTP response details
 | Status code | Description | Response headers |
