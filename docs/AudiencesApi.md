@@ -23,7 +23,7 @@ Method | HTTP request | Description
 
 ## Operation: add_audience_schedule_to_audience
 
-> AddAudienceScheduleToAudience200Response add_audience_schedule_to_audience(space_id, id, add_audience_schedule_to_audience_alpha_input)
+> AddAudienceScheduleToAudience200Response add_audience_schedule_to_audience(space_id, id, add_audience_schedule_to_audience_input)
 
 Add Audience Schedule to Audience
 
@@ -37,7 +37,7 @@ import time
 import os
 import segment_public_api
 from segment_public_api.models.add_audience_schedule_to_audience200_response import AddAudienceScheduleToAudience200Response
-from segment_public_api.models.add_audience_schedule_to_audience_alpha_input import AddAudienceScheduleToAudienceAlphaInput
+from segment_public_api.models.add_audience_schedule_to_audience_input import AddAudienceScheduleToAudienceInput
 from segment_public_api.rest import ApiException
 from pprint import pprint
 
@@ -54,11 +54,11 @@ with segment_public_api.ApiClient(configuration) as api_client:
     api_instance = segment_public_api.AudiencesApi(api_client)
     space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
     id = 'aud_0ujsszwN8NRY24YaXiTIE2VWDTS' # str | 
-    add_audience_schedule_to_audience_alpha_input = {"strategy":"SPECIFIC_DAYS","config":{"days":[1,3,5],"hours":[9,17],"timezone":"America/New_York"}} # AddAudienceScheduleToAudienceAlphaInput | 
+    add_audience_schedule_to_audience_input = {"strategy":"SPECIFIC_DAYS","config":{"days":[1,3,5],"hours":[9,17],"timezone":"America/New_York"}} # AddAudienceScheduleToAudienceInput | 
 
     try:
         # Add Audience Schedule to Audience
-        api_response = api_instance.add_audience_schedule_to_audience(space_id, id, add_audience_schedule_to_audience_alpha_input)
+        api_response = api_instance.add_audience_schedule_to_audience(space_id, id, add_audience_schedule_to_audience_input)
         print("The response of AudiencesApi->add_audience_schedule_to_audience:\n")
         pprint(api_response)
     except Exception as e:
@@ -73,7 +73,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **space_id** | **str**|  | 
  **id** | **str**|  | 
- **add_audience_schedule_to_audience_alpha_input** | [**AddAudienceScheduleToAudienceAlphaInput**](AddAudienceScheduleToAudienceAlphaInput.md)|  | 
+ **add_audience_schedule_to_audience_input** | [**AddAudienceScheduleToAudienceInput**](AddAudienceScheduleToAudienceInput.md)|  | 
 
 ### Return type
 
@@ -85,8 +85,8 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/vnd.segment.v1alpha+json
- - **Accept**: application/vnd.segment.v1alpha+json, application/json
+ - **Content-Type**: application/json, application/vnd.segment.v1+json, application/vnd.segment.v1alpha+json
+ - **Accept**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1alpha+json
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -542,7 +542,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/vnd.segment.v1alpha+json, application/json
+ - **Accept**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1alpha+json
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -701,7 +701,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/vnd.segment.v1alpha+json, application/json
+ - **Accept**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1alpha+json
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -720,7 +720,7 @@ Name | Type | Description  | Notes
 
 List Audiences
 
-Returns Audiences by spaceId. Supports including audience schedules using `?include=schedules`.  • This endpoint is in **Beta** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.   The rate limit for this endpoint is 60 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
+Returns Audiences by spaceId. Supports including audience schedules using `?include=schedules`.  • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.   The rate limit for this endpoint is 60 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
 
 ### Example
 
@@ -934,7 +934,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/vnd.segment.v1alpha+json, application/json
+ - **Accept**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1alpha+json
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -1027,7 +1027,7 @@ Name | Type | Description  | Notes
 
 ## Operation: update_audience_schedule_for_audience
 
-> UpdateAudienceScheduleForAudience200Response update_audience_schedule_for_audience(space_id, id, schedule_id, update_audience_schedule_for_audience_alpha_input)
+> UpdateAudienceScheduleForAudience200Response update_audience_schedule_for_audience(space_id, id, schedule_id, update_audience_schedule_for_audience_input)
 
 Update Audience Schedule for Audience
 
@@ -1041,7 +1041,7 @@ import time
 import os
 import segment_public_api
 from segment_public_api.models.update_audience_schedule_for_audience200_response import UpdateAudienceScheduleForAudience200Response
-from segment_public_api.models.update_audience_schedule_for_audience_alpha_input import UpdateAudienceScheduleForAudienceAlphaInput
+from segment_public_api.models.update_audience_schedule_for_audience_input import UpdateAudienceScheduleForAudienceInput
 from segment_public_api.rest import ApiException
 from pprint import pprint
 
@@ -1059,11 +1059,11 @@ with segment_public_api.ApiClient(configuration) as api_client:
     space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
     id = 'aud_0ujsszwN8NRY24YaXiTIE2VWDTS' # str | 
     schedule_id = 'sch_0ujsszwN8NRY24YaXiTIE2VWDTS' # str | 
-    update_audience_schedule_for_audience_alpha_input = {"strategy":"SPECIFIC_DAYS","config":{"days":[1,3,4],"hours":[9,16],"timezone":"America/New_York"}} # UpdateAudienceScheduleForAudienceAlphaInput | 
+    update_audience_schedule_for_audience_input = {"strategy":"SPECIFIC_DAYS","config":{"days":[1,3,4],"hours":[9,16],"timezone":"America/New_York"}} # UpdateAudienceScheduleForAudienceInput | 
 
     try:
         # Update Audience Schedule for Audience
-        api_response = api_instance.update_audience_schedule_for_audience(space_id, id, schedule_id, update_audience_schedule_for_audience_alpha_input)
+        api_response = api_instance.update_audience_schedule_for_audience(space_id, id, schedule_id, update_audience_schedule_for_audience_input)
         print("The response of AudiencesApi->update_audience_schedule_for_audience:\n")
         pprint(api_response)
     except Exception as e:
@@ -1079,7 +1079,7 @@ Name | Type | Description  | Notes
  **space_id** | **str**|  | 
  **id** | **str**|  | 
  **schedule_id** | **str**|  | 
- **update_audience_schedule_for_audience_alpha_input** | [**UpdateAudienceScheduleForAudienceAlphaInput**](UpdateAudienceScheduleForAudienceAlphaInput.md)|  | 
+ **update_audience_schedule_for_audience_input** | [**UpdateAudienceScheduleForAudienceInput**](UpdateAudienceScheduleForAudienceInput.md)|  | 
 
 ### Return type
 
@@ -1091,8 +1091,8 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/vnd.segment.v1alpha+json
- - **Accept**: application/vnd.segment.v1alpha+json, application/json
+ - **Content-Type**: application/json, application/vnd.segment.v1+json, application/vnd.segment.v1alpha+json
+ - **Accept**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1alpha+json
 
 ### HTTP response details
 | Status code | Description | Response headers |
