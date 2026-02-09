@@ -72,7 +72,7 @@ class AudiencesApi:
     def add_audience_schedule_to_audience(self, space_id : constr(strict=True), id : constr(strict=True), add_audience_schedule_to_audience_input : AddAudienceScheduleToAudienceInput, **kwargs) -> AddAudienceScheduleToAudience200Response:  # noqa: E501
         """Add Audience Schedule to Audience  # noqa: E501
 
-        The ability to configure the run schedule for an Audience is limited to Linked Audiences (audienceType = LINKED).  Note that if a Linked Audience remains disabled for 90 days Segment will delete the associated schedule and a new schedule will need to be created.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
+        The ability to configure the run schedule for an Audience is limited to Linked Audiences (audienceType = LINKED).  Note that if a Linked Audience remains disabled for 90 days Segment will delete the associated schedule and a new schedule will need to be created.  • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -106,7 +106,7 @@ class AudiencesApi:
     def add_audience_schedule_to_audience_with_http_info(self, space_id : constr(strict=True), id : constr(strict=True), add_audience_schedule_to_audience_input : AddAudienceScheduleToAudienceInput, **kwargs) -> ApiResponse:  # noqa: E501
         """Add Audience Schedule to Audience  # noqa: E501
 
-        The ability to configure the run schedule for an Audience is limited to Linked Audiences (audienceType = LINKED).  Note that if a Linked Audience remains disabled for 90 days Segment will delete the associated schedule and a new schedule will need to be created.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
+        The ability to configure the run schedule for an Audience is limited to Linked Audiences (audienceType = LINKED).  Note that if a Linked Audience remains disabled for 90 days Segment will delete the associated schedule and a new schedule will need to be created.  • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1015,7 +1015,7 @@ class AudiencesApi:
     def get_audience_schedule_from_space_and_audience(self, space_id : constr(strict=True), id : constr(strict=True), schedule_id : constr(strict=True), **kwargs) -> GetAudienceScheduleFromSpaceAndAudience200Response:  # noqa: E501
         """Get Audience Schedule from Space And Audience  # noqa: E501
 
-        Returns the schedule for the given audience and scheduleId.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
+        Returns the schedule for the given audience and scheduleId.  • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1049,7 +1049,7 @@ class AudiencesApi:
     def get_audience_schedule_from_space_and_audience_with_http_info(self, space_id : constr(strict=True), id : constr(strict=True), schedule_id : constr(strict=True), **kwargs) -> ApiResponse:  # noqa: E501
         """Get Audience Schedule from Space And Audience  # noqa: E501
 
-        Returns the schedule for the given audience and scheduleId.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
+        Returns the schedule for the given audience and scheduleId.  • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1349,7 +1349,7 @@ class AudiencesApi:
     def list_audience_schedules_from_space_and_audience(self, space_id : constr(strict=True), id : constr(strict=True), **kwargs) -> ListAudienceSchedulesFromSpaceAndAudience200Response:  # noqa: E501
         """List Audience Schedules from Space And Audience  # noqa: E501
 
-        Returns the list of schedules for the given audience.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
+        Returns the list of schedules for the given audience.  • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1381,7 +1381,7 @@ class AudiencesApi:
     def list_audience_schedules_from_space_and_audience_with_http_info(self, space_id : constr(strict=True), id : constr(strict=True), **kwargs) -> ApiResponse:  # noqa: E501
         """List Audience Schedules from Space And Audience  # noqa: E501
 
-        Returns the list of schedules for the given audience.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
+        Returns the list of schedules for the given audience.  • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1818,7 +1818,7 @@ class AudiencesApi:
     def remove_audience_schedule_from_audience(self, space_id : constr(strict=True), id : constr(strict=True), schedule_id : constr(strict=True), **kwargs) -> RemoveAudienceScheduleFromAudience200Response:  # noqa: E501
         """Remove Audience Schedule from Audience  # noqa: E501
 
-        Deletes an audience schedule for a Linked Audience (audienceType = LINKED).  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
+        Deletes an audience schedule for a Linked Audience (audienceType = LINKED).  • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1852,7 +1852,7 @@ class AudiencesApi:
     def remove_audience_schedule_from_audience_with_http_info(self, space_id : constr(strict=True), id : constr(strict=True), schedule_id : constr(strict=True), **kwargs) -> ApiResponse:  # noqa: E501
         """Remove Audience Schedule from Audience  # noqa: E501
 
-        Deletes an audience schedule for a Linked Audience (audienceType = LINKED).  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
+        Deletes an audience schedule for a Linked Audience (audienceType = LINKED).  • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -2143,7 +2143,7 @@ class AudiencesApi:
     def update_audience_schedule_for_audience(self, space_id : constr(strict=True), id : constr(strict=True), schedule_id : constr(strict=True), update_audience_schedule_for_audience_input : UpdateAudienceScheduleForAudienceInput, **kwargs) -> UpdateAudienceScheduleForAudience200Response:  # noqa: E501
         """Update Audience Schedule for Audience  # noqa: E501
 
-        Updates an audience schedule for a Linked Audience (audienceType = LINKED).  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
+        Updates an audience schedule for a Linked Audience (audienceType = LINKED).  • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -2179,7 +2179,7 @@ class AudiencesApi:
     def update_audience_schedule_for_audience_with_http_info(self, space_id : constr(strict=True), id : constr(strict=True), schedule_id : constr(strict=True), update_audience_schedule_for_audience_input : UpdateAudienceScheduleForAudienceInput, **kwargs) -> ApiResponse:  # noqa: E501
         """Update Audience Schedule for Audience  # noqa: E501
 
-        Updates an audience schedule for a Linked Audience (audienceType = LINKED).  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
+        Updates an audience schedule for a Linked Audience (audienceType = LINKED).  • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
