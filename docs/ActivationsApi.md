@@ -13,6 +13,7 @@ Method | HTTP request | Description
 [**remove_activation_from_audience**](ActivationsApi.md#remove_activation_from_audience) | **DELETE** /spaces/{spaceId}/audiences/{audienceId}/activations/{id} | Remove Activation from Audience
 [**remove_destination_from_audience**](ActivationsApi.md#remove_destination_from_audience) | **DELETE** /spaces/{spaceId}/audiences/{audienceId}/destination-connections/{destinationId} | Remove Destination from Audience
 [**update_activation_for_audience**](ActivationsApi.md#update_activation_for_audience) | **PATCH** /spaces/{spaceId}/audiences/{audienceId}/activations/{id} | Update Activation for Audience
+[**update_destination_for_audience**](ActivationsApi.md#update_destination_for_audience) | **PATCH** /spaces/{spaceId}/audiences/{audienceId}/destination-connections/{destinationId} | Update Destination for Audience
 
 
 
@@ -699,6 +700,86 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**UpdateActivationForAudience200Response**](UpdateActivationForAudience200Response.md)
+
+### Authorization
+
+[token](../README.md#token)
+
+### HTTP request headers
+
+ - **Content-Type**: application/vnd.segment.v1alpha+json
+ - **Accept**: application/vnd.segment.v1alpha+json, application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**404** | Resource not found |  -  |
+**422** | Validation failure |  -  |
+**429** | Too many requests |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## Operation: update_destination_for_audience
+
+> UpdateDestinationForAudience200Response update_destination_for_audience(space_id, audience_id, destination_id, update_destination_for_audience_alpha_input)
+
+Update Destination for Audience
+
+Updates a Destination for an Audience.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Destination Updated for Audience` event in the [audit trail](/tag/Audit-Trail).
+
+### Example
+
+* Bearer Authentication (token):
+```python
+import time
+import os
+import segment_public_api
+from segment_public_api.models.update_destination_for_audience200_response import UpdateDestinationForAudience200Response
+from segment_public_api.models.update_destination_for_audience_alpha_input import UpdateDestinationForAudienceAlphaInput
+from segment_public_api.rest import ApiException
+from pprint import pprint
+
+
+
+# Configure Bearer authorization: token
+configuration = segment_public_api.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with segment_public_api.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = segment_public_api.ActivationsApi(api_client)
+    space_id = 'spa_9aQ1Lj62S4bomZKLF4DPqW' # str | 
+    audience_id = 'aud_0ujsszwN8NRY24YaXiTIE2VWDTS' # str | 
+    destination_id = 'ii_123456789' # str | 
+    update_destination_for_audience_alpha_input = {"idSyncConfiguration":[{"externalId":"user_id","strategy":"first"},{"externalId":"email","strategy":"all"}]} # UpdateDestinationForAudienceAlphaInput | 
+
+    try:
+        # Update Destination for Audience
+        api_response = api_instance.update_destination_for_audience(space_id, audience_id, destination_id, update_destination_for_audience_alpha_input)
+        print("The response of ActivationsApi->update_destination_for_audience:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ActivationsApi->update_destination_for_audience: %s\n" % e)
+```
+
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **space_id** | **str**|  | 
+ **audience_id** | **str**|  | 
+ **destination_id** | **str**|  | 
+ **update_destination_for_audience_alpha_input** | [**UpdateDestinationForAudienceAlphaInput**](UpdateDestinationForAudienceAlphaInput.md)|  | 
+
+### Return type
+
+[**UpdateDestinationForAudience200Response**](UpdateDestinationForAudience200Response.md)
 
 ### Authorization
 
