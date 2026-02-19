@@ -28,9 +28,9 @@ class AddActivationToAudienceAlphaInput(BaseModel):
     """
     Input to create an activation.  # noqa: E501
     """
-    enabled: Optional[StrictBool] = Field(None, description="Whether the event emitter should be created in an enabled state. Will trigger an audience run if enabled.")
-    perform_resync: StrictBool = Field(..., alias="performResync", description="Whether to perform a resync after creation of the activation.")
-    activation_type: StrictStr = Field(..., alias="activationType", description="Type of activation trigger.")
+    enabled: Optional[StrictBool] = Field(None, description="Determines whether an activation is enabled.")
+    perform_resync: StrictBool = Field(..., alias="performResync", description="Determines whether to perform a full resync upon creation. If true, the entire audience is resent to the Destination from scratch. If false, only future changes will be synced.")
+    activation_type: StrictStr = Field(..., alias="activationType", description="Determines when an event is sent to the Destination.   Possible values: Audience Entered: Sends an event when a profile or entity enters the audience. Audience Exited: Sends an event when a profile or entity exits the audience. Audience Membership Changed: Sends an event for both entries and exits. This does not apply to entities.  Note that events are sent for the profile, unless the audience is a Linked Audience. In that case, events are sent for the target entity defined for that audience.")
     activation_name: StrictStr = Field(..., alias="activationName", description="Name of the activation.")
     personalization: PersonalizationInput = Field(...)
     destination_mapping: Optional[DestinationSubscriptionConfiguration] = Field(None, alias="destinationMapping")

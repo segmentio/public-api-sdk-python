@@ -26,7 +26,7 @@ class DestinationSubscriptionConfiguration(BaseModel):
     """
     Destination Subscription Configuration.  # noqa: E501
     """
-    action_id: StrictStr = Field(..., alias="actionId", description="The action id to instantiate.")
+    action_id: StrictStr = Field(..., alias="actionId", description="The id for the action that Segment should perform on the Destination.")
     settings: Optional[Dict[str, Any]] = Field(None, description="Represents settings used to configure an action subscription.")
     __properties = ["actionId", "settings"]
 

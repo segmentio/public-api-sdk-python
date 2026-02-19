@@ -29,8 +29,8 @@ class AddDestinationToAudienceAlphaOutput(BaseModel):
     AddDestinationToAudienceAlphaOutput
     """
     connection: Connection = Field(...)
-    id_sync_configuration: conlist(IDSyncConfigurationInput) = Field(..., alias="idSyncConfiguration", description="The id sync configuration for the Destination - array of external ids with their strategies.")
-    connection_settings: Optional[Any] = Field(None, alias="connectionSettings", description="The settings that a Destination requires to create audiences on a third-party platform. These settings are Destination-specific and thus are best defined as unknown.")
+    id_sync_configuration: conlist(IDSyncConfigurationInput) = Field(..., alias="idSyncConfiguration", description="Identifier sync configuration. Defines which external ids to sync and their selection strategies. Maximum 5 items allowed. If omitted, the default will be last email and last user_id, or all email and all user_id depending on the Destination.")
+    connection_settings: Optional[Any] = Field(None, alias="connectionSettings", description="The settings that a Destination requires to create audiences on a third-party platform. These settings are Destination-specific. Use the List Supported Destinations from Audience endpoint to find the required connection settings.")
     __properties = ["connection", "idSyncConfiguration", "connectionSettings"]
 
     class Config:

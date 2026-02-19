@@ -32,7 +32,7 @@ class UpdateActivationForAudienceAlphaInput(BaseModel):
     activation_name: Optional[StrictStr] = Field(None, alias="activationName", description="Activation name.")
     personalization: Optional[PersonalizationInput] = None
     destination_mapping: Optional[DestinationSubscriptionConfiguration] = Field(None, alias="destinationMapping")
-    perform_resync: Optional[StrictBool] = Field(None, alias="performResync", description="Whether to perform a resync after creation of the activation.")
+    perform_resync: Optional[StrictBool] = Field(None, alias="performResync", description="Determines whether to perform a full resync after the update. If true, the entire audience is resent to the Destination using the updated configuration. If false, the update applies only to future syncs.")
     __properties = ["enabled", "activationName", "personalization", "destinationMapping", "performResync"]
 
     class Config:
