@@ -26,8 +26,8 @@ class IDSyncConfigurationInput(BaseModel):
     """
     The identifier sync configuration input.  # noqa: E501
     """
-    external_id: StrictStr = Field(..., alias="externalId", description="The external id to sync, for example \"user_id\" or \"email\".")
-    strategy: StrictStr = Field(..., description="The strategy for syncing this identifier. Valid values: \"first\", \"last\", \"all\".")
+    external_id: StrictStr = Field(..., alias="externalId", description="The id type to sync. Examples: user_id, email, anonymous_id.")
+    strategy: StrictStr = Field(..., description="The rule for selecting which identifiers to sync from a profile.  Possible values: first: Syncs only the oldest recorded value. last: Syncs only the most recently updated value. all: Syncs every value found on the profile (sends multiple events).")
     __properties = ["externalId", "strategy"]
 
     class Config:

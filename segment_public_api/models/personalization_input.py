@@ -30,7 +30,7 @@ class PersonalizationInput(BaseModel):
     """
     profile: Profile = Field(...)
     entities: Optional[conlist(PersonalizationInputEntity)] = Field(None, description="Entities V2 Object.")
-    sync_entity_property_changes: Optional[StrictBool] = Field(None, alias="syncEntityPropertyChanges", description="Sync entity property changes back to Segment. Only applicable if activationType is \"Audience Membership Changed\".")
+    sync_entity_property_changes: Optional[StrictBool] = Field(None, alias="syncEntityPropertyChanges", description="Sync entity property changes to the Destination. Only applicable if activationType is \"Audience Membership Changed\".")
     __properties = ["profile", "entities", "syncEntityPropertyChanges"]
 
     class Config:

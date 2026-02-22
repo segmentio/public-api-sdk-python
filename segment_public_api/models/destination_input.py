@@ -26,8 +26,8 @@ class DestinationInput(BaseModel):
     """
     The Destination Input Object.  # noqa: E501
     """
-    id: StrictStr = Field(..., description="The Destination instance id.")
-    type: StrictStr = Field(..., description="Type of Destination to add to the audience.")
+    id: StrictStr = Field(..., description="The Destination id. Use the List Destinations endpoint to look up available ids.")
+    type: StrictStr = Field(..., description="The category of the Destination.  Possible values: destination, warehouse.")
     __properties = ["id", "type"]
 
     class Config:

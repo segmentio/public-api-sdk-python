@@ -34,11 +34,11 @@ class ActivationOutput(BaseModel):
     space_id: StrictStr = Field(..., alias="spaceId", description="The space id.")
     audience_id: StrictStr = Field(..., alias="audienceId", description="The audience id.")
     connection_id: StrictStr = Field(..., alias="connectionId", description="The connection id.")
-    activation_type: StrictStr = Field(..., alias="activationType", description="Type of activation trigger.")
+    activation_type: StrictStr = Field(..., alias="activationType", description="Determines when an event is sent to the Destination.   Possible values: Audience Entered: Sends an event when a profile or entity enters the audience. Audience Exited: Sends an event when a profile or entity exits the audience. Audience Membership Changed: Sends an event for both entries and exits. This does not apply to entities.  Note that events are sent for the profile, unless the audience is a Linked Audience. In that case, events are sent for the target entity defined for that audience.")
     activation_name: StrictStr = Field(..., alias="activationName", description="Name of the activation.")
     personalization: PersonalizationInput = Field(...)
     destination_mapping: Optional[DestinationSubscriptionConfiguration] = Field(None, alias="destinationMapping")
-    perform_resync: Optional[StrictBool] = Field(None, alias="performResync", description="Whether to perform a resync after creation of the activation.")
+    perform_resync: Optional[StrictBool] = Field(None, alias="performResync", description="Indicates if a full resync is currently pending or in progress.")
     __properties = ["id", "enabled", "workspaceId", "spaceId", "audienceId", "connectionId", "activationType", "activationName", "personalization", "destinationMapping", "performResync"]
 
     class Config:
