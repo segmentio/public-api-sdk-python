@@ -42,7 +42,7 @@ class AudienceSummaryWithAudienceTypeAndLookback(BaseModel):
     key: StrictStr = Field(..., description="Key for the audience.")
     enabled: StrictBool = Field(..., description="Enabled/disabled status for the audience.")
     definition: Optional[AudienceDefinition] = Field(...)
-    status: Optional[StrictStr] = Field(None, description="Status for the audience.  Possible values: Backfilling, Computing, Failed, Live, Awaiting Destinations, Disabled.")
+    status: Optional[StrictStr] = Field(None, description="Status for the audience.  Possible values: Backfilling, Computing, Disabled, Error, Failed, Live, Locked, Not Computing, Preparing, Awaiting Destinations.")
     created_by: StrictStr = Field(..., alias="createdBy", description="User id who created the audience.")
     updated_by: StrictStr = Field(..., alias="updatedBy", description="User id who last updated the audience.")
     created_at: StrictStr = Field(..., alias="createdAt", description="Date the audience was created.")
