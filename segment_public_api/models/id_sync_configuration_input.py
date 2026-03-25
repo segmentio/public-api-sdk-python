@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 
-
+from typing import Optional
 from pydantic import BaseModel, Field, StrictStr
 
 class IDSyncConfigurationInput(BaseModel):
@@ -28,7 +28,8 @@ class IDSyncConfigurationInput(BaseModel):
     """
     external_id: StrictStr = Field(..., alias="externalId", description="The id type to sync. Examples: user_id, email, anonymous_id.")
     strategy: StrictStr = Field(..., description="The rule for selecting which identifiers to sync from a profile.  Possible values: first: Syncs only the oldest recorded value. last: Syncs only the most recently updated value. all: Syncs every value found on the profile (sends multiple events).")
-    __properties = ["externalId", "strategy"]
+    map_to: Optional[StrictStr] = Field(None, alias="mapTo", description="Optional destination-specific identifier to map to (for example, \"Email_Address_c\").")
+    __properties = ["externalId", "strategy", "mapTo"]
 
     class Config:
         """Pydantic configuration"""
@@ -67,7 +68,8 @@ class IDSyncConfigurationInput(BaseModel):
 
         _obj = IDSyncConfigurationInput.parse_obj({
             "external_id": obj.get("externalId"),
-            "strategy": obj.get("strategy")
+            "strategy": obj.get("strategy"),
+            "map_to": obj.get("mapTo")
         })
         return _obj
 
