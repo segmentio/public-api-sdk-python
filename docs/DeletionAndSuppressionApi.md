@@ -7,7 +7,6 @@ Method | HTTP request | Description
 [**create_cloud_source_regulation**](DeletionAndSuppressionApi.md#create_cloud_source_regulation) | **POST** /regulations/cloudsources/{sourceId} | Create Cloud Source Regulation
 [**create_source_regulation**](DeletionAndSuppressionApi.md#create_source_regulation) | **POST** /regulations/sources/{sourceId} | Create Source Regulation
 [**create_workspace_regulation**](DeletionAndSuppressionApi.md#create_workspace_regulation) | **POST** /regulations | Create Workspace Regulation
-[**delete_regulation**](DeletionAndSuppressionApi.md#delete_regulation) | **DELETE** /regulations/{regulateId} | Delete Regulation
 [**get_regulation**](DeletionAndSuppressionApi.md#get_regulation) | **GET** /regulations/{regulateId} | Get Regulation
 [**list_regulations_from_source**](DeletionAndSuppressionApi.md#list_regulations_from_source) | **GET** /regulations/sources/{sourceId} | List Regulations from Source
 [**list_suppressions**](DeletionAndSuppressionApi.md#list_suppressions) | **GET** /suppressions | List Suppressions
@@ -234,79 +233,6 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  * X-RateLimit-Remaining - Remaining requests in the current period for the regulation type category. Tracked separately for Segment-only vs Segment &amp; Destination regulation types. <br>  * X-RateLimit-Consumed - Number of requests consumed in the current period for the regulation type category. Tracked separately for Segment-only vs Segment &amp; Destination regulation types. <br>  * X-RateLimit-Reset - RFC 5322 timestamp indicating when the regulation quota resets for the specific regulation type category. <br>  |
-**404** | Resource not found |  -  |
-**422** | Validation failure |  -  |
-**429** | Too many requests |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-
-## Operation: delete_regulation
-
-> DeleteRegulation200Response delete_regulation(regulate_id)
-
-Delete Regulation
-
-Deletes a regulation from the Workspace. The regulation must be in the initialized state to be deleted.    • When called, this endpoint may generate the `Regulation Deleted` event in the [audit trail](/tag/Audit-Trail).         **DEPRECATED**: this endpoint has been deprecated according to the guidelines, and may experience reduced SLA guarantees.
-
-### Example
-
-* Bearer Authentication (token):
-```python
-import time
-import os
-import segment_public_api
-from segment_public_api.models.delete_regulation200_response import DeleteRegulation200Response
-from segment_public_api.rest import ApiException
-from pprint import pprint
-
-
-
-# Configure Bearer authorization: token
-configuration = segment_public_api.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with segment_public_api.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = segment_public_api.DeletionAndSuppressionApi(api_client)
-    regulate_id = '1qJkfE1tpwvQcklImGksLN629wn' # str | 
-
-    try:
-        # Delete Regulation
-        api_response = api_instance.delete_regulation(regulate_id)
-        print("The response of DeletionAndSuppressionApi->delete_regulation:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DeletionAndSuppressionApi->delete_regulation: %s\n" % e)
-```
-
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **regulate_id** | **str**|  | 
-
-### Return type
-
-[**DeleteRegulation200Response**](DeleteRegulation200Response.md)
-
-### Authorization
-
-[token](../README.md#token)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | OK |  -  |
 **404** | Resource not found |  -  |
 **422** | Validation failure |  -  |
 **429** | Too many requests |  -  |
