@@ -1,5 +1,3 @@
-# coding: utf-8
-
 """
     Segment Public API
 
@@ -13,29 +11,23 @@
 """  # noqa: E501
 
 
-import re  # noqa: F401
-import io
 import warnings
-
-from pydantic import validate_arguments, ValidationError
-
+from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
+from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
-from pydantic import Field, StrictStr, conlist
 
-from typing import Optional
-
+from pydantic import Field, StrictStr, field_validator
+from typing import List, Optional
+from typing_extensions import Annotated
 from segment_public_api.models.delivery_overview_destination_filter_by import DeliveryOverviewDestinationFilterBy
 from segment_public_api.models.delivery_overview_source_filter_by import DeliveryOverviewSourceFilterBy
 from segment_public_api.models.delivery_overview_successfully_received_filter_by import DeliveryOverviewSuccessfullyReceivedFilterBy
 from segment_public_api.models.get_egress_failed_metrics_from_delivery_overview200_response import GetEgressFailedMetricsFromDeliveryOverview200Response
 from segment_public_api.models.pagination_input import PaginationInput
 
-from segment_public_api.api_client import ApiClient
+from segment_public_api.api_client import ApiClient, RequestSerialized
 from segment_public_api.api_response import ApiResponse
-from segment_public_api.exceptions import (  # noqa: F401
-    ApiTypeError,
-    ApiValueError
-)
+from segment_public_api.rest import RESTResponseType
 
 
 class DeliveryOverviewApi:
@@ -50,60 +42,34 @@ class DeliveryOverviewApi:
             api_client = ApiClient.get_default()
         self.api_client = api_client
 
-    @validate_arguments
-    def get_egress_failed_metrics_from_delivery_overview(self, source_id : Annotated[StrictStr, Field(..., description="The sourceId for the Workspace.  This parameter exists in beta.")], destination_config_id : Annotated[StrictStr, Field(..., description="The id tied to a Workspace Destination.  This parameter exists in beta.")], start_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta.")], end_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta.")], granularity : Annotated[StrictStr, Field(..., description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")], group_by : Annotated[Optional[conlist(StrictStr)], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.")] = None, filter : Annotated[Optional[DeliveryOverviewDestinationFilterBy], Field(description="An optional filter for `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and/or `spaceId` that can be applied in addition to a `group By`.  This parameter exists in beta.")] = None, pagination : Annotated[Optional[PaginationInput], Field(description="Params to specify the page cursor and count.  This parameter exists in beta.")] = None, **kwargs) -> GetEgressFailedMetricsFromDeliveryOverview200Response:  # noqa: E501
-        """Get Egress Failed Metrics from Delivery Overview  # noqa: E501
 
-        Get events that failed to be delivered to Destination.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
+    @validate_call
+    def get_egress_failed_metrics_from_delivery_overview(
+        self,
+        source_id: Annotated[StrictStr, Field(description="The sourceId for the Workspace.  This parameter exists in beta.")],
+        destination_config_id: Annotated[StrictStr, Field(description="The id tied to a Workspace Destination.  This parameter exists in beta.")],
+        start_time: Annotated[StrictStr, Field(description="The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta.")],
+        end_time: Annotated[StrictStr, Field(description="The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta.")],
+        granularity: Annotated[StrictStr, Field(description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")],
+        group_by: Annotated[Optional[List[StrictStr]], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.")] = None,
+        filter: Annotated[Optional[DeliveryOverviewDestinationFilterBy], Field(description="An optional filter for `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and/or `spaceId` that can be applied in addition to a `group By`.  This parameter exists in beta.")] = None,
+        pagination: Annotated[Optional[PaginationInput], Field(description="Params to specify the page cursor and count.  This parameter exists in beta.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> GetEgressFailedMetricsFromDeliveryOverview200Response:
+        """Get Egress Failed Metrics from Delivery Overview
 
-        >>> thread = api.get_egress_failed_metrics_from_delivery_overview(source_id, destination_config_id, start_time, end_time, granularity, group_by, filter, pagination, async_req=True)
-        >>> result = thread.get()
-
-        :param source_id: The sourceId for the Workspace.  This parameter exists in beta. (required)
-        :type source_id: str
-        :param destination_config_id: The id tied to a Workspace Destination.  This parameter exists in beta. (required)
-        :type destination_config_id: str
-        :param start_time: The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta. (required)
-        :type start_time: str
-        :param end_time: The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta. (required)
-        :type end_time: str
-        :param granularity: The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta. (required)
-        :type granularity: str
-        :param group_by: A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.
-        :type group_by: List[str]
-        :param filter: An optional filter for `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and/or `spaceId` that can be applied in addition to a `group By`.  This parameter exists in beta.
-        :type filter: DeliveryOverviewDestinationFilterBy
-        :param pagination: Params to specify the page cursor and count.  This parameter exists in beta.
-        :type pagination: PaginationInput
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
-        :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: GetEgressFailedMetricsFromDeliveryOverview200Response
-        """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
-            message = "Error! Please call the get_egress_failed_metrics_from_delivery_overview_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
-            raise ValueError(message)
-        return self.get_egress_failed_metrics_from_delivery_overview_with_http_info(source_id, destination_config_id, start_time, end_time, granularity, group_by, filter, pagination, **kwargs)  # noqa: E501
-
-    @validate_arguments
-    def get_egress_failed_metrics_from_delivery_overview_with_http_info(self, source_id : Annotated[StrictStr, Field(..., description="The sourceId for the Workspace.  This parameter exists in beta.")], destination_config_id : Annotated[StrictStr, Field(..., description="The id tied to a Workspace Destination.  This parameter exists in beta.")], start_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta.")], end_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta.")], granularity : Annotated[StrictStr, Field(..., description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")], group_by : Annotated[Optional[conlist(StrictStr)], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.")] = None, filter : Annotated[Optional[DeliveryOverviewDestinationFilterBy], Field(description="An optional filter for `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and/or `spaceId` that can be applied in addition to a `group By`.  This parameter exists in beta.")] = None, pagination : Annotated[Optional[PaginationInput], Field(description="Params to specify the page cursor and count.  This parameter exists in beta.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """Get Egress Failed Metrics from Delivery Overview  # noqa: E501
-
-        Get events that failed to be delivered to Destination.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-
-        >>> thread = api.get_egress_failed_metrics_from_delivery_overview_with_http_info(source_id, destination_config_id, start_time, end_time, granularity, group_by, filter, pagination, async_req=True)
-        >>> result = thread.get()
+        Get events that failed to be delivered to Destination.
 
         :param source_id: The sourceId for the Workspace.  This parameter exists in beta. (required)
         :type source_id: str
@@ -121,145 +87,382 @@ class DeliveryOverviewApi:
         :type filter: DeliveryOverviewDestinationFilterBy
         :param pagination: Params to specify the page cursor and count.  This parameter exists in beta.
         :type pagination: PaginationInput
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _preload_content: if False, the ApiResponse.data will
-                                 be set to none and raw_data will store the
-                                 HTTP response body without reading/decoding.
-                                 Default is True.
-        :type _preload_content: bool, optional
-        :param _return_http_data_only: response data instead of ApiResponse
-                                       object with status code, headers, etc
-        :type _return_http_data_only: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the authentication
-                              in the spec for a single request.
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
         :type _request_auth: dict, optional
-        :type _content_type: string, optional: force content-type for the request
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
         :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: tuple(GetEgressFailedMetricsFromDeliveryOverview200Response, status_code(int), headers(HTTPHeaderDict))
-        """
+        """ # noqa: E501
 
-        _params = locals()
-
-        _all_params = [
-            'source_id',
-            'destination_config_id',
-            'start_time',
-            'end_time',
-            'granularity',
-            'group_by',
-            'filter',
-            'pagination'
-        ]
-        _all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
-            ]
+        _param = self._get_egress_failed_metrics_from_delivery_overview_serialize(
+            source_id=source_id,
+            destination_config_id=destination_config_id,
+            start_time=start_time,
+            end_time=end_time,
+            granularity=granularity,
+            group_by=group_by,
+            filter=filter,
+            pagination=pagination,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
         )
 
-        # validate the arguments
-        for _key, _val in _params['kwargs'].items():
-            if _key not in _all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method get_egress_failed_metrics_from_delivery_overview" % _key
-                )
-            _params[_key] = _val
-        del _params['kwargs']
-
-        _collection_formats = {}
-
-        # process the path parameters
-        _path_params = {}
-
-        # process the query parameters
-        _query_params = []
-        if _params.get('source_id') is not None:  # noqa: E501
-            _query_params.append(('sourceId', _params['source_id']))
-
-        if _params.get('destination_config_id') is not None:  # noqa: E501
-            _query_params.append(('destinationConfigId', _params['destination_config_id']))
-
-        if _params.get('start_time') is not None:  # noqa: E501
-            _query_params.append(('startTime', _params['start_time']))
-
-        if _params.get('end_time') is not None:  # noqa: E501
-            _query_params.append(('endTime', _params['end_time']))
-
-        if _params.get('group_by') is not None:  # noqa: E501
-            _query_params.append(('groupBy', _params['group_by']))
-            _collection_formats['groupBy'] = 'multi'
-
-        if _params.get('granularity') is not None:  # noqa: E501
-            _query_params.append(('granularity', _params['granularity']))
-
-        if _params.get('filter') is not None:  # noqa: E501
-            _query_params.append(('filter', _params['filter']))
-
-        if _params.get('pagination') is not None:  # noqa: E501
-            _query_params.append(('pagination', _params['pagination']))
-
-        # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
-        # process the form parameters
-        _form_params = []
-        _files = {}
-        # process the body parameter
-        _body_params = None
-        # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/vnd.segment.v1beta+json', 'application/json'])  # noqa: E501
-
-        # authentication setting
-        _auth_settings = ['token']  # noqa: E501
-
-        _response_types_map = {
+        _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetEgressFailedMetricsFromDeliveryOverview200Response",
             '404': "RequestErrorEnvelope",
             '422': "RequestErrorEnvelope",
             '429': "RequestErrorEnvelope",
         }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
 
-        return self.api_client.call_api(
-            '/delivery-overview/failed-delivery', 'GET',
-            _path_params,
-            _query_params,
-            _header_params,
+
+    @validate_call
+    def get_egress_failed_metrics_from_delivery_overview_with_http_info(
+        self,
+        source_id: Annotated[StrictStr, Field(description="The sourceId for the Workspace.  This parameter exists in beta.")],
+        destination_config_id: Annotated[StrictStr, Field(description="The id tied to a Workspace Destination.  This parameter exists in beta.")],
+        start_time: Annotated[StrictStr, Field(description="The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta.")],
+        end_time: Annotated[StrictStr, Field(description="The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta.")],
+        granularity: Annotated[StrictStr, Field(description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")],
+        group_by: Annotated[Optional[List[StrictStr]], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.")] = None,
+        filter: Annotated[Optional[DeliveryOverviewDestinationFilterBy], Field(description="An optional filter for `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and/or `spaceId` that can be applied in addition to a `group By`.  This parameter exists in beta.")] = None,
+        pagination: Annotated[Optional[PaginationInput], Field(description="Params to specify the page cursor and count.  This parameter exists in beta.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[GetEgressFailedMetricsFromDeliveryOverview200Response]:
+        """Get Egress Failed Metrics from Delivery Overview
+
+        Get events that failed to be delivered to Destination.
+
+        :param source_id: The sourceId for the Workspace.  This parameter exists in beta. (required)
+        :type source_id: str
+        :param destination_config_id: The id tied to a Workspace Destination.  This parameter exists in beta. (required)
+        :type destination_config_id: str
+        :param start_time: The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta. (required)
+        :type start_time: str
+        :param end_time: The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta. (required)
+        :type end_time: str
+        :param granularity: The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta. (required)
+        :type granularity: str
+        :param group_by: A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.
+        :type group_by: List[str]
+        :param filter: An optional filter for `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and/or `spaceId` that can be applied in addition to a `group By`.  This parameter exists in beta.
+        :type filter: DeliveryOverviewDestinationFilterBy
+        :param pagination: Params to specify the page cursor and count.  This parameter exists in beta.
+        :type pagination: PaginationInput
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_egress_failed_metrics_from_delivery_overview_serialize(
+            source_id=source_id,
+            destination_config_id=destination_config_id,
+            start_time=start_time,
+            end_time=end_time,
+            granularity=granularity,
+            group_by=group_by,
+            filter=filter,
+            pagination=pagination,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetEgressFailedMetricsFromDeliveryOverview200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def get_egress_failed_metrics_from_delivery_overview_without_preload_content(
+        self,
+        source_id: Annotated[StrictStr, Field(description="The sourceId for the Workspace.  This parameter exists in beta.")],
+        destination_config_id: Annotated[StrictStr, Field(description="The id tied to a Workspace Destination.  This parameter exists in beta.")],
+        start_time: Annotated[StrictStr, Field(description="The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta.")],
+        end_time: Annotated[StrictStr, Field(description="The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta.")],
+        granularity: Annotated[StrictStr, Field(description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")],
+        group_by: Annotated[Optional[List[StrictStr]], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.")] = None,
+        filter: Annotated[Optional[DeliveryOverviewDestinationFilterBy], Field(description="An optional filter for `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and/or `spaceId` that can be applied in addition to a `group By`.  This parameter exists in beta.")] = None,
+        pagination: Annotated[Optional[PaginationInput], Field(description="Params to specify the page cursor and count.  This parameter exists in beta.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get Egress Failed Metrics from Delivery Overview
+
+        Get events that failed to be delivered to Destination.
+
+        :param source_id: The sourceId for the Workspace.  This parameter exists in beta. (required)
+        :type source_id: str
+        :param destination_config_id: The id tied to a Workspace Destination.  This parameter exists in beta. (required)
+        :type destination_config_id: str
+        :param start_time: The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta. (required)
+        :type start_time: str
+        :param end_time: The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta. (required)
+        :type end_time: str
+        :param granularity: The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta. (required)
+        :type granularity: str
+        :param group_by: A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.
+        :type group_by: List[str]
+        :param filter: An optional filter for `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and/or `spaceId` that can be applied in addition to a `group By`.  This parameter exists in beta.
+        :type filter: DeliveryOverviewDestinationFilterBy
+        :param pagination: Params to specify the page cursor and count.  This parameter exists in beta.
+        :type pagination: PaginationInput
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_egress_failed_metrics_from_delivery_overview_serialize(
+            source_id=source_id,
+            destination_config_id=destination_config_id,
+            start_time=start_time,
+            end_time=end_time,
+            granularity=granularity,
+            group_by=group_by,
+            filter=filter,
+            pagination=pagination,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetEgressFailedMetricsFromDeliveryOverview200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _get_egress_failed_metrics_from_delivery_overview_serialize(
+        self,
+        source_id,
+        destination_config_id,
+        start_time,
+        end_time,
+        granularity,
+        group_by,
+        filter,
+        pagination,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+            'groupBy': 'multi',
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        if source_id is not None:
+            
+            _query_params.append(('sourceId', source_id))
+            
+        if destination_config_id is not None:
+            
+            _query_params.append(('destinationConfigId', destination_config_id))
+            
+        if start_time is not None:
+            
+            _query_params.append(('startTime', start_time))
+            
+        if end_time is not None:
+            
+            _query_params.append(('endTime', end_time))
+            
+        if group_by is not None:
+            
+            _query_params.append(('groupBy', group_by))
+            
+        if granularity is not None:
+            
+            _query_params.append(('granularity', granularity))
+            
+        if filter is not None:
+            
+            _query_params.append(('filter', filter))
+            
+        if pagination is not None:
+            
+            _query_params.append(('pagination', pagination))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/vnd.segment.v1beta+json', 
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'token'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/delivery-overview/failed-delivery',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
             body=_body_params,
             post_params=_form_params,
             files=_files,
-            response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _host=_host,
+            _request_auth=_request_auth
+        )
 
-    @validate_arguments
-    def get_egress_success_metrics_from_delivery_overview(self, source_id : Annotated[StrictStr, Field(..., description="The sourceId for the Workspace.  This parameter exists in beta.")], destination_config_id : Annotated[StrictStr, Field(..., description="The id tied to a Workspace Destination.  This parameter exists in beta.")], start_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta.")], end_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta.")], granularity : Annotated[StrictStr, Field(..., description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")], group_by : Annotated[Optional[conlist(StrictStr)], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.")] = None, filter : Annotated[Optional[DeliveryOverviewDestinationFilterBy], Field(description="An optional filter for `event Name`, `event Type`, `discard Reason`, `appVersion`, `subscription Id`, `activationId`, `audienceId`, or `spaceId` that can be applied in addition to a `group By`. If you would like to view retry attempts for a successful delivery, you can filter `discard Reason` from `successes.attempt.1` through `successes.attempt.10`.  This parameter exists in beta.")] = None, pagination : Annotated[Optional[PaginationInput], Field(description="Params to specify the page cursor and count.  This parameter exists in beta.")] = None, **kwargs) -> GetEgressFailedMetricsFromDeliveryOverview200Response:  # noqa: E501
-        """Get Egress Success Metrics from Delivery Overview  # noqa: E501
 
-        Get events successfully delivered to Destination.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_egress_success_metrics_from_delivery_overview(source_id, destination_config_id, start_time, end_time, granularity, group_by, filter, pagination, async_req=True)
-        >>> result = thread.get()
+
+    @validate_call
+    def get_egress_success_metrics_from_delivery_overview(
+        self,
+        source_id: Annotated[StrictStr, Field(description="The sourceId for the Workspace.  This parameter exists in beta.")],
+        destination_config_id: Annotated[StrictStr, Field(description="The id tied to a Workspace Destination.  This parameter exists in beta.")],
+        start_time: Annotated[StrictStr, Field(description="The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta.")],
+        end_time: Annotated[StrictStr, Field(description="The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta.")],
+        granularity: Annotated[StrictStr, Field(description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")],
+        group_by: Annotated[Optional[List[StrictStr]], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.")] = None,
+        filter: Annotated[Optional[DeliveryOverviewDestinationFilterBy], Field(description="An optional filter for `event Name`, `event Type`, `discard Reason`, `appVersion`, `subscription Id`, `activationId`, `audienceId`, or `spaceId` that can be applied in addition to a `group By`. If you would like to view retry attempts for a successful delivery, you can filter `discard Reason` from `successes.attempt.1` through `successes.attempt.10`.  This parameter exists in beta.")] = None,
+        pagination: Annotated[Optional[PaginationInput], Field(description="Params to specify the page cursor and count.  This parameter exists in beta.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> GetEgressFailedMetricsFromDeliveryOverview200Response:
+        """Get Egress Success Metrics from Delivery Overview
+
+        Get events successfully delivered to Destination.
 
         :param source_id: The sourceId for the Workspace.  This parameter exists in beta. (required)
         :type source_id: str
@@ -277,33 +480,87 @@ class DeliveryOverviewApi:
         :type filter: DeliveryOverviewDestinationFilterBy
         :param pagination: Params to specify the page cursor and count.  This parameter exists in beta.
         :type pagination: PaginationInput
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
         :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: GetEgressFailedMetricsFromDeliveryOverview200Response
-        """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
-            message = "Error! Please call the get_egress_success_metrics_from_delivery_overview_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
-            raise ValueError(message)
-        return self.get_egress_success_metrics_from_delivery_overview_with_http_info(source_id, destination_config_id, start_time, end_time, granularity, group_by, filter, pagination, **kwargs)  # noqa: E501
+        """ # noqa: E501
 
-    @validate_arguments
-    def get_egress_success_metrics_from_delivery_overview_with_http_info(self, source_id : Annotated[StrictStr, Field(..., description="The sourceId for the Workspace.  This parameter exists in beta.")], destination_config_id : Annotated[StrictStr, Field(..., description="The id tied to a Workspace Destination.  This parameter exists in beta.")], start_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta.")], end_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta.")], granularity : Annotated[StrictStr, Field(..., description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")], group_by : Annotated[Optional[conlist(StrictStr)], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.")] = None, filter : Annotated[Optional[DeliveryOverviewDestinationFilterBy], Field(description="An optional filter for `event Name`, `event Type`, `discard Reason`, `appVersion`, `subscription Id`, `activationId`, `audienceId`, or `spaceId` that can be applied in addition to a `group By`. If you would like to view retry attempts for a successful delivery, you can filter `discard Reason` from `successes.attempt.1` through `successes.attempt.10`.  This parameter exists in beta.")] = None, pagination : Annotated[Optional[PaginationInput], Field(description="Params to specify the page cursor and count.  This parameter exists in beta.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """Get Egress Success Metrics from Delivery Overview  # noqa: E501
+        _param = self._get_egress_success_metrics_from_delivery_overview_serialize(
+            source_id=source_id,
+            destination_config_id=destination_config_id,
+            start_time=start_time,
+            end_time=end_time,
+            granularity=granularity,
+            group_by=group_by,
+            filter=filter,
+            pagination=pagination,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
 
-        Get events successfully delivered to Destination.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetEgressFailedMetricsFromDeliveryOverview200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
 
-        >>> thread = api.get_egress_success_metrics_from_delivery_overview_with_http_info(source_id, destination_config_id, start_time, end_time, granularity, group_by, filter, pagination, async_req=True)
-        >>> result = thread.get()
+
+    @validate_call
+    def get_egress_success_metrics_from_delivery_overview_with_http_info(
+        self,
+        source_id: Annotated[StrictStr, Field(description="The sourceId for the Workspace.  This parameter exists in beta.")],
+        destination_config_id: Annotated[StrictStr, Field(description="The id tied to a Workspace Destination.  This parameter exists in beta.")],
+        start_time: Annotated[StrictStr, Field(description="The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta.")],
+        end_time: Annotated[StrictStr, Field(description="The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta.")],
+        granularity: Annotated[StrictStr, Field(description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")],
+        group_by: Annotated[Optional[List[StrictStr]], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.")] = None,
+        filter: Annotated[Optional[DeliveryOverviewDestinationFilterBy], Field(description="An optional filter for `event Name`, `event Type`, `discard Reason`, `appVersion`, `subscription Id`, `activationId`, `audienceId`, or `spaceId` that can be applied in addition to a `group By`. If you would like to view retry attempts for a successful delivery, you can filter `discard Reason` from `successes.attempt.1` through `successes.attempt.10`.  This parameter exists in beta.")] = None,
+        pagination: Annotated[Optional[PaginationInput], Field(description="Params to specify the page cursor and count.  This parameter exists in beta.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[GetEgressFailedMetricsFromDeliveryOverview200Response]:
+        """Get Egress Success Metrics from Delivery Overview
+
+        Get events successfully delivered to Destination.
 
         :param source_id: The sourceId for the Workspace.  This parameter exists in beta. (required)
         :type source_id: str
@@ -321,145 +578,284 @@ class DeliveryOverviewApi:
         :type filter: DeliveryOverviewDestinationFilterBy
         :param pagination: Params to specify the page cursor and count.  This parameter exists in beta.
         :type pagination: PaginationInput
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _preload_content: if False, the ApiResponse.data will
-                                 be set to none and raw_data will store the
-                                 HTTP response body without reading/decoding.
-                                 Default is True.
-        :type _preload_content: bool, optional
-        :param _return_http_data_only: response data instead of ApiResponse
-                                       object with status code, headers, etc
-        :type _return_http_data_only: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the authentication
-                              in the spec for a single request.
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
         :type _request_auth: dict, optional
-        :type _content_type: string, optional: force content-type for the request
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
         :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: tuple(GetEgressFailedMetricsFromDeliveryOverview200Response, status_code(int), headers(HTTPHeaderDict))
-        """
+        """ # noqa: E501
 
-        _params = locals()
-
-        _all_params = [
-            'source_id',
-            'destination_config_id',
-            'start_time',
-            'end_time',
-            'granularity',
-            'group_by',
-            'filter',
-            'pagination'
-        ]
-        _all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
-            ]
+        _param = self._get_egress_success_metrics_from_delivery_overview_serialize(
+            source_id=source_id,
+            destination_config_id=destination_config_id,
+            start_time=start_time,
+            end_time=end_time,
+            granularity=granularity,
+            group_by=group_by,
+            filter=filter,
+            pagination=pagination,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
         )
 
-        # validate the arguments
-        for _key, _val in _params['kwargs'].items():
-            if _key not in _all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method get_egress_success_metrics_from_delivery_overview" % _key
-                )
-            _params[_key] = _val
-        del _params['kwargs']
-
-        _collection_formats = {}
-
-        # process the path parameters
-        _path_params = {}
-
-        # process the query parameters
-        _query_params = []
-        if _params.get('source_id') is not None:  # noqa: E501
-            _query_params.append(('sourceId', _params['source_id']))
-
-        if _params.get('destination_config_id') is not None:  # noqa: E501
-            _query_params.append(('destinationConfigId', _params['destination_config_id']))
-
-        if _params.get('start_time') is not None:  # noqa: E501
-            _query_params.append(('startTime', _params['start_time']))
-
-        if _params.get('end_time') is not None:  # noqa: E501
-            _query_params.append(('endTime', _params['end_time']))
-
-        if _params.get('group_by') is not None:  # noqa: E501
-            _query_params.append(('groupBy', _params['group_by']))
-            _collection_formats['groupBy'] = 'multi'
-
-        if _params.get('granularity') is not None:  # noqa: E501
-            _query_params.append(('granularity', _params['granularity']))
-
-        if _params.get('filter') is not None:  # noqa: E501
-            _query_params.append(('filter', _params['filter']))
-
-        if _params.get('pagination') is not None:  # noqa: E501
-            _query_params.append(('pagination', _params['pagination']))
-
-        # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
-        # process the form parameters
-        _form_params = []
-        _files = {}
-        # process the body parameter
-        _body_params = None
-        # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/vnd.segment.v1beta+json', 'application/json'])  # noqa: E501
-
-        # authentication setting
-        _auth_settings = ['token']  # noqa: E501
-
-        _response_types_map = {
+        _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetEgressFailedMetricsFromDeliveryOverview200Response",
             '404': "RequestErrorEnvelope",
             '422': "RequestErrorEnvelope",
             '429': "RequestErrorEnvelope",
         }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
 
-        return self.api_client.call_api(
-            '/delivery-overview/successful-delivery', 'GET',
-            _path_params,
-            _query_params,
-            _header_params,
+
+    @validate_call
+    def get_egress_success_metrics_from_delivery_overview_without_preload_content(
+        self,
+        source_id: Annotated[StrictStr, Field(description="The sourceId for the Workspace.  This parameter exists in beta.")],
+        destination_config_id: Annotated[StrictStr, Field(description="The id tied to a Workspace Destination.  This parameter exists in beta.")],
+        start_time: Annotated[StrictStr, Field(description="The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta.")],
+        end_time: Annotated[StrictStr, Field(description="The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta.")],
+        granularity: Annotated[StrictStr, Field(description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")],
+        group_by: Annotated[Optional[List[StrictStr]], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.")] = None,
+        filter: Annotated[Optional[DeliveryOverviewDestinationFilterBy], Field(description="An optional filter for `event Name`, `event Type`, `discard Reason`, `appVersion`, `subscription Id`, `activationId`, `audienceId`, or `spaceId` that can be applied in addition to a `group By`. If you would like to view retry attempts for a successful delivery, you can filter `discard Reason` from `successes.attempt.1` through `successes.attempt.10`.  This parameter exists in beta.")] = None,
+        pagination: Annotated[Optional[PaginationInput], Field(description="Params to specify the page cursor and count.  This parameter exists in beta.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get Egress Success Metrics from Delivery Overview
+
+        Get events successfully delivered to Destination.
+
+        :param source_id: The sourceId for the Workspace.  This parameter exists in beta. (required)
+        :type source_id: str
+        :param destination_config_id: The id tied to a Workspace Destination.  This parameter exists in beta. (required)
+        :type destination_config_id: str
+        :param start_time: The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta. (required)
+        :type start_time: str
+        :param end_time: The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta. (required)
+        :type end_time: str
+        :param granularity: The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta. (required)
+        :type granularity: str
+        :param group_by: A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.
+        :type group_by: List[str]
+        :param filter: An optional filter for `event Name`, `event Type`, `discard Reason`, `appVersion`, `subscription Id`, `activationId`, `audienceId`, or `spaceId` that can be applied in addition to a `group By`. If you would like to view retry attempts for a successful delivery, you can filter `discard Reason` from `successes.attempt.1` through `successes.attempt.10`.  This parameter exists in beta.
+        :type filter: DeliveryOverviewDestinationFilterBy
+        :param pagination: Params to specify the page cursor and count.  This parameter exists in beta.
+        :type pagination: PaginationInput
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_egress_success_metrics_from_delivery_overview_serialize(
+            source_id=source_id,
+            destination_config_id=destination_config_id,
+            start_time=start_time,
+            end_time=end_time,
+            granularity=granularity,
+            group_by=group_by,
+            filter=filter,
+            pagination=pagination,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetEgressFailedMetricsFromDeliveryOverview200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _get_egress_success_metrics_from_delivery_overview_serialize(
+        self,
+        source_id,
+        destination_config_id,
+        start_time,
+        end_time,
+        granularity,
+        group_by,
+        filter,
+        pagination,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+            'groupBy': 'multi',
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        if source_id is not None:
+            
+            _query_params.append(('sourceId', source_id))
+            
+        if destination_config_id is not None:
+            
+            _query_params.append(('destinationConfigId', destination_config_id))
+            
+        if start_time is not None:
+            
+            _query_params.append(('startTime', start_time))
+            
+        if end_time is not None:
+            
+            _query_params.append(('endTime', end_time))
+            
+        if group_by is not None:
+            
+            _query_params.append(('groupBy', group_by))
+            
+        if granularity is not None:
+            
+            _query_params.append(('granularity', granularity))
+            
+        if filter is not None:
+            
+            _query_params.append(('filter', filter))
+            
+        if pagination is not None:
+            
+            _query_params.append(('pagination', pagination))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/vnd.segment.v1beta+json', 
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'token'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/delivery-overview/successful-delivery',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
             body=_body_params,
             post_params=_form_params,
             files=_files,
-            response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _host=_host,
+            _request_auth=_request_auth
+        )
 
-    @validate_arguments
-    def get_filtered_at_destination_metrics_from_delivery_overview(self, source_id : Annotated[StrictStr, Field(..., description="The sourceId for the Workspace.  This parameter exists in beta.")], destination_config_id : Annotated[StrictStr, Field(..., description="The id tied to a Workspace Destination.  This parameter exists in beta.")], start_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta.")], end_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta.")], granularity : Annotated[StrictStr, Field(..., description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")], group_by : Annotated[Optional[conlist(StrictStr)], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.")] = None, filter : Annotated[Optional[DeliveryOverviewDestinationFilterBy], Field(description="An optional filter for `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and/or `spaceId` that can be applied in addition to a `group By`.  This parameter exists in beta.")] = None, pagination : Annotated[Optional[PaginationInput], Field(description="Params to specify the page cursor and count.  This parameter exists in beta.")] = None, **kwargs) -> GetEgressFailedMetricsFromDeliveryOverview200Response:  # noqa: E501
-        """Get Filtered At Destination Metrics from Delivery Overview  # noqa: E501
 
-        Get events that were filtered at Destination.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_filtered_at_destination_metrics_from_delivery_overview(source_id, destination_config_id, start_time, end_time, granularity, group_by, filter, pagination, async_req=True)
-        >>> result = thread.get()
+
+    @validate_call
+    def get_filtered_at_destination_metrics_from_delivery_overview(
+        self,
+        source_id: Annotated[StrictStr, Field(description="The sourceId for the Workspace.  This parameter exists in beta.")],
+        destination_config_id: Annotated[StrictStr, Field(description="The id tied to a Workspace Destination.  This parameter exists in beta.")],
+        start_time: Annotated[StrictStr, Field(description="The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta.")],
+        end_time: Annotated[StrictStr, Field(description="The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta.")],
+        granularity: Annotated[StrictStr, Field(description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")],
+        group_by: Annotated[Optional[List[StrictStr]], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.")] = None,
+        filter: Annotated[Optional[DeliveryOverviewDestinationFilterBy], Field(description="An optional filter for `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and/or `spaceId` that can be applied in addition to a `group By`.  This parameter exists in beta.")] = None,
+        pagination: Annotated[Optional[PaginationInput], Field(description="Params to specify the page cursor and count.  This parameter exists in beta.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> GetEgressFailedMetricsFromDeliveryOverview200Response:
+        """Get Filtered At Destination Metrics from Delivery Overview
+
+        Get events that were filtered at Destination.
 
         :param source_id: The sourceId for the Workspace.  This parameter exists in beta. (required)
         :type source_id: str
@@ -477,33 +873,87 @@ class DeliveryOverviewApi:
         :type filter: DeliveryOverviewDestinationFilterBy
         :param pagination: Params to specify the page cursor and count.  This parameter exists in beta.
         :type pagination: PaginationInput
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
         :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: GetEgressFailedMetricsFromDeliveryOverview200Response
-        """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
-            message = "Error! Please call the get_filtered_at_destination_metrics_from_delivery_overview_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
-            raise ValueError(message)
-        return self.get_filtered_at_destination_metrics_from_delivery_overview_with_http_info(source_id, destination_config_id, start_time, end_time, granularity, group_by, filter, pagination, **kwargs)  # noqa: E501
+        """ # noqa: E501
 
-    @validate_arguments
-    def get_filtered_at_destination_metrics_from_delivery_overview_with_http_info(self, source_id : Annotated[StrictStr, Field(..., description="The sourceId for the Workspace.  This parameter exists in beta.")], destination_config_id : Annotated[StrictStr, Field(..., description="The id tied to a Workspace Destination.  This parameter exists in beta.")], start_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta.")], end_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta.")], granularity : Annotated[StrictStr, Field(..., description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")], group_by : Annotated[Optional[conlist(StrictStr)], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.")] = None, filter : Annotated[Optional[DeliveryOverviewDestinationFilterBy], Field(description="An optional filter for `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and/or `spaceId` that can be applied in addition to a `group By`.  This parameter exists in beta.")] = None, pagination : Annotated[Optional[PaginationInput], Field(description="Params to specify the page cursor and count.  This parameter exists in beta.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """Get Filtered At Destination Metrics from Delivery Overview  # noqa: E501
+        _param = self._get_filtered_at_destination_metrics_from_delivery_overview_serialize(
+            source_id=source_id,
+            destination_config_id=destination_config_id,
+            start_time=start_time,
+            end_time=end_time,
+            granularity=granularity,
+            group_by=group_by,
+            filter=filter,
+            pagination=pagination,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
 
-        Get events that were filtered at Destination.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetEgressFailedMetricsFromDeliveryOverview200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
 
-        >>> thread = api.get_filtered_at_destination_metrics_from_delivery_overview_with_http_info(source_id, destination_config_id, start_time, end_time, granularity, group_by, filter, pagination, async_req=True)
-        >>> result = thread.get()
+
+    @validate_call
+    def get_filtered_at_destination_metrics_from_delivery_overview_with_http_info(
+        self,
+        source_id: Annotated[StrictStr, Field(description="The sourceId for the Workspace.  This parameter exists in beta.")],
+        destination_config_id: Annotated[StrictStr, Field(description="The id tied to a Workspace Destination.  This parameter exists in beta.")],
+        start_time: Annotated[StrictStr, Field(description="The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta.")],
+        end_time: Annotated[StrictStr, Field(description="The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta.")],
+        granularity: Annotated[StrictStr, Field(description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")],
+        group_by: Annotated[Optional[List[StrictStr]], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.")] = None,
+        filter: Annotated[Optional[DeliveryOverviewDestinationFilterBy], Field(description="An optional filter for `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and/or `spaceId` that can be applied in addition to a `group By`.  This parameter exists in beta.")] = None,
+        pagination: Annotated[Optional[PaginationInput], Field(description="Params to specify the page cursor and count.  This parameter exists in beta.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[GetEgressFailedMetricsFromDeliveryOverview200Response]:
+        """Get Filtered At Destination Metrics from Delivery Overview
+
+        Get events that were filtered at Destination.
 
         :param source_id: The sourceId for the Workspace.  This parameter exists in beta. (required)
         :type source_id: str
@@ -521,145 +971,283 @@ class DeliveryOverviewApi:
         :type filter: DeliveryOverviewDestinationFilterBy
         :param pagination: Params to specify the page cursor and count.  This parameter exists in beta.
         :type pagination: PaginationInput
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _preload_content: if False, the ApiResponse.data will
-                                 be set to none and raw_data will store the
-                                 HTTP response body without reading/decoding.
-                                 Default is True.
-        :type _preload_content: bool, optional
-        :param _return_http_data_only: response data instead of ApiResponse
-                                       object with status code, headers, etc
-        :type _return_http_data_only: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the authentication
-                              in the spec for a single request.
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
         :type _request_auth: dict, optional
-        :type _content_type: string, optional: force content-type for the request
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
         :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: tuple(GetEgressFailedMetricsFromDeliveryOverview200Response, status_code(int), headers(HTTPHeaderDict))
-        """
+        """ # noqa: E501
 
-        _params = locals()
-
-        _all_params = [
-            'source_id',
-            'destination_config_id',
-            'start_time',
-            'end_time',
-            'granularity',
-            'group_by',
-            'filter',
-            'pagination'
-        ]
-        _all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
-            ]
+        _param = self._get_filtered_at_destination_metrics_from_delivery_overview_serialize(
+            source_id=source_id,
+            destination_config_id=destination_config_id,
+            start_time=start_time,
+            end_time=end_time,
+            granularity=granularity,
+            group_by=group_by,
+            filter=filter,
+            pagination=pagination,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
         )
 
-        # validate the arguments
-        for _key, _val in _params['kwargs'].items():
-            if _key not in _all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method get_filtered_at_destination_metrics_from_delivery_overview" % _key
-                )
-            _params[_key] = _val
-        del _params['kwargs']
-
-        _collection_formats = {}
-
-        # process the path parameters
-        _path_params = {}
-
-        # process the query parameters
-        _query_params = []
-        if _params.get('source_id') is not None:  # noqa: E501
-            _query_params.append(('sourceId', _params['source_id']))
-
-        if _params.get('destination_config_id') is not None:  # noqa: E501
-            _query_params.append(('destinationConfigId', _params['destination_config_id']))
-
-        if _params.get('start_time') is not None:  # noqa: E501
-            _query_params.append(('startTime', _params['start_time']))
-
-        if _params.get('end_time') is not None:  # noqa: E501
-            _query_params.append(('endTime', _params['end_time']))
-
-        if _params.get('group_by') is not None:  # noqa: E501
-            _query_params.append(('groupBy', _params['group_by']))
-            _collection_formats['groupBy'] = 'multi'
-
-        if _params.get('granularity') is not None:  # noqa: E501
-            _query_params.append(('granularity', _params['granularity']))
-
-        if _params.get('filter') is not None:  # noqa: E501
-            _query_params.append(('filter', _params['filter']))
-
-        if _params.get('pagination') is not None:  # noqa: E501
-            _query_params.append(('pagination', _params['pagination']))
-
-        # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
-        # process the form parameters
-        _form_params = []
-        _files = {}
-        # process the body parameter
-        _body_params = None
-        # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/vnd.segment.v1beta+json', 'application/json'])  # noqa: E501
-
-        # authentication setting
-        _auth_settings = ['token']  # noqa: E501
-
-        _response_types_map = {
+        _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetEgressFailedMetricsFromDeliveryOverview200Response",
             '404': "RequestErrorEnvelope",
             '422': "RequestErrorEnvelope",
             '429': "RequestErrorEnvelope",
         }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
 
-        return self.api_client.call_api(
-            '/delivery-overview/filtered-at-destination', 'GET',
-            _path_params,
-            _query_params,
-            _header_params,
+
+    @validate_call
+    def get_filtered_at_destination_metrics_from_delivery_overview_without_preload_content(
+        self,
+        source_id: Annotated[StrictStr, Field(description="The sourceId for the Workspace.  This parameter exists in beta.")],
+        destination_config_id: Annotated[StrictStr, Field(description="The id tied to a Workspace Destination.  This parameter exists in beta.")],
+        start_time: Annotated[StrictStr, Field(description="The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta.")],
+        end_time: Annotated[StrictStr, Field(description="The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta.")],
+        granularity: Annotated[StrictStr, Field(description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")],
+        group_by: Annotated[Optional[List[StrictStr]], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.")] = None,
+        filter: Annotated[Optional[DeliveryOverviewDestinationFilterBy], Field(description="An optional filter for `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and/or `spaceId` that can be applied in addition to a `group By`.  This parameter exists in beta.")] = None,
+        pagination: Annotated[Optional[PaginationInput], Field(description="Params to specify the page cursor and count.  This parameter exists in beta.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get Filtered At Destination Metrics from Delivery Overview
+
+        Get events that were filtered at Destination.
+
+        :param source_id: The sourceId for the Workspace.  This parameter exists in beta. (required)
+        :type source_id: str
+        :param destination_config_id: The id tied to a Workspace Destination.  This parameter exists in beta. (required)
+        :type destination_config_id: str
+        :param start_time: The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta. (required)
+        :type start_time: str
+        :param end_time: The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta. (required)
+        :type end_time: str
+        :param granularity: The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta. (required)
+        :type granularity: str
+        :param group_by: A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and `spaceId`.  This parameter exists in beta.
+        :type group_by: List[str]
+        :param filter: An optional filter for `event Name`, `event Type`, `discard Reason`, `app Version`, `subscription Id`, `activationId`, `audienceId`, and/or `spaceId` that can be applied in addition to a `group By`.  This parameter exists in beta.
+        :type filter: DeliveryOverviewDestinationFilterBy
+        :param pagination: Params to specify the page cursor and count.  This parameter exists in beta.
+        :type pagination: PaginationInput
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_filtered_at_destination_metrics_from_delivery_overview_serialize(
+            source_id=source_id,
+            destination_config_id=destination_config_id,
+            start_time=start_time,
+            end_time=end_time,
+            granularity=granularity,
+            group_by=group_by,
+            filter=filter,
+            pagination=pagination,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetEgressFailedMetricsFromDeliveryOverview200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _get_filtered_at_destination_metrics_from_delivery_overview_serialize(
+        self,
+        source_id,
+        destination_config_id,
+        start_time,
+        end_time,
+        granularity,
+        group_by,
+        filter,
+        pagination,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+            'groupBy': 'multi',
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        if source_id is not None:
+            
+            _query_params.append(('sourceId', source_id))
+            
+        if destination_config_id is not None:
+            
+            _query_params.append(('destinationConfigId', destination_config_id))
+            
+        if start_time is not None:
+            
+            _query_params.append(('startTime', start_time))
+            
+        if end_time is not None:
+            
+            _query_params.append(('endTime', end_time))
+            
+        if group_by is not None:
+            
+            _query_params.append(('groupBy', group_by))
+            
+        if granularity is not None:
+            
+            _query_params.append(('granularity', granularity))
+            
+        if filter is not None:
+            
+            _query_params.append(('filter', filter))
+            
+        if pagination is not None:
+            
+            _query_params.append(('pagination', pagination))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/vnd.segment.v1beta+json', 
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'token'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/delivery-overview/filtered-at-destination',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
             body=_body_params,
             post_params=_form_params,
             files=_files,
-            response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _host=_host,
+            _request_auth=_request_auth
+        )
 
-    @validate_arguments
-    def get_filtered_at_source_metrics_from_delivery_overview(self, source_id : Annotated[StrictStr, Field(..., description="The sourceId for the Workspace.  This parameter exists in beta.")], start_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta.")], end_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta.")], granularity : Annotated[StrictStr, Field(..., description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")], group_by : Annotated[Optional[conlist(StrictStr)], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, and `app Version`.  This parameter exists in beta.")] = None, filter : Annotated[Optional[DeliveryOverviewSourceFilterBy], Field(description="An optional filter for `event Name`, `event Type`, `discard Reason`, and/or `app Version` that can be applied in addition to a `group By`.  This parameter exists in beta.")] = None, pagination : Annotated[Optional[PaginationInput], Field(description="Optional params to specify the page cursor and count.  This parameter exists in beta.")] = None, **kwargs) -> GetEgressFailedMetricsFromDeliveryOverview200Response:  # noqa: E501
-        """Get Filtered At Source Metrics from Delivery Overview  # noqa: E501
 
-        Get events that were filtered at Source.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_filtered_at_source_metrics_from_delivery_overview(source_id, start_time, end_time, granularity, group_by, filter, pagination, async_req=True)
-        >>> result = thread.get()
+
+    @validate_call
+    def get_filtered_at_source_metrics_from_delivery_overview(
+        self,
+        source_id: Annotated[StrictStr, Field(description="The sourceId for the Workspace.  This parameter exists in beta.")],
+        start_time: Annotated[StrictStr, Field(description="The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta.")],
+        end_time: Annotated[StrictStr, Field(description="The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta.")],
+        granularity: Annotated[StrictStr, Field(description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")],
+        group_by: Annotated[Optional[List[StrictStr]], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, and `app Version`.  This parameter exists in beta.")] = None,
+        filter: Annotated[Optional[DeliveryOverviewSourceFilterBy], Field(description="An optional filter for `event Name`, `event Type`, `discard Reason`, and/or `app Version` that can be applied in addition to a `group By`.  This parameter exists in beta.")] = None,
+        pagination: Annotated[Optional[PaginationInput], Field(description="Optional params to specify the page cursor and count.  This parameter exists in beta.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> GetEgressFailedMetricsFromDeliveryOverview200Response:
+        """Get Filtered At Source Metrics from Delivery Overview
+
+        Get events that were filtered at Source.
 
         :param source_id: The sourceId for the Workspace.  This parameter exists in beta. (required)
         :type source_id: str
@@ -675,33 +1263,85 @@ class DeliveryOverviewApi:
         :type filter: DeliveryOverviewSourceFilterBy
         :param pagination: Optional params to specify the page cursor and count.  This parameter exists in beta.
         :type pagination: PaginationInput
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
         :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: GetEgressFailedMetricsFromDeliveryOverview200Response
-        """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
-            message = "Error! Please call the get_filtered_at_source_metrics_from_delivery_overview_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
-            raise ValueError(message)
-        return self.get_filtered_at_source_metrics_from_delivery_overview_with_http_info(source_id, start_time, end_time, granularity, group_by, filter, pagination, **kwargs)  # noqa: E501
+        """ # noqa: E501
 
-    @validate_arguments
-    def get_filtered_at_source_metrics_from_delivery_overview_with_http_info(self, source_id : Annotated[StrictStr, Field(..., description="The sourceId for the Workspace.  This parameter exists in beta.")], start_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta.")], end_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta.")], granularity : Annotated[StrictStr, Field(..., description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")], group_by : Annotated[Optional[conlist(StrictStr)], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, and `app Version`.  This parameter exists in beta.")] = None, filter : Annotated[Optional[DeliveryOverviewSourceFilterBy], Field(description="An optional filter for `event Name`, `event Type`, `discard Reason`, and/or `app Version` that can be applied in addition to a `group By`.  This parameter exists in beta.")] = None, pagination : Annotated[Optional[PaginationInput], Field(description="Optional params to specify the page cursor and count.  This parameter exists in beta.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """Get Filtered At Source Metrics from Delivery Overview  # noqa: E501
+        _param = self._get_filtered_at_source_metrics_from_delivery_overview_serialize(
+            source_id=source_id,
+            start_time=start_time,
+            end_time=end_time,
+            granularity=granularity,
+            group_by=group_by,
+            filter=filter,
+            pagination=pagination,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
 
-        Get events that were filtered at Source.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetEgressFailedMetricsFromDeliveryOverview200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
 
-        >>> thread = api.get_filtered_at_source_metrics_from_delivery_overview_with_http_info(source_id, start_time, end_time, granularity, group_by, filter, pagination, async_req=True)
-        >>> result = thread.get()
+
+    @validate_call
+    def get_filtered_at_source_metrics_from_delivery_overview_with_http_info(
+        self,
+        source_id: Annotated[StrictStr, Field(description="The sourceId for the Workspace.  This parameter exists in beta.")],
+        start_time: Annotated[StrictStr, Field(description="The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta.")],
+        end_time: Annotated[StrictStr, Field(description="The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta.")],
+        granularity: Annotated[StrictStr, Field(description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")],
+        group_by: Annotated[Optional[List[StrictStr]], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, and `app Version`.  This parameter exists in beta.")] = None,
+        filter: Annotated[Optional[DeliveryOverviewSourceFilterBy], Field(description="An optional filter for `event Name`, `event Type`, `discard Reason`, and/or `app Version` that can be applied in addition to a `group By`.  This parameter exists in beta.")] = None,
+        pagination: Annotated[Optional[PaginationInput], Field(description="Optional params to specify the page cursor and count.  This parameter exists in beta.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[GetEgressFailedMetricsFromDeliveryOverview200Response]:
+        """Get Filtered At Source Metrics from Delivery Overview
+
+        Get events that were filtered at Source.
 
         :param source_id: The sourceId for the Workspace.  This parameter exists in beta. (required)
         :type source_id: str
@@ -717,141 +1357,273 @@ class DeliveryOverviewApi:
         :type filter: DeliveryOverviewSourceFilterBy
         :param pagination: Optional params to specify the page cursor and count.  This parameter exists in beta.
         :type pagination: PaginationInput
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _preload_content: if False, the ApiResponse.data will
-                                 be set to none and raw_data will store the
-                                 HTTP response body without reading/decoding.
-                                 Default is True.
-        :type _preload_content: bool, optional
-        :param _return_http_data_only: response data instead of ApiResponse
-                                       object with status code, headers, etc
-        :type _return_http_data_only: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the authentication
-                              in the spec for a single request.
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
         :type _request_auth: dict, optional
-        :type _content_type: string, optional: force content-type for the request
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
         :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: tuple(GetEgressFailedMetricsFromDeliveryOverview200Response, status_code(int), headers(HTTPHeaderDict))
-        """
+        """ # noqa: E501
 
-        _params = locals()
-
-        _all_params = [
-            'source_id',
-            'start_time',
-            'end_time',
-            'granularity',
-            'group_by',
-            'filter',
-            'pagination'
-        ]
-        _all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
-            ]
+        _param = self._get_filtered_at_source_metrics_from_delivery_overview_serialize(
+            source_id=source_id,
+            start_time=start_time,
+            end_time=end_time,
+            granularity=granularity,
+            group_by=group_by,
+            filter=filter,
+            pagination=pagination,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
         )
 
-        # validate the arguments
-        for _key, _val in _params['kwargs'].items():
-            if _key not in _all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method get_filtered_at_source_metrics_from_delivery_overview" % _key
-                )
-            _params[_key] = _val
-        del _params['kwargs']
-
-        _collection_formats = {}
-
-        # process the path parameters
-        _path_params = {}
-
-        # process the query parameters
-        _query_params = []
-        if _params.get('source_id') is not None:  # noqa: E501
-            _query_params.append(('sourceId', _params['source_id']))
-
-        if _params.get('start_time') is not None:  # noqa: E501
-            _query_params.append(('startTime', _params['start_time']))
-
-        if _params.get('end_time') is not None:  # noqa: E501
-            _query_params.append(('endTime', _params['end_time']))
-
-        if _params.get('group_by') is not None:  # noqa: E501
-            _query_params.append(('groupBy', _params['group_by']))
-            _collection_formats['groupBy'] = 'multi'
-
-        if _params.get('granularity') is not None:  # noqa: E501
-            _query_params.append(('granularity', _params['granularity']))
-
-        if _params.get('filter') is not None:  # noqa: E501
-            _query_params.append(('filter', _params['filter']))
-
-        if _params.get('pagination') is not None:  # noqa: E501
-            _query_params.append(('pagination', _params['pagination']))
-
-        # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
-        # process the form parameters
-        _form_params = []
-        _files = {}
-        # process the body parameter
-        _body_params = None
-        # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/vnd.segment.v1beta+json', 'application/json'])  # noqa: E501
-
-        # authentication setting
-        _auth_settings = ['token']  # noqa: E501
-
-        _response_types_map = {
+        _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetEgressFailedMetricsFromDeliveryOverview200Response",
             '404': "RequestErrorEnvelope",
             '422': "RequestErrorEnvelope",
             '429': "RequestErrorEnvelope",
         }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
 
-        return self.api_client.call_api(
-            '/delivery-overview/filtered-at-source', 'GET',
-            _path_params,
-            _query_params,
-            _header_params,
+
+    @validate_call
+    def get_filtered_at_source_metrics_from_delivery_overview_without_preload_content(
+        self,
+        source_id: Annotated[StrictStr, Field(description="The sourceId for the Workspace.  This parameter exists in beta.")],
+        start_time: Annotated[StrictStr, Field(description="The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta.")],
+        end_time: Annotated[StrictStr, Field(description="The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta.")],
+        granularity: Annotated[StrictStr, Field(description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")],
+        group_by: Annotated[Optional[List[StrictStr]], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, and `app Version`.  This parameter exists in beta.")] = None,
+        filter: Annotated[Optional[DeliveryOverviewSourceFilterBy], Field(description="An optional filter for `event Name`, `event Type`, `discard Reason`, and/or `app Version` that can be applied in addition to a `group By`.  This parameter exists in beta.")] = None,
+        pagination: Annotated[Optional[PaginationInput], Field(description="Optional params to specify the page cursor and count.  This parameter exists in beta.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get Filtered At Source Metrics from Delivery Overview
+
+        Get events that were filtered at Source.
+
+        :param source_id: The sourceId for the Workspace.  This parameter exists in beta. (required)
+        :type source_id: str
+        :param start_time: The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta. (required)
+        :type start_time: str
+        :param end_time: The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta. (required)
+        :type end_time: str
+        :param granularity: The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta. (required)
+        :type granularity: str
+        :param group_by: A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, and `app Version`.  This parameter exists in beta.
+        :type group_by: List[str]
+        :param filter: An optional filter for `event Name`, `event Type`, `discard Reason`, and/or `app Version` that can be applied in addition to a `group By`.  This parameter exists in beta.
+        :type filter: DeliveryOverviewSourceFilterBy
+        :param pagination: Optional params to specify the page cursor and count.  This parameter exists in beta.
+        :type pagination: PaginationInput
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_filtered_at_source_metrics_from_delivery_overview_serialize(
+            source_id=source_id,
+            start_time=start_time,
+            end_time=end_time,
+            granularity=granularity,
+            group_by=group_by,
+            filter=filter,
+            pagination=pagination,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetEgressFailedMetricsFromDeliveryOverview200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _get_filtered_at_source_metrics_from_delivery_overview_serialize(
+        self,
+        source_id,
+        start_time,
+        end_time,
+        granularity,
+        group_by,
+        filter,
+        pagination,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+            'groupBy': 'multi',
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        if source_id is not None:
+            
+            _query_params.append(('sourceId', source_id))
+            
+        if start_time is not None:
+            
+            _query_params.append(('startTime', start_time))
+            
+        if end_time is not None:
+            
+            _query_params.append(('endTime', end_time))
+            
+        if group_by is not None:
+            
+            _query_params.append(('groupBy', group_by))
+            
+        if granularity is not None:
+            
+            _query_params.append(('granularity', granularity))
+            
+        if filter is not None:
+            
+            _query_params.append(('filter', filter))
+            
+        if pagination is not None:
+            
+            _query_params.append(('pagination', pagination))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/vnd.segment.v1beta+json', 
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'token'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/delivery-overview/filtered-at-source',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
             body=_body_params,
             post_params=_form_params,
             files=_files,
-            response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _host=_host,
+            _request_auth=_request_auth
+        )
 
-    @validate_arguments
-    def get_ingress_failed_metrics_from_delivery_overview(self, source_id : Annotated[StrictStr, Field(..., description="The sourceId for the Workspace.  This parameter exists in beta.")], start_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta.")], end_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta.")], granularity : Annotated[StrictStr, Field(..., description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")], group_by : Annotated[Optional[conlist(StrictStr)], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, and/or `appVersion`.  This parameter exists in beta.")] = None, filter : Annotated[Optional[DeliveryOverviewSourceFilterBy], Field(description="An optional filter for `event Name`, `event Type`, `discard Reason`, and/or `app Version` that can be applied in addition to a `group By`.  This parameter exists in beta.")] = None, pagination : Annotated[Optional[PaginationInput], Field(description="Optional params to specify the page cursor and count.  This parameter exists in beta.")] = None, **kwargs) -> GetEgressFailedMetricsFromDeliveryOverview200Response:  # noqa: E501
-        """Get Ingress Failed Metrics from Delivery Overview  # noqa: E501
 
-        Get events that failed on ingest.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_ingress_failed_metrics_from_delivery_overview(source_id, start_time, end_time, granularity, group_by, filter, pagination, async_req=True)
-        >>> result = thread.get()
+
+    @validate_call
+    def get_ingress_failed_metrics_from_delivery_overview(
+        self,
+        source_id: Annotated[StrictStr, Field(description="The sourceId for the Workspace.  This parameter exists in beta.")],
+        start_time: Annotated[StrictStr, Field(description="The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta.")],
+        end_time: Annotated[StrictStr, Field(description="The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta.")],
+        granularity: Annotated[StrictStr, Field(description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")],
+        group_by: Annotated[Optional[List[StrictStr]], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, and/or `appVersion`.  This parameter exists in beta.")] = None,
+        filter: Annotated[Optional[DeliveryOverviewSourceFilterBy], Field(description="An optional filter for `event Name`, `event Type`, `discard Reason`, and/or `app Version` that can be applied in addition to a `group By`.  This parameter exists in beta.")] = None,
+        pagination: Annotated[Optional[PaginationInput], Field(description="Optional params to specify the page cursor and count.  This parameter exists in beta.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> GetEgressFailedMetricsFromDeliveryOverview200Response:
+        """Get Ingress Failed Metrics from Delivery Overview
+
+        Get events that failed on ingest.
 
         :param source_id: The sourceId for the Workspace.  This parameter exists in beta. (required)
         :type source_id: str
@@ -867,33 +1639,85 @@ class DeliveryOverviewApi:
         :type filter: DeliveryOverviewSourceFilterBy
         :param pagination: Optional params to specify the page cursor and count.  This parameter exists in beta.
         :type pagination: PaginationInput
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
         :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: GetEgressFailedMetricsFromDeliveryOverview200Response
-        """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
-            message = "Error! Please call the get_ingress_failed_metrics_from_delivery_overview_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
-            raise ValueError(message)
-        return self.get_ingress_failed_metrics_from_delivery_overview_with_http_info(source_id, start_time, end_time, granularity, group_by, filter, pagination, **kwargs)  # noqa: E501
+        """ # noqa: E501
 
-    @validate_arguments
-    def get_ingress_failed_metrics_from_delivery_overview_with_http_info(self, source_id : Annotated[StrictStr, Field(..., description="The sourceId for the Workspace.  This parameter exists in beta.")], start_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta.")], end_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta.")], granularity : Annotated[StrictStr, Field(..., description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")], group_by : Annotated[Optional[conlist(StrictStr)], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, and/or `appVersion`.  This parameter exists in beta.")] = None, filter : Annotated[Optional[DeliveryOverviewSourceFilterBy], Field(description="An optional filter for `event Name`, `event Type`, `discard Reason`, and/or `app Version` that can be applied in addition to a `group By`.  This parameter exists in beta.")] = None, pagination : Annotated[Optional[PaginationInput], Field(description="Optional params to specify the page cursor and count.  This parameter exists in beta.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """Get Ingress Failed Metrics from Delivery Overview  # noqa: E501
+        _param = self._get_ingress_failed_metrics_from_delivery_overview_serialize(
+            source_id=source_id,
+            start_time=start_time,
+            end_time=end_time,
+            granularity=granularity,
+            group_by=group_by,
+            filter=filter,
+            pagination=pagination,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
 
-        Get events that failed on ingest.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetEgressFailedMetricsFromDeliveryOverview200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
 
-        >>> thread = api.get_ingress_failed_metrics_from_delivery_overview_with_http_info(source_id, start_time, end_time, granularity, group_by, filter, pagination, async_req=True)
-        >>> result = thread.get()
+
+    @validate_call
+    def get_ingress_failed_metrics_from_delivery_overview_with_http_info(
+        self,
+        source_id: Annotated[StrictStr, Field(description="The sourceId for the Workspace.  This parameter exists in beta.")],
+        start_time: Annotated[StrictStr, Field(description="The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta.")],
+        end_time: Annotated[StrictStr, Field(description="The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta.")],
+        granularity: Annotated[StrictStr, Field(description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")],
+        group_by: Annotated[Optional[List[StrictStr]], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, and/or `appVersion`.  This parameter exists in beta.")] = None,
+        filter: Annotated[Optional[DeliveryOverviewSourceFilterBy], Field(description="An optional filter for `event Name`, `event Type`, `discard Reason`, and/or `app Version` that can be applied in addition to a `group By`.  This parameter exists in beta.")] = None,
+        pagination: Annotated[Optional[PaginationInput], Field(description="Optional params to specify the page cursor and count.  This parameter exists in beta.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[GetEgressFailedMetricsFromDeliveryOverview200Response]:
+        """Get Ingress Failed Metrics from Delivery Overview
+
+        Get events that failed on ingest.
 
         :param source_id: The sourceId for the Workspace.  This parameter exists in beta. (required)
         :type source_id: str
@@ -909,141 +1733,273 @@ class DeliveryOverviewApi:
         :type filter: DeliveryOverviewSourceFilterBy
         :param pagination: Optional params to specify the page cursor and count.  This parameter exists in beta.
         :type pagination: PaginationInput
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _preload_content: if False, the ApiResponse.data will
-                                 be set to none and raw_data will store the
-                                 HTTP response body without reading/decoding.
-                                 Default is True.
-        :type _preload_content: bool, optional
-        :param _return_http_data_only: response data instead of ApiResponse
-                                       object with status code, headers, etc
-        :type _return_http_data_only: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the authentication
-                              in the spec for a single request.
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
         :type _request_auth: dict, optional
-        :type _content_type: string, optional: force content-type for the request
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
         :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: tuple(GetEgressFailedMetricsFromDeliveryOverview200Response, status_code(int), headers(HTTPHeaderDict))
-        """
+        """ # noqa: E501
 
-        _params = locals()
-
-        _all_params = [
-            'source_id',
-            'start_time',
-            'end_time',
-            'granularity',
-            'group_by',
-            'filter',
-            'pagination'
-        ]
-        _all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
-            ]
+        _param = self._get_ingress_failed_metrics_from_delivery_overview_serialize(
+            source_id=source_id,
+            start_time=start_time,
+            end_time=end_time,
+            granularity=granularity,
+            group_by=group_by,
+            filter=filter,
+            pagination=pagination,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
         )
 
-        # validate the arguments
-        for _key, _val in _params['kwargs'].items():
-            if _key not in _all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method get_ingress_failed_metrics_from_delivery_overview" % _key
-                )
-            _params[_key] = _val
-        del _params['kwargs']
-
-        _collection_formats = {}
-
-        # process the path parameters
-        _path_params = {}
-
-        # process the query parameters
-        _query_params = []
-        if _params.get('source_id') is not None:  # noqa: E501
-            _query_params.append(('sourceId', _params['source_id']))
-
-        if _params.get('start_time') is not None:  # noqa: E501
-            _query_params.append(('startTime', _params['start_time']))
-
-        if _params.get('end_time') is not None:  # noqa: E501
-            _query_params.append(('endTime', _params['end_time']))
-
-        if _params.get('group_by') is not None:  # noqa: E501
-            _query_params.append(('groupBy', _params['group_by']))
-            _collection_formats['groupBy'] = 'multi'
-
-        if _params.get('granularity') is not None:  # noqa: E501
-            _query_params.append(('granularity', _params['granularity']))
-
-        if _params.get('filter') is not None:  # noqa: E501
-            _query_params.append(('filter', _params['filter']))
-
-        if _params.get('pagination') is not None:  # noqa: E501
-            _query_params.append(('pagination', _params['pagination']))
-
-        # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
-        # process the form parameters
-        _form_params = []
-        _files = {}
-        # process the body parameter
-        _body_params = None
-        # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/vnd.segment.v1beta+json', 'application/json'])  # noqa: E501
-
-        # authentication setting
-        _auth_settings = ['token']  # noqa: E501
-
-        _response_types_map = {
+        _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetEgressFailedMetricsFromDeliveryOverview200Response",
             '404': "RequestErrorEnvelope",
             '422': "RequestErrorEnvelope",
             '429': "RequestErrorEnvelope",
         }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
 
-        return self.api_client.call_api(
-            '/delivery-overview/failed-on-ingest', 'GET',
-            _path_params,
-            _query_params,
-            _header_params,
+
+    @validate_call
+    def get_ingress_failed_metrics_from_delivery_overview_without_preload_content(
+        self,
+        source_id: Annotated[StrictStr, Field(description="The sourceId for the Workspace.  This parameter exists in beta.")],
+        start_time: Annotated[StrictStr, Field(description="The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta.")],
+        end_time: Annotated[StrictStr, Field(description="The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta.")],
+        granularity: Annotated[StrictStr, Field(description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")],
+        group_by: Annotated[Optional[List[StrictStr]], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, and/or `appVersion`.  This parameter exists in beta.")] = None,
+        filter: Annotated[Optional[DeliveryOverviewSourceFilterBy], Field(description="An optional filter for `event Name`, `event Type`, `discard Reason`, and/or `app Version` that can be applied in addition to a `group By`.  This parameter exists in beta.")] = None,
+        pagination: Annotated[Optional[PaginationInput], Field(description="Optional params to specify the page cursor and count.  This parameter exists in beta.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get Ingress Failed Metrics from Delivery Overview
+
+        Get events that failed on ingest.
+
+        :param source_id: The sourceId for the Workspace.  This parameter exists in beta. (required)
+        :type source_id: str
+        :param start_time: The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta. (required)
+        :type start_time: str
+        :param end_time: The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta. (required)
+        :type end_time: str
+        :param granularity: The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta. (required)
+        :type granularity: str
+        :param group_by: A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, `discard Reason`, and/or `appVersion`.  This parameter exists in beta.
+        :type group_by: List[str]
+        :param filter: An optional filter for `event Name`, `event Type`, `discard Reason`, and/or `app Version` that can be applied in addition to a `group By`.  This parameter exists in beta.
+        :type filter: DeliveryOverviewSourceFilterBy
+        :param pagination: Optional params to specify the page cursor and count.  This parameter exists in beta.
+        :type pagination: PaginationInput
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_ingress_failed_metrics_from_delivery_overview_serialize(
+            source_id=source_id,
+            start_time=start_time,
+            end_time=end_time,
+            granularity=granularity,
+            group_by=group_by,
+            filter=filter,
+            pagination=pagination,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetEgressFailedMetricsFromDeliveryOverview200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _get_ingress_failed_metrics_from_delivery_overview_serialize(
+        self,
+        source_id,
+        start_time,
+        end_time,
+        granularity,
+        group_by,
+        filter,
+        pagination,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+            'groupBy': 'multi',
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        if source_id is not None:
+            
+            _query_params.append(('sourceId', source_id))
+            
+        if start_time is not None:
+            
+            _query_params.append(('startTime', start_time))
+            
+        if end_time is not None:
+            
+            _query_params.append(('endTime', end_time))
+            
+        if group_by is not None:
+            
+            _query_params.append(('groupBy', group_by))
+            
+        if granularity is not None:
+            
+            _query_params.append(('granularity', granularity))
+            
+        if filter is not None:
+            
+            _query_params.append(('filter', filter))
+            
+        if pagination is not None:
+            
+            _query_params.append(('pagination', pagination))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/vnd.segment.v1beta+json', 
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'token'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/delivery-overview/failed-on-ingest',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
             body=_body_params,
             post_params=_form_params,
             files=_files,
-            response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _host=_host,
+            _request_auth=_request_auth
+        )
 
-    @validate_arguments
-    def get_ingress_success_metrics_from_delivery_overview(self, source_id : Annotated[StrictStr, Field(..., description="The sourceId for the Workspace.  This parameter exists in beta.")], start_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta.")], end_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta.")], granularity : Annotated[StrictStr, Field(..., description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")], group_by : Annotated[Optional[conlist(StrictStr)], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, and/or `app Version`.  This parameter exists in beta.")] = None, filter : Annotated[Optional[DeliveryOverviewSuccessfullyReceivedFilterBy], Field(description="An optional filter for `event Name`, `event Type`, and/or `app Version` that can be applied in addition to a `group By`.  This parameter exists in beta.")] = None, pagination : Annotated[Optional[PaginationInput], Field(description="Optional params to specify the page cursor and count.  This parameter exists in beta.")] = None, **kwargs) -> GetEgressFailedMetricsFromDeliveryOverview200Response:  # noqa: E501
-        """Get Ingress Success Metrics from Delivery Overview  # noqa: E501
 
-        Get events that were successfully received by Segment.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_ingress_success_metrics_from_delivery_overview(source_id, start_time, end_time, granularity, group_by, filter, pagination, async_req=True)
-        >>> result = thread.get()
+
+    @validate_call
+    def get_ingress_success_metrics_from_delivery_overview(
+        self,
+        source_id: Annotated[StrictStr, Field(description="The sourceId for the Workspace.  This parameter exists in beta.")],
+        start_time: Annotated[StrictStr, Field(description="The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta.")],
+        end_time: Annotated[StrictStr, Field(description="The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta.")],
+        granularity: Annotated[StrictStr, Field(description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")],
+        group_by: Annotated[Optional[List[StrictStr]], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, and/or `app Version`.  This parameter exists in beta.")] = None,
+        filter: Annotated[Optional[DeliveryOverviewSuccessfullyReceivedFilterBy], Field(description="An optional filter for `event Name`, `event Type`, and/or `app Version` that can be applied in addition to a `group By`.  This parameter exists in beta.")] = None,
+        pagination: Annotated[Optional[PaginationInput], Field(description="Optional params to specify the page cursor and count.  This parameter exists in beta.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> GetEgressFailedMetricsFromDeliveryOverview200Response:
+        """Get Ingress Success Metrics from Delivery Overview
+
+        Get events that were successfully received by Segment.
 
         :param source_id: The sourceId for the Workspace.  This parameter exists in beta. (required)
         :type source_id: str
@@ -1059,33 +2015,85 @@ class DeliveryOverviewApi:
         :type filter: DeliveryOverviewSuccessfullyReceivedFilterBy
         :param pagination: Optional params to specify the page cursor and count.  This parameter exists in beta.
         :type pagination: PaginationInput
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
         :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: GetEgressFailedMetricsFromDeliveryOverview200Response
-        """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
-            message = "Error! Please call the get_ingress_success_metrics_from_delivery_overview_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
-            raise ValueError(message)
-        return self.get_ingress_success_metrics_from_delivery_overview_with_http_info(source_id, start_time, end_time, granularity, group_by, filter, pagination, **kwargs)  # noqa: E501
+        """ # noqa: E501
 
-    @validate_arguments
-    def get_ingress_success_metrics_from_delivery_overview_with_http_info(self, source_id : Annotated[StrictStr, Field(..., description="The sourceId for the Workspace.  This parameter exists in beta.")], start_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta.")], end_time : Annotated[StrictStr, Field(..., description="The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta.")], granularity : Annotated[StrictStr, Field(..., description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")], group_by : Annotated[Optional[conlist(StrictStr)], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, and/or `app Version`.  This parameter exists in beta.")] = None, filter : Annotated[Optional[DeliveryOverviewSuccessfullyReceivedFilterBy], Field(description="An optional filter for `event Name`, `event Type`, and/or `app Version` that can be applied in addition to a `group By`.  This parameter exists in beta.")] = None, pagination : Annotated[Optional[PaginationInput], Field(description="Optional params to specify the page cursor and count.  This parameter exists in beta.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """Get Ingress Success Metrics from Delivery Overview  # noqa: E501
+        _param = self._get_ingress_success_metrics_from_delivery_overview_serialize(
+            source_id=source_id,
+            start_time=start_time,
+            end_time=end_time,
+            granularity=granularity,
+            group_by=group_by,
+            filter=filter,
+            pagination=pagination,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
 
-        Get events that were successfully received by Segment.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetEgressFailedMetricsFromDeliveryOverview200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
 
-        >>> thread = api.get_ingress_success_metrics_from_delivery_overview_with_http_info(source_id, start_time, end_time, granularity, group_by, filter, pagination, async_req=True)
-        >>> result = thread.get()
+
+    @validate_call
+    def get_ingress_success_metrics_from_delivery_overview_with_http_info(
+        self,
+        source_id: Annotated[StrictStr, Field(description="The sourceId for the Workspace.  This parameter exists in beta.")],
+        start_time: Annotated[StrictStr, Field(description="The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta.")],
+        end_time: Annotated[StrictStr, Field(description="The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta.")],
+        granularity: Annotated[StrictStr, Field(description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")],
+        group_by: Annotated[Optional[List[StrictStr]], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, and/or `app Version`.  This parameter exists in beta.")] = None,
+        filter: Annotated[Optional[DeliveryOverviewSuccessfullyReceivedFilterBy], Field(description="An optional filter for `event Name`, `event Type`, and/or `app Version` that can be applied in addition to a `group By`.  This parameter exists in beta.")] = None,
+        pagination: Annotated[Optional[PaginationInput], Field(description="Optional params to specify the page cursor and count.  This parameter exists in beta.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[GetEgressFailedMetricsFromDeliveryOverview200Response]:
+        """Get Ingress Success Metrics from Delivery Overview
+
+        Get events that were successfully received by Segment.
 
         :param source_id: The sourceId for the Workspace.  This parameter exists in beta. (required)
         :type source_id: str
@@ -1101,127 +2109,242 @@ class DeliveryOverviewApi:
         :type filter: DeliveryOverviewSuccessfullyReceivedFilterBy
         :param pagination: Optional params to specify the page cursor and count.  This parameter exists in beta.
         :type pagination: PaginationInput
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _preload_content: if False, the ApiResponse.data will
-                                 be set to none and raw_data will store the
-                                 HTTP response body without reading/decoding.
-                                 Default is True.
-        :type _preload_content: bool, optional
-        :param _return_http_data_only: response data instead of ApiResponse
-                                       object with status code, headers, etc
-        :type _return_http_data_only: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the authentication
-                              in the spec for a single request.
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
         :type _request_auth: dict, optional
-        :type _content_type: string, optional: force content-type for the request
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
         :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: tuple(GetEgressFailedMetricsFromDeliveryOverview200Response, status_code(int), headers(HTTPHeaderDict))
-        """
+        """ # noqa: E501
 
-        _params = locals()
-
-        _all_params = [
-            'source_id',
-            'start_time',
-            'end_time',
-            'granularity',
-            'group_by',
-            'filter',
-            'pagination'
-        ]
-        _all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
-            ]
+        _param = self._get_ingress_success_metrics_from_delivery_overview_serialize(
+            source_id=source_id,
+            start_time=start_time,
+            end_time=end_time,
+            granularity=granularity,
+            group_by=group_by,
+            filter=filter,
+            pagination=pagination,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
         )
 
-        # validate the arguments
-        for _key, _val in _params['kwargs'].items():
-            if _key not in _all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method get_ingress_success_metrics_from_delivery_overview" % _key
-                )
-            _params[_key] = _val
-        del _params['kwargs']
-
-        _collection_formats = {}
-
-        # process the path parameters
-        _path_params = {}
-
-        # process the query parameters
-        _query_params = []
-        if _params.get('source_id') is not None:  # noqa: E501
-            _query_params.append(('sourceId', _params['source_id']))
-
-        if _params.get('start_time') is not None:  # noqa: E501
-            _query_params.append(('startTime', _params['start_time']))
-
-        if _params.get('end_time') is not None:  # noqa: E501
-            _query_params.append(('endTime', _params['end_time']))
-
-        if _params.get('group_by') is not None:  # noqa: E501
-            _query_params.append(('groupBy', _params['group_by']))
-            _collection_formats['groupBy'] = 'multi'
-
-        if _params.get('granularity') is not None:  # noqa: E501
-            _query_params.append(('granularity', _params['granularity']))
-
-        if _params.get('filter') is not None:  # noqa: E501
-            _query_params.append(('filter', _params['filter']))
-
-        if _params.get('pagination') is not None:  # noqa: E501
-            _query_params.append(('pagination', _params['pagination']))
-
-        # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
-        # process the form parameters
-        _form_params = []
-        _files = {}
-        # process the body parameter
-        _body_params = None
-        # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/vnd.segment.v1beta+json', 'application/json'])  # noqa: E501
-
-        # authentication setting
-        _auth_settings = ['token']  # noqa: E501
-
-        _response_types_map = {
+        _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetEgressFailedMetricsFromDeliveryOverview200Response",
             '404': "RequestErrorEnvelope",
             '422': "RequestErrorEnvelope",
             '429': "RequestErrorEnvelope",
         }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
 
-        return self.api_client.call_api(
-            '/delivery-overview/successfully-received', 'GET',
-            _path_params,
-            _query_params,
-            _header_params,
+
+    @validate_call
+    def get_ingress_success_metrics_from_delivery_overview_without_preload_content(
+        self,
+        source_id: Annotated[StrictStr, Field(description="The sourceId for the Workspace.  This parameter exists in beta.")],
+        start_time: Annotated[StrictStr, Field(description="The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta.")],
+        end_time: Annotated[StrictStr, Field(description="The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta.")],
+        granularity: Annotated[StrictStr, Field(description="The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta.")],
+        group_by: Annotated[Optional[List[StrictStr]], Field(description="A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, and/or `app Version`.  This parameter exists in beta.")] = None,
+        filter: Annotated[Optional[DeliveryOverviewSuccessfullyReceivedFilterBy], Field(description="An optional filter for `event Name`, `event Type`, and/or `app Version` that can be applied in addition to a `group By`.  This parameter exists in beta.")] = None,
+        pagination: Annotated[Optional[PaginationInput], Field(description="Optional params to specify the page cursor and count.  This parameter exists in beta.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get Ingress Success Metrics from Delivery Overview
+
+        Get events that were successfully received by Segment.
+
+        :param source_id: The sourceId for the Workspace.  This parameter exists in beta. (required)
+        :type source_id: str
+        :param start_time: The ISO8601 formatted timestamp corresponding to the beginning of the requested time frame, inclusive.  This parameter exists in beta. (required)
+        :type start_time: str
+        :param end_time: The ISO8601 formatted timestamp corresponding to the end of the requested time frame, noninclusive.  This parameter exists in beta. (required)
+        :type end_time: str
+        :param granularity: The size of each bucket in the requested window.  Based on the granularity chosen, there are restrictions on the time range you can query:  **Minute**: - Max time range: 4 hours - Oldest possible start time: 48 hours in the past  **Hour**: - Max Time range: 14 days - Oldest possible start time: 30 days in the past  **Day**: - Max time range: 30 days - Oldest possible start time: 30 days in the past  This parameter exists in beta. (required)
+        :type granularity: str
+        :param group_by: A comma-delimited list of strings representing one or more dimensions to group the result by.  Valid options are: `event Name`, `event Type`, and/or `app Version`.  This parameter exists in beta.
+        :type group_by: List[str]
+        :param filter: An optional filter for `event Name`, `event Type`, and/or `app Version` that can be applied in addition to a `group By`.  This parameter exists in beta.
+        :type filter: DeliveryOverviewSuccessfullyReceivedFilterBy
+        :param pagination: Optional params to specify the page cursor and count.  This parameter exists in beta.
+        :type pagination: PaginationInput
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_ingress_success_metrics_from_delivery_overview_serialize(
+            source_id=source_id,
+            start_time=start_time,
+            end_time=end_time,
+            granularity=granularity,
+            group_by=group_by,
+            filter=filter,
+            pagination=pagination,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetEgressFailedMetricsFromDeliveryOverview200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _get_ingress_success_metrics_from_delivery_overview_serialize(
+        self,
+        source_id,
+        start_time,
+        end_time,
+        granularity,
+        group_by,
+        filter,
+        pagination,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+            'groupBy': 'multi',
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        if source_id is not None:
+            
+            _query_params.append(('sourceId', source_id))
+            
+        if start_time is not None:
+            
+            _query_params.append(('startTime', start_time))
+            
+        if end_time is not None:
+            
+            _query_params.append(('endTime', end_time))
+            
+        if group_by is not None:
+            
+            _query_params.append(('groupBy', group_by))
+            
+        if granularity is not None:
+            
+            _query_params.append(('granularity', granularity))
+            
+        if filter is not None:
+            
+            _query_params.append(('filter', filter))
+            
+        if pagination is not None:
+            
+            _query_params.append(('pagination', pagination))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/vnd.segment.v1beta+json', 
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'token'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/delivery-overview/successfully-received',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
             body=_body_params,
             post_params=_form_params,
             files=_files,
-            response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+

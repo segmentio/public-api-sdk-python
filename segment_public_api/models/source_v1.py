@@ -18,82 +18,99 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-from typing import Any, Dict, List, Optional
-from pydantic import BaseModel, Field, StrictBool, StrictStr, conlist
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from segment_public_api.models.label_v1 import LabelV1
 from segment_public_api.models.source_metadata_v1 import SourceMetadataV1
+from typing import Optional, Set
+from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class SourceV1(BaseModel):
     """
-    Defines a data Source for Segment data.  # noqa: E501
-    """
-    id: StrictStr = Field(..., description="The id of the Source.  Config API note: analogous to `name`.")
-    slug: StrictStr = Field(..., description="The slug used to identify the Source in the Segment app.  Config API note: equal to `name`.")
-    name: Optional[StrictStr] = Field(None, description="The name of the Source.  Config API note: equal to `displayName`.")
-    metadata: SourceMetadataV1 = Field(...)
-    workspace_id: StrictStr = Field(..., alias="workspaceId", description="The id of the Workspace that owns the Source.  Config API note: equal to `parent`.")
-    enabled: StrictBool = Field(..., description="Enable to receive data from the Source.")
-    write_keys: conlist(StrictStr) = Field(..., alias="writeKeys", description="The write keys used to send data from the Source. This field is left empty when the current token does not have the 'source admin' permission.")
-    settings: Optional[Dict[str, Any]] = Field(None, description="A key-value object that contains instance-specific settings for a Source.  The `options` field in the Source metadata defines the schema of this object.")
-    labels: conlist(LabelV1) = Field(..., description="A list of labels applied to the Source.")
-    __properties = ["id", "slug", "name", "metadata", "workspaceId", "enabled", "writeKeys", "settings", "labels"]
+    Defines a data Source for Segment data.
+    """ # noqa: E501
+    id: StrictStr = Field(description="The id of the Source.  Config API note: analogous to `name`.")
+    slug: StrictStr = Field(description="The slug used to identify the Source in the Segment app.  Config API note: equal to `name`.")
+    name: Optional[StrictStr] = Field(default=None, description="The name of the Source.  Config API note: equal to `displayName`.")
+    metadata: SourceMetadataV1 = Field(description="The metadata for the Source.  Config API note: includes `catalogName` and `catalogId`.")
+    workspace_id: StrictStr = Field(description="The id of the Workspace that owns the Source.  Config API note: equal to `parent`.", alias="workspaceId")
+    enabled: StrictBool = Field(description="Enable to receive data from the Source.")
+    write_keys: List[StrictStr] = Field(description="The write keys used to send data from the Source. This field is left empty when the current token does not have the 'source admin' permission.", alias="writeKeys")
+    settings: Optional[Dict[str, Any]] = Field(default=None, description="The settings associated with the Source.")
+    labels: List[LabelV1] = Field(description="A list of labels applied to the Source.")
+    __properties: ClassVar[List[str]] = ["id", "slug", "name", "metadata", "workspaceId", "enabled", "writeKeys", "settings", "labels"]
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        validate_by_name=True,
+        validate_by_alias=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
-    def from_json(cls, json_str: str) -> SourceV1:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of SourceV1 from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         # override the default output from pydantic by calling `to_dict()` of metadata
         if self.metadata:
             _dict['metadata'] = self.metadata.to_dict()
         # override the default output from pydantic by calling `to_dict()` of each item in labels (list)
         _items = []
         if self.labels:
-            for _item in self.labels:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_labels in self.labels:
+                if _item_labels:
+                    _items.append(_item_labels.to_dict())
             _dict['labels'] = _items
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> SourceV1:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of SourceV1 from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return SourceV1.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = SourceV1.parse_obj({
+        _obj = cls.model_validate({
             "id": obj.get("id"),
             "slug": obj.get("slug"),
             "name": obj.get("name"),
-            "metadata": SourceMetadataV1.from_dict(obj.get("metadata")) if obj.get("metadata") is not None else None,
-            "workspace_id": obj.get("workspaceId"),
+            "metadata": SourceMetadataV1.from_dict(obj["metadata"]) if obj.get("metadata") is not None else None,
+            "workspaceId": obj.get("workspaceId"),
             "enabled": obj.get("enabled"),
-            "write_keys": obj.get("writeKeys"),
+            "writeKeys": obj.get("writeKeys"),
             "settings": obj.get("settings"),
-            "labels": [LabelV1.from_dict(_item) for _item in obj.get("labels")] if obj.get("labels") is not None else None
+            "labels": [LabelV1.from_dict(_item) for _item in obj["labels"]] if obj.get("labels") is not None else None
         })
         return _obj
 

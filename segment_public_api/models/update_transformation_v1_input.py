@@ -18,76 +18,93 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-from typing import List, Optional
-from pydantic import BaseModel, Field, StrictBool, StrictStr, conlist
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from segment_public_api.models.fql_defined_property_v1 import FQLDefinedPropertyV1
 from segment_public_api.models.hash_properties_configuration import HashPropertiesConfiguration
 from segment_public_api.models.property_rename_v1 import PropertyRenameV1
 from segment_public_api.models.property_value_transformation_v1 import PropertyValueTransformationV1
+from typing import Optional, Set
+from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class UpdateTransformationV1Input(BaseModel):
     """
-    The input to update a Transformation.  # noqa: E501
-    """
-    name: Optional[StrictStr] = Field(None, description="The name of the Transformation.")
-    source_id: Optional[StrictStr] = Field(None, alias="sourceId", description="The optional Source to be associated with the Transformation.")
-    destination_metadata_id: Optional[StrictStr] = Field(None, alias="destinationMetadataId", description="The optional Destination metadata to be associated with the Transformation.")
-    enabled: Optional[StrictBool] = Field(None, description="If the Transformation should be enabled.")
-    var_if: Optional[StrictStr] = Field(None, alias="if", description="If statement ([FQL](https://segment.com/docs/config-api/fql/)) to match events.  For standard event matchers, use the following:  Track -\\> \"event='\\<eventName\\>'\"  Identify -\\> \"type='identify'\"  Group -\\> \"type='group'\"")
-    drop: Optional[StrictBool] = Field(None, description="Optional boolean value if the Transformation should drop the event entirely when the if statement matches, ignores all other transforms.")
-    new_event_name: Optional[StrictStr] = Field(None, alias="newEventName", description="Optional new event name for renaming events. Works only for 'track' event type.")
-    property_renames: Optional[conlist(PropertyRenameV1)] = Field(None, alias="propertyRenames", description="Optional array for renaming properties collected by your events.")
-    property_value_transformations: Optional[conlist(PropertyValueTransformationV1)] = Field(None, alias="propertyValueTransformations", description="Optional array for transforming properties and values collected by your events. Limited to 10 properties.")
-    fql_defined_properties: Optional[conlist(FQLDefinedPropertyV1)] = Field(None, alias="fqlDefinedProperties", description="Optional array for updating properties defined in [FQL](https://segment.com/docs/config-api/fql/). Currently limited to 1 property.")
-    allow_properties: Optional[conlist(StrictStr)] = Field(None, alias="allowProperties", description="Optional array for allowing properties from your events.")
-    hash_properties_configuration: Optional[HashPropertiesConfiguration] = Field(None, alias="hashPropertiesConfiguration")
-    __properties = ["name", "sourceId", "destinationMetadataId", "enabled", "if", "drop", "newEventName", "propertyRenames", "propertyValueTransformations", "fqlDefinedProperties", "allowProperties", "hashPropertiesConfiguration"]
+    The input to update a Transformation.
+    """ # noqa: E501
+    name: Optional[StrictStr] = Field(default=None, description="The name of the Transformation.")
+    source_id: Optional[StrictStr] = Field(default=None, description="The optional Source to be associated with the Transformation.", alias="sourceId")
+    destination_metadata_id: Optional[StrictStr] = Field(default=None, description="The optional Destination metadata to be associated with the Transformation.", alias="destinationMetadataId")
+    enabled: Optional[StrictBool] = Field(default=None, description="If the Transformation should be enabled.")
+    var_if: Optional[StrictStr] = Field(default=None, description="If statement ([FQL](https://segment.com/docs/config-api/fql/)) to match events.  For standard event matchers, use the following:  Track -\\> \"event='\\<eventName\\>'\"  Identify -\\> \"type='identify'\"  Group -\\> \"type='group'\"", alias="if")
+    drop: Optional[StrictBool] = Field(default=None, description="Optional boolean value if the Transformation should drop the event entirely when the if statement matches, ignores all other transforms.")
+    new_event_name: Optional[StrictStr] = Field(default=None, description="Optional new event name for renaming events. Works only for 'track' event type.", alias="newEventName")
+    property_renames: Optional[List[PropertyRenameV1]] = Field(default=None, description="Optional array for renaming properties collected by your events.", alias="propertyRenames")
+    property_value_transformations: Optional[List[PropertyValueTransformationV1]] = Field(default=None, description="Optional array for transforming properties and values collected by your events. Limited to 10 properties.", alias="propertyValueTransformations")
+    fql_defined_properties: Optional[List[FQLDefinedPropertyV1]] = Field(default=None, description="Optional array for updating properties defined in [FQL](https://segment.com/docs/config-api/fql/). Currently limited to 1 property.", alias="fqlDefinedProperties")
+    allow_properties: Optional[List[StrictStr]] = Field(default=None, description="Optional array for allowing properties from your events.", alias="allowProperties")
+    hash_properties_configuration: Optional[HashPropertiesConfiguration] = Field(default=None, description="Optional object for hashing properties within an event.", alias="hashPropertiesConfiguration")
+    __properties: ClassVar[List[str]] = ["name", "sourceId", "destinationMetadataId", "enabled", "if", "drop", "newEventName", "propertyRenames", "propertyValueTransformations", "fqlDefinedProperties", "allowProperties", "hashPropertiesConfiguration"]
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        validate_by_name=True,
+        validate_by_alias=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
-    def from_json(cls, json_str: str) -> UpdateTransformationV1Input:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of UpdateTransformationV1Input from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         # override the default output from pydantic by calling `to_dict()` of each item in property_renames (list)
         _items = []
         if self.property_renames:
-            for _item in self.property_renames:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_property_renames in self.property_renames:
+                if _item_property_renames:
+                    _items.append(_item_property_renames.to_dict())
             _dict['propertyRenames'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in property_value_transformations (list)
         _items = []
         if self.property_value_transformations:
-            for _item in self.property_value_transformations:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_property_value_transformations in self.property_value_transformations:
+                if _item_property_value_transformations:
+                    _items.append(_item_property_value_transformations.to_dict())
             _dict['propertyValueTransformations'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in fql_defined_properties (list)
         _items = []
         if self.fql_defined_properties:
-            for _item in self.fql_defined_properties:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_fql_defined_properties in self.fql_defined_properties:
+                if _item_fql_defined_properties:
+                    _items.append(_item_fql_defined_properties.to_dict())
             _dict['fqlDefinedProperties'] = _items
         # override the default output from pydantic by calling `to_dict()` of hash_properties_configuration
         if self.hash_properties_configuration:
@@ -95,27 +112,27 @@ class UpdateTransformationV1Input(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> UpdateTransformationV1Input:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of UpdateTransformationV1Input from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return UpdateTransformationV1Input.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = UpdateTransformationV1Input.parse_obj({
+        _obj = cls.model_validate({
             "name": obj.get("name"),
-            "source_id": obj.get("sourceId"),
-            "destination_metadata_id": obj.get("destinationMetadataId"),
+            "sourceId": obj.get("sourceId"),
+            "destinationMetadataId": obj.get("destinationMetadataId"),
             "enabled": obj.get("enabled"),
-            "var_if": obj.get("if"),
+            "if": obj.get("if"),
             "drop": obj.get("drop"),
-            "new_event_name": obj.get("newEventName"),
-            "property_renames": [PropertyRenameV1.from_dict(_item) for _item in obj.get("propertyRenames")] if obj.get("propertyRenames") is not None else None,
-            "property_value_transformations": [PropertyValueTransformationV1.from_dict(_item) for _item in obj.get("propertyValueTransformations")] if obj.get("propertyValueTransformations") is not None else None,
-            "fql_defined_properties": [FQLDefinedPropertyV1.from_dict(_item) for _item in obj.get("fqlDefinedProperties")] if obj.get("fqlDefinedProperties") is not None else None,
-            "allow_properties": obj.get("allowProperties"),
-            "hash_properties_configuration": HashPropertiesConfiguration.from_dict(obj.get("hashPropertiesConfiguration")) if obj.get("hashPropertiesConfiguration") is not None else None
+            "newEventName": obj.get("newEventName"),
+            "propertyRenames": [PropertyRenameV1.from_dict(_item) for _item in obj["propertyRenames"]] if obj.get("propertyRenames") is not None else None,
+            "propertyValueTransformations": [PropertyValueTransformationV1.from_dict(_item) for _item in obj["propertyValueTransformations"]] if obj.get("propertyValueTransformations") is not None else None,
+            "fqlDefinedProperties": [FQLDefinedPropertyV1.from_dict(_item) for _item in obj["fqlDefinedProperties"]] if obj.get("fqlDefinedProperties") is not None else None,
+            "allowProperties": obj.get("allowProperties"),
+            "hashPropertiesConfiguration": HashPropertiesConfiguration.from_dict(obj["hashPropertiesConfiguration"]) if obj.get("hashPropertiesConfiguration") is not None else None
         })
         return _obj
 

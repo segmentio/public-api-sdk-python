@@ -1,5 +1,3 @@
-# coding: utf-8
-
 """
     Segment Public API
 
@@ -23,12 +21,12 @@ from setuptools import setup, find_packages  # noqa: H301
 # http://pypi.python.org/pypi/setuptools
 NAME = "segment-public-api"
 VERSION = "73.0.0"
-PYTHON_REQUIRES = ">=3.7"
+PYTHON_REQUIRES = ">= 3.9"
 REQUIRES = [
-    "urllib3 >= 1.25.3, < 2.1.0",
-    "python-dateutil",
-    "pydantic >= 1.10.5, < 2",
-    "aenum"
+    "urllib3 >= 2.1.0, < 3.0.0",
+    "python-dateutil >= 2.8.2",
+    "pydantic >= 2.11",
+    "typing-extensions >= 4.7.1",
 ]
 
 setup(

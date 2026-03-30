@@ -1,5 +1,3 @@
-# coding: utf-8
-
 """
     Segment Public API
 
@@ -13,25 +11,19 @@
 """  # noqa: E501
 
 
-import re  # noqa: F401
-import io
 import warnings
-
-from pydantic import validate_arguments, ValidationError
-
+from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
+from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
+
 from pydantic import Field, StrictBool, StrictFloat, StrictInt, StrictStr
-
 from typing import Optional, Union
-
+from typing_extensions import Annotated
 from segment_public_api.models.echo200_response import Echo200Response
 
-from segment_public_api.api_client import ApiClient
+from segment_public_api.api_client import ApiClient, RequestSerialized
 from segment_public_api.api_response import ApiResponse
-from segment_public_api.exceptions import (  # noqa: F401
-    ApiTypeError,
-    ApiValueError
-)
+from segment_public_api.rest import RESTResponseType
 
 
 class TestingApi:
@@ -46,56 +38,32 @@ class TestingApi:
             api_client = ApiClient.get_default()
         self.api_client = api_client
 
-    @validate_arguments
-    def echo(self, message : Annotated[StrictStr, Field(..., description="Sets the response `message` field. The response contains this field's entry.  This parameter exists in alpha.")], delay : Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="The desired response delay, in milliseconds.  This parameter exists in alpha.")] = None, trigger_error : Annotated[Optional[StrictBool], Field(description="If `true`, returns an HTTP `4xx` error that contains the string in `message`.  This parameter exists in alpha.")] = None, trigger_multiple_errors : Annotated[Optional[StrictBool], Field(description="If `true`, returns an HTTP `4xx` error that contains the value of the `message` field in the error message array.  This has no effect if the request sets `triggerError`.  This parameter exists in alpha.")] = None, trigger_unexpected_error : Annotated[Optional[StrictBool], Field(description="If `true`, triggers a `500` error.  This has no effect if the request sets either `triggerError` or `triggerMultipleErrors`.  This parameter exists in alpha.")] = None, status_code : Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Sets the HTTP status code to return.  This parameter exists in alpha.")] = None, **kwargs) -> Echo200Response:  # noqa: E501
-        """Echo  # noqa: E501
 
-        Public Echo endpoint.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
+    @validate_call
+    def echo(
+        self,
+        message: Annotated[StrictStr, Field(description="Sets the response `message` field. The response contains this field's entry.  This parameter exists in alpha.")],
+        delay: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="The desired response delay, in milliseconds.  This parameter exists in alpha.")] = None,
+        trigger_error: Annotated[Optional[StrictBool], Field(description="If `true`, returns an HTTP `4xx` error that contains the string in `message`.  This parameter exists in alpha.")] = None,
+        trigger_multiple_errors: Annotated[Optional[StrictBool], Field(description="If `true`, returns an HTTP `4xx` error that contains the value of the `message` field in the error message array.  This has no effect if the request sets `triggerError`.  This parameter exists in alpha.")] = None,
+        trigger_unexpected_error: Annotated[Optional[StrictBool], Field(description="If `true`, triggers a `500` error.  This has no effect if the request sets either `triggerError` or `triggerMultipleErrors`.  This parameter exists in alpha.")] = None,
+        status_code: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Sets the HTTP status code to return.  This parameter exists in alpha.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> Echo200Response:
+        """Echo
 
-        >>> thread = api.echo(message, delay, trigger_error, trigger_multiple_errors, trigger_unexpected_error, status_code, async_req=True)
-        >>> result = thread.get()
-
-        :param message: Sets the response `message` field. The response contains this field's entry.  This parameter exists in alpha. (required)
-        :type message: str
-        :param delay: The desired response delay, in milliseconds.  This parameter exists in alpha.
-        :type delay: float
-        :param trigger_error: If `true`, returns an HTTP `4xx` error that contains the string in `message`.  This parameter exists in alpha.
-        :type trigger_error: bool
-        :param trigger_multiple_errors: If `true`, returns an HTTP `4xx` error that contains the value of the `message` field in the error message array.  This has no effect if the request sets `triggerError`.  This parameter exists in alpha.
-        :type trigger_multiple_errors: bool
-        :param trigger_unexpected_error: If `true`, triggers a `500` error.  This has no effect if the request sets either `triggerError` or `triggerMultipleErrors`.  This parameter exists in alpha.
-        :type trigger_unexpected_error: bool
-        :param status_code: Sets the HTTP status code to return.  This parameter exists in alpha.
-        :type status_code: float
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
-        :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: Echo200Response
-        """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
-            message = "Error! Please call the echo_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
-            raise ValueError(message)
-        return self.echo_with_http_info(message, delay, trigger_error, trigger_multiple_errors, trigger_unexpected_error, status_code, **kwargs)  # noqa: E501
-
-    @validate_arguments
-    def echo_with_http_info(self, message : Annotated[StrictStr, Field(..., description="Sets the response `message` field. The response contains this field's entry.  This parameter exists in alpha.")], delay : Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="The desired response delay, in milliseconds.  This parameter exists in alpha.")] = None, trigger_error : Annotated[Optional[StrictBool], Field(description="If `true`, returns an HTTP `4xx` error that contains the string in `message`.  This parameter exists in alpha.")] = None, trigger_multiple_errors : Annotated[Optional[StrictBool], Field(description="If `true`, returns an HTTP `4xx` error that contains the value of the `message` field in the error message array.  This has no effect if the request sets `triggerError`.  This parameter exists in alpha.")] = None, trigger_unexpected_error : Annotated[Optional[StrictBool], Field(description="If `true`, triggers a `500` error.  This has no effect if the request sets either `triggerError` or `triggerMultipleErrors`.  This parameter exists in alpha.")] = None, status_code : Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Sets the HTTP status code to return.  This parameter exists in alpha.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """Echo  # noqa: E501
-
-        Public Echo endpoint.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-
-        >>> thread = api.echo_with_http_info(message, delay, trigger_error, trigger_multiple_errors, trigger_unexpected_error, status_code, async_req=True)
-        >>> result = thread.get()
+        Public Echo endpoint.
 
         :param message: Sets the response `message` field. The response contains this field's entry.  This parameter exists in alpha. (required)
         :type message: str
@@ -109,122 +77,322 @@ class TestingApi:
         :type trigger_unexpected_error: bool
         :param status_code: Sets the HTTP status code to return.  This parameter exists in alpha.
         :type status_code: float
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _preload_content: if False, the ApiResponse.data will
-                                 be set to none and raw_data will store the
-                                 HTTP response body without reading/decoding.
-                                 Default is True.
-        :type _preload_content: bool, optional
-        :param _return_http_data_only: response data instead of ApiResponse
-                                       object with status code, headers, etc
-        :type _return_http_data_only: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the authentication
-                              in the spec for a single request.
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
         :type _request_auth: dict, optional
-        :type _content_type: string, optional: force content-type for the request
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
         :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: tuple(Echo200Response, status_code(int), headers(HTTPHeaderDict))
-        """
+        """ # noqa: E501
 
-        _params = locals()
-
-        _all_params = [
-            'message',
-            'delay',
-            'trigger_error',
-            'trigger_multiple_errors',
-            'trigger_unexpected_error',
-            'status_code'
-        ]
-        _all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
-            ]
+        _param = self._echo_serialize(
+            message=message,
+            delay=delay,
+            trigger_error=trigger_error,
+            trigger_multiple_errors=trigger_multiple_errors,
+            trigger_unexpected_error=trigger_unexpected_error,
+            status_code=status_code,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
         )
 
-        # validate the arguments
-        for _key, _val in _params['kwargs'].items():
-            if _key not in _all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method echo" % _key
-                )
-            _params[_key] = _val
-        del _params['kwargs']
-
-        _collection_formats = {}
-
-        # process the path parameters
-        _path_params = {}
-
-        # process the query parameters
-        _query_params = []
-        if _params.get('message') is not None:  # noqa: E501
-            _query_params.append(('message', _params['message']))
-
-        if _params.get('delay') is not None:  # noqa: E501
-            _query_params.append(('delay', _params['delay']))
-
-        if _params.get('trigger_error') is not None:  # noqa: E501
-            _query_params.append(('triggerError', _params['trigger_error']))
-
-        if _params.get('trigger_multiple_errors') is not None:  # noqa: E501
-            _query_params.append(('triggerMultipleErrors', _params['trigger_multiple_errors']))
-
-        if _params.get('trigger_unexpected_error') is not None:  # noqa: E501
-            _query_params.append(('triggerUnexpectedError', _params['trigger_unexpected_error']))
-
-        if _params.get('status_code') is not None:  # noqa: E501
-            _query_params.append(('statusCode', _params['status_code']))
-
-        # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
-        # process the form parameters
-        _form_params = []
-        _files = {}
-        # process the body parameter
-        _body_params = None
-        # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/vnd.segment.v1+json', 'application/json', 'application/vnd.segment.v1alpha+json'])  # noqa: E501
-
-        # authentication setting
-        _auth_settings = ['token']  # noqa: E501
-
-        _response_types_map = {
+        _response_types_map: Dict[str, Optional[str]] = {
             '200': "Echo200Response",
             '404': "RequestErrorEnvelope",
             '422': "RequestErrorEnvelope",
             '429': "RequestErrorEnvelope",
         }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
 
-        return self.api_client.call_api(
-            '/echo', 'GET',
-            _path_params,
-            _query_params,
-            _header_params,
+
+    @validate_call
+    def echo_with_http_info(
+        self,
+        message: Annotated[StrictStr, Field(description="Sets the response `message` field. The response contains this field's entry.  This parameter exists in alpha.")],
+        delay: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="The desired response delay, in milliseconds.  This parameter exists in alpha.")] = None,
+        trigger_error: Annotated[Optional[StrictBool], Field(description="If `true`, returns an HTTP `4xx` error that contains the string in `message`.  This parameter exists in alpha.")] = None,
+        trigger_multiple_errors: Annotated[Optional[StrictBool], Field(description="If `true`, returns an HTTP `4xx` error that contains the value of the `message` field in the error message array.  This has no effect if the request sets `triggerError`.  This parameter exists in alpha.")] = None,
+        trigger_unexpected_error: Annotated[Optional[StrictBool], Field(description="If `true`, triggers a `500` error.  This has no effect if the request sets either `triggerError` or `triggerMultipleErrors`.  This parameter exists in alpha.")] = None,
+        status_code: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Sets the HTTP status code to return.  This parameter exists in alpha.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[Echo200Response]:
+        """Echo
+
+        Public Echo endpoint.
+
+        :param message: Sets the response `message` field. The response contains this field's entry.  This parameter exists in alpha. (required)
+        :type message: str
+        :param delay: The desired response delay, in milliseconds.  This parameter exists in alpha.
+        :type delay: float
+        :param trigger_error: If `true`, returns an HTTP `4xx` error that contains the string in `message`.  This parameter exists in alpha.
+        :type trigger_error: bool
+        :param trigger_multiple_errors: If `true`, returns an HTTP `4xx` error that contains the value of the `message` field in the error message array.  This has no effect if the request sets `triggerError`.  This parameter exists in alpha.
+        :type trigger_multiple_errors: bool
+        :param trigger_unexpected_error: If `true`, triggers a `500` error.  This has no effect if the request sets either `triggerError` or `triggerMultipleErrors`.  This parameter exists in alpha.
+        :type trigger_unexpected_error: bool
+        :param status_code: Sets the HTTP status code to return.  This parameter exists in alpha.
+        :type status_code: float
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._echo_serialize(
+            message=message,
+            delay=delay,
+            trigger_error=trigger_error,
+            trigger_multiple_errors=trigger_multiple_errors,
+            trigger_unexpected_error=trigger_unexpected_error,
+            status_code=status_code,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "Echo200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def echo_without_preload_content(
+        self,
+        message: Annotated[StrictStr, Field(description="Sets the response `message` field. The response contains this field's entry.  This parameter exists in alpha.")],
+        delay: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="The desired response delay, in milliseconds.  This parameter exists in alpha.")] = None,
+        trigger_error: Annotated[Optional[StrictBool], Field(description="If `true`, returns an HTTP `4xx` error that contains the string in `message`.  This parameter exists in alpha.")] = None,
+        trigger_multiple_errors: Annotated[Optional[StrictBool], Field(description="If `true`, returns an HTTP `4xx` error that contains the value of the `message` field in the error message array.  This has no effect if the request sets `triggerError`.  This parameter exists in alpha.")] = None,
+        trigger_unexpected_error: Annotated[Optional[StrictBool], Field(description="If `true`, triggers a `500` error.  This has no effect if the request sets either `triggerError` or `triggerMultipleErrors`.  This parameter exists in alpha.")] = None,
+        status_code: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Sets the HTTP status code to return.  This parameter exists in alpha.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Echo
+
+        Public Echo endpoint.
+
+        :param message: Sets the response `message` field. The response contains this field's entry.  This parameter exists in alpha. (required)
+        :type message: str
+        :param delay: The desired response delay, in milliseconds.  This parameter exists in alpha.
+        :type delay: float
+        :param trigger_error: If `true`, returns an HTTP `4xx` error that contains the string in `message`.  This parameter exists in alpha.
+        :type trigger_error: bool
+        :param trigger_multiple_errors: If `true`, returns an HTTP `4xx` error that contains the value of the `message` field in the error message array.  This has no effect if the request sets `triggerError`.  This parameter exists in alpha.
+        :type trigger_multiple_errors: bool
+        :param trigger_unexpected_error: If `true`, triggers a `500` error.  This has no effect if the request sets either `triggerError` or `triggerMultipleErrors`.  This parameter exists in alpha.
+        :type trigger_unexpected_error: bool
+        :param status_code: Sets the HTTP status code to return.  This parameter exists in alpha.
+        :type status_code: float
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._echo_serialize(
+            message=message,
+            delay=delay,
+            trigger_error=trigger_error,
+            trigger_multiple_errors=trigger_multiple_errors,
+            trigger_unexpected_error=trigger_unexpected_error,
+            status_code=status_code,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "Echo200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _echo_serialize(
+        self,
+        message,
+        delay,
+        trigger_error,
+        trigger_multiple_errors,
+        trigger_unexpected_error,
+        status_code,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        if message is not None:
+            
+            _query_params.append(('message', message))
+            
+        if delay is not None:
+            
+            _query_params.append(('delay', delay))
+            
+        if trigger_error is not None:
+            
+            _query_params.append(('triggerError', trigger_error))
+            
+        if trigger_multiple_errors is not None:
+            
+            _query_params.append(('triggerMultipleErrors', trigger_multiple_errors))
+            
+        if trigger_unexpected_error is not None:
+            
+            _query_params.append(('triggerUnexpectedError', trigger_unexpected_error))
+            
+        if status_code is not None:
+            
+            _query_params.append(('statusCode', status_code))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/vnd.segment.v1+json', 
+                    'application/json', 
+                    'application/vnd.segment.v1alpha+json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'token'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/echo',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
             body=_body_params,
             post_params=_form_params,
             files=_files,
-            response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+

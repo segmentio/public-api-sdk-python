@@ -17,735 +17,1467 @@
 
 __version__ = "73.0.0"
 
+# Define package exports
+__all__ = [
+    "APICallsApi",
+    "ActivationsApi",
+    "AudiencesApi",
+    "AuditTrailApi",
+    "CatalogApi",
+    "ComputedTraitsApi",
+    "DeletionAndSuppressionApi",
+    "DeliveryOverviewApi",
+    "DestinationFiltersApi",
+    "DestinationsApi",
+    "EventsApi",
+    "FunctionsApi",
+    "IAMGroupsApi",
+    "IAMRolesApi",
+    "IAMUsersApi",
+    "LabelsApi",
+    "LivePluginsApi",
+    "MonthlyTrackedUsersApi",
+    "ProfilesSyncApi",
+    "ReverseETLApi",
+    "SelectiveSyncApi",
+    "SourcesApi",
+    "SpaceFiltersApi",
+    "SpacesApi",
+    "TestingApi",
+    "TrackingPlansApi",
+    "TransformationsApi",
+    "WarehousesApi",
+    "WorkspacesApi",
+    "CustomerInsightsApi",
+    "DbtApi",
+    "ApiResponse",
+    "ApiClient",
+    "Configuration",
+    "OpenApiException",
+    "ApiTypeError",
+    "ApiValueError",
+    "ApiKeyError",
+    "ApiAttributeError",
+    "ApiException",
+    "APICallSnapshotV1",
+    "AccessPermissionV1",
+    "ActivationOutput",
+    "AddActivationToAudience200Response",
+    "AddActivationToAudienceAlphaInput",
+    "AddActivationToAudienceAlphaOutput",
+    "AddAudienceScheduleToAudience200Response",
+    "AddAudienceScheduleToAudience200Response1",
+    "AddAudienceScheduleToAudienceAlphaInput",
+    "AddAudienceScheduleToAudienceAlphaOutput",
+    "AddAudienceScheduleToAudienceInput",
+    "AddAudienceScheduleToAudienceOutput",
+    "AddConnectionFromSourceToWarehouse201Response",
+    "AddConnectionFromSourceToWarehouseV1Output",
+    "AddDestinationToAudience200Response",
+    "AddDestinationToAudienceAlphaInput",
+    "AddDestinationToAudienceAlphaOutput",
+    "AddLabelsToSource200Response",
+    "AddLabelsToSource200Response1",
+    "AddLabelsToSourceAlphaInput",
+    "AddLabelsToSourceAlphaOutput",
+    "AddLabelsToSourceV1Input",
+    "AddLabelsToSourceV1Output",
+    "AddPermissionsToUser200Response",
+    "AddPermissionsToUserGroup200Response",
+    "AddPermissionsToUserGroupV1Input",
+    "AddPermissionsToUserGroupV1Output",
+    "AddPermissionsToUserV1Input",
+    "AddPermissionsToUserV1Output",
+    "AddSourceToTrackingPlan200Response",
+    "AddSourceToTrackingPlanV1Input",
+    "AddSourceToTrackingPlanV1Output",
+    "AddUsersToUserGroup200Response",
+    "AddUsersToUserGroupV1Input",
+    "AddUsersToUserGroupV1Output",
+    "AdvancedWarehouseSyncScheduleV1Input",
+    "AdvancedWarehouseSyncScheduleV1Output",
+    "AllowedLabelBeta",
+    "AudienceComputeCadence",
+    "AudienceDefinition",
+    "AudienceDefinitionWithoutTargetEntity",
+    "AudienceOptions",
+    "AudienceOptionsWithLookback",
+    "AudiencePreview",
+    "AudiencePreviewAccountResult",
+    "AudiencePreviewEntitiesResult",
+    "AudiencePreviewIdentifier",
+    "AudiencePreviewProfileResult",
+    "AudiencePreviewResult",
+    "AudienceRunInfo",
+    "AudienceSchedule",
+    "AudienceSize",
+    "AudienceSummary",
+    "AudienceSummaryWithAudienceTypeAndLookback",
+    "AuditEventV1",
+    "BatchQueryMessagingSubscriptionsForSpace200Response",
+    "BatchQueryMessagingSubscriptionsForSpaceAlphaInput",
+    "BatchQueryMessagingSubscriptionsForSpaceAlphaOutput",
+    "BreakdownBeta",
+    "CancelReverseETLSyncForModel200Response",
+    "CancelReverseETLSyncForModelInput",
+    "CancelReverseETLSyncForModelOutput",
+    "CommonSourceSettingsV1",
+    "ComputedTraitSummary",
+    "ComputedTraitsDefinition",
+    "Config",
+    "Config1",
+    "Connection",
+    "Contact",
+    "CreateAudience200Response",
+    "CreateAudience200Response1",
+    "CreateAudience200Response2",
+    "CreateAudienceAlphaInput",
+    "CreateAudienceAlphaOutput",
+    "CreateAudienceBetaInput",
+    "CreateAudienceBetaOutput",
+    "CreateAudienceInput",
+    "CreateAudienceOutput",
+    "CreateAudiencePreview200Response",
+    "CreateAudiencePreview200Response1",
+    "CreateAudiencePreview200Response2",
+    "CreateAudiencePreviewAlphaInput",
+    "CreateAudiencePreviewAlphaOutput",
+    "CreateAudiencePreviewBetaInput",
+    "CreateAudiencePreviewBetaOutput",
+    "CreateAudiencePreviewInput",
+    "CreateAudiencePreviewOptions",
+    "CreateAudiencePreviewOutput",
+    "CreateCloudSourceRegulation200Response",
+    "CreateCloudSourceRegulationV1Input",
+    "CreateCloudSourceRegulationV1Output",
+    "CreateComputedTrait200Response",
+    "CreateComputedTraitAlphaInput",
+    "CreateComputedTraitAlphaOutput",
+    "CreateDbtModelSyncTrigger200Response",
+    "CreateDbtModelSyncTriggerInput",
+    "CreateDbtModelSyncTriggerOutput",
+    "CreateDestination200Response",
+    "CreateDestinationSubscription200Response",
+    "CreateDestinationSubscriptionAlphaInput",
+    "CreateDestinationSubscriptionAlphaOutput",
+    "CreateDestinationV1Input",
+    "CreateDestinationV1Output",
+    "CreateDownload200Response",
+    "CreateDownloadAlphaInput",
+    "CreateDownloadAlphaOutput",
+    "CreateFilterForDestination200Response",
+    "CreateFilterForDestinationV1Input",
+    "CreateFilterForDestinationV1Output",
+    "CreateFilterForSpace200Response",
+    "CreateFilterForSpaceInput",
+    "CreateFilterForSpaceOutput",
+    "CreateFunction200Response",
+    "CreateFunctionDeployment200Response",
+    "CreateFunctionDeploymentV1Output",
+    "CreateFunctionV1Input",
+    "CreateFunctionV1Output",
+    "CreateInsertFunctionInstance200Response",
+    "CreateInsertFunctionInstanceAlphaInput",
+    "CreateInsertFunctionInstanceAlphaOutput",
+    "CreateInvites201Response",
+    "CreateInvitesV1Input",
+    "CreateInvitesV1Output",
+    "CreateLabel201Response",
+    "CreateLabelV1Input",
+    "CreateLabelV1Output",
+    "CreateLivePlugin200Response",
+    "CreateLivePluginAlphaInput",
+    "CreateLivePluginAlphaOutput",
+    "CreateProfilesWarehouse201Response",
+    "CreateProfilesWarehouseAlphaInput",
+    "CreateProfilesWarehouseAlphaOutput",
+    "CreateReverseETLManualSync200Response",
+    "CreateReverseETLManualSyncInput",
+    "CreateReverseETLManualSyncOutput",
+    "CreateReverseEtlModel201Response",
+    "CreateReverseEtlModelInput",
+    "CreateReverseEtlModelOutput",
+    "CreateSource201Response",
+    "CreateSource201Response1",
+    "CreateSourceAlphaInput",
+    "CreateSourceAlphaOutput",
+    "CreateSourceRegulation200Response",
+    "CreateSourceRegulationV1Input",
+    "CreateSourceRegulationV1Output",
+    "CreateSourceV1Input",
+    "CreateSourceV1Output",
+    "CreateTrackingPlan200Response",
+    "CreateTrackingPlanV1Input",
+    "CreateTrackingPlanV1Output",
+    "CreateTransformation200Response",
+    "CreateTransformationBetaInput",
+    "CreateTransformationBetaOutput",
+    "CreateTransformationV1Input",
+    "CreateTransformationV1Output",
+    "CreateUserGroup200Response",
+    "CreateUserGroupV1Input",
+    "CreateUserGroupV1Output",
+    "CreateValidationInWarehouse200Response",
+    "CreateValidationInWarehouseV1Input",
+    "CreateValidationInWarehouseV1Output",
+    "CreateWarehouse201Response",
+    "CreateWarehouseV1Input",
+    "CreateWarehouseV1Output",
+    "CreateWorkspaceRegulation200Response",
+    "CreateWorkspaceRegulationV1Input",
+    "CreateWorkspaceRegulationV1Output",
+    "CreateWriteKeyForSource200Response",
+    "CreateWriteKeyForSourceAlphaOutput",
+    "DbtModelSyncTrigger",
+    "DeleteActivationAlphaOutput",
+    "DeleteDestination200Response",
+    "DeleteDestinationV1Output",
+    "DeleteFilterById200Response",
+    "DeleteFilterByIdOutput",
+    "DeleteFunction200Response",
+    "DeleteFunctionV1Output",
+    "DeleteInsertFunctionInstance200Response",
+    "DeleteInsertFunctionInstanceAlphaOutput",
+    "DeleteInvites200Response",
+    "DeleteInvitesV1Output",
+    "DeleteLabel200Response",
+    "DeleteLabel200Response1",
+    "DeleteLabelAlphaOutput",
+    "DeleteLabelV1Output",
+    "DeleteLivePluginCode200Response",
+    "DeleteLivePluginCodeAlphaOutput",
+    "DeleteReverseEtlModel200Response",
+    "DeleteReverseEtlModelOutput",
+    "DeleteSource200Response",
+    "DeleteSource200Response1",
+    "DeleteSourceAlphaOutput",
+    "DeleteSourceV1Output",
+    "DeleteTrackingPlan200Response",
+    "DeleteTrackingPlanV1Output",
+    "DeleteTransformation200Response",
+    "DeleteTransformationBetaInput",
+    "DeleteTransformationBetaOutput",
+    "DeleteTransformationV1Output",
+    "DeleteUserGroup200Response",
+    "DeleteUserGroupV1Output",
+    "DeleteUsers200Response",
+    "DeleteUsersV1Output",
+    "DeleteWarehouse200Response",
+    "DeleteWarehouseV1Output",
+    "DeliveryMetricsSummaryBeta",
+    "DeliveryOverviewDestinationFilterBy",
+    "DeliveryOverviewMetricsDatapoint",
+    "DeliveryOverviewMetricsDataset",
+    "DeliveryOverviewSourceFilterBy",
+    "DeliveryOverviewSuccessfullyReceivedFilterBy",
+    "Destination",
+    "DestinationFilterActionV1",
+    "DestinationFilterV1",
+    "DestinationInput",
+    "DestinationMetadataActionFieldV1",
+    "DestinationMetadataActionV1",
+    "DestinationMetadataComponentV1",
+    "DestinationMetadataFeaturesV1",
+    "DestinationMetadataMethodsV1",
+    "DestinationMetadataPlatformsV1",
+    "DestinationMetadataSubscriptionPresetV1",
+    "DestinationMetadataV1",
+    "DestinationStatusV1",
+    "DestinationSubscription",
+    "DestinationSubscriptionConfiguration",
+    "DestinationSubscriptionUpdateInput",
+    "DestinationV1",
+    "Download",
+    "Echo200Response",
+    "Echo200Response1",
+    "EchoAlphaOutput",
+    "EchoV1Output",
+    "EntityDetails",
+    "EventSourceV1",
+    "FQLDefinedPropertyV1",
+    "Filter",
+    "ForceExecuteAudienceRun200Response",
+    "ForceExecuteAudienceRun200Response1",
+    "ForceExecuteAudienceRunAlphaOutput",
+    "ForceExecuteAudienceRunOutput",
+    "FunctionDeployment",
+    "FunctionSettingV1",
+    "FunctionV1",
+    "GetActivationFromAudience200Response",
+    "GetActivationFromAudienceOutput",
+    "GetAdvancedSyncScheduleFromWarehouse200Response",
+    "GetAdvancedSyncScheduleFromWarehouseV1Output",
+    "GetAudience200Response",
+    "GetAudience200Response1",
+    "GetAudience200Response2",
+    "GetAudienceAlphaOutput",
+    "GetAudienceBetaOutput",
+    "GetAudienceOutput",
+    "GetAudiencePreview200Response",
+    "GetAudiencePreview200Response1",
+    "GetAudiencePreview200Response2",
+    "GetAudiencePreviewAlphaOutput",
+    "GetAudiencePreviewBetaOutput",
+    "GetAudiencePreviewOutput",
+    "GetAudienceScheduleFromSpaceAndAudience200Response",
+    "GetAudienceScheduleFromSpaceAndAudience200Response1",
+    "GetAudienceScheduleFromSpaceAndAudienceAlphaOutput",
+    "GetAudienceScheduleFromSpaceAndAudienceOutput",
+    "GetComputedTrait200Response",
+    "GetComputedTraitAlphaOutput",
+    "GetConnectionStateFromWarehouse200Response",
+    "GetConnectionStateFromWarehouseV1Output",
+    "GetDailyPerSourceAPICallsUsage200Response",
+    "GetDailyPerSourceAPICallsUsageV1Output",
+    "GetDailyPerSourceMTUUsage200Response",
+    "GetDailyPerSourceMTUUsageV1Output",
+    "GetDailyWorkspaceAPICallsUsage200Response",
+    "GetDailyWorkspaceAPICallsUsageV1Output",
+    "GetDailyWorkspaceMTUUsage200Response",
+    "GetDailyWorkspaceMTUUsageV1Output",
+    "GetDeliveryOverviewMetricsBetaOutput",
+    "GetDestination200Response",
+    "GetDestinationMetadata200Response",
+    "GetDestinationMetadataV1Output",
+    "GetDestinationV1Output",
+    "GetDestinationsCatalog200Response",
+    "GetDestinationsCatalogV1Output",
+    "GetEgressFailedMetricsFromDeliveryOverview200Response",
+    "GetEventsVolumeFromWorkspace200Response",
+    "GetEventsVolumeFromWorkspaceV1Output",
+    "GetEventsVolumeFromWorkspaceV1Query",
+    "GetFilterById200Response",
+    "GetFilterByIdOutput",
+    "GetFilterInDestination200Response",
+    "GetFilterInDestinationV1Output",
+    "GetFunction200Response",
+    "GetFunctionV1Output",
+    "GetFunctionVersion200Response",
+    "GetFunctionVersionAlphaOutput",
+    "GetInsertFunctionInstance200Response",
+    "GetInsertFunctionInstanceAlphaOutput",
+    "GetLatestFromLivePlugins200Response",
+    "GetLatestFromLivePluginsAlphaOutput",
+    "GetMessagingSubscriptionFailureResponse",
+    "GetMessagingSubscriptionSuccessResponse",
+    "GetRegulation200Response",
+    "GetRegulationV1Output",
+    "GetReverseETLSyncStatus200Response",
+    "GetReverseETLSyncStatusOutput",
+    "GetReverseEtlModel200Response",
+    "GetReverseEtlModelOutput",
+    "GetSource200Response",
+    "GetSource200Response1",
+    "GetSourceAlphaOutput",
+    "GetSourceMetadata200Response",
+    "GetSourceMetadataV1Output",
+    "GetSourceV1Output",
+    "GetSourcesCatalog200Response",
+    "GetSourcesCatalogV1Output",
+    "GetSpace200Response",
+    "GetSpaceAlphaOutput",
+    "GetSubscriptionFromDestination200Response",
+    "GetSubscriptionFromDestinationAlphaOutput",
+    "GetSubscriptionRequest",
+    "GetTrackingPlan200Response",
+    "GetTrackingPlanV1Output",
+    "GetTransformation200Response",
+    "GetTransformationBetaInput",
+    "GetTransformationBetaOutput",
+    "GetTransformationV1Output",
+    "GetUser200Response",
+    "GetUserGroup200Response",
+    "GetUserGroupV1Output",
+    "GetUserV1Output",
+    "GetWarehouse200Response",
+    "GetWarehouseMetadata200Response",
+    "GetWarehouseMetadataV1Output",
+    "GetWarehouseV1Output",
+    "GetWarehousesCatalog200Response",
+    "GetWarehousesCatalogV1Output",
+    "GetWorkspace200Response",
+    "GetWorkspaceV1Output",
+    "GroupSourceSettingsV1",
+    "GroupSubscriptionStatus",
+    "GroupSubscriptionStatusResponse",
+    "HandleWebhookInput",
+    "HandleWebhookOutput",
+    "HashPropertiesConfiguration",
+    "IDSyncConfigurationInput",
+    "IdentifySourceSettingsV1",
+    "InsertFunctionInstanceAlpha",
+    "IntegrationOptionBeta",
+    "InvitePermissionV1",
+    "InviteV1",
+    "LabelAlpha",
+    "LabelV1",
+    "ListActivationsAlphaOutput",
+    "ListActivationsFromAudience200Response",
+    "ListActivationsFromAudienceOutput",
+    "ListAudienceConsumersFromSpaceAndAudience200Response",
+    "ListAudienceConsumersFromSpaceAndAudienceAlphaOutput",
+    "ListAudienceConsumersSortInput",
+    "ListAudienceSchedulesFromSpaceAndAudience200Response",
+    "ListAudienceSchedulesFromSpaceAndAudience200Response1",
+    "ListAudienceSchedulesFromSpaceAndAudienceAlphaOutput",
+    "ListAudienceSchedulesFromSpaceAndAudienceOutput",
+    "ListAudienceSearchInput",
+    "ListAudiences200Response",
+    "ListAudiences200Response1",
+    "ListAudiences200Response2",
+    "ListAudiencesAlphaOutput",
+    "ListAudiencesBetaOutput",
+    "ListAudiencesOutput",
+    "ListAudiencesPaginationInput",
+    "ListAuditEvents200Response",
+    "ListAuditEventsV1Output",
+    "ListComputedTraits200Response",
+    "ListComputedTraitsAlphaOutput",
+    "ListConnectedDestinationsFromSource200Response",
+    "ListConnectedDestinationsFromSource200Response1",
+    "ListConnectedDestinationsFromSourceAlphaOutput",
+    "ListConnectedDestinationsFromSourceV1Output",
+    "ListConnectedSourcesFromWarehouse200Response",
+    "ListConnectedSourcesFromWarehouseV1Output",
+    "ListConnectedWarehousesFromSource200Response",
+    "ListConnectedWarehousesFromSource200Response1",
+    "ListConnectedWarehousesFromSourceAlphaOutput",
+    "ListConnectedWarehousesFromSourceV1Output",
+    "ListDeliveryMetricsSummaryFromDestination200Response",
+    "ListDeliveryMetricsSummaryFromDestinationBetaOutput",
+    "ListDestinations200Response",
+    "ListDestinationsFromAudience200Response",
+    "ListDestinationsFromAudienceAlphaOutput",
+    "ListDestinationsV1Output",
+    "ListFiltersForSpace200Response",
+    "ListFiltersForSpaceOutput",
+    "ListFiltersFromDestination200Response",
+    "ListFiltersFromDestinationV1Output",
+    "ListFiltersPaginationInput",
+    "ListFiltersPaginationOutput",
+    "ListFunctionItemV1",
+    "ListFunctionVersions200Response",
+    "ListFunctionVersionsAlphaOutput",
+    "ListFunctions200Response",
+    "ListFunctionsV1Output",
+    "ListInsertFunctionInstances200Response",
+    "ListInsertFunctionInstancesAlphaOutput",
+    "ListInvites200Response",
+    "ListInvitesFromUserGroup200Response",
+    "ListInvitesFromUserGroupV1Output",
+    "ListInvitesV1Output",
+    "ListLabels200Response",
+    "ListLabels200Response1",
+    "ListLabelsAlphaOutput",
+    "ListLabelsV1Output",
+    "ListProfilesWarehouseInSpace200Response",
+    "ListProfilesWarehouseInSpaceAlphaOutput",
+    "ListRegulationsFromSource200Response",
+    "ListRegulationsFromSourceV1Output",
+    "ListReverseETLSyncStatusesFromModelAndSubscriptionId200Response",
+    "ListReverseETLSyncStatusesFromModelAndSubscriptionIdOutput",
+    "ListReverseEtlModels200Response",
+    "ListReverseEtlModelsOutput",
+    "ListRoles200Response",
+    "ListRolesV1Output",
+    "ListRulesFromTrackingPlan200Response",
+    "ListRulesFromTrackingPlanV1Output",
+    "ListSchemaSettingsInSource200Response",
+    "ListSchemaSettingsInSourceV1Output",
+    "ListSelectiveSyncsFromWarehouseAndSource200Response",
+    "ListSelectiveSyncsFromWarehouseAndSourceV1Output",
+    "ListSelectiveSyncsFromWarehouseAndSpace200Response",
+    "ListSelectiveSyncsFromWarehouseAndSpaceAlphaOutput",
+    "ListSources200Response",
+    "ListSources200Response1",
+    "ListSourcesAlphaOutput",
+    "ListSourcesFromTrackingPlan200Response",
+    "ListSourcesFromTrackingPlanV1Output",
+    "ListSourcesV1Output",
+    "ListSpaces200Response",
+    "ListSpacesAlphaOutput",
+    "ListSubscriptionsFromDestination200Response",
+    "ListSubscriptionsFromDestinationAlphaOutput",
+    "ListSupportedDestinationsFromAudience200Response",
+    "ListSupportedDestinationsFromAudienceAlphaOutput",
+    "ListSuppressions200Response",
+    "ListSuppressionsV1Output",
+    "ListSyncsFromWarehouse200Response",
+    "ListSyncsFromWarehouseAndSource200Response",
+    "ListSyncsFromWarehouseAndSourceV1Output",
+    "ListSyncsFromWarehouseV1Output",
+    "ListTrackingPlans200Response",
+    "ListTrackingPlansV1Output",
+    "ListTransformations200Response",
+    "ListTransformationsBetaInput",
+    "ListTransformationsBetaOutput",
+    "ListTransformationsV1Output",
+    "ListUserGroups200Response",
+    "ListUserGroupsFromUser200Response",
+    "ListUserGroupsFromUserV1Output",
+    "ListUserGroupsV1Output",
+    "ListUsers200Response",
+    "ListUsersFromUserGroup200Response",
+    "ListUsersFromUserGroupV1Output",
+    "ListUsersV1Output",
+    "ListWarehouses200Response",
+    "ListWarehousesV1Output",
+    "ListWorkspaceRegulations200Response",
+    "ListWorkspaceRegulationsV1Output",
+    "LivePluginsAlpha",
+    "LogosBeta",
+    "MessageSubscriptionResponse",
+    "MessageSubscriptionResponseError",
+    "MessagesSubscriptionRequest",
+    "Metadata",
+    "MetricBeta",
+    "MinimalUserGroupV1",
+    "MinimalUserV1",
+    "MtuSnapshotV1",
+    "PaginationInput",
+    "PaginationOutput",
+    "PeriodicConfig",
+    "PermissionInputV1",
+    "PermissionResourceV1",
+    "PermissionV1",
+    "PersonalizationInput",
+    "PersonalizationInputEntity",
+    "PreviewDestinationFilter200Response",
+    "PreviewDestinationFilterV1",
+    "PreviewDestinationFilterV1Input",
+    "PreviewDestinationFilterV1Output",
+    "Profile",
+    "ProfilesWarehouseAlpha",
+    "PropertyRenameBeta",
+    "PropertyRenameV1",
+    "PropertyValueTransformationBeta",
+    "PropertyValueTransformationV1",
+    "ReadAudiencePreviewOptions",
+    "Regulation",
+    "RegulationListEntryV1",
+    "RemoveActivationFromAudience200Response",
+    "RemoveActivationFromAudienceOutput",
+    "RemoveAudienceFromSpace200Response",
+    "RemoveAudienceFromSpace200Response1",
+    "RemoveAudienceFromSpace200Response2",
+    "RemoveAudienceFromSpaceAlphaOutput",
+    "RemoveAudienceFromSpaceBetaOutput",
+    "RemoveAudienceFromSpaceOutput",
+    "RemoveAudienceScheduleFromAudience200Response",
+    "RemoveAudienceScheduleFromAudience200Response1",
+    "RemoveAudienceScheduleFromAudienceAlphaOutput",
+    "RemoveAudienceScheduleFromAudienceOutput",
+    "RemoveComputedTraitFromSpace200Response",
+    "RemoveComputedTraitFromSpaceAlphaOutput",
+    "RemoveDestinationFromAudience200Response",
+    "RemoveDestinationFromAudienceAlphaOutput",
+    "RemoveFilterFromDestination200Response",
+    "RemoveFilterFromDestinationV1Output",
+    "RemoveProfilesWarehouseFromSpace200Response",
+    "RemoveProfilesWarehouseFromSpaceAlphaOutput",
+    "RemoveRuleV1",
+    "RemoveRulesFromTrackingPlan200Response",
+    "RemoveRulesFromTrackingPlanV1Output",
+    "RemoveSourceConnectionFromWarehouse200Response",
+    "RemoveSourceConnectionFromWarehouseV1Output",
+    "RemoveSourceFromTrackingPlan200Response",
+    "RemoveSourceFromTrackingPlanV1Output",
+    "RemoveSubscriptionFromDestination200Response",
+    "RemoveSubscriptionFromDestinationAlphaOutput",
+    "RemoveUsersFromUserGroup200Response",
+    "RemoveUsersFromUserGroupV1Output",
+    "RemoveWriteKeyFromSource200Response",
+    "RemoveWriteKeyFromSourceAlphaOutput",
+    "ReplaceAdvancedSyncScheduleForWarehouse200Response",
+    "ReplaceAdvancedSyncScheduleForWarehouseV1Input",
+    "ReplaceAdvancedSyncScheduleForWarehouseV1Output",
+    "ReplaceLabelsInSource200Response",
+    "ReplaceLabelsInSource200Response1",
+    "ReplaceLabelsInSourceAlphaInput",
+    "ReplaceLabelsInSourceAlphaOutput",
+    "ReplaceLabelsInSourceV1Input",
+    "ReplaceLabelsInSourceV1Output",
+    "ReplaceMessagingSubscriptionsInSpaces200Response",
+    "ReplaceMessagingSubscriptionsInSpacesAlphaInput",
+    "ReplaceMessagingSubscriptionsInSpacesAlphaOutput",
+    "ReplacePermissionsForUser200Response",
+    "ReplacePermissionsForUserGroup200Response",
+    "ReplacePermissionsForUserGroupV1Input",
+    "ReplacePermissionsForUserGroupV1Output",
+    "ReplacePermissionsForUserV1Input",
+    "ReplacePermissionsForUserV1Output",
+    "ReplaceRulesInTrackingPlan200Response",
+    "ReplaceRulesInTrackingPlanV1Input",
+    "ReplaceRulesInTrackingPlanV1Output",
+    "ReplaceUsersInUserGroup200Response",
+    "ReplaceUsersInUserGroupV1Input",
+    "ReplaceUsersInUserGroupV1Output",
+    "RequestError",
+    "RequestErrorEnvelope",
+    "ResourceV1",
+    "RestoreFunctionVersion200Response",
+    "RestoreFunctionVersionAlphaInput",
+    "RestoreFunctionVersionAlphaOutput",
+    "ReverseETLManualSyncJobOutput",
+    "ReverseETLSyncStatus",
+    "ReverseEtlCronScheduleConfig",
+    "ReverseEtlDbtCloudScheduleConfig",
+    "ReverseEtlModel",
+    "ReverseEtlPeriodicScheduleConfig",
+    "ReverseEtlScheduleConfig",
+    "ReverseEtlScheduleDefinition",
+    "ReverseEtlSpecificTimeScheduleConfig",
+    "RoleV1",
+    "RuleInputV1",
+    "RuleV1",
+    "SimpleDestination",
+    "SourceAPICallSnapshotV1",
+    "SourceAlpha",
+    "SourceEventVolumeDatapointV1",
+    "SourceEventVolumeV1",
+    "SourceMetadataV1",
+    "SourceSettingsOutputV1",
+    "SourceV1",
+    "Space",
+    "SpaceWarehouseSchemaOverride",
+    "SpaceWarehouseSelectiveSyncItemAlpha",
+    "SpecificDaysConfig",
+    "StreamStatusV1",
+    "SuppressedInner",
+    "SyncExtractPhase",
+    "SyncLoadPhase",
+    "SyncNoticeV1",
+    "SyncV1",
+    "TrackSourceSettingsV1",
+    "TrackingPlanV1",
+    "TraitDefinition",
+    "TraitOptions",
+    "TransformationBeta",
+    "TransformationV1",
+    "UpdateActivationForAudience200Response",
+    "UpdateActivationForAudienceAlphaInput",
+    "UpdateActivationForAudienceOutput",
+    "UpdateAudienceForSpace200Response",
+    "UpdateAudienceForSpace200Response1",
+    "UpdateAudienceForSpace200Response2",
+    "UpdateAudienceForSpaceAlphaInput",
+    "UpdateAudienceForSpaceAlphaOutput",
+    "UpdateAudienceForSpaceBetaInput",
+    "UpdateAudienceForSpaceBetaOutput",
+    "UpdateAudienceForSpaceInput",
+    "UpdateAudienceForSpaceOutput",
+    "UpdateAudienceScheduleForAudience200Response",
+    "UpdateAudienceScheduleForAudience200Response1",
+    "UpdateAudienceScheduleForAudienceAlphaInput",
+    "UpdateAudienceScheduleForAudienceAlphaOutput",
+    "UpdateAudienceScheduleForAudienceInput",
+    "UpdateAudienceScheduleForAudienceOutput",
+    "UpdateComputedTraitForSpace200Response",
+    "UpdateComputedTraitForSpaceAlphaInput",
+    "UpdateComputedTraitForSpaceAlphaOutput",
+    "UpdateDestination200Response",
+    "UpdateDestinationForAudience200Response",
+    "UpdateDestinationForAudienceAlphaInput",
+    "UpdateDestinationForAudienceAlphaOutput",
+    "UpdateDestinationV1Input",
+    "UpdateDestinationV1Output",
+    "UpdateFilterById200Response",
+    "UpdateFilterByIdInput",
+    "UpdateFilterByIdOutput",
+    "UpdateFilterForDestination200Response",
+    "UpdateFilterForDestinationV1Input",
+    "UpdateFilterForDestinationV1Output",
+    "UpdateFunction200Response",
+    "UpdateFunctionV1Input",
+    "UpdateFunctionV1Output",
+    "UpdateGroupSubscriptionStatusResponse",
+    "UpdateInsertFunctionInstance200Response",
+    "UpdateInsertFunctionInstanceAlphaInput",
+    "UpdateInsertFunctionInstanceAlphaOutput",
+    "UpdateProfilesWarehouseForSpaceWarehouse200Response",
+    "UpdateProfilesWarehouseForSpaceWarehouseAlphaInput",
+    "UpdateProfilesWarehouseForSpaceWarehouseAlphaOutput",
+    "UpdateReverseEtlModel200Response",
+    "UpdateReverseEtlModelInput",
+    "UpdateReverseEtlModelOutput",
+    "UpdateRulesInTrackingPlan200Response",
+    "UpdateRulesInTrackingPlanV1Input",
+    "UpdateRulesInTrackingPlanV1Output",
+    "UpdateSchemaSettingsInSource200Response",
+    "UpdateSchemaSettingsInSourceV1Input",
+    "UpdateSchemaSettingsInSourceV1Output",
+    "UpdateSelectiveSyncForWarehouse200Response",
+    "UpdateSelectiveSyncForWarehouseAndSpace200Response",
+    "UpdateSelectiveSyncForWarehouseAndSpaceAlphaInput",
+    "UpdateSelectiveSyncForWarehouseAndSpaceAlphaOutput",
+    "UpdateSelectiveSyncForWarehouseV1Input",
+    "UpdateSelectiveSyncForWarehouseV1Output",
+    "UpdateSource200Response",
+    "UpdateSource200Response1",
+    "UpdateSourceAlphaInput",
+    "UpdateSourceAlphaOutput",
+    "UpdateSourceV1Input",
+    "UpdateSourceV1Output",
+    "UpdateSubscriptionForDestination200Response",
+    "UpdateSubscriptionForDestinationAlphaInput",
+    "UpdateSubscriptionForDestinationAlphaOutput",
+    "UpdateTrackingPlan200Response",
+    "UpdateTrackingPlanV1Input",
+    "UpdateTrackingPlanV1Output",
+    "UpdateTransformation200Response",
+    "UpdateTransformationBetaInput",
+    "UpdateTransformationBetaOutput",
+    "UpdateTransformationV1Input",
+    "UpdateTransformationV1Output",
+    "UpdateUserGroup200Response",
+    "UpdateUserGroupV1Input",
+    "UpdateUserGroupV1Output",
+    "UpdateWarehouse200Response",
+    "UpdateWarehouseV1Input",
+    "UpdateWarehouseV1Output",
+    "UpsertRuleV1",
+    "UserGroupV1",
+    "UserV1",
+    "UsersPerSourceSnapshotV1",
+    "Version",
+    "WarehouseAdvancedSyncV1",
+    "WarehouseMetadataV1",
+    "WarehouseSelectiveSyncItemV1",
+    "WarehouseSyncOverrideV1",
+    "WarehouseV1",
+    "WorkspaceV1",
+]
+
 # import apis into sdk package
-from segment_public_api.api.api_calls_api import APICallsApi
-from segment_public_api.api.activations_api import ActivationsApi
-from segment_public_api.api.audiences_api import AudiencesApi
-from segment_public_api.api.audit_trail_api import AuditTrailApi
-from segment_public_api.api.catalog_api import CatalogApi
-from segment_public_api.api.computed_traits_api import ComputedTraitsApi
-from segment_public_api.api.deletion_and_suppression_api import DeletionAndSuppressionApi
-from segment_public_api.api.delivery_overview_api import DeliveryOverviewApi
-from segment_public_api.api.destination_filters_api import DestinationFiltersApi
-from segment_public_api.api.destinations_api import DestinationsApi
-from segment_public_api.api.events_api import EventsApi
-from segment_public_api.api.functions_api import FunctionsApi
-from segment_public_api.api.iam_groups_api import IAMGroupsApi
-from segment_public_api.api.iam_roles_api import IAMRolesApi
-from segment_public_api.api.iam_users_api import IAMUsersApi
-from segment_public_api.api.labels_api import LabelsApi
-from segment_public_api.api.live_plugins_api import LivePluginsApi
-from segment_public_api.api.monthly_tracked_users_api import MonthlyTrackedUsersApi
-from segment_public_api.api.profiles_sync_api import ProfilesSyncApi
-from segment_public_api.api.reverse_etl_api import ReverseETLApi
-from segment_public_api.api.selective_sync_api import SelectiveSyncApi
-from segment_public_api.api.sources_api import SourcesApi
-from segment_public_api.api.space_filters_api import SpaceFiltersApi
-from segment_public_api.api.spaces_api import SpacesApi
-from segment_public_api.api.testing_api import TestingApi
-from segment_public_api.api.tracking_plans_api import TrackingPlansApi
-from segment_public_api.api.transformations_api import TransformationsApi
-from segment_public_api.api.warehouses_api import WarehousesApi
-from segment_public_api.api.workspaces_api import WorkspacesApi
-from segment_public_api.api.customer_insights_api import CustomerInsightsApi
-from segment_public_api.api.dbt_api import DbtApi
+from segment_public_api.api.api_calls_api import APICallsApi as APICallsApi
+from segment_public_api.api.activations_api import ActivationsApi as ActivationsApi
+from segment_public_api.api.audiences_api import AudiencesApi as AudiencesApi
+from segment_public_api.api.audit_trail_api import AuditTrailApi as AuditTrailApi
+from segment_public_api.api.catalog_api import CatalogApi as CatalogApi
+from segment_public_api.api.computed_traits_api import ComputedTraitsApi as ComputedTraitsApi
+from segment_public_api.api.deletion_and_suppression_api import DeletionAndSuppressionApi as DeletionAndSuppressionApi
+from segment_public_api.api.delivery_overview_api import DeliveryOverviewApi as DeliveryOverviewApi
+from segment_public_api.api.destination_filters_api import DestinationFiltersApi as DestinationFiltersApi
+from segment_public_api.api.destinations_api import DestinationsApi as DestinationsApi
+from segment_public_api.api.events_api import EventsApi as EventsApi
+from segment_public_api.api.functions_api import FunctionsApi as FunctionsApi
+from segment_public_api.api.iam_groups_api import IAMGroupsApi as IAMGroupsApi
+from segment_public_api.api.iam_roles_api import IAMRolesApi as IAMRolesApi
+from segment_public_api.api.iam_users_api import IAMUsersApi as IAMUsersApi
+from segment_public_api.api.labels_api import LabelsApi as LabelsApi
+from segment_public_api.api.live_plugins_api import LivePluginsApi as LivePluginsApi
+from segment_public_api.api.monthly_tracked_users_api import MonthlyTrackedUsersApi as MonthlyTrackedUsersApi
+from segment_public_api.api.profiles_sync_api import ProfilesSyncApi as ProfilesSyncApi
+from segment_public_api.api.reverse_etl_api import ReverseETLApi as ReverseETLApi
+from segment_public_api.api.selective_sync_api import SelectiveSyncApi as SelectiveSyncApi
+from segment_public_api.api.sources_api import SourcesApi as SourcesApi
+from segment_public_api.api.space_filters_api import SpaceFiltersApi as SpaceFiltersApi
+from segment_public_api.api.spaces_api import SpacesApi as SpacesApi
+from segment_public_api.api.testing_api import TestingApi as TestingApi
+from segment_public_api.api.tracking_plans_api import TrackingPlansApi as TrackingPlansApi
+from segment_public_api.api.transformations_api import TransformationsApi as TransformationsApi
+from segment_public_api.api.warehouses_api import WarehousesApi as WarehousesApi
+from segment_public_api.api.workspaces_api import WorkspacesApi as WorkspacesApi
+from segment_public_api.api.customer_insights_api import CustomerInsightsApi as CustomerInsightsApi
+from segment_public_api.api.dbt_api import DbtApi as DbtApi
 
 # import ApiClient
-from segment_public_api.api_response import ApiResponse
-from segment_public_api.api_client import ApiClient
-from segment_public_api.configuration import Configuration
-from segment_public_api.exceptions import OpenApiException
-from segment_public_api.exceptions import ApiTypeError
-from segment_public_api.exceptions import ApiValueError
-from segment_public_api.exceptions import ApiKeyError
-from segment_public_api.exceptions import ApiAttributeError
-from segment_public_api.exceptions import ApiException
+from segment_public_api.api_response import ApiResponse as ApiResponse
+from segment_public_api.api_client import ApiClient as ApiClient
+from segment_public_api.configuration import Configuration as Configuration
+from segment_public_api.exceptions import OpenApiException as OpenApiException
+from segment_public_api.exceptions import ApiTypeError as ApiTypeError
+from segment_public_api.exceptions import ApiValueError as ApiValueError
+from segment_public_api.exceptions import ApiKeyError as ApiKeyError
+from segment_public_api.exceptions import ApiAttributeError as ApiAttributeError
+from segment_public_api.exceptions import ApiException as ApiException
 
 # import models into sdk package
-from segment_public_api.models.api_call_snapshot_v1 import APICallSnapshotV1
-from segment_public_api.models.access_permission_v1 import AccessPermissionV1
-from segment_public_api.models.activation_output import ActivationOutput
-from segment_public_api.models.add_activation_to_audience200_response import AddActivationToAudience200Response
-from segment_public_api.models.add_activation_to_audience_alpha_input import AddActivationToAudienceAlphaInput
-from segment_public_api.models.add_activation_to_audience_alpha_output import AddActivationToAudienceAlphaOutput
-from segment_public_api.models.add_audience_schedule_to_audience200_response import AddAudienceScheduleToAudience200Response
-from segment_public_api.models.add_audience_schedule_to_audience200_response1 import AddAudienceScheduleToAudience200Response1
-from segment_public_api.models.add_audience_schedule_to_audience_alpha_input import AddAudienceScheduleToAudienceAlphaInput
-from segment_public_api.models.add_audience_schedule_to_audience_alpha_output import AddAudienceScheduleToAudienceAlphaOutput
-from segment_public_api.models.add_audience_schedule_to_audience_input import AddAudienceScheduleToAudienceInput
-from segment_public_api.models.add_audience_schedule_to_audience_output import AddAudienceScheduleToAudienceOutput
-from segment_public_api.models.add_connection_from_source_to_warehouse201_response import AddConnectionFromSourceToWarehouse201Response
-from segment_public_api.models.add_connection_from_source_to_warehouse_v1_output import AddConnectionFromSourceToWarehouseV1Output
-from segment_public_api.models.add_destination_to_audience200_response import AddDestinationToAudience200Response
-from segment_public_api.models.add_destination_to_audience_alpha_input import AddDestinationToAudienceAlphaInput
-from segment_public_api.models.add_destination_to_audience_alpha_output import AddDestinationToAudienceAlphaOutput
-from segment_public_api.models.add_labels_to_source200_response import AddLabelsToSource200Response
-from segment_public_api.models.add_labels_to_source200_response1 import AddLabelsToSource200Response1
-from segment_public_api.models.add_labels_to_source_alpha_input import AddLabelsToSourceAlphaInput
-from segment_public_api.models.add_labels_to_source_alpha_output import AddLabelsToSourceAlphaOutput
-from segment_public_api.models.add_labels_to_source_v1_input import AddLabelsToSourceV1Input
-from segment_public_api.models.add_labels_to_source_v1_output import AddLabelsToSourceV1Output
-from segment_public_api.models.add_permissions_to_user200_response import AddPermissionsToUser200Response
-from segment_public_api.models.add_permissions_to_user_group200_response import AddPermissionsToUserGroup200Response
-from segment_public_api.models.add_permissions_to_user_group_v1_input import AddPermissionsToUserGroupV1Input
-from segment_public_api.models.add_permissions_to_user_group_v1_output import AddPermissionsToUserGroupV1Output
-from segment_public_api.models.add_permissions_to_user_v1_input import AddPermissionsToUserV1Input
-from segment_public_api.models.add_permissions_to_user_v1_output import AddPermissionsToUserV1Output
-from segment_public_api.models.add_source_to_tracking_plan200_response import AddSourceToTrackingPlan200Response
-from segment_public_api.models.add_source_to_tracking_plan_v1_input import AddSourceToTrackingPlanV1Input
-from segment_public_api.models.add_source_to_tracking_plan_v1_output import AddSourceToTrackingPlanV1Output
-from segment_public_api.models.add_users_to_user_group200_response import AddUsersToUserGroup200Response
-from segment_public_api.models.add_users_to_user_group_v1_input import AddUsersToUserGroupV1Input
-from segment_public_api.models.add_users_to_user_group_v1_output import AddUsersToUserGroupV1Output
-from segment_public_api.models.advanced_warehouse_sync_schedule_v1_input import AdvancedWarehouseSyncScheduleV1Input
-from segment_public_api.models.advanced_warehouse_sync_schedule_v1_output import AdvancedWarehouseSyncScheduleV1Output
-from segment_public_api.models.allowed_label_beta import AllowedLabelBeta
-from segment_public_api.models.audience_compute_cadence import AudienceComputeCadence
-from segment_public_api.models.audience_definition import AudienceDefinition
-from segment_public_api.models.audience_definition_without_target_entity import AudienceDefinitionWithoutTargetEntity
-from segment_public_api.models.audience_options import AudienceOptions
-from segment_public_api.models.audience_options_with_lookback import AudienceOptionsWithLookback
-from segment_public_api.models.audience_preview import AudiencePreview
-from segment_public_api.models.audience_preview_account_result import AudiencePreviewAccountResult
-from segment_public_api.models.audience_preview_entities_result import AudiencePreviewEntitiesResult
-from segment_public_api.models.audience_preview_identifier import AudiencePreviewIdentifier
-from segment_public_api.models.audience_preview_profile_result import AudiencePreviewProfileResult
-from segment_public_api.models.audience_preview_result import AudiencePreviewResult
-from segment_public_api.models.audience_run_info import AudienceRunInfo
-from segment_public_api.models.audience_schedule import AudienceSchedule
-from segment_public_api.models.audience_size import AudienceSize
-from segment_public_api.models.audience_summary import AudienceSummary
-from segment_public_api.models.audience_summary_with_audience_type_and_lookback import AudienceSummaryWithAudienceTypeAndLookback
-from segment_public_api.models.audit_event_v1 import AuditEventV1
-from segment_public_api.models.batch_query_messaging_subscriptions_for_space200_response import BatchQueryMessagingSubscriptionsForSpace200Response
-from segment_public_api.models.batch_query_messaging_subscriptions_for_space_alpha_input import BatchQueryMessagingSubscriptionsForSpaceAlphaInput
-from segment_public_api.models.batch_query_messaging_subscriptions_for_space_alpha_output import BatchQueryMessagingSubscriptionsForSpaceAlphaOutput
-from segment_public_api.models.breakdown_beta import BreakdownBeta
-from segment_public_api.models.cancel_reverse_etl_sync_for_model200_response import CancelReverseETLSyncForModel200Response
-from segment_public_api.models.cancel_reverse_etl_sync_for_model_input import CancelReverseETLSyncForModelInput
-from segment_public_api.models.cancel_reverse_etl_sync_for_model_output import CancelReverseETLSyncForModelOutput
-from segment_public_api.models.common_source_settings_v1 import CommonSourceSettingsV1
-from segment_public_api.models.computed_trait_summary import ComputedTraitSummary
-from segment_public_api.models.computed_traits_definition import ComputedTraitsDefinition
-from segment_public_api.models.config import Config
-from segment_public_api.models.config1 import Config1
-from segment_public_api.models.connection import Connection
-from segment_public_api.models.contact import Contact
-from segment_public_api.models.create_audience200_response import CreateAudience200Response
-from segment_public_api.models.create_audience200_response1 import CreateAudience200Response1
-from segment_public_api.models.create_audience200_response2 import CreateAudience200Response2
-from segment_public_api.models.create_audience_alpha_input import CreateAudienceAlphaInput
-from segment_public_api.models.create_audience_alpha_output import CreateAudienceAlphaOutput
-from segment_public_api.models.create_audience_beta_input import CreateAudienceBetaInput
-from segment_public_api.models.create_audience_beta_output import CreateAudienceBetaOutput
-from segment_public_api.models.create_audience_input import CreateAudienceInput
-from segment_public_api.models.create_audience_output import CreateAudienceOutput
-from segment_public_api.models.create_audience_preview200_response import CreateAudiencePreview200Response
-from segment_public_api.models.create_audience_preview200_response1 import CreateAudiencePreview200Response1
-from segment_public_api.models.create_audience_preview200_response2 import CreateAudiencePreview200Response2
-from segment_public_api.models.create_audience_preview_alpha_input import CreateAudiencePreviewAlphaInput
-from segment_public_api.models.create_audience_preview_alpha_output import CreateAudiencePreviewAlphaOutput
-from segment_public_api.models.create_audience_preview_beta_input import CreateAudiencePreviewBetaInput
-from segment_public_api.models.create_audience_preview_beta_output import CreateAudiencePreviewBetaOutput
-from segment_public_api.models.create_audience_preview_input import CreateAudiencePreviewInput
-from segment_public_api.models.create_audience_preview_options import CreateAudiencePreviewOptions
-from segment_public_api.models.create_audience_preview_output import CreateAudiencePreviewOutput
-from segment_public_api.models.create_cloud_source_regulation200_response import CreateCloudSourceRegulation200Response
-from segment_public_api.models.create_cloud_source_regulation_v1_input import CreateCloudSourceRegulationV1Input
-from segment_public_api.models.create_cloud_source_regulation_v1_output import CreateCloudSourceRegulationV1Output
-from segment_public_api.models.create_computed_trait200_response import CreateComputedTrait200Response
-from segment_public_api.models.create_computed_trait_alpha_input import CreateComputedTraitAlphaInput
-from segment_public_api.models.create_computed_trait_alpha_output import CreateComputedTraitAlphaOutput
-from segment_public_api.models.create_dbt_model_sync_trigger200_response import CreateDbtModelSyncTrigger200Response
-from segment_public_api.models.create_dbt_model_sync_trigger_input import CreateDbtModelSyncTriggerInput
-from segment_public_api.models.create_dbt_model_sync_trigger_output import CreateDbtModelSyncTriggerOutput
-from segment_public_api.models.create_destination200_response import CreateDestination200Response
-from segment_public_api.models.create_destination_subscription200_response import CreateDestinationSubscription200Response
-from segment_public_api.models.create_destination_subscription_alpha_input import CreateDestinationSubscriptionAlphaInput
-from segment_public_api.models.create_destination_subscription_alpha_output import CreateDestinationSubscriptionAlphaOutput
-from segment_public_api.models.create_destination_v1_input import CreateDestinationV1Input
-from segment_public_api.models.create_destination_v1_output import CreateDestinationV1Output
-from segment_public_api.models.create_download200_response import CreateDownload200Response
-from segment_public_api.models.create_download_alpha_input import CreateDownloadAlphaInput
-from segment_public_api.models.create_download_alpha_output import CreateDownloadAlphaOutput
-from segment_public_api.models.create_filter_for_destination200_response import CreateFilterForDestination200Response
-from segment_public_api.models.create_filter_for_destination_v1_input import CreateFilterForDestinationV1Input
-from segment_public_api.models.create_filter_for_destination_v1_output import CreateFilterForDestinationV1Output
-from segment_public_api.models.create_filter_for_space200_response import CreateFilterForSpace200Response
-from segment_public_api.models.create_filter_for_space_input import CreateFilterForSpaceInput
-from segment_public_api.models.create_filter_for_space_output import CreateFilterForSpaceOutput
-from segment_public_api.models.create_function200_response import CreateFunction200Response
-from segment_public_api.models.create_function_deployment200_response import CreateFunctionDeployment200Response
-from segment_public_api.models.create_function_deployment_v1_output import CreateFunctionDeploymentV1Output
-from segment_public_api.models.create_function_v1_input import CreateFunctionV1Input
-from segment_public_api.models.create_function_v1_output import CreateFunctionV1Output
-from segment_public_api.models.create_insert_function_instance200_response import CreateInsertFunctionInstance200Response
-from segment_public_api.models.create_insert_function_instance_alpha_input import CreateInsertFunctionInstanceAlphaInput
-from segment_public_api.models.create_insert_function_instance_alpha_output import CreateInsertFunctionInstanceAlphaOutput
-from segment_public_api.models.create_invites201_response import CreateInvites201Response
-from segment_public_api.models.create_invites_v1_input import CreateInvitesV1Input
-from segment_public_api.models.create_invites_v1_output import CreateInvitesV1Output
-from segment_public_api.models.create_label201_response import CreateLabel201Response
-from segment_public_api.models.create_label_v1_input import CreateLabelV1Input
-from segment_public_api.models.create_label_v1_output import CreateLabelV1Output
-from segment_public_api.models.create_live_plugin200_response import CreateLivePlugin200Response
-from segment_public_api.models.create_live_plugin_alpha_input import CreateLivePluginAlphaInput
-from segment_public_api.models.create_live_plugin_alpha_output import CreateLivePluginAlphaOutput
-from segment_public_api.models.create_profiles_warehouse201_response import CreateProfilesWarehouse201Response
-from segment_public_api.models.create_profiles_warehouse_alpha_input import CreateProfilesWarehouseAlphaInput
-from segment_public_api.models.create_profiles_warehouse_alpha_output import CreateProfilesWarehouseAlphaOutput
-from segment_public_api.models.create_reverse_etl_manual_sync200_response import CreateReverseETLManualSync200Response
-from segment_public_api.models.create_reverse_etl_manual_sync_input import CreateReverseETLManualSyncInput
-from segment_public_api.models.create_reverse_etl_manual_sync_output import CreateReverseETLManualSyncOutput
-from segment_public_api.models.create_reverse_etl_model201_response import CreateReverseEtlModel201Response
-from segment_public_api.models.create_reverse_etl_model_input import CreateReverseEtlModelInput
-from segment_public_api.models.create_reverse_etl_model_output import CreateReverseEtlModelOutput
-from segment_public_api.models.create_source201_response import CreateSource201Response
-from segment_public_api.models.create_source201_response1 import CreateSource201Response1
-from segment_public_api.models.create_source_alpha_input import CreateSourceAlphaInput
-from segment_public_api.models.create_source_alpha_output import CreateSourceAlphaOutput
-from segment_public_api.models.create_source_regulation200_response import CreateSourceRegulation200Response
-from segment_public_api.models.create_source_regulation_v1_input import CreateSourceRegulationV1Input
-from segment_public_api.models.create_source_regulation_v1_output import CreateSourceRegulationV1Output
-from segment_public_api.models.create_source_v1_input import CreateSourceV1Input
-from segment_public_api.models.create_source_v1_output import CreateSourceV1Output
-from segment_public_api.models.create_tracking_plan200_response import CreateTrackingPlan200Response
-from segment_public_api.models.create_tracking_plan_v1_input import CreateTrackingPlanV1Input
-from segment_public_api.models.create_tracking_plan_v1_output import CreateTrackingPlanV1Output
-from segment_public_api.models.create_transformation200_response import CreateTransformation200Response
-from segment_public_api.models.create_transformation_beta_input import CreateTransformationBetaInput
-from segment_public_api.models.create_transformation_beta_output import CreateTransformationBetaOutput
-from segment_public_api.models.create_transformation_v1_input import CreateTransformationV1Input
-from segment_public_api.models.create_transformation_v1_output import CreateTransformationV1Output
-from segment_public_api.models.create_user_group200_response import CreateUserGroup200Response
-from segment_public_api.models.create_user_group_v1_input import CreateUserGroupV1Input
-from segment_public_api.models.create_user_group_v1_output import CreateUserGroupV1Output
-from segment_public_api.models.create_validation_in_warehouse200_response import CreateValidationInWarehouse200Response
-from segment_public_api.models.create_validation_in_warehouse_v1_input import CreateValidationInWarehouseV1Input
-from segment_public_api.models.create_validation_in_warehouse_v1_output import CreateValidationInWarehouseV1Output
-from segment_public_api.models.create_warehouse201_response import CreateWarehouse201Response
-from segment_public_api.models.create_warehouse_v1_input import CreateWarehouseV1Input
-from segment_public_api.models.create_warehouse_v1_output import CreateWarehouseV1Output
-from segment_public_api.models.create_workspace_regulation200_response import CreateWorkspaceRegulation200Response
-from segment_public_api.models.create_workspace_regulation_v1_input import CreateWorkspaceRegulationV1Input
-from segment_public_api.models.create_workspace_regulation_v1_output import CreateWorkspaceRegulationV1Output
-from segment_public_api.models.create_write_key_for_source200_response import CreateWriteKeyForSource200Response
-from segment_public_api.models.create_write_key_for_source_alpha_output import CreateWriteKeyForSourceAlphaOutput
-from segment_public_api.models.dbt_model_sync_trigger import DbtModelSyncTrigger
-from segment_public_api.models.delete_activation_alpha_output import DeleteActivationAlphaOutput
-from segment_public_api.models.delete_destination200_response import DeleteDestination200Response
-from segment_public_api.models.delete_destination_v1_output import DeleteDestinationV1Output
-from segment_public_api.models.delete_filter_by_id200_response import DeleteFilterById200Response
-from segment_public_api.models.delete_filter_by_id_output import DeleteFilterByIdOutput
-from segment_public_api.models.delete_function200_response import DeleteFunction200Response
-from segment_public_api.models.delete_function_v1_output import DeleteFunctionV1Output
-from segment_public_api.models.delete_insert_function_instance200_response import DeleteInsertFunctionInstance200Response
-from segment_public_api.models.delete_insert_function_instance_alpha_output import DeleteInsertFunctionInstanceAlphaOutput
-from segment_public_api.models.delete_invites200_response import DeleteInvites200Response
-from segment_public_api.models.delete_invites_v1_output import DeleteInvitesV1Output
-from segment_public_api.models.delete_label200_response import DeleteLabel200Response
-from segment_public_api.models.delete_label200_response1 import DeleteLabel200Response1
-from segment_public_api.models.delete_label_alpha_output import DeleteLabelAlphaOutput
-from segment_public_api.models.delete_label_v1_output import DeleteLabelV1Output
-from segment_public_api.models.delete_live_plugin_code200_response import DeleteLivePluginCode200Response
-from segment_public_api.models.delete_live_plugin_code_alpha_output import DeleteLivePluginCodeAlphaOutput
-from segment_public_api.models.delete_reverse_etl_model200_response import DeleteReverseEtlModel200Response
-from segment_public_api.models.delete_reverse_etl_model_output import DeleteReverseEtlModelOutput
-from segment_public_api.models.delete_source200_response import DeleteSource200Response
-from segment_public_api.models.delete_source200_response1 import DeleteSource200Response1
-from segment_public_api.models.delete_source_alpha_output import DeleteSourceAlphaOutput
-from segment_public_api.models.delete_source_v1_output import DeleteSourceV1Output
-from segment_public_api.models.delete_tracking_plan200_response import DeleteTrackingPlan200Response
-from segment_public_api.models.delete_tracking_plan_v1_output import DeleteTrackingPlanV1Output
-from segment_public_api.models.delete_transformation200_response import DeleteTransformation200Response
-from segment_public_api.models.delete_transformation_beta_input import DeleteTransformationBetaInput
-from segment_public_api.models.delete_transformation_beta_output import DeleteTransformationBetaOutput
-from segment_public_api.models.delete_transformation_v1_output import DeleteTransformationV1Output
-from segment_public_api.models.delete_user_group200_response import DeleteUserGroup200Response
-from segment_public_api.models.delete_user_group_v1_output import DeleteUserGroupV1Output
-from segment_public_api.models.delete_users200_response import DeleteUsers200Response
-from segment_public_api.models.delete_users_v1_output import DeleteUsersV1Output
-from segment_public_api.models.delete_warehouse200_response import DeleteWarehouse200Response
-from segment_public_api.models.delete_warehouse_v1_output import DeleteWarehouseV1Output
-from segment_public_api.models.delivery_metrics_summary_beta import DeliveryMetricsSummaryBeta
-from segment_public_api.models.delivery_overview_destination_filter_by import DeliveryOverviewDestinationFilterBy
-from segment_public_api.models.delivery_overview_metrics_datapoint import DeliveryOverviewMetricsDatapoint
-from segment_public_api.models.delivery_overview_metrics_dataset import DeliveryOverviewMetricsDataset
-from segment_public_api.models.delivery_overview_source_filter_by import DeliveryOverviewSourceFilterBy
-from segment_public_api.models.delivery_overview_successfully_received_filter_by import DeliveryOverviewSuccessfullyReceivedFilterBy
-from segment_public_api.models.destination import Destination
-from segment_public_api.models.destination_filter_action_v1 import DestinationFilterActionV1
-from segment_public_api.models.destination_filter_v1 import DestinationFilterV1
-from segment_public_api.models.destination_input import DestinationInput
-from segment_public_api.models.destination_metadata_action_field_v1 import DestinationMetadataActionFieldV1
-from segment_public_api.models.destination_metadata_action_v1 import DestinationMetadataActionV1
-from segment_public_api.models.destination_metadata_component_v1 import DestinationMetadataComponentV1
-from segment_public_api.models.destination_metadata_features_v1 import DestinationMetadataFeaturesV1
-from segment_public_api.models.destination_metadata_methods_v1 import DestinationMetadataMethodsV1
-from segment_public_api.models.destination_metadata_platforms_v1 import DestinationMetadataPlatformsV1
-from segment_public_api.models.destination_metadata_subscription_preset_v1 import DestinationMetadataSubscriptionPresetV1
-from segment_public_api.models.destination_metadata_v1 import DestinationMetadataV1
-from segment_public_api.models.destination_status_v1 import DestinationStatusV1
-from segment_public_api.models.destination_subscription import DestinationSubscription
-from segment_public_api.models.destination_subscription_configuration import DestinationSubscriptionConfiguration
-from segment_public_api.models.destination_subscription_update_input import DestinationSubscriptionUpdateInput
-from segment_public_api.models.destination_v1 import DestinationV1
-from segment_public_api.models.download import Download
-from segment_public_api.models.echo200_response import Echo200Response
-from segment_public_api.models.echo200_response1 import Echo200Response1
-from segment_public_api.models.echo_alpha_output import EchoAlphaOutput
-from segment_public_api.models.echo_v1_output import EchoV1Output
-from segment_public_api.models.entity_details import EntityDetails
-from segment_public_api.models.event_source_v1 import EventSourceV1
-from segment_public_api.models.fql_defined_property_v1 import FQLDefinedPropertyV1
-from segment_public_api.models.filter import Filter
-from segment_public_api.models.force_execute_audience_run200_response import ForceExecuteAudienceRun200Response
-from segment_public_api.models.force_execute_audience_run200_response1 import ForceExecuteAudienceRun200Response1
-from segment_public_api.models.force_execute_audience_run_alpha_output import ForceExecuteAudienceRunAlphaOutput
-from segment_public_api.models.force_execute_audience_run_output import ForceExecuteAudienceRunOutput
-from segment_public_api.models.function_deployment import FunctionDeployment
-from segment_public_api.models.function_setting_v1 import FunctionSettingV1
-from segment_public_api.models.function_v1 import FunctionV1
-from segment_public_api.models.get_activation_from_audience200_response import GetActivationFromAudience200Response
-from segment_public_api.models.get_activation_from_audience_output import GetActivationFromAudienceOutput
-from segment_public_api.models.get_advanced_sync_schedule_from_warehouse200_response import GetAdvancedSyncScheduleFromWarehouse200Response
-from segment_public_api.models.get_advanced_sync_schedule_from_warehouse_v1_output import GetAdvancedSyncScheduleFromWarehouseV1Output
-from segment_public_api.models.get_audience200_response import GetAudience200Response
-from segment_public_api.models.get_audience200_response1 import GetAudience200Response1
-from segment_public_api.models.get_audience200_response2 import GetAudience200Response2
-from segment_public_api.models.get_audience_alpha_output import GetAudienceAlphaOutput
-from segment_public_api.models.get_audience_beta_output import GetAudienceBetaOutput
-from segment_public_api.models.get_audience_output import GetAudienceOutput
-from segment_public_api.models.get_audience_preview200_response import GetAudiencePreview200Response
-from segment_public_api.models.get_audience_preview200_response1 import GetAudiencePreview200Response1
-from segment_public_api.models.get_audience_preview200_response2 import GetAudiencePreview200Response2
-from segment_public_api.models.get_audience_preview_alpha_output import GetAudiencePreviewAlphaOutput
-from segment_public_api.models.get_audience_preview_beta_output import GetAudiencePreviewBetaOutput
-from segment_public_api.models.get_audience_preview_output import GetAudiencePreviewOutput
-from segment_public_api.models.get_audience_schedule_from_space_and_audience200_response import GetAudienceScheduleFromSpaceAndAudience200Response
-from segment_public_api.models.get_audience_schedule_from_space_and_audience200_response1 import GetAudienceScheduleFromSpaceAndAudience200Response1
-from segment_public_api.models.get_audience_schedule_from_space_and_audience_alpha_output import GetAudienceScheduleFromSpaceAndAudienceAlphaOutput
-from segment_public_api.models.get_audience_schedule_from_space_and_audience_output import GetAudienceScheduleFromSpaceAndAudienceOutput
-from segment_public_api.models.get_computed_trait200_response import GetComputedTrait200Response
-from segment_public_api.models.get_computed_trait_alpha_output import GetComputedTraitAlphaOutput
-from segment_public_api.models.get_connection_state_from_warehouse200_response import GetConnectionStateFromWarehouse200Response
-from segment_public_api.models.get_connection_state_from_warehouse_v1_output import GetConnectionStateFromWarehouseV1Output
-from segment_public_api.models.get_daily_per_source_api_calls_usage200_response import GetDailyPerSourceAPICallsUsage200Response
-from segment_public_api.models.get_daily_per_source_api_calls_usage_v1_output import GetDailyPerSourceAPICallsUsageV1Output
-from segment_public_api.models.get_daily_per_source_mtu_usage200_response import GetDailyPerSourceMTUUsage200Response
-from segment_public_api.models.get_daily_per_source_mtu_usage_v1_output import GetDailyPerSourceMTUUsageV1Output
-from segment_public_api.models.get_daily_workspace_api_calls_usage200_response import GetDailyWorkspaceAPICallsUsage200Response
-from segment_public_api.models.get_daily_workspace_api_calls_usage_v1_output import GetDailyWorkspaceAPICallsUsageV1Output
-from segment_public_api.models.get_daily_workspace_mtu_usage200_response import GetDailyWorkspaceMTUUsage200Response
-from segment_public_api.models.get_daily_workspace_mtu_usage_v1_output import GetDailyWorkspaceMTUUsageV1Output
-from segment_public_api.models.get_delivery_overview_metrics_beta_output import GetDeliveryOverviewMetricsBetaOutput
-from segment_public_api.models.get_destination200_response import GetDestination200Response
-from segment_public_api.models.get_destination_metadata200_response import GetDestinationMetadata200Response
-from segment_public_api.models.get_destination_metadata_v1_output import GetDestinationMetadataV1Output
-from segment_public_api.models.get_destination_v1_output import GetDestinationV1Output
-from segment_public_api.models.get_destinations_catalog200_response import GetDestinationsCatalog200Response
-from segment_public_api.models.get_destinations_catalog_v1_output import GetDestinationsCatalogV1Output
-from segment_public_api.models.get_egress_failed_metrics_from_delivery_overview200_response import GetEgressFailedMetricsFromDeliveryOverview200Response
-from segment_public_api.models.get_events_volume_from_workspace200_response import GetEventsVolumeFromWorkspace200Response
-from segment_public_api.models.get_events_volume_from_workspace_v1_output import GetEventsVolumeFromWorkspaceV1Output
-from segment_public_api.models.get_events_volume_from_workspace_v1_query import GetEventsVolumeFromWorkspaceV1Query
-from segment_public_api.models.get_filter_by_id200_response import GetFilterById200Response
-from segment_public_api.models.get_filter_by_id_output import GetFilterByIdOutput
-from segment_public_api.models.get_filter_in_destination200_response import GetFilterInDestination200Response
-from segment_public_api.models.get_filter_in_destination_v1_output import GetFilterInDestinationV1Output
-from segment_public_api.models.get_function200_response import GetFunction200Response
-from segment_public_api.models.get_function_v1_output import GetFunctionV1Output
-from segment_public_api.models.get_function_version200_response import GetFunctionVersion200Response
-from segment_public_api.models.get_function_version_alpha_output import GetFunctionVersionAlphaOutput
-from segment_public_api.models.get_insert_function_instance200_response import GetInsertFunctionInstance200Response
-from segment_public_api.models.get_insert_function_instance_alpha_output import GetInsertFunctionInstanceAlphaOutput
-from segment_public_api.models.get_latest_from_live_plugins200_response import GetLatestFromLivePlugins200Response
-from segment_public_api.models.get_latest_from_live_plugins_alpha_output import GetLatestFromLivePluginsAlphaOutput
-from segment_public_api.models.get_messaging_subscription_failure_response import GetMessagingSubscriptionFailureResponse
-from segment_public_api.models.get_messaging_subscription_success_response import GetMessagingSubscriptionSuccessResponse
-from segment_public_api.models.get_regulation200_response import GetRegulation200Response
-from segment_public_api.models.get_regulation_v1_output import GetRegulationV1Output
-from segment_public_api.models.get_reverse_etl_sync_status200_response import GetReverseETLSyncStatus200Response
-from segment_public_api.models.get_reverse_etl_sync_status_output import GetReverseETLSyncStatusOutput
-from segment_public_api.models.get_reverse_etl_model200_response import GetReverseEtlModel200Response
-from segment_public_api.models.get_reverse_etl_model_output import GetReverseEtlModelOutput
-from segment_public_api.models.get_source200_response import GetSource200Response
-from segment_public_api.models.get_source200_response1 import GetSource200Response1
-from segment_public_api.models.get_source_alpha_output import GetSourceAlphaOutput
-from segment_public_api.models.get_source_metadata200_response import GetSourceMetadata200Response
-from segment_public_api.models.get_source_metadata_v1_output import GetSourceMetadataV1Output
-from segment_public_api.models.get_source_v1_output import GetSourceV1Output
-from segment_public_api.models.get_sources_catalog200_response import GetSourcesCatalog200Response
-from segment_public_api.models.get_sources_catalog_v1_output import GetSourcesCatalogV1Output
-from segment_public_api.models.get_space200_response import GetSpace200Response
-from segment_public_api.models.get_space_alpha_output import GetSpaceAlphaOutput
-from segment_public_api.models.get_subscription_from_destination200_response import GetSubscriptionFromDestination200Response
-from segment_public_api.models.get_subscription_from_destination_alpha_output import GetSubscriptionFromDestinationAlphaOutput
-from segment_public_api.models.get_subscription_request import GetSubscriptionRequest
-from segment_public_api.models.get_tracking_plan200_response import GetTrackingPlan200Response
-from segment_public_api.models.get_tracking_plan_v1_output import GetTrackingPlanV1Output
-from segment_public_api.models.get_transformation200_response import GetTransformation200Response
-from segment_public_api.models.get_transformation_beta_input import GetTransformationBetaInput
-from segment_public_api.models.get_transformation_beta_output import GetTransformationBetaOutput
-from segment_public_api.models.get_transformation_v1_output import GetTransformationV1Output
-from segment_public_api.models.get_user200_response import GetUser200Response
-from segment_public_api.models.get_user_group200_response import GetUserGroup200Response
-from segment_public_api.models.get_user_group_v1_output import GetUserGroupV1Output
-from segment_public_api.models.get_user_v1_output import GetUserV1Output
-from segment_public_api.models.get_warehouse200_response import GetWarehouse200Response
-from segment_public_api.models.get_warehouse_metadata200_response import GetWarehouseMetadata200Response
-from segment_public_api.models.get_warehouse_metadata_v1_output import GetWarehouseMetadataV1Output
-from segment_public_api.models.get_warehouse_v1_output import GetWarehouseV1Output
-from segment_public_api.models.get_warehouses_catalog200_response import GetWarehousesCatalog200Response
-from segment_public_api.models.get_warehouses_catalog_v1_output import GetWarehousesCatalogV1Output
-from segment_public_api.models.get_workspace200_response import GetWorkspace200Response
-from segment_public_api.models.get_workspace_v1_output import GetWorkspaceV1Output
-from segment_public_api.models.group_source_settings_v1 import GroupSourceSettingsV1
-from segment_public_api.models.group_subscription_status import GroupSubscriptionStatus
-from segment_public_api.models.group_subscription_status_response import GroupSubscriptionStatusResponse
-from segment_public_api.models.handle_webhook_input import HandleWebhookInput
-from segment_public_api.models.handle_webhook_output import HandleWebhookOutput
-from segment_public_api.models.hash_properties_configuration import HashPropertiesConfiguration
-from segment_public_api.models.id_sync_configuration_input import IDSyncConfigurationInput
-from segment_public_api.models.identify_source_settings_v1 import IdentifySourceSettingsV1
-from segment_public_api.models.insert_function_instance_alpha import InsertFunctionInstanceAlpha
-from segment_public_api.models.integration_option_beta import IntegrationOptionBeta
-from segment_public_api.models.invite_permission_v1 import InvitePermissionV1
-from segment_public_api.models.invite_v1 import InviteV1
-from segment_public_api.models.label_alpha import LabelAlpha
-from segment_public_api.models.label_v1 import LabelV1
-from segment_public_api.models.list_activations_alpha_output import ListActivationsAlphaOutput
-from segment_public_api.models.list_activations_from_audience200_response import ListActivationsFromAudience200Response
-from segment_public_api.models.list_activations_from_audience_output import ListActivationsFromAudienceOutput
-from segment_public_api.models.list_audience_consumers_from_space_and_audience200_response import ListAudienceConsumersFromSpaceAndAudience200Response
-from segment_public_api.models.list_audience_consumers_from_space_and_audience_alpha_output import ListAudienceConsumersFromSpaceAndAudienceAlphaOutput
-from segment_public_api.models.list_audience_consumers_sort_input import ListAudienceConsumersSortInput
-from segment_public_api.models.list_audience_schedules_from_space_and_audience200_response import ListAudienceSchedulesFromSpaceAndAudience200Response
-from segment_public_api.models.list_audience_schedules_from_space_and_audience200_response1 import ListAudienceSchedulesFromSpaceAndAudience200Response1
-from segment_public_api.models.list_audience_schedules_from_space_and_audience_alpha_output import ListAudienceSchedulesFromSpaceAndAudienceAlphaOutput
-from segment_public_api.models.list_audience_schedules_from_space_and_audience_output import ListAudienceSchedulesFromSpaceAndAudienceOutput
-from segment_public_api.models.list_audience_search_input import ListAudienceSearchInput
-from segment_public_api.models.list_audiences200_response import ListAudiences200Response
-from segment_public_api.models.list_audiences200_response1 import ListAudiences200Response1
-from segment_public_api.models.list_audiences200_response2 import ListAudiences200Response2
-from segment_public_api.models.list_audiences_alpha_output import ListAudiencesAlphaOutput
-from segment_public_api.models.list_audiences_beta_output import ListAudiencesBetaOutput
-from segment_public_api.models.list_audiences_output import ListAudiencesOutput
-from segment_public_api.models.list_audiences_pagination_input import ListAudiencesPaginationInput
-from segment_public_api.models.list_audit_events200_response import ListAuditEvents200Response
-from segment_public_api.models.list_audit_events_v1_output import ListAuditEventsV1Output
-from segment_public_api.models.list_computed_traits200_response import ListComputedTraits200Response
-from segment_public_api.models.list_computed_traits_alpha_output import ListComputedTraitsAlphaOutput
-from segment_public_api.models.list_connected_destinations_from_source200_response import ListConnectedDestinationsFromSource200Response
-from segment_public_api.models.list_connected_destinations_from_source200_response1 import ListConnectedDestinationsFromSource200Response1
-from segment_public_api.models.list_connected_destinations_from_source_alpha_output import ListConnectedDestinationsFromSourceAlphaOutput
-from segment_public_api.models.list_connected_destinations_from_source_v1_output import ListConnectedDestinationsFromSourceV1Output
-from segment_public_api.models.list_connected_sources_from_warehouse200_response import ListConnectedSourcesFromWarehouse200Response
-from segment_public_api.models.list_connected_sources_from_warehouse_v1_output import ListConnectedSourcesFromWarehouseV1Output
-from segment_public_api.models.list_connected_warehouses_from_source200_response import ListConnectedWarehousesFromSource200Response
-from segment_public_api.models.list_connected_warehouses_from_source200_response1 import ListConnectedWarehousesFromSource200Response1
-from segment_public_api.models.list_connected_warehouses_from_source_alpha_output import ListConnectedWarehousesFromSourceAlphaOutput
-from segment_public_api.models.list_connected_warehouses_from_source_v1_output import ListConnectedWarehousesFromSourceV1Output
-from segment_public_api.models.list_delivery_metrics_summary_from_destination200_response import ListDeliveryMetricsSummaryFromDestination200Response
-from segment_public_api.models.list_delivery_metrics_summary_from_destination_beta_output import ListDeliveryMetricsSummaryFromDestinationBetaOutput
-from segment_public_api.models.list_destinations200_response import ListDestinations200Response
-from segment_public_api.models.list_destinations_from_audience200_response import ListDestinationsFromAudience200Response
-from segment_public_api.models.list_destinations_from_audience_alpha_output import ListDestinationsFromAudienceAlphaOutput
-from segment_public_api.models.list_destinations_v1_output import ListDestinationsV1Output
-from segment_public_api.models.list_filters_for_space200_response import ListFiltersForSpace200Response
-from segment_public_api.models.list_filters_for_space_output import ListFiltersForSpaceOutput
-from segment_public_api.models.list_filters_from_destination200_response import ListFiltersFromDestination200Response
-from segment_public_api.models.list_filters_from_destination_v1_output import ListFiltersFromDestinationV1Output
-from segment_public_api.models.list_filters_pagination_input import ListFiltersPaginationInput
-from segment_public_api.models.list_filters_pagination_output import ListFiltersPaginationOutput
-from segment_public_api.models.list_function_item_v1 import ListFunctionItemV1
-from segment_public_api.models.list_function_versions200_response import ListFunctionVersions200Response
-from segment_public_api.models.list_function_versions_alpha_output import ListFunctionVersionsAlphaOutput
-from segment_public_api.models.list_functions200_response import ListFunctions200Response
-from segment_public_api.models.list_functions_v1_output import ListFunctionsV1Output
-from segment_public_api.models.list_insert_function_instances200_response import ListInsertFunctionInstances200Response
-from segment_public_api.models.list_insert_function_instances_alpha_output import ListInsertFunctionInstancesAlphaOutput
-from segment_public_api.models.list_invites200_response import ListInvites200Response
-from segment_public_api.models.list_invites_from_user_group200_response import ListInvitesFromUserGroup200Response
-from segment_public_api.models.list_invites_from_user_group_v1_output import ListInvitesFromUserGroupV1Output
-from segment_public_api.models.list_invites_v1_output import ListInvitesV1Output
-from segment_public_api.models.list_labels200_response import ListLabels200Response
-from segment_public_api.models.list_labels200_response1 import ListLabels200Response1
-from segment_public_api.models.list_labels_alpha_output import ListLabelsAlphaOutput
-from segment_public_api.models.list_labels_v1_output import ListLabelsV1Output
-from segment_public_api.models.list_profiles_warehouse_in_space200_response import ListProfilesWarehouseInSpace200Response
-from segment_public_api.models.list_profiles_warehouse_in_space_alpha_output import ListProfilesWarehouseInSpaceAlphaOutput
-from segment_public_api.models.list_regulations_from_source200_response import ListRegulationsFromSource200Response
-from segment_public_api.models.list_regulations_from_source_v1_output import ListRegulationsFromSourceV1Output
-from segment_public_api.models.list_reverse_etl_sync_statuses_from_model_and_subscription_id200_response import ListReverseETLSyncStatusesFromModelAndSubscriptionId200Response
-from segment_public_api.models.list_reverse_etl_sync_statuses_from_model_and_subscription_id_output import ListReverseETLSyncStatusesFromModelAndSubscriptionIdOutput
-from segment_public_api.models.list_reverse_etl_models200_response import ListReverseEtlModels200Response
-from segment_public_api.models.list_reverse_etl_models_output import ListReverseEtlModelsOutput
-from segment_public_api.models.list_roles200_response import ListRoles200Response
-from segment_public_api.models.list_roles_v1_output import ListRolesV1Output
-from segment_public_api.models.list_rules_from_tracking_plan200_response import ListRulesFromTrackingPlan200Response
-from segment_public_api.models.list_rules_from_tracking_plan_v1_output import ListRulesFromTrackingPlanV1Output
-from segment_public_api.models.list_schema_settings_in_source200_response import ListSchemaSettingsInSource200Response
-from segment_public_api.models.list_schema_settings_in_source_v1_output import ListSchemaSettingsInSourceV1Output
-from segment_public_api.models.list_selective_syncs_from_warehouse_and_source200_response import ListSelectiveSyncsFromWarehouseAndSource200Response
-from segment_public_api.models.list_selective_syncs_from_warehouse_and_source_v1_output import ListSelectiveSyncsFromWarehouseAndSourceV1Output
-from segment_public_api.models.list_selective_syncs_from_warehouse_and_space200_response import ListSelectiveSyncsFromWarehouseAndSpace200Response
-from segment_public_api.models.list_selective_syncs_from_warehouse_and_space_alpha_output import ListSelectiveSyncsFromWarehouseAndSpaceAlphaOutput
-from segment_public_api.models.list_sources200_response import ListSources200Response
-from segment_public_api.models.list_sources200_response1 import ListSources200Response1
-from segment_public_api.models.list_sources_alpha_output import ListSourcesAlphaOutput
-from segment_public_api.models.list_sources_from_tracking_plan200_response import ListSourcesFromTrackingPlan200Response
-from segment_public_api.models.list_sources_from_tracking_plan_v1_output import ListSourcesFromTrackingPlanV1Output
-from segment_public_api.models.list_sources_v1_output import ListSourcesV1Output
-from segment_public_api.models.list_spaces200_response import ListSpaces200Response
-from segment_public_api.models.list_spaces_alpha_output import ListSpacesAlphaOutput
-from segment_public_api.models.list_subscriptions_from_destination200_response import ListSubscriptionsFromDestination200Response
-from segment_public_api.models.list_subscriptions_from_destination_alpha_output import ListSubscriptionsFromDestinationAlphaOutput
-from segment_public_api.models.list_supported_destinations_from_audience200_response import ListSupportedDestinationsFromAudience200Response
-from segment_public_api.models.list_supported_destinations_from_audience_alpha_output import ListSupportedDestinationsFromAudienceAlphaOutput
-from segment_public_api.models.list_suppressions200_response import ListSuppressions200Response
-from segment_public_api.models.list_suppressions_v1_output import ListSuppressionsV1Output
-from segment_public_api.models.list_syncs_from_warehouse200_response import ListSyncsFromWarehouse200Response
-from segment_public_api.models.list_syncs_from_warehouse_and_source200_response import ListSyncsFromWarehouseAndSource200Response
-from segment_public_api.models.list_syncs_from_warehouse_and_source_v1_output import ListSyncsFromWarehouseAndSourceV1Output
-from segment_public_api.models.list_syncs_from_warehouse_v1_output import ListSyncsFromWarehouseV1Output
-from segment_public_api.models.list_tracking_plans200_response import ListTrackingPlans200Response
-from segment_public_api.models.list_tracking_plans_v1_output import ListTrackingPlansV1Output
-from segment_public_api.models.list_transformations200_response import ListTransformations200Response
-from segment_public_api.models.list_transformations_beta_input import ListTransformationsBetaInput
-from segment_public_api.models.list_transformations_beta_output import ListTransformationsBetaOutput
-from segment_public_api.models.list_transformations_v1_output import ListTransformationsV1Output
-from segment_public_api.models.list_user_groups200_response import ListUserGroups200Response
-from segment_public_api.models.list_user_groups_from_user200_response import ListUserGroupsFromUser200Response
-from segment_public_api.models.list_user_groups_from_user_v1_output import ListUserGroupsFromUserV1Output
-from segment_public_api.models.list_user_groups_v1_output import ListUserGroupsV1Output
-from segment_public_api.models.list_users200_response import ListUsers200Response
-from segment_public_api.models.list_users_from_user_group200_response import ListUsersFromUserGroup200Response
-from segment_public_api.models.list_users_from_user_group_v1_output import ListUsersFromUserGroupV1Output
-from segment_public_api.models.list_users_v1_output import ListUsersV1Output
-from segment_public_api.models.list_warehouses200_response import ListWarehouses200Response
-from segment_public_api.models.list_warehouses_v1_output import ListWarehousesV1Output
-from segment_public_api.models.list_workspace_regulations200_response import ListWorkspaceRegulations200Response
-from segment_public_api.models.list_workspace_regulations_v1_output import ListWorkspaceRegulationsV1Output
-from segment_public_api.models.live_plugins_alpha import LivePluginsAlpha
-from segment_public_api.models.logos_beta import LogosBeta
-from segment_public_api.models.message_subscription_response import MessageSubscriptionResponse
-from segment_public_api.models.message_subscription_response_error import MessageSubscriptionResponseError
-from segment_public_api.models.messages_subscription_request import MessagesSubscriptionRequest
-from segment_public_api.models.metadata import Metadata
-from segment_public_api.models.metric_beta import MetricBeta
-from segment_public_api.models.minimal_user_group_v1 import MinimalUserGroupV1
-from segment_public_api.models.minimal_user_v1 import MinimalUserV1
-from segment_public_api.models.mtu_snapshot_v1 import MtuSnapshotV1
-from segment_public_api.models.pagination_input import PaginationInput
-from segment_public_api.models.pagination_output import PaginationOutput
-from segment_public_api.models.periodic_config import PeriodicConfig
-from segment_public_api.models.permission_input_v1 import PermissionInputV1
-from segment_public_api.models.permission_resource_v1 import PermissionResourceV1
-from segment_public_api.models.permission_v1 import PermissionV1
-from segment_public_api.models.personalization_input import PersonalizationInput
-from segment_public_api.models.personalization_input_entity import PersonalizationInputEntity
-from segment_public_api.models.preview_destination_filter200_response import PreviewDestinationFilter200Response
-from segment_public_api.models.preview_destination_filter_v1 import PreviewDestinationFilterV1
-from segment_public_api.models.preview_destination_filter_v1_input import PreviewDestinationFilterV1Input
-from segment_public_api.models.preview_destination_filter_v1_output import PreviewDestinationFilterV1Output
-from segment_public_api.models.profile import Profile
-from segment_public_api.models.profiles_warehouse_alpha import ProfilesWarehouseAlpha
-from segment_public_api.models.property_rename_beta import PropertyRenameBeta
-from segment_public_api.models.property_rename_v1 import PropertyRenameV1
-from segment_public_api.models.property_value_transformation_beta import PropertyValueTransformationBeta
-from segment_public_api.models.property_value_transformation_v1 import PropertyValueTransformationV1
-from segment_public_api.models.read_audience_preview_options import ReadAudiencePreviewOptions
-from segment_public_api.models.regulation import Regulation
-from segment_public_api.models.regulation_list_entry_v1 import RegulationListEntryV1
-from segment_public_api.models.remove_activation_from_audience200_response import RemoveActivationFromAudience200Response
-from segment_public_api.models.remove_activation_from_audience_output import RemoveActivationFromAudienceOutput
-from segment_public_api.models.remove_audience_from_space200_response import RemoveAudienceFromSpace200Response
-from segment_public_api.models.remove_audience_from_space200_response1 import RemoveAudienceFromSpace200Response1
-from segment_public_api.models.remove_audience_from_space200_response2 import RemoveAudienceFromSpace200Response2
-from segment_public_api.models.remove_audience_from_space_alpha_output import RemoveAudienceFromSpaceAlphaOutput
-from segment_public_api.models.remove_audience_from_space_beta_output import RemoveAudienceFromSpaceBetaOutput
-from segment_public_api.models.remove_audience_from_space_output import RemoveAudienceFromSpaceOutput
-from segment_public_api.models.remove_audience_schedule_from_audience200_response import RemoveAudienceScheduleFromAudience200Response
-from segment_public_api.models.remove_audience_schedule_from_audience200_response1 import RemoveAudienceScheduleFromAudience200Response1
-from segment_public_api.models.remove_audience_schedule_from_audience_alpha_output import RemoveAudienceScheduleFromAudienceAlphaOutput
-from segment_public_api.models.remove_audience_schedule_from_audience_output import RemoveAudienceScheduleFromAudienceOutput
-from segment_public_api.models.remove_computed_trait_from_space200_response import RemoveComputedTraitFromSpace200Response
-from segment_public_api.models.remove_computed_trait_from_space_alpha_output import RemoveComputedTraitFromSpaceAlphaOutput
-from segment_public_api.models.remove_destination_from_audience200_response import RemoveDestinationFromAudience200Response
-from segment_public_api.models.remove_destination_from_audience_alpha_output import RemoveDestinationFromAudienceAlphaOutput
-from segment_public_api.models.remove_filter_from_destination200_response import RemoveFilterFromDestination200Response
-from segment_public_api.models.remove_filter_from_destination_v1_output import RemoveFilterFromDestinationV1Output
-from segment_public_api.models.remove_profiles_warehouse_from_space200_response import RemoveProfilesWarehouseFromSpace200Response
-from segment_public_api.models.remove_profiles_warehouse_from_space_alpha_output import RemoveProfilesWarehouseFromSpaceAlphaOutput
-from segment_public_api.models.remove_rule_v1 import RemoveRuleV1
-from segment_public_api.models.remove_rules_from_tracking_plan200_response import RemoveRulesFromTrackingPlan200Response
-from segment_public_api.models.remove_rules_from_tracking_plan_v1_output import RemoveRulesFromTrackingPlanV1Output
-from segment_public_api.models.remove_source_connection_from_warehouse200_response import RemoveSourceConnectionFromWarehouse200Response
-from segment_public_api.models.remove_source_connection_from_warehouse_v1_output import RemoveSourceConnectionFromWarehouseV1Output
-from segment_public_api.models.remove_source_from_tracking_plan200_response import RemoveSourceFromTrackingPlan200Response
-from segment_public_api.models.remove_source_from_tracking_plan_v1_output import RemoveSourceFromTrackingPlanV1Output
-from segment_public_api.models.remove_subscription_from_destination200_response import RemoveSubscriptionFromDestination200Response
-from segment_public_api.models.remove_subscription_from_destination_alpha_output import RemoveSubscriptionFromDestinationAlphaOutput
-from segment_public_api.models.remove_users_from_user_group200_response import RemoveUsersFromUserGroup200Response
-from segment_public_api.models.remove_users_from_user_group_v1_output import RemoveUsersFromUserGroupV1Output
-from segment_public_api.models.remove_write_key_from_source200_response import RemoveWriteKeyFromSource200Response
-from segment_public_api.models.remove_write_key_from_source_alpha_output import RemoveWriteKeyFromSourceAlphaOutput
-from segment_public_api.models.replace_advanced_sync_schedule_for_warehouse200_response import ReplaceAdvancedSyncScheduleForWarehouse200Response
-from segment_public_api.models.replace_advanced_sync_schedule_for_warehouse_v1_input import ReplaceAdvancedSyncScheduleForWarehouseV1Input
-from segment_public_api.models.replace_advanced_sync_schedule_for_warehouse_v1_output import ReplaceAdvancedSyncScheduleForWarehouseV1Output
-from segment_public_api.models.replace_labels_in_source200_response import ReplaceLabelsInSource200Response
-from segment_public_api.models.replace_labels_in_source200_response1 import ReplaceLabelsInSource200Response1
-from segment_public_api.models.replace_labels_in_source_alpha_input import ReplaceLabelsInSourceAlphaInput
-from segment_public_api.models.replace_labels_in_source_alpha_output import ReplaceLabelsInSourceAlphaOutput
-from segment_public_api.models.replace_labels_in_source_v1_input import ReplaceLabelsInSourceV1Input
-from segment_public_api.models.replace_labels_in_source_v1_output import ReplaceLabelsInSourceV1Output
-from segment_public_api.models.replace_messaging_subscriptions_in_spaces200_response import ReplaceMessagingSubscriptionsInSpaces200Response
-from segment_public_api.models.replace_messaging_subscriptions_in_spaces_alpha_input import ReplaceMessagingSubscriptionsInSpacesAlphaInput
-from segment_public_api.models.replace_messaging_subscriptions_in_spaces_alpha_output import ReplaceMessagingSubscriptionsInSpacesAlphaOutput
-from segment_public_api.models.replace_permissions_for_user200_response import ReplacePermissionsForUser200Response
-from segment_public_api.models.replace_permissions_for_user_group200_response import ReplacePermissionsForUserGroup200Response
-from segment_public_api.models.replace_permissions_for_user_group_v1_input import ReplacePermissionsForUserGroupV1Input
-from segment_public_api.models.replace_permissions_for_user_group_v1_output import ReplacePermissionsForUserGroupV1Output
-from segment_public_api.models.replace_permissions_for_user_v1_input import ReplacePermissionsForUserV1Input
-from segment_public_api.models.replace_permissions_for_user_v1_output import ReplacePermissionsForUserV1Output
-from segment_public_api.models.replace_rules_in_tracking_plan200_response import ReplaceRulesInTrackingPlan200Response
-from segment_public_api.models.replace_rules_in_tracking_plan_v1_input import ReplaceRulesInTrackingPlanV1Input
-from segment_public_api.models.replace_rules_in_tracking_plan_v1_output import ReplaceRulesInTrackingPlanV1Output
-from segment_public_api.models.replace_users_in_user_group200_response import ReplaceUsersInUserGroup200Response
-from segment_public_api.models.replace_users_in_user_group_v1_input import ReplaceUsersInUserGroupV1Input
-from segment_public_api.models.replace_users_in_user_group_v1_output import ReplaceUsersInUserGroupV1Output
-from segment_public_api.models.request_error import RequestError
-from segment_public_api.models.request_error_envelope import RequestErrorEnvelope
-from segment_public_api.models.resource_v1 import ResourceV1
-from segment_public_api.models.restore_function_version200_response import RestoreFunctionVersion200Response
-from segment_public_api.models.restore_function_version_alpha_input import RestoreFunctionVersionAlphaInput
-from segment_public_api.models.restore_function_version_alpha_output import RestoreFunctionVersionAlphaOutput
-from segment_public_api.models.reverse_etl_manual_sync_job_output import ReverseETLManualSyncJobOutput
-from segment_public_api.models.reverse_etl_sync_status import ReverseETLSyncStatus
-from segment_public_api.models.reverse_etl_cron_schedule_config import ReverseEtlCronScheduleConfig
-from segment_public_api.models.reverse_etl_dbt_cloud_schedule_config import ReverseEtlDbtCloudScheduleConfig
-from segment_public_api.models.reverse_etl_model import ReverseEtlModel
-from segment_public_api.models.reverse_etl_periodic_schedule_config import ReverseEtlPeriodicScheduleConfig
-from segment_public_api.models.reverse_etl_schedule_config import ReverseEtlScheduleConfig
-from segment_public_api.models.reverse_etl_schedule_definition import ReverseEtlScheduleDefinition
-from segment_public_api.models.reverse_etl_specific_time_schedule_config import ReverseEtlSpecificTimeScheduleConfig
-from segment_public_api.models.role_v1 import RoleV1
-from segment_public_api.models.rule_input_v1 import RuleInputV1
-from segment_public_api.models.rule_v1 import RuleV1
-from segment_public_api.models.simple_destination import SimpleDestination
-from segment_public_api.models.source_api_call_snapshot_v1 import SourceAPICallSnapshotV1
-from segment_public_api.models.source_alpha import SourceAlpha
-from segment_public_api.models.source_event_volume_datapoint_v1 import SourceEventVolumeDatapointV1
-from segment_public_api.models.source_event_volume_v1 import SourceEventVolumeV1
-from segment_public_api.models.source_metadata_v1 import SourceMetadataV1
-from segment_public_api.models.source_settings_output_v1 import SourceSettingsOutputV1
-from segment_public_api.models.source_v1 import SourceV1
-from segment_public_api.models.space import Space
-from segment_public_api.models.space_warehouse_schema_override import SpaceWarehouseSchemaOverride
-from segment_public_api.models.space_warehouse_selective_sync_item_alpha import SpaceWarehouseSelectiveSyncItemAlpha
-from segment_public_api.models.specific_days_config import SpecificDaysConfig
-from segment_public_api.models.stream_status_v1 import StreamStatusV1
-from segment_public_api.models.suppressed_inner import SuppressedInner
-from segment_public_api.models.sync_extract_phase import SyncExtractPhase
-from segment_public_api.models.sync_load_phase import SyncLoadPhase
-from segment_public_api.models.sync_notice_v1 import SyncNoticeV1
-from segment_public_api.models.sync_v1 import SyncV1
-from segment_public_api.models.track_source_settings_v1 import TrackSourceSettingsV1
-from segment_public_api.models.tracking_plan_v1 import TrackingPlanV1
-from segment_public_api.models.trait_definition import TraitDefinition
-from segment_public_api.models.trait_options import TraitOptions
-from segment_public_api.models.transformation_beta import TransformationBeta
-from segment_public_api.models.transformation_v1 import TransformationV1
-from segment_public_api.models.update_activation_for_audience200_response import UpdateActivationForAudience200Response
-from segment_public_api.models.update_activation_for_audience_alpha_input import UpdateActivationForAudienceAlphaInput
-from segment_public_api.models.update_activation_for_audience_output import UpdateActivationForAudienceOutput
-from segment_public_api.models.update_audience_for_space200_response import UpdateAudienceForSpace200Response
-from segment_public_api.models.update_audience_for_space200_response1 import UpdateAudienceForSpace200Response1
-from segment_public_api.models.update_audience_for_space200_response2 import UpdateAudienceForSpace200Response2
-from segment_public_api.models.update_audience_for_space_alpha_input import UpdateAudienceForSpaceAlphaInput
-from segment_public_api.models.update_audience_for_space_alpha_output import UpdateAudienceForSpaceAlphaOutput
-from segment_public_api.models.update_audience_for_space_beta_input import UpdateAudienceForSpaceBetaInput
-from segment_public_api.models.update_audience_for_space_beta_output import UpdateAudienceForSpaceBetaOutput
-from segment_public_api.models.update_audience_for_space_input import UpdateAudienceForSpaceInput
-from segment_public_api.models.update_audience_for_space_output import UpdateAudienceForSpaceOutput
-from segment_public_api.models.update_audience_schedule_for_audience200_response import UpdateAudienceScheduleForAudience200Response
-from segment_public_api.models.update_audience_schedule_for_audience200_response1 import UpdateAudienceScheduleForAudience200Response1
-from segment_public_api.models.update_audience_schedule_for_audience_alpha_input import UpdateAudienceScheduleForAudienceAlphaInput
-from segment_public_api.models.update_audience_schedule_for_audience_alpha_output import UpdateAudienceScheduleForAudienceAlphaOutput
-from segment_public_api.models.update_audience_schedule_for_audience_input import UpdateAudienceScheduleForAudienceInput
-from segment_public_api.models.update_audience_schedule_for_audience_output import UpdateAudienceScheduleForAudienceOutput
-from segment_public_api.models.update_computed_trait_for_space200_response import UpdateComputedTraitForSpace200Response
-from segment_public_api.models.update_computed_trait_for_space_alpha_input import UpdateComputedTraitForSpaceAlphaInput
-from segment_public_api.models.update_computed_trait_for_space_alpha_output import UpdateComputedTraitForSpaceAlphaOutput
-from segment_public_api.models.update_destination200_response import UpdateDestination200Response
-from segment_public_api.models.update_destination_for_audience200_response import UpdateDestinationForAudience200Response
-from segment_public_api.models.update_destination_for_audience_alpha_input import UpdateDestinationForAudienceAlphaInput
-from segment_public_api.models.update_destination_for_audience_alpha_output import UpdateDestinationForAudienceAlphaOutput
-from segment_public_api.models.update_destination_v1_input import UpdateDestinationV1Input
-from segment_public_api.models.update_destination_v1_output import UpdateDestinationV1Output
-from segment_public_api.models.update_filter_by_id200_response import UpdateFilterById200Response
-from segment_public_api.models.update_filter_by_id_input import UpdateFilterByIdInput
-from segment_public_api.models.update_filter_by_id_output import UpdateFilterByIdOutput
-from segment_public_api.models.update_filter_for_destination200_response import UpdateFilterForDestination200Response
-from segment_public_api.models.update_filter_for_destination_v1_input import UpdateFilterForDestinationV1Input
-from segment_public_api.models.update_filter_for_destination_v1_output import UpdateFilterForDestinationV1Output
-from segment_public_api.models.update_function200_response import UpdateFunction200Response
-from segment_public_api.models.update_function_v1_input import UpdateFunctionV1Input
-from segment_public_api.models.update_function_v1_output import UpdateFunctionV1Output
-from segment_public_api.models.update_group_subscription_status_response import UpdateGroupSubscriptionStatusResponse
-from segment_public_api.models.update_insert_function_instance200_response import UpdateInsertFunctionInstance200Response
-from segment_public_api.models.update_insert_function_instance_alpha_input import UpdateInsertFunctionInstanceAlphaInput
-from segment_public_api.models.update_insert_function_instance_alpha_output import UpdateInsertFunctionInstanceAlphaOutput
-from segment_public_api.models.update_profiles_warehouse_for_space_warehouse200_response import UpdateProfilesWarehouseForSpaceWarehouse200Response
-from segment_public_api.models.update_profiles_warehouse_for_space_warehouse_alpha_input import UpdateProfilesWarehouseForSpaceWarehouseAlphaInput
-from segment_public_api.models.update_profiles_warehouse_for_space_warehouse_alpha_output import UpdateProfilesWarehouseForSpaceWarehouseAlphaOutput
-from segment_public_api.models.update_reverse_etl_model200_response import UpdateReverseEtlModel200Response
-from segment_public_api.models.update_reverse_etl_model_input import UpdateReverseEtlModelInput
-from segment_public_api.models.update_reverse_etl_model_output import UpdateReverseEtlModelOutput
-from segment_public_api.models.update_rules_in_tracking_plan200_response import UpdateRulesInTrackingPlan200Response
-from segment_public_api.models.update_rules_in_tracking_plan_v1_input import UpdateRulesInTrackingPlanV1Input
-from segment_public_api.models.update_rules_in_tracking_plan_v1_output import UpdateRulesInTrackingPlanV1Output
-from segment_public_api.models.update_schema_settings_in_source200_response import UpdateSchemaSettingsInSource200Response
-from segment_public_api.models.update_schema_settings_in_source_v1_input import UpdateSchemaSettingsInSourceV1Input
-from segment_public_api.models.update_schema_settings_in_source_v1_output import UpdateSchemaSettingsInSourceV1Output
-from segment_public_api.models.update_selective_sync_for_warehouse200_response import UpdateSelectiveSyncForWarehouse200Response
-from segment_public_api.models.update_selective_sync_for_warehouse_and_space200_response import UpdateSelectiveSyncForWarehouseAndSpace200Response
-from segment_public_api.models.update_selective_sync_for_warehouse_and_space_alpha_input import UpdateSelectiveSyncForWarehouseAndSpaceAlphaInput
-from segment_public_api.models.update_selective_sync_for_warehouse_and_space_alpha_output import UpdateSelectiveSyncForWarehouseAndSpaceAlphaOutput
-from segment_public_api.models.update_selective_sync_for_warehouse_v1_input import UpdateSelectiveSyncForWarehouseV1Input
-from segment_public_api.models.update_selective_sync_for_warehouse_v1_output import UpdateSelectiveSyncForWarehouseV1Output
-from segment_public_api.models.update_source200_response import UpdateSource200Response
-from segment_public_api.models.update_source200_response1 import UpdateSource200Response1
-from segment_public_api.models.update_source_alpha_input import UpdateSourceAlphaInput
-from segment_public_api.models.update_source_alpha_output import UpdateSourceAlphaOutput
-from segment_public_api.models.update_source_v1_input import UpdateSourceV1Input
-from segment_public_api.models.update_source_v1_output import UpdateSourceV1Output
-from segment_public_api.models.update_subscription_for_destination200_response import UpdateSubscriptionForDestination200Response
-from segment_public_api.models.update_subscription_for_destination_alpha_input import UpdateSubscriptionForDestinationAlphaInput
-from segment_public_api.models.update_subscription_for_destination_alpha_output import UpdateSubscriptionForDestinationAlphaOutput
-from segment_public_api.models.update_tracking_plan200_response import UpdateTrackingPlan200Response
-from segment_public_api.models.update_tracking_plan_v1_input import UpdateTrackingPlanV1Input
-from segment_public_api.models.update_tracking_plan_v1_output import UpdateTrackingPlanV1Output
-from segment_public_api.models.update_transformation200_response import UpdateTransformation200Response
-from segment_public_api.models.update_transformation_beta_input import UpdateTransformationBetaInput
-from segment_public_api.models.update_transformation_beta_output import UpdateTransformationBetaOutput
-from segment_public_api.models.update_transformation_v1_input import UpdateTransformationV1Input
-from segment_public_api.models.update_transformation_v1_output import UpdateTransformationV1Output
-from segment_public_api.models.update_user_group200_response import UpdateUserGroup200Response
-from segment_public_api.models.update_user_group_v1_input import UpdateUserGroupV1Input
-from segment_public_api.models.update_user_group_v1_output import UpdateUserGroupV1Output
-from segment_public_api.models.update_warehouse200_response import UpdateWarehouse200Response
-from segment_public_api.models.update_warehouse_v1_input import UpdateWarehouseV1Input
-from segment_public_api.models.update_warehouse_v1_output import UpdateWarehouseV1Output
-from segment_public_api.models.upsert_rule_v1 import UpsertRuleV1
-from segment_public_api.models.user_group_v1 import UserGroupV1
-from segment_public_api.models.user_v1 import UserV1
-from segment_public_api.models.users_per_source_snapshot_v1 import UsersPerSourceSnapshotV1
-from segment_public_api.models.version import Version
-from segment_public_api.models.warehouse_advanced_sync_v1 import WarehouseAdvancedSyncV1
-from segment_public_api.models.warehouse_metadata_v1 import WarehouseMetadataV1
-from segment_public_api.models.warehouse_selective_sync_item_v1 import WarehouseSelectiveSyncItemV1
-from segment_public_api.models.warehouse_sync_override_v1 import WarehouseSyncOverrideV1
-from segment_public_api.models.warehouse_v1 import WarehouseV1
-from segment_public_api.models.workspace_v1 import WorkspaceV1
+from segment_public_api.models.api_call_snapshot_v1 import APICallSnapshotV1 as APICallSnapshotV1
+from segment_public_api.models.access_permission_v1 import AccessPermissionV1 as AccessPermissionV1
+from segment_public_api.models.activation_output import ActivationOutput as ActivationOutput
+from segment_public_api.models.add_activation_to_audience200_response import AddActivationToAudience200Response as AddActivationToAudience200Response
+from segment_public_api.models.add_activation_to_audience_alpha_input import AddActivationToAudienceAlphaInput as AddActivationToAudienceAlphaInput
+from segment_public_api.models.add_activation_to_audience_alpha_output import AddActivationToAudienceAlphaOutput as AddActivationToAudienceAlphaOutput
+from segment_public_api.models.add_audience_schedule_to_audience200_response import AddAudienceScheduleToAudience200Response as AddAudienceScheduleToAudience200Response
+from segment_public_api.models.add_audience_schedule_to_audience200_response1 import AddAudienceScheduleToAudience200Response1 as AddAudienceScheduleToAudience200Response1
+from segment_public_api.models.add_audience_schedule_to_audience_alpha_input import AddAudienceScheduleToAudienceAlphaInput as AddAudienceScheduleToAudienceAlphaInput
+from segment_public_api.models.add_audience_schedule_to_audience_alpha_output import AddAudienceScheduleToAudienceAlphaOutput as AddAudienceScheduleToAudienceAlphaOutput
+from segment_public_api.models.add_audience_schedule_to_audience_input import AddAudienceScheduleToAudienceInput as AddAudienceScheduleToAudienceInput
+from segment_public_api.models.add_audience_schedule_to_audience_output import AddAudienceScheduleToAudienceOutput as AddAudienceScheduleToAudienceOutput
+from segment_public_api.models.add_connection_from_source_to_warehouse201_response import AddConnectionFromSourceToWarehouse201Response as AddConnectionFromSourceToWarehouse201Response
+from segment_public_api.models.add_connection_from_source_to_warehouse_v1_output import AddConnectionFromSourceToWarehouseV1Output as AddConnectionFromSourceToWarehouseV1Output
+from segment_public_api.models.add_destination_to_audience200_response import AddDestinationToAudience200Response as AddDestinationToAudience200Response
+from segment_public_api.models.add_destination_to_audience_alpha_input import AddDestinationToAudienceAlphaInput as AddDestinationToAudienceAlphaInput
+from segment_public_api.models.add_destination_to_audience_alpha_output import AddDestinationToAudienceAlphaOutput as AddDestinationToAudienceAlphaOutput
+from segment_public_api.models.add_labels_to_source200_response import AddLabelsToSource200Response as AddLabelsToSource200Response
+from segment_public_api.models.add_labels_to_source200_response1 import AddLabelsToSource200Response1 as AddLabelsToSource200Response1
+from segment_public_api.models.add_labels_to_source_alpha_input import AddLabelsToSourceAlphaInput as AddLabelsToSourceAlphaInput
+from segment_public_api.models.add_labels_to_source_alpha_output import AddLabelsToSourceAlphaOutput as AddLabelsToSourceAlphaOutput
+from segment_public_api.models.add_labels_to_source_v1_input import AddLabelsToSourceV1Input as AddLabelsToSourceV1Input
+from segment_public_api.models.add_labels_to_source_v1_output import AddLabelsToSourceV1Output as AddLabelsToSourceV1Output
+from segment_public_api.models.add_permissions_to_user200_response import AddPermissionsToUser200Response as AddPermissionsToUser200Response
+from segment_public_api.models.add_permissions_to_user_group200_response import AddPermissionsToUserGroup200Response as AddPermissionsToUserGroup200Response
+from segment_public_api.models.add_permissions_to_user_group_v1_input import AddPermissionsToUserGroupV1Input as AddPermissionsToUserGroupV1Input
+from segment_public_api.models.add_permissions_to_user_group_v1_output import AddPermissionsToUserGroupV1Output as AddPermissionsToUserGroupV1Output
+from segment_public_api.models.add_permissions_to_user_v1_input import AddPermissionsToUserV1Input as AddPermissionsToUserV1Input
+from segment_public_api.models.add_permissions_to_user_v1_output import AddPermissionsToUserV1Output as AddPermissionsToUserV1Output
+from segment_public_api.models.add_source_to_tracking_plan200_response import AddSourceToTrackingPlan200Response as AddSourceToTrackingPlan200Response
+from segment_public_api.models.add_source_to_tracking_plan_v1_input import AddSourceToTrackingPlanV1Input as AddSourceToTrackingPlanV1Input
+from segment_public_api.models.add_source_to_tracking_plan_v1_output import AddSourceToTrackingPlanV1Output as AddSourceToTrackingPlanV1Output
+from segment_public_api.models.add_users_to_user_group200_response import AddUsersToUserGroup200Response as AddUsersToUserGroup200Response
+from segment_public_api.models.add_users_to_user_group_v1_input import AddUsersToUserGroupV1Input as AddUsersToUserGroupV1Input
+from segment_public_api.models.add_users_to_user_group_v1_output import AddUsersToUserGroupV1Output as AddUsersToUserGroupV1Output
+from segment_public_api.models.advanced_warehouse_sync_schedule_v1_input import AdvancedWarehouseSyncScheduleV1Input as AdvancedWarehouseSyncScheduleV1Input
+from segment_public_api.models.advanced_warehouse_sync_schedule_v1_output import AdvancedWarehouseSyncScheduleV1Output as AdvancedWarehouseSyncScheduleV1Output
+from segment_public_api.models.allowed_label_beta import AllowedLabelBeta as AllowedLabelBeta
+from segment_public_api.models.audience_compute_cadence import AudienceComputeCadence as AudienceComputeCadence
+from segment_public_api.models.audience_definition import AudienceDefinition as AudienceDefinition
+from segment_public_api.models.audience_definition_without_target_entity import AudienceDefinitionWithoutTargetEntity as AudienceDefinitionWithoutTargetEntity
+from segment_public_api.models.audience_options import AudienceOptions as AudienceOptions
+from segment_public_api.models.audience_options_with_lookback import AudienceOptionsWithLookback as AudienceOptionsWithLookback
+from segment_public_api.models.audience_preview import AudiencePreview as AudiencePreview
+from segment_public_api.models.audience_preview_account_result import AudiencePreviewAccountResult as AudiencePreviewAccountResult
+from segment_public_api.models.audience_preview_entities_result import AudiencePreviewEntitiesResult as AudiencePreviewEntitiesResult
+from segment_public_api.models.audience_preview_identifier import AudiencePreviewIdentifier as AudiencePreviewIdentifier
+from segment_public_api.models.audience_preview_profile_result import AudiencePreviewProfileResult as AudiencePreviewProfileResult
+from segment_public_api.models.audience_preview_result import AudiencePreviewResult as AudiencePreviewResult
+from segment_public_api.models.audience_run_info import AudienceRunInfo as AudienceRunInfo
+from segment_public_api.models.audience_schedule import AudienceSchedule as AudienceSchedule
+from segment_public_api.models.audience_size import AudienceSize as AudienceSize
+from segment_public_api.models.audience_summary import AudienceSummary as AudienceSummary
+from segment_public_api.models.audience_summary_with_audience_type_and_lookback import AudienceSummaryWithAudienceTypeAndLookback as AudienceSummaryWithAudienceTypeAndLookback
+from segment_public_api.models.audit_event_v1 import AuditEventV1 as AuditEventV1
+from segment_public_api.models.batch_query_messaging_subscriptions_for_space200_response import BatchQueryMessagingSubscriptionsForSpace200Response as BatchQueryMessagingSubscriptionsForSpace200Response
+from segment_public_api.models.batch_query_messaging_subscriptions_for_space_alpha_input import BatchQueryMessagingSubscriptionsForSpaceAlphaInput as BatchQueryMessagingSubscriptionsForSpaceAlphaInput
+from segment_public_api.models.batch_query_messaging_subscriptions_for_space_alpha_output import BatchQueryMessagingSubscriptionsForSpaceAlphaOutput as BatchQueryMessagingSubscriptionsForSpaceAlphaOutput
+from segment_public_api.models.breakdown_beta import BreakdownBeta as BreakdownBeta
+from segment_public_api.models.cancel_reverse_etl_sync_for_model200_response import CancelReverseETLSyncForModel200Response as CancelReverseETLSyncForModel200Response
+from segment_public_api.models.cancel_reverse_etl_sync_for_model_input import CancelReverseETLSyncForModelInput as CancelReverseETLSyncForModelInput
+from segment_public_api.models.cancel_reverse_etl_sync_for_model_output import CancelReverseETLSyncForModelOutput as CancelReverseETLSyncForModelOutput
+from segment_public_api.models.common_source_settings_v1 import CommonSourceSettingsV1 as CommonSourceSettingsV1
+from segment_public_api.models.computed_trait_summary import ComputedTraitSummary as ComputedTraitSummary
+from segment_public_api.models.computed_traits_definition import ComputedTraitsDefinition as ComputedTraitsDefinition
+from segment_public_api.models.config import Config as Config
+from segment_public_api.models.config1 import Config1 as Config1
+from segment_public_api.models.connection import Connection as Connection
+from segment_public_api.models.contact import Contact as Contact
+from segment_public_api.models.create_audience200_response import CreateAudience200Response as CreateAudience200Response
+from segment_public_api.models.create_audience200_response1 import CreateAudience200Response1 as CreateAudience200Response1
+from segment_public_api.models.create_audience200_response2 import CreateAudience200Response2 as CreateAudience200Response2
+from segment_public_api.models.create_audience_alpha_input import CreateAudienceAlphaInput as CreateAudienceAlphaInput
+from segment_public_api.models.create_audience_alpha_output import CreateAudienceAlphaOutput as CreateAudienceAlphaOutput
+from segment_public_api.models.create_audience_beta_input import CreateAudienceBetaInput as CreateAudienceBetaInput
+from segment_public_api.models.create_audience_beta_output import CreateAudienceBetaOutput as CreateAudienceBetaOutput
+from segment_public_api.models.create_audience_input import CreateAudienceInput as CreateAudienceInput
+from segment_public_api.models.create_audience_output import CreateAudienceOutput as CreateAudienceOutput
+from segment_public_api.models.create_audience_preview200_response import CreateAudiencePreview200Response as CreateAudiencePreview200Response
+from segment_public_api.models.create_audience_preview200_response1 import CreateAudiencePreview200Response1 as CreateAudiencePreview200Response1
+from segment_public_api.models.create_audience_preview200_response2 import CreateAudiencePreview200Response2 as CreateAudiencePreview200Response2
+from segment_public_api.models.create_audience_preview_alpha_input import CreateAudiencePreviewAlphaInput as CreateAudiencePreviewAlphaInput
+from segment_public_api.models.create_audience_preview_alpha_output import CreateAudiencePreviewAlphaOutput as CreateAudiencePreviewAlphaOutput
+from segment_public_api.models.create_audience_preview_beta_input import CreateAudiencePreviewBetaInput as CreateAudiencePreviewBetaInput
+from segment_public_api.models.create_audience_preview_beta_output import CreateAudiencePreviewBetaOutput as CreateAudiencePreviewBetaOutput
+from segment_public_api.models.create_audience_preview_input import CreateAudiencePreviewInput as CreateAudiencePreviewInput
+from segment_public_api.models.create_audience_preview_options import CreateAudiencePreviewOptions as CreateAudiencePreviewOptions
+from segment_public_api.models.create_audience_preview_output import CreateAudiencePreviewOutput as CreateAudiencePreviewOutput
+from segment_public_api.models.create_cloud_source_regulation200_response import CreateCloudSourceRegulation200Response as CreateCloudSourceRegulation200Response
+from segment_public_api.models.create_cloud_source_regulation_v1_input import CreateCloudSourceRegulationV1Input as CreateCloudSourceRegulationV1Input
+from segment_public_api.models.create_cloud_source_regulation_v1_output import CreateCloudSourceRegulationV1Output as CreateCloudSourceRegulationV1Output
+from segment_public_api.models.create_computed_trait200_response import CreateComputedTrait200Response as CreateComputedTrait200Response
+from segment_public_api.models.create_computed_trait_alpha_input import CreateComputedTraitAlphaInput as CreateComputedTraitAlphaInput
+from segment_public_api.models.create_computed_trait_alpha_output import CreateComputedTraitAlphaOutput as CreateComputedTraitAlphaOutput
+from segment_public_api.models.create_dbt_model_sync_trigger200_response import CreateDbtModelSyncTrigger200Response as CreateDbtModelSyncTrigger200Response
+from segment_public_api.models.create_dbt_model_sync_trigger_input import CreateDbtModelSyncTriggerInput as CreateDbtModelSyncTriggerInput
+from segment_public_api.models.create_dbt_model_sync_trigger_output import CreateDbtModelSyncTriggerOutput as CreateDbtModelSyncTriggerOutput
+from segment_public_api.models.create_destination200_response import CreateDestination200Response as CreateDestination200Response
+from segment_public_api.models.create_destination_subscription200_response import CreateDestinationSubscription200Response as CreateDestinationSubscription200Response
+from segment_public_api.models.create_destination_subscription_alpha_input import CreateDestinationSubscriptionAlphaInput as CreateDestinationSubscriptionAlphaInput
+from segment_public_api.models.create_destination_subscription_alpha_output import CreateDestinationSubscriptionAlphaOutput as CreateDestinationSubscriptionAlphaOutput
+from segment_public_api.models.create_destination_v1_input import CreateDestinationV1Input as CreateDestinationV1Input
+from segment_public_api.models.create_destination_v1_output import CreateDestinationV1Output as CreateDestinationV1Output
+from segment_public_api.models.create_download200_response import CreateDownload200Response as CreateDownload200Response
+from segment_public_api.models.create_download_alpha_input import CreateDownloadAlphaInput as CreateDownloadAlphaInput
+from segment_public_api.models.create_download_alpha_output import CreateDownloadAlphaOutput as CreateDownloadAlphaOutput
+from segment_public_api.models.create_filter_for_destination200_response import CreateFilterForDestination200Response as CreateFilterForDestination200Response
+from segment_public_api.models.create_filter_for_destination_v1_input import CreateFilterForDestinationV1Input as CreateFilterForDestinationV1Input
+from segment_public_api.models.create_filter_for_destination_v1_output import CreateFilterForDestinationV1Output as CreateFilterForDestinationV1Output
+from segment_public_api.models.create_filter_for_space200_response import CreateFilterForSpace200Response as CreateFilterForSpace200Response
+from segment_public_api.models.create_filter_for_space_input import CreateFilterForSpaceInput as CreateFilterForSpaceInput
+from segment_public_api.models.create_filter_for_space_output import CreateFilterForSpaceOutput as CreateFilterForSpaceOutput
+from segment_public_api.models.create_function200_response import CreateFunction200Response as CreateFunction200Response
+from segment_public_api.models.create_function_deployment200_response import CreateFunctionDeployment200Response as CreateFunctionDeployment200Response
+from segment_public_api.models.create_function_deployment_v1_output import CreateFunctionDeploymentV1Output as CreateFunctionDeploymentV1Output
+from segment_public_api.models.create_function_v1_input import CreateFunctionV1Input as CreateFunctionV1Input
+from segment_public_api.models.create_function_v1_output import CreateFunctionV1Output as CreateFunctionV1Output
+from segment_public_api.models.create_insert_function_instance200_response import CreateInsertFunctionInstance200Response as CreateInsertFunctionInstance200Response
+from segment_public_api.models.create_insert_function_instance_alpha_input import CreateInsertFunctionInstanceAlphaInput as CreateInsertFunctionInstanceAlphaInput
+from segment_public_api.models.create_insert_function_instance_alpha_output import CreateInsertFunctionInstanceAlphaOutput as CreateInsertFunctionInstanceAlphaOutput
+from segment_public_api.models.create_invites201_response import CreateInvites201Response as CreateInvites201Response
+from segment_public_api.models.create_invites_v1_input import CreateInvitesV1Input as CreateInvitesV1Input
+from segment_public_api.models.create_invites_v1_output import CreateInvitesV1Output as CreateInvitesV1Output
+from segment_public_api.models.create_label201_response import CreateLabel201Response as CreateLabel201Response
+from segment_public_api.models.create_label_v1_input import CreateLabelV1Input as CreateLabelV1Input
+from segment_public_api.models.create_label_v1_output import CreateLabelV1Output as CreateLabelV1Output
+from segment_public_api.models.create_live_plugin200_response import CreateLivePlugin200Response as CreateLivePlugin200Response
+from segment_public_api.models.create_live_plugin_alpha_input import CreateLivePluginAlphaInput as CreateLivePluginAlphaInput
+from segment_public_api.models.create_live_plugin_alpha_output import CreateLivePluginAlphaOutput as CreateLivePluginAlphaOutput
+from segment_public_api.models.create_profiles_warehouse201_response import CreateProfilesWarehouse201Response as CreateProfilesWarehouse201Response
+from segment_public_api.models.create_profiles_warehouse_alpha_input import CreateProfilesWarehouseAlphaInput as CreateProfilesWarehouseAlphaInput
+from segment_public_api.models.create_profiles_warehouse_alpha_output import CreateProfilesWarehouseAlphaOutput as CreateProfilesWarehouseAlphaOutput
+from segment_public_api.models.create_reverse_etl_manual_sync200_response import CreateReverseETLManualSync200Response as CreateReverseETLManualSync200Response
+from segment_public_api.models.create_reverse_etl_manual_sync_input import CreateReverseETLManualSyncInput as CreateReverseETLManualSyncInput
+from segment_public_api.models.create_reverse_etl_manual_sync_output import CreateReverseETLManualSyncOutput as CreateReverseETLManualSyncOutput
+from segment_public_api.models.create_reverse_etl_model201_response import CreateReverseEtlModel201Response as CreateReverseEtlModel201Response
+from segment_public_api.models.create_reverse_etl_model_input import CreateReverseEtlModelInput as CreateReverseEtlModelInput
+from segment_public_api.models.create_reverse_etl_model_output import CreateReverseEtlModelOutput as CreateReverseEtlModelOutput
+from segment_public_api.models.create_source201_response import CreateSource201Response as CreateSource201Response
+from segment_public_api.models.create_source201_response1 import CreateSource201Response1 as CreateSource201Response1
+from segment_public_api.models.create_source_alpha_input import CreateSourceAlphaInput as CreateSourceAlphaInput
+from segment_public_api.models.create_source_alpha_output import CreateSourceAlphaOutput as CreateSourceAlphaOutput
+from segment_public_api.models.create_source_regulation200_response import CreateSourceRegulation200Response as CreateSourceRegulation200Response
+from segment_public_api.models.create_source_regulation_v1_input import CreateSourceRegulationV1Input as CreateSourceRegulationV1Input
+from segment_public_api.models.create_source_regulation_v1_output import CreateSourceRegulationV1Output as CreateSourceRegulationV1Output
+from segment_public_api.models.create_source_v1_input import CreateSourceV1Input as CreateSourceV1Input
+from segment_public_api.models.create_source_v1_output import CreateSourceV1Output as CreateSourceV1Output
+from segment_public_api.models.create_tracking_plan200_response import CreateTrackingPlan200Response as CreateTrackingPlan200Response
+from segment_public_api.models.create_tracking_plan_v1_input import CreateTrackingPlanV1Input as CreateTrackingPlanV1Input
+from segment_public_api.models.create_tracking_plan_v1_output import CreateTrackingPlanV1Output as CreateTrackingPlanV1Output
+from segment_public_api.models.create_transformation200_response import CreateTransformation200Response as CreateTransformation200Response
+from segment_public_api.models.create_transformation_beta_input import CreateTransformationBetaInput as CreateTransformationBetaInput
+from segment_public_api.models.create_transformation_beta_output import CreateTransformationBetaOutput as CreateTransformationBetaOutput
+from segment_public_api.models.create_transformation_v1_input import CreateTransformationV1Input as CreateTransformationV1Input
+from segment_public_api.models.create_transformation_v1_output import CreateTransformationV1Output as CreateTransformationV1Output
+from segment_public_api.models.create_user_group200_response import CreateUserGroup200Response as CreateUserGroup200Response
+from segment_public_api.models.create_user_group_v1_input import CreateUserGroupV1Input as CreateUserGroupV1Input
+from segment_public_api.models.create_user_group_v1_output import CreateUserGroupV1Output as CreateUserGroupV1Output
+from segment_public_api.models.create_validation_in_warehouse200_response import CreateValidationInWarehouse200Response as CreateValidationInWarehouse200Response
+from segment_public_api.models.create_validation_in_warehouse_v1_input import CreateValidationInWarehouseV1Input as CreateValidationInWarehouseV1Input
+from segment_public_api.models.create_validation_in_warehouse_v1_output import CreateValidationInWarehouseV1Output as CreateValidationInWarehouseV1Output
+from segment_public_api.models.create_warehouse201_response import CreateWarehouse201Response as CreateWarehouse201Response
+from segment_public_api.models.create_warehouse_v1_input import CreateWarehouseV1Input as CreateWarehouseV1Input
+from segment_public_api.models.create_warehouse_v1_output import CreateWarehouseV1Output as CreateWarehouseV1Output
+from segment_public_api.models.create_workspace_regulation200_response import CreateWorkspaceRegulation200Response as CreateWorkspaceRegulation200Response
+from segment_public_api.models.create_workspace_regulation_v1_input import CreateWorkspaceRegulationV1Input as CreateWorkspaceRegulationV1Input
+from segment_public_api.models.create_workspace_regulation_v1_output import CreateWorkspaceRegulationV1Output as CreateWorkspaceRegulationV1Output
+from segment_public_api.models.create_write_key_for_source200_response import CreateWriteKeyForSource200Response as CreateWriteKeyForSource200Response
+from segment_public_api.models.create_write_key_for_source_alpha_output import CreateWriteKeyForSourceAlphaOutput as CreateWriteKeyForSourceAlphaOutput
+from segment_public_api.models.dbt_model_sync_trigger import DbtModelSyncTrigger as DbtModelSyncTrigger
+from segment_public_api.models.delete_activation_alpha_output import DeleteActivationAlphaOutput as DeleteActivationAlphaOutput
+from segment_public_api.models.delete_destination200_response import DeleteDestination200Response as DeleteDestination200Response
+from segment_public_api.models.delete_destination_v1_output import DeleteDestinationV1Output as DeleteDestinationV1Output
+from segment_public_api.models.delete_filter_by_id200_response import DeleteFilterById200Response as DeleteFilterById200Response
+from segment_public_api.models.delete_filter_by_id_output import DeleteFilterByIdOutput as DeleteFilterByIdOutput
+from segment_public_api.models.delete_function200_response import DeleteFunction200Response as DeleteFunction200Response
+from segment_public_api.models.delete_function_v1_output import DeleteFunctionV1Output as DeleteFunctionV1Output
+from segment_public_api.models.delete_insert_function_instance200_response import DeleteInsertFunctionInstance200Response as DeleteInsertFunctionInstance200Response
+from segment_public_api.models.delete_insert_function_instance_alpha_output import DeleteInsertFunctionInstanceAlphaOutput as DeleteInsertFunctionInstanceAlphaOutput
+from segment_public_api.models.delete_invites200_response import DeleteInvites200Response as DeleteInvites200Response
+from segment_public_api.models.delete_invites_v1_output import DeleteInvitesV1Output as DeleteInvitesV1Output
+from segment_public_api.models.delete_label200_response import DeleteLabel200Response as DeleteLabel200Response
+from segment_public_api.models.delete_label200_response1 import DeleteLabel200Response1 as DeleteLabel200Response1
+from segment_public_api.models.delete_label_alpha_output import DeleteLabelAlphaOutput as DeleteLabelAlphaOutput
+from segment_public_api.models.delete_label_v1_output import DeleteLabelV1Output as DeleteLabelV1Output
+from segment_public_api.models.delete_live_plugin_code200_response import DeleteLivePluginCode200Response as DeleteLivePluginCode200Response
+from segment_public_api.models.delete_live_plugin_code_alpha_output import DeleteLivePluginCodeAlphaOutput as DeleteLivePluginCodeAlphaOutput
+from segment_public_api.models.delete_reverse_etl_model200_response import DeleteReverseEtlModel200Response as DeleteReverseEtlModel200Response
+from segment_public_api.models.delete_reverse_etl_model_output import DeleteReverseEtlModelOutput as DeleteReverseEtlModelOutput
+from segment_public_api.models.delete_source200_response import DeleteSource200Response as DeleteSource200Response
+from segment_public_api.models.delete_source200_response1 import DeleteSource200Response1 as DeleteSource200Response1
+from segment_public_api.models.delete_source_alpha_output import DeleteSourceAlphaOutput as DeleteSourceAlphaOutput
+from segment_public_api.models.delete_source_v1_output import DeleteSourceV1Output as DeleteSourceV1Output
+from segment_public_api.models.delete_tracking_plan200_response import DeleteTrackingPlan200Response as DeleteTrackingPlan200Response
+from segment_public_api.models.delete_tracking_plan_v1_output import DeleteTrackingPlanV1Output as DeleteTrackingPlanV1Output
+from segment_public_api.models.delete_transformation200_response import DeleteTransformation200Response as DeleteTransformation200Response
+from segment_public_api.models.delete_transformation_beta_input import DeleteTransformationBetaInput as DeleteTransformationBetaInput
+from segment_public_api.models.delete_transformation_beta_output import DeleteTransformationBetaOutput as DeleteTransformationBetaOutput
+from segment_public_api.models.delete_transformation_v1_output import DeleteTransformationV1Output as DeleteTransformationV1Output
+from segment_public_api.models.delete_user_group200_response import DeleteUserGroup200Response as DeleteUserGroup200Response
+from segment_public_api.models.delete_user_group_v1_output import DeleteUserGroupV1Output as DeleteUserGroupV1Output
+from segment_public_api.models.delete_users200_response import DeleteUsers200Response as DeleteUsers200Response
+from segment_public_api.models.delete_users_v1_output import DeleteUsersV1Output as DeleteUsersV1Output
+from segment_public_api.models.delete_warehouse200_response import DeleteWarehouse200Response as DeleteWarehouse200Response
+from segment_public_api.models.delete_warehouse_v1_output import DeleteWarehouseV1Output as DeleteWarehouseV1Output
+from segment_public_api.models.delivery_metrics_summary_beta import DeliveryMetricsSummaryBeta as DeliveryMetricsSummaryBeta
+from segment_public_api.models.delivery_overview_destination_filter_by import DeliveryOverviewDestinationFilterBy as DeliveryOverviewDestinationFilterBy
+from segment_public_api.models.delivery_overview_metrics_datapoint import DeliveryOverviewMetricsDatapoint as DeliveryOverviewMetricsDatapoint
+from segment_public_api.models.delivery_overview_metrics_dataset import DeliveryOverviewMetricsDataset as DeliveryOverviewMetricsDataset
+from segment_public_api.models.delivery_overview_source_filter_by import DeliveryOverviewSourceFilterBy as DeliveryOverviewSourceFilterBy
+from segment_public_api.models.delivery_overview_successfully_received_filter_by import DeliveryOverviewSuccessfullyReceivedFilterBy as DeliveryOverviewSuccessfullyReceivedFilterBy
+from segment_public_api.models.destination import Destination as Destination
+from segment_public_api.models.destination_filter_action_v1 import DestinationFilterActionV1 as DestinationFilterActionV1
+from segment_public_api.models.destination_filter_v1 import DestinationFilterV1 as DestinationFilterV1
+from segment_public_api.models.destination_input import DestinationInput as DestinationInput
+from segment_public_api.models.destination_metadata_action_field_v1 import DestinationMetadataActionFieldV1 as DestinationMetadataActionFieldV1
+from segment_public_api.models.destination_metadata_action_v1 import DestinationMetadataActionV1 as DestinationMetadataActionV1
+from segment_public_api.models.destination_metadata_component_v1 import DestinationMetadataComponentV1 as DestinationMetadataComponentV1
+from segment_public_api.models.destination_metadata_features_v1 import DestinationMetadataFeaturesV1 as DestinationMetadataFeaturesV1
+from segment_public_api.models.destination_metadata_methods_v1 import DestinationMetadataMethodsV1 as DestinationMetadataMethodsV1
+from segment_public_api.models.destination_metadata_platforms_v1 import DestinationMetadataPlatformsV1 as DestinationMetadataPlatformsV1
+from segment_public_api.models.destination_metadata_subscription_preset_v1 import DestinationMetadataSubscriptionPresetV1 as DestinationMetadataSubscriptionPresetV1
+from segment_public_api.models.destination_metadata_v1 import DestinationMetadataV1 as DestinationMetadataV1
+from segment_public_api.models.destination_status_v1 import DestinationStatusV1 as DestinationStatusV1
+from segment_public_api.models.destination_subscription import DestinationSubscription as DestinationSubscription
+from segment_public_api.models.destination_subscription_configuration import DestinationSubscriptionConfiguration as DestinationSubscriptionConfiguration
+from segment_public_api.models.destination_subscription_update_input import DestinationSubscriptionUpdateInput as DestinationSubscriptionUpdateInput
+from segment_public_api.models.destination_v1 import DestinationV1 as DestinationV1
+from segment_public_api.models.download import Download as Download
+from segment_public_api.models.echo200_response import Echo200Response as Echo200Response
+from segment_public_api.models.echo200_response1 import Echo200Response1 as Echo200Response1
+from segment_public_api.models.echo_alpha_output import EchoAlphaOutput as EchoAlphaOutput
+from segment_public_api.models.echo_v1_output import EchoV1Output as EchoV1Output
+from segment_public_api.models.entity_details import EntityDetails as EntityDetails
+from segment_public_api.models.event_source_v1 import EventSourceV1 as EventSourceV1
+from segment_public_api.models.fql_defined_property_v1 import FQLDefinedPropertyV1 as FQLDefinedPropertyV1
+from segment_public_api.models.filter import Filter as Filter
+from segment_public_api.models.force_execute_audience_run200_response import ForceExecuteAudienceRun200Response as ForceExecuteAudienceRun200Response
+from segment_public_api.models.force_execute_audience_run200_response1 import ForceExecuteAudienceRun200Response1 as ForceExecuteAudienceRun200Response1
+from segment_public_api.models.force_execute_audience_run_alpha_output import ForceExecuteAudienceRunAlphaOutput as ForceExecuteAudienceRunAlphaOutput
+from segment_public_api.models.force_execute_audience_run_output import ForceExecuteAudienceRunOutput as ForceExecuteAudienceRunOutput
+from segment_public_api.models.function_deployment import FunctionDeployment as FunctionDeployment
+from segment_public_api.models.function_setting_v1 import FunctionSettingV1 as FunctionSettingV1
+from segment_public_api.models.function_v1 import FunctionV1 as FunctionV1
+from segment_public_api.models.get_activation_from_audience200_response import GetActivationFromAudience200Response as GetActivationFromAudience200Response
+from segment_public_api.models.get_activation_from_audience_output import GetActivationFromAudienceOutput as GetActivationFromAudienceOutput
+from segment_public_api.models.get_advanced_sync_schedule_from_warehouse200_response import GetAdvancedSyncScheduleFromWarehouse200Response as GetAdvancedSyncScheduleFromWarehouse200Response
+from segment_public_api.models.get_advanced_sync_schedule_from_warehouse_v1_output import GetAdvancedSyncScheduleFromWarehouseV1Output as GetAdvancedSyncScheduleFromWarehouseV1Output
+from segment_public_api.models.get_audience200_response import GetAudience200Response as GetAudience200Response
+from segment_public_api.models.get_audience200_response1 import GetAudience200Response1 as GetAudience200Response1
+from segment_public_api.models.get_audience200_response2 import GetAudience200Response2 as GetAudience200Response2
+from segment_public_api.models.get_audience_alpha_output import GetAudienceAlphaOutput as GetAudienceAlphaOutput
+from segment_public_api.models.get_audience_beta_output import GetAudienceBetaOutput as GetAudienceBetaOutput
+from segment_public_api.models.get_audience_output import GetAudienceOutput as GetAudienceOutput
+from segment_public_api.models.get_audience_preview200_response import GetAudiencePreview200Response as GetAudiencePreview200Response
+from segment_public_api.models.get_audience_preview200_response1 import GetAudiencePreview200Response1 as GetAudiencePreview200Response1
+from segment_public_api.models.get_audience_preview200_response2 import GetAudiencePreview200Response2 as GetAudiencePreview200Response2
+from segment_public_api.models.get_audience_preview_alpha_output import GetAudiencePreviewAlphaOutput as GetAudiencePreviewAlphaOutput
+from segment_public_api.models.get_audience_preview_beta_output import GetAudiencePreviewBetaOutput as GetAudiencePreviewBetaOutput
+from segment_public_api.models.get_audience_preview_output import GetAudiencePreviewOutput as GetAudiencePreviewOutput
+from segment_public_api.models.get_audience_schedule_from_space_and_audience200_response import GetAudienceScheduleFromSpaceAndAudience200Response as GetAudienceScheduleFromSpaceAndAudience200Response
+from segment_public_api.models.get_audience_schedule_from_space_and_audience200_response1 import GetAudienceScheduleFromSpaceAndAudience200Response1 as GetAudienceScheduleFromSpaceAndAudience200Response1
+from segment_public_api.models.get_audience_schedule_from_space_and_audience_alpha_output import GetAudienceScheduleFromSpaceAndAudienceAlphaOutput as GetAudienceScheduleFromSpaceAndAudienceAlphaOutput
+from segment_public_api.models.get_audience_schedule_from_space_and_audience_output import GetAudienceScheduleFromSpaceAndAudienceOutput as GetAudienceScheduleFromSpaceAndAudienceOutput
+from segment_public_api.models.get_computed_trait200_response import GetComputedTrait200Response as GetComputedTrait200Response
+from segment_public_api.models.get_computed_trait_alpha_output import GetComputedTraitAlphaOutput as GetComputedTraitAlphaOutput
+from segment_public_api.models.get_connection_state_from_warehouse200_response import GetConnectionStateFromWarehouse200Response as GetConnectionStateFromWarehouse200Response
+from segment_public_api.models.get_connection_state_from_warehouse_v1_output import GetConnectionStateFromWarehouseV1Output as GetConnectionStateFromWarehouseV1Output
+from segment_public_api.models.get_daily_per_source_api_calls_usage200_response import GetDailyPerSourceAPICallsUsage200Response as GetDailyPerSourceAPICallsUsage200Response
+from segment_public_api.models.get_daily_per_source_api_calls_usage_v1_output import GetDailyPerSourceAPICallsUsageV1Output as GetDailyPerSourceAPICallsUsageV1Output
+from segment_public_api.models.get_daily_per_source_mtu_usage200_response import GetDailyPerSourceMTUUsage200Response as GetDailyPerSourceMTUUsage200Response
+from segment_public_api.models.get_daily_per_source_mtu_usage_v1_output import GetDailyPerSourceMTUUsageV1Output as GetDailyPerSourceMTUUsageV1Output
+from segment_public_api.models.get_daily_workspace_api_calls_usage200_response import GetDailyWorkspaceAPICallsUsage200Response as GetDailyWorkspaceAPICallsUsage200Response
+from segment_public_api.models.get_daily_workspace_api_calls_usage_v1_output import GetDailyWorkspaceAPICallsUsageV1Output as GetDailyWorkspaceAPICallsUsageV1Output
+from segment_public_api.models.get_daily_workspace_mtu_usage200_response import GetDailyWorkspaceMTUUsage200Response as GetDailyWorkspaceMTUUsage200Response
+from segment_public_api.models.get_daily_workspace_mtu_usage_v1_output import GetDailyWorkspaceMTUUsageV1Output as GetDailyWorkspaceMTUUsageV1Output
+from segment_public_api.models.get_delivery_overview_metrics_beta_output import GetDeliveryOverviewMetricsBetaOutput as GetDeliveryOverviewMetricsBetaOutput
+from segment_public_api.models.get_destination200_response import GetDestination200Response as GetDestination200Response
+from segment_public_api.models.get_destination_metadata200_response import GetDestinationMetadata200Response as GetDestinationMetadata200Response
+from segment_public_api.models.get_destination_metadata_v1_output import GetDestinationMetadataV1Output as GetDestinationMetadataV1Output
+from segment_public_api.models.get_destination_v1_output import GetDestinationV1Output as GetDestinationV1Output
+from segment_public_api.models.get_destinations_catalog200_response import GetDestinationsCatalog200Response as GetDestinationsCatalog200Response
+from segment_public_api.models.get_destinations_catalog_v1_output import GetDestinationsCatalogV1Output as GetDestinationsCatalogV1Output
+from segment_public_api.models.get_egress_failed_metrics_from_delivery_overview200_response import GetEgressFailedMetricsFromDeliveryOverview200Response as GetEgressFailedMetricsFromDeliveryOverview200Response
+from segment_public_api.models.get_events_volume_from_workspace200_response import GetEventsVolumeFromWorkspace200Response as GetEventsVolumeFromWorkspace200Response
+from segment_public_api.models.get_events_volume_from_workspace_v1_output import GetEventsVolumeFromWorkspaceV1Output as GetEventsVolumeFromWorkspaceV1Output
+from segment_public_api.models.get_events_volume_from_workspace_v1_query import GetEventsVolumeFromWorkspaceV1Query as GetEventsVolumeFromWorkspaceV1Query
+from segment_public_api.models.get_filter_by_id200_response import GetFilterById200Response as GetFilterById200Response
+from segment_public_api.models.get_filter_by_id_output import GetFilterByIdOutput as GetFilterByIdOutput
+from segment_public_api.models.get_filter_in_destination200_response import GetFilterInDestination200Response as GetFilterInDestination200Response
+from segment_public_api.models.get_filter_in_destination_v1_output import GetFilterInDestinationV1Output as GetFilterInDestinationV1Output
+from segment_public_api.models.get_function200_response import GetFunction200Response as GetFunction200Response
+from segment_public_api.models.get_function_v1_output import GetFunctionV1Output as GetFunctionV1Output
+from segment_public_api.models.get_function_version200_response import GetFunctionVersion200Response as GetFunctionVersion200Response
+from segment_public_api.models.get_function_version_alpha_output import GetFunctionVersionAlphaOutput as GetFunctionVersionAlphaOutput
+from segment_public_api.models.get_insert_function_instance200_response import GetInsertFunctionInstance200Response as GetInsertFunctionInstance200Response
+from segment_public_api.models.get_insert_function_instance_alpha_output import GetInsertFunctionInstanceAlphaOutput as GetInsertFunctionInstanceAlphaOutput
+from segment_public_api.models.get_latest_from_live_plugins200_response import GetLatestFromLivePlugins200Response as GetLatestFromLivePlugins200Response
+from segment_public_api.models.get_latest_from_live_plugins_alpha_output import GetLatestFromLivePluginsAlphaOutput as GetLatestFromLivePluginsAlphaOutput
+from segment_public_api.models.get_messaging_subscription_failure_response import GetMessagingSubscriptionFailureResponse as GetMessagingSubscriptionFailureResponse
+from segment_public_api.models.get_messaging_subscription_success_response import GetMessagingSubscriptionSuccessResponse as GetMessagingSubscriptionSuccessResponse
+from segment_public_api.models.get_regulation200_response import GetRegulation200Response as GetRegulation200Response
+from segment_public_api.models.get_regulation_v1_output import GetRegulationV1Output as GetRegulationV1Output
+from segment_public_api.models.get_reverse_etl_sync_status200_response import GetReverseETLSyncStatus200Response as GetReverseETLSyncStatus200Response
+from segment_public_api.models.get_reverse_etl_sync_status_output import GetReverseETLSyncStatusOutput as GetReverseETLSyncStatusOutput
+from segment_public_api.models.get_reverse_etl_model200_response import GetReverseEtlModel200Response as GetReverseEtlModel200Response
+from segment_public_api.models.get_reverse_etl_model_output import GetReverseEtlModelOutput as GetReverseEtlModelOutput
+from segment_public_api.models.get_source200_response import GetSource200Response as GetSource200Response
+from segment_public_api.models.get_source200_response1 import GetSource200Response1 as GetSource200Response1
+from segment_public_api.models.get_source_alpha_output import GetSourceAlphaOutput as GetSourceAlphaOutput
+from segment_public_api.models.get_source_metadata200_response import GetSourceMetadata200Response as GetSourceMetadata200Response
+from segment_public_api.models.get_source_metadata_v1_output import GetSourceMetadataV1Output as GetSourceMetadataV1Output
+from segment_public_api.models.get_source_v1_output import GetSourceV1Output as GetSourceV1Output
+from segment_public_api.models.get_sources_catalog200_response import GetSourcesCatalog200Response as GetSourcesCatalog200Response
+from segment_public_api.models.get_sources_catalog_v1_output import GetSourcesCatalogV1Output as GetSourcesCatalogV1Output
+from segment_public_api.models.get_space200_response import GetSpace200Response as GetSpace200Response
+from segment_public_api.models.get_space_alpha_output import GetSpaceAlphaOutput as GetSpaceAlphaOutput
+from segment_public_api.models.get_subscription_from_destination200_response import GetSubscriptionFromDestination200Response as GetSubscriptionFromDestination200Response
+from segment_public_api.models.get_subscription_from_destination_alpha_output import GetSubscriptionFromDestinationAlphaOutput as GetSubscriptionFromDestinationAlphaOutput
+from segment_public_api.models.get_subscription_request import GetSubscriptionRequest as GetSubscriptionRequest
+from segment_public_api.models.get_tracking_plan200_response import GetTrackingPlan200Response as GetTrackingPlan200Response
+from segment_public_api.models.get_tracking_plan_v1_output import GetTrackingPlanV1Output as GetTrackingPlanV1Output
+from segment_public_api.models.get_transformation200_response import GetTransformation200Response as GetTransformation200Response
+from segment_public_api.models.get_transformation_beta_input import GetTransformationBetaInput as GetTransformationBetaInput
+from segment_public_api.models.get_transformation_beta_output import GetTransformationBetaOutput as GetTransformationBetaOutput
+from segment_public_api.models.get_transformation_v1_output import GetTransformationV1Output as GetTransformationV1Output
+from segment_public_api.models.get_user200_response import GetUser200Response as GetUser200Response
+from segment_public_api.models.get_user_group200_response import GetUserGroup200Response as GetUserGroup200Response
+from segment_public_api.models.get_user_group_v1_output import GetUserGroupV1Output as GetUserGroupV1Output
+from segment_public_api.models.get_user_v1_output import GetUserV1Output as GetUserV1Output
+from segment_public_api.models.get_warehouse200_response import GetWarehouse200Response as GetWarehouse200Response
+from segment_public_api.models.get_warehouse_metadata200_response import GetWarehouseMetadata200Response as GetWarehouseMetadata200Response
+from segment_public_api.models.get_warehouse_metadata_v1_output import GetWarehouseMetadataV1Output as GetWarehouseMetadataV1Output
+from segment_public_api.models.get_warehouse_v1_output import GetWarehouseV1Output as GetWarehouseV1Output
+from segment_public_api.models.get_warehouses_catalog200_response import GetWarehousesCatalog200Response as GetWarehousesCatalog200Response
+from segment_public_api.models.get_warehouses_catalog_v1_output import GetWarehousesCatalogV1Output as GetWarehousesCatalogV1Output
+from segment_public_api.models.get_workspace200_response import GetWorkspace200Response as GetWorkspace200Response
+from segment_public_api.models.get_workspace_v1_output import GetWorkspaceV1Output as GetWorkspaceV1Output
+from segment_public_api.models.group_source_settings_v1 import GroupSourceSettingsV1 as GroupSourceSettingsV1
+from segment_public_api.models.group_subscription_status import GroupSubscriptionStatus as GroupSubscriptionStatus
+from segment_public_api.models.group_subscription_status_response import GroupSubscriptionStatusResponse as GroupSubscriptionStatusResponse
+from segment_public_api.models.handle_webhook_input import HandleWebhookInput as HandleWebhookInput
+from segment_public_api.models.handle_webhook_output import HandleWebhookOutput as HandleWebhookOutput
+from segment_public_api.models.hash_properties_configuration import HashPropertiesConfiguration as HashPropertiesConfiguration
+from segment_public_api.models.id_sync_configuration_input import IDSyncConfigurationInput as IDSyncConfigurationInput
+from segment_public_api.models.identify_source_settings_v1 import IdentifySourceSettingsV1 as IdentifySourceSettingsV1
+from segment_public_api.models.insert_function_instance_alpha import InsertFunctionInstanceAlpha as InsertFunctionInstanceAlpha
+from segment_public_api.models.integration_option_beta import IntegrationOptionBeta as IntegrationOptionBeta
+from segment_public_api.models.invite_permission_v1 import InvitePermissionV1 as InvitePermissionV1
+from segment_public_api.models.invite_v1 import InviteV1 as InviteV1
+from segment_public_api.models.label_alpha import LabelAlpha as LabelAlpha
+from segment_public_api.models.label_v1 import LabelV1 as LabelV1
+from segment_public_api.models.list_activations_alpha_output import ListActivationsAlphaOutput as ListActivationsAlphaOutput
+from segment_public_api.models.list_activations_from_audience200_response import ListActivationsFromAudience200Response as ListActivationsFromAudience200Response
+from segment_public_api.models.list_activations_from_audience_output import ListActivationsFromAudienceOutput as ListActivationsFromAudienceOutput
+from segment_public_api.models.list_audience_consumers_from_space_and_audience200_response import ListAudienceConsumersFromSpaceAndAudience200Response as ListAudienceConsumersFromSpaceAndAudience200Response
+from segment_public_api.models.list_audience_consumers_from_space_and_audience_alpha_output import ListAudienceConsumersFromSpaceAndAudienceAlphaOutput as ListAudienceConsumersFromSpaceAndAudienceAlphaOutput
+from segment_public_api.models.list_audience_consumers_sort_input import ListAudienceConsumersSortInput as ListAudienceConsumersSortInput
+from segment_public_api.models.list_audience_schedules_from_space_and_audience200_response import ListAudienceSchedulesFromSpaceAndAudience200Response as ListAudienceSchedulesFromSpaceAndAudience200Response
+from segment_public_api.models.list_audience_schedules_from_space_and_audience200_response1 import ListAudienceSchedulesFromSpaceAndAudience200Response1 as ListAudienceSchedulesFromSpaceAndAudience200Response1
+from segment_public_api.models.list_audience_schedules_from_space_and_audience_alpha_output import ListAudienceSchedulesFromSpaceAndAudienceAlphaOutput as ListAudienceSchedulesFromSpaceAndAudienceAlphaOutput
+from segment_public_api.models.list_audience_schedules_from_space_and_audience_output import ListAudienceSchedulesFromSpaceAndAudienceOutput as ListAudienceSchedulesFromSpaceAndAudienceOutput
+from segment_public_api.models.list_audience_search_input import ListAudienceSearchInput as ListAudienceSearchInput
+from segment_public_api.models.list_audiences200_response import ListAudiences200Response as ListAudiences200Response
+from segment_public_api.models.list_audiences200_response1 import ListAudiences200Response1 as ListAudiences200Response1
+from segment_public_api.models.list_audiences200_response2 import ListAudiences200Response2 as ListAudiences200Response2
+from segment_public_api.models.list_audiences_alpha_output import ListAudiencesAlphaOutput as ListAudiencesAlphaOutput
+from segment_public_api.models.list_audiences_beta_output import ListAudiencesBetaOutput as ListAudiencesBetaOutput
+from segment_public_api.models.list_audiences_output import ListAudiencesOutput as ListAudiencesOutput
+from segment_public_api.models.list_audiences_pagination_input import ListAudiencesPaginationInput as ListAudiencesPaginationInput
+from segment_public_api.models.list_audit_events200_response import ListAuditEvents200Response as ListAuditEvents200Response
+from segment_public_api.models.list_audit_events_v1_output import ListAuditEventsV1Output as ListAuditEventsV1Output
+from segment_public_api.models.list_computed_traits200_response import ListComputedTraits200Response as ListComputedTraits200Response
+from segment_public_api.models.list_computed_traits_alpha_output import ListComputedTraitsAlphaOutput as ListComputedTraitsAlphaOutput
+from segment_public_api.models.list_connected_destinations_from_source200_response import ListConnectedDestinationsFromSource200Response as ListConnectedDestinationsFromSource200Response
+from segment_public_api.models.list_connected_destinations_from_source200_response1 import ListConnectedDestinationsFromSource200Response1 as ListConnectedDestinationsFromSource200Response1
+from segment_public_api.models.list_connected_destinations_from_source_alpha_output import ListConnectedDestinationsFromSourceAlphaOutput as ListConnectedDestinationsFromSourceAlphaOutput
+from segment_public_api.models.list_connected_destinations_from_source_v1_output import ListConnectedDestinationsFromSourceV1Output as ListConnectedDestinationsFromSourceV1Output
+from segment_public_api.models.list_connected_sources_from_warehouse200_response import ListConnectedSourcesFromWarehouse200Response as ListConnectedSourcesFromWarehouse200Response
+from segment_public_api.models.list_connected_sources_from_warehouse_v1_output import ListConnectedSourcesFromWarehouseV1Output as ListConnectedSourcesFromWarehouseV1Output
+from segment_public_api.models.list_connected_warehouses_from_source200_response import ListConnectedWarehousesFromSource200Response as ListConnectedWarehousesFromSource200Response
+from segment_public_api.models.list_connected_warehouses_from_source200_response1 import ListConnectedWarehousesFromSource200Response1 as ListConnectedWarehousesFromSource200Response1
+from segment_public_api.models.list_connected_warehouses_from_source_alpha_output import ListConnectedWarehousesFromSourceAlphaOutput as ListConnectedWarehousesFromSourceAlphaOutput
+from segment_public_api.models.list_connected_warehouses_from_source_v1_output import ListConnectedWarehousesFromSourceV1Output as ListConnectedWarehousesFromSourceV1Output
+from segment_public_api.models.list_delivery_metrics_summary_from_destination200_response import ListDeliveryMetricsSummaryFromDestination200Response as ListDeliveryMetricsSummaryFromDestination200Response
+from segment_public_api.models.list_delivery_metrics_summary_from_destination_beta_output import ListDeliveryMetricsSummaryFromDestinationBetaOutput as ListDeliveryMetricsSummaryFromDestinationBetaOutput
+from segment_public_api.models.list_destinations200_response import ListDestinations200Response as ListDestinations200Response
+from segment_public_api.models.list_destinations_from_audience200_response import ListDestinationsFromAudience200Response as ListDestinationsFromAudience200Response
+from segment_public_api.models.list_destinations_from_audience_alpha_output import ListDestinationsFromAudienceAlphaOutput as ListDestinationsFromAudienceAlphaOutput
+from segment_public_api.models.list_destinations_v1_output import ListDestinationsV1Output as ListDestinationsV1Output
+from segment_public_api.models.list_filters_for_space200_response import ListFiltersForSpace200Response as ListFiltersForSpace200Response
+from segment_public_api.models.list_filters_for_space_output import ListFiltersForSpaceOutput as ListFiltersForSpaceOutput
+from segment_public_api.models.list_filters_from_destination200_response import ListFiltersFromDestination200Response as ListFiltersFromDestination200Response
+from segment_public_api.models.list_filters_from_destination_v1_output import ListFiltersFromDestinationV1Output as ListFiltersFromDestinationV1Output
+from segment_public_api.models.list_filters_pagination_input import ListFiltersPaginationInput as ListFiltersPaginationInput
+from segment_public_api.models.list_filters_pagination_output import ListFiltersPaginationOutput as ListFiltersPaginationOutput
+from segment_public_api.models.list_function_item_v1 import ListFunctionItemV1 as ListFunctionItemV1
+from segment_public_api.models.list_function_versions200_response import ListFunctionVersions200Response as ListFunctionVersions200Response
+from segment_public_api.models.list_function_versions_alpha_output import ListFunctionVersionsAlphaOutput as ListFunctionVersionsAlphaOutput
+from segment_public_api.models.list_functions200_response import ListFunctions200Response as ListFunctions200Response
+from segment_public_api.models.list_functions_v1_output import ListFunctionsV1Output as ListFunctionsV1Output
+from segment_public_api.models.list_insert_function_instances200_response import ListInsertFunctionInstances200Response as ListInsertFunctionInstances200Response
+from segment_public_api.models.list_insert_function_instances_alpha_output import ListInsertFunctionInstancesAlphaOutput as ListInsertFunctionInstancesAlphaOutput
+from segment_public_api.models.list_invites200_response import ListInvites200Response as ListInvites200Response
+from segment_public_api.models.list_invites_from_user_group200_response import ListInvitesFromUserGroup200Response as ListInvitesFromUserGroup200Response
+from segment_public_api.models.list_invites_from_user_group_v1_output import ListInvitesFromUserGroupV1Output as ListInvitesFromUserGroupV1Output
+from segment_public_api.models.list_invites_v1_output import ListInvitesV1Output as ListInvitesV1Output
+from segment_public_api.models.list_labels200_response import ListLabels200Response as ListLabels200Response
+from segment_public_api.models.list_labels200_response1 import ListLabels200Response1 as ListLabels200Response1
+from segment_public_api.models.list_labels_alpha_output import ListLabelsAlphaOutput as ListLabelsAlphaOutput
+from segment_public_api.models.list_labels_v1_output import ListLabelsV1Output as ListLabelsV1Output
+from segment_public_api.models.list_profiles_warehouse_in_space200_response import ListProfilesWarehouseInSpace200Response as ListProfilesWarehouseInSpace200Response
+from segment_public_api.models.list_profiles_warehouse_in_space_alpha_output import ListProfilesWarehouseInSpaceAlphaOutput as ListProfilesWarehouseInSpaceAlphaOutput
+from segment_public_api.models.list_regulations_from_source200_response import ListRegulationsFromSource200Response as ListRegulationsFromSource200Response
+from segment_public_api.models.list_regulations_from_source_v1_output import ListRegulationsFromSourceV1Output as ListRegulationsFromSourceV1Output
+from segment_public_api.models.list_reverse_etl_sync_statuses_from_model_and_subscription_id200_response import ListReverseETLSyncStatusesFromModelAndSubscriptionId200Response as ListReverseETLSyncStatusesFromModelAndSubscriptionId200Response
+from segment_public_api.models.list_reverse_etl_sync_statuses_from_model_and_subscription_id_output import ListReverseETLSyncStatusesFromModelAndSubscriptionIdOutput as ListReverseETLSyncStatusesFromModelAndSubscriptionIdOutput
+from segment_public_api.models.list_reverse_etl_models200_response import ListReverseEtlModels200Response as ListReverseEtlModels200Response
+from segment_public_api.models.list_reverse_etl_models_output import ListReverseEtlModelsOutput as ListReverseEtlModelsOutput
+from segment_public_api.models.list_roles200_response import ListRoles200Response as ListRoles200Response
+from segment_public_api.models.list_roles_v1_output import ListRolesV1Output as ListRolesV1Output
+from segment_public_api.models.list_rules_from_tracking_plan200_response import ListRulesFromTrackingPlan200Response as ListRulesFromTrackingPlan200Response
+from segment_public_api.models.list_rules_from_tracking_plan_v1_output import ListRulesFromTrackingPlanV1Output as ListRulesFromTrackingPlanV1Output
+from segment_public_api.models.list_schema_settings_in_source200_response import ListSchemaSettingsInSource200Response as ListSchemaSettingsInSource200Response
+from segment_public_api.models.list_schema_settings_in_source_v1_output import ListSchemaSettingsInSourceV1Output as ListSchemaSettingsInSourceV1Output
+from segment_public_api.models.list_selective_syncs_from_warehouse_and_source200_response import ListSelectiveSyncsFromWarehouseAndSource200Response as ListSelectiveSyncsFromWarehouseAndSource200Response
+from segment_public_api.models.list_selective_syncs_from_warehouse_and_source_v1_output import ListSelectiveSyncsFromWarehouseAndSourceV1Output as ListSelectiveSyncsFromWarehouseAndSourceV1Output
+from segment_public_api.models.list_selective_syncs_from_warehouse_and_space200_response import ListSelectiveSyncsFromWarehouseAndSpace200Response as ListSelectiveSyncsFromWarehouseAndSpace200Response
+from segment_public_api.models.list_selective_syncs_from_warehouse_and_space_alpha_output import ListSelectiveSyncsFromWarehouseAndSpaceAlphaOutput as ListSelectiveSyncsFromWarehouseAndSpaceAlphaOutput
+from segment_public_api.models.list_sources200_response import ListSources200Response as ListSources200Response
+from segment_public_api.models.list_sources200_response1 import ListSources200Response1 as ListSources200Response1
+from segment_public_api.models.list_sources_alpha_output import ListSourcesAlphaOutput as ListSourcesAlphaOutput
+from segment_public_api.models.list_sources_from_tracking_plan200_response import ListSourcesFromTrackingPlan200Response as ListSourcesFromTrackingPlan200Response
+from segment_public_api.models.list_sources_from_tracking_plan_v1_output import ListSourcesFromTrackingPlanV1Output as ListSourcesFromTrackingPlanV1Output
+from segment_public_api.models.list_sources_v1_output import ListSourcesV1Output as ListSourcesV1Output
+from segment_public_api.models.list_spaces200_response import ListSpaces200Response as ListSpaces200Response
+from segment_public_api.models.list_spaces_alpha_output import ListSpacesAlphaOutput as ListSpacesAlphaOutput
+from segment_public_api.models.list_subscriptions_from_destination200_response import ListSubscriptionsFromDestination200Response as ListSubscriptionsFromDestination200Response
+from segment_public_api.models.list_subscriptions_from_destination_alpha_output import ListSubscriptionsFromDestinationAlphaOutput as ListSubscriptionsFromDestinationAlphaOutput
+from segment_public_api.models.list_supported_destinations_from_audience200_response import ListSupportedDestinationsFromAudience200Response as ListSupportedDestinationsFromAudience200Response
+from segment_public_api.models.list_supported_destinations_from_audience_alpha_output import ListSupportedDestinationsFromAudienceAlphaOutput as ListSupportedDestinationsFromAudienceAlphaOutput
+from segment_public_api.models.list_suppressions200_response import ListSuppressions200Response as ListSuppressions200Response
+from segment_public_api.models.list_suppressions_v1_output import ListSuppressionsV1Output as ListSuppressionsV1Output
+from segment_public_api.models.list_syncs_from_warehouse200_response import ListSyncsFromWarehouse200Response as ListSyncsFromWarehouse200Response
+from segment_public_api.models.list_syncs_from_warehouse_and_source200_response import ListSyncsFromWarehouseAndSource200Response as ListSyncsFromWarehouseAndSource200Response
+from segment_public_api.models.list_syncs_from_warehouse_and_source_v1_output import ListSyncsFromWarehouseAndSourceV1Output as ListSyncsFromWarehouseAndSourceV1Output
+from segment_public_api.models.list_syncs_from_warehouse_v1_output import ListSyncsFromWarehouseV1Output as ListSyncsFromWarehouseV1Output
+from segment_public_api.models.list_tracking_plans200_response import ListTrackingPlans200Response as ListTrackingPlans200Response
+from segment_public_api.models.list_tracking_plans_v1_output import ListTrackingPlansV1Output as ListTrackingPlansV1Output
+from segment_public_api.models.list_transformations200_response import ListTransformations200Response as ListTransformations200Response
+from segment_public_api.models.list_transformations_beta_input import ListTransformationsBetaInput as ListTransformationsBetaInput
+from segment_public_api.models.list_transformations_beta_output import ListTransformationsBetaOutput as ListTransformationsBetaOutput
+from segment_public_api.models.list_transformations_v1_output import ListTransformationsV1Output as ListTransformationsV1Output
+from segment_public_api.models.list_user_groups200_response import ListUserGroups200Response as ListUserGroups200Response
+from segment_public_api.models.list_user_groups_from_user200_response import ListUserGroupsFromUser200Response as ListUserGroupsFromUser200Response
+from segment_public_api.models.list_user_groups_from_user_v1_output import ListUserGroupsFromUserV1Output as ListUserGroupsFromUserV1Output
+from segment_public_api.models.list_user_groups_v1_output import ListUserGroupsV1Output as ListUserGroupsV1Output
+from segment_public_api.models.list_users200_response import ListUsers200Response as ListUsers200Response
+from segment_public_api.models.list_users_from_user_group200_response import ListUsersFromUserGroup200Response as ListUsersFromUserGroup200Response
+from segment_public_api.models.list_users_from_user_group_v1_output import ListUsersFromUserGroupV1Output as ListUsersFromUserGroupV1Output
+from segment_public_api.models.list_users_v1_output import ListUsersV1Output as ListUsersV1Output
+from segment_public_api.models.list_warehouses200_response import ListWarehouses200Response as ListWarehouses200Response
+from segment_public_api.models.list_warehouses_v1_output import ListWarehousesV1Output as ListWarehousesV1Output
+from segment_public_api.models.list_workspace_regulations200_response import ListWorkspaceRegulations200Response as ListWorkspaceRegulations200Response
+from segment_public_api.models.list_workspace_regulations_v1_output import ListWorkspaceRegulationsV1Output as ListWorkspaceRegulationsV1Output
+from segment_public_api.models.live_plugins_alpha import LivePluginsAlpha as LivePluginsAlpha
+from segment_public_api.models.logos_beta import LogosBeta as LogosBeta
+from segment_public_api.models.message_subscription_response import MessageSubscriptionResponse as MessageSubscriptionResponse
+from segment_public_api.models.message_subscription_response_error import MessageSubscriptionResponseError as MessageSubscriptionResponseError
+from segment_public_api.models.messages_subscription_request import MessagesSubscriptionRequest as MessagesSubscriptionRequest
+from segment_public_api.models.metadata import Metadata as Metadata
+from segment_public_api.models.metric_beta import MetricBeta as MetricBeta
+from segment_public_api.models.minimal_user_group_v1 import MinimalUserGroupV1 as MinimalUserGroupV1
+from segment_public_api.models.minimal_user_v1 import MinimalUserV1 as MinimalUserV1
+from segment_public_api.models.mtu_snapshot_v1 import MtuSnapshotV1 as MtuSnapshotV1
+from segment_public_api.models.pagination_input import PaginationInput as PaginationInput
+from segment_public_api.models.pagination_output import PaginationOutput as PaginationOutput
+from segment_public_api.models.periodic_config import PeriodicConfig as PeriodicConfig
+from segment_public_api.models.permission_input_v1 import PermissionInputV1 as PermissionInputV1
+from segment_public_api.models.permission_resource_v1 import PermissionResourceV1 as PermissionResourceV1
+from segment_public_api.models.permission_v1 import PermissionV1 as PermissionV1
+from segment_public_api.models.personalization_input import PersonalizationInput as PersonalizationInput
+from segment_public_api.models.personalization_input_entity import PersonalizationInputEntity as PersonalizationInputEntity
+from segment_public_api.models.preview_destination_filter200_response import PreviewDestinationFilter200Response as PreviewDestinationFilter200Response
+from segment_public_api.models.preview_destination_filter_v1 import PreviewDestinationFilterV1 as PreviewDestinationFilterV1
+from segment_public_api.models.preview_destination_filter_v1_input import PreviewDestinationFilterV1Input as PreviewDestinationFilterV1Input
+from segment_public_api.models.preview_destination_filter_v1_output import PreviewDestinationFilterV1Output as PreviewDestinationFilterV1Output
+from segment_public_api.models.profile import Profile as Profile
+from segment_public_api.models.profiles_warehouse_alpha import ProfilesWarehouseAlpha as ProfilesWarehouseAlpha
+from segment_public_api.models.property_rename_beta import PropertyRenameBeta as PropertyRenameBeta
+from segment_public_api.models.property_rename_v1 import PropertyRenameV1 as PropertyRenameV1
+from segment_public_api.models.property_value_transformation_beta import PropertyValueTransformationBeta as PropertyValueTransformationBeta
+from segment_public_api.models.property_value_transformation_v1 import PropertyValueTransformationV1 as PropertyValueTransformationV1
+from segment_public_api.models.read_audience_preview_options import ReadAudiencePreviewOptions as ReadAudiencePreviewOptions
+from segment_public_api.models.regulation import Regulation as Regulation
+from segment_public_api.models.regulation_list_entry_v1 import RegulationListEntryV1 as RegulationListEntryV1
+from segment_public_api.models.remove_activation_from_audience200_response import RemoveActivationFromAudience200Response as RemoveActivationFromAudience200Response
+from segment_public_api.models.remove_activation_from_audience_output import RemoveActivationFromAudienceOutput as RemoveActivationFromAudienceOutput
+from segment_public_api.models.remove_audience_from_space200_response import RemoveAudienceFromSpace200Response as RemoveAudienceFromSpace200Response
+from segment_public_api.models.remove_audience_from_space200_response1 import RemoveAudienceFromSpace200Response1 as RemoveAudienceFromSpace200Response1
+from segment_public_api.models.remove_audience_from_space200_response2 import RemoveAudienceFromSpace200Response2 as RemoveAudienceFromSpace200Response2
+from segment_public_api.models.remove_audience_from_space_alpha_output import RemoveAudienceFromSpaceAlphaOutput as RemoveAudienceFromSpaceAlphaOutput
+from segment_public_api.models.remove_audience_from_space_beta_output import RemoveAudienceFromSpaceBetaOutput as RemoveAudienceFromSpaceBetaOutput
+from segment_public_api.models.remove_audience_from_space_output import RemoveAudienceFromSpaceOutput as RemoveAudienceFromSpaceOutput
+from segment_public_api.models.remove_audience_schedule_from_audience200_response import RemoveAudienceScheduleFromAudience200Response as RemoveAudienceScheduleFromAudience200Response
+from segment_public_api.models.remove_audience_schedule_from_audience200_response1 import RemoveAudienceScheduleFromAudience200Response1 as RemoveAudienceScheduleFromAudience200Response1
+from segment_public_api.models.remove_audience_schedule_from_audience_alpha_output import RemoveAudienceScheduleFromAudienceAlphaOutput as RemoveAudienceScheduleFromAudienceAlphaOutput
+from segment_public_api.models.remove_audience_schedule_from_audience_output import RemoveAudienceScheduleFromAudienceOutput as RemoveAudienceScheduleFromAudienceOutput
+from segment_public_api.models.remove_computed_trait_from_space200_response import RemoveComputedTraitFromSpace200Response as RemoveComputedTraitFromSpace200Response
+from segment_public_api.models.remove_computed_trait_from_space_alpha_output import RemoveComputedTraitFromSpaceAlphaOutput as RemoveComputedTraitFromSpaceAlphaOutput
+from segment_public_api.models.remove_destination_from_audience200_response import RemoveDestinationFromAudience200Response as RemoveDestinationFromAudience200Response
+from segment_public_api.models.remove_destination_from_audience_alpha_output import RemoveDestinationFromAudienceAlphaOutput as RemoveDestinationFromAudienceAlphaOutput
+from segment_public_api.models.remove_filter_from_destination200_response import RemoveFilterFromDestination200Response as RemoveFilterFromDestination200Response
+from segment_public_api.models.remove_filter_from_destination_v1_output import RemoveFilterFromDestinationV1Output as RemoveFilterFromDestinationV1Output
+from segment_public_api.models.remove_profiles_warehouse_from_space200_response import RemoveProfilesWarehouseFromSpace200Response as RemoveProfilesWarehouseFromSpace200Response
+from segment_public_api.models.remove_profiles_warehouse_from_space_alpha_output import RemoveProfilesWarehouseFromSpaceAlphaOutput as RemoveProfilesWarehouseFromSpaceAlphaOutput
+from segment_public_api.models.remove_rule_v1 import RemoveRuleV1 as RemoveRuleV1
+from segment_public_api.models.remove_rules_from_tracking_plan200_response import RemoveRulesFromTrackingPlan200Response as RemoveRulesFromTrackingPlan200Response
+from segment_public_api.models.remove_rules_from_tracking_plan_v1_output import RemoveRulesFromTrackingPlanV1Output as RemoveRulesFromTrackingPlanV1Output
+from segment_public_api.models.remove_source_connection_from_warehouse200_response import RemoveSourceConnectionFromWarehouse200Response as RemoveSourceConnectionFromWarehouse200Response
+from segment_public_api.models.remove_source_connection_from_warehouse_v1_output import RemoveSourceConnectionFromWarehouseV1Output as RemoveSourceConnectionFromWarehouseV1Output
+from segment_public_api.models.remove_source_from_tracking_plan200_response import RemoveSourceFromTrackingPlan200Response as RemoveSourceFromTrackingPlan200Response
+from segment_public_api.models.remove_source_from_tracking_plan_v1_output import RemoveSourceFromTrackingPlanV1Output as RemoveSourceFromTrackingPlanV1Output
+from segment_public_api.models.remove_subscription_from_destination200_response import RemoveSubscriptionFromDestination200Response as RemoveSubscriptionFromDestination200Response
+from segment_public_api.models.remove_subscription_from_destination_alpha_output import RemoveSubscriptionFromDestinationAlphaOutput as RemoveSubscriptionFromDestinationAlphaOutput
+from segment_public_api.models.remove_users_from_user_group200_response import RemoveUsersFromUserGroup200Response as RemoveUsersFromUserGroup200Response
+from segment_public_api.models.remove_users_from_user_group_v1_output import RemoveUsersFromUserGroupV1Output as RemoveUsersFromUserGroupV1Output
+from segment_public_api.models.remove_write_key_from_source200_response import RemoveWriteKeyFromSource200Response as RemoveWriteKeyFromSource200Response
+from segment_public_api.models.remove_write_key_from_source_alpha_output import RemoveWriteKeyFromSourceAlphaOutput as RemoveWriteKeyFromSourceAlphaOutput
+from segment_public_api.models.replace_advanced_sync_schedule_for_warehouse200_response import ReplaceAdvancedSyncScheduleForWarehouse200Response as ReplaceAdvancedSyncScheduleForWarehouse200Response
+from segment_public_api.models.replace_advanced_sync_schedule_for_warehouse_v1_input import ReplaceAdvancedSyncScheduleForWarehouseV1Input as ReplaceAdvancedSyncScheduleForWarehouseV1Input
+from segment_public_api.models.replace_advanced_sync_schedule_for_warehouse_v1_output import ReplaceAdvancedSyncScheduleForWarehouseV1Output as ReplaceAdvancedSyncScheduleForWarehouseV1Output
+from segment_public_api.models.replace_labels_in_source200_response import ReplaceLabelsInSource200Response as ReplaceLabelsInSource200Response
+from segment_public_api.models.replace_labels_in_source200_response1 import ReplaceLabelsInSource200Response1 as ReplaceLabelsInSource200Response1
+from segment_public_api.models.replace_labels_in_source_alpha_input import ReplaceLabelsInSourceAlphaInput as ReplaceLabelsInSourceAlphaInput
+from segment_public_api.models.replace_labels_in_source_alpha_output import ReplaceLabelsInSourceAlphaOutput as ReplaceLabelsInSourceAlphaOutput
+from segment_public_api.models.replace_labels_in_source_v1_input import ReplaceLabelsInSourceV1Input as ReplaceLabelsInSourceV1Input
+from segment_public_api.models.replace_labels_in_source_v1_output import ReplaceLabelsInSourceV1Output as ReplaceLabelsInSourceV1Output
+from segment_public_api.models.replace_messaging_subscriptions_in_spaces200_response import ReplaceMessagingSubscriptionsInSpaces200Response as ReplaceMessagingSubscriptionsInSpaces200Response
+from segment_public_api.models.replace_messaging_subscriptions_in_spaces_alpha_input import ReplaceMessagingSubscriptionsInSpacesAlphaInput as ReplaceMessagingSubscriptionsInSpacesAlphaInput
+from segment_public_api.models.replace_messaging_subscriptions_in_spaces_alpha_output import ReplaceMessagingSubscriptionsInSpacesAlphaOutput as ReplaceMessagingSubscriptionsInSpacesAlphaOutput
+from segment_public_api.models.replace_permissions_for_user200_response import ReplacePermissionsForUser200Response as ReplacePermissionsForUser200Response
+from segment_public_api.models.replace_permissions_for_user_group200_response import ReplacePermissionsForUserGroup200Response as ReplacePermissionsForUserGroup200Response
+from segment_public_api.models.replace_permissions_for_user_group_v1_input import ReplacePermissionsForUserGroupV1Input as ReplacePermissionsForUserGroupV1Input
+from segment_public_api.models.replace_permissions_for_user_group_v1_output import ReplacePermissionsForUserGroupV1Output as ReplacePermissionsForUserGroupV1Output
+from segment_public_api.models.replace_permissions_for_user_v1_input import ReplacePermissionsForUserV1Input as ReplacePermissionsForUserV1Input
+from segment_public_api.models.replace_permissions_for_user_v1_output import ReplacePermissionsForUserV1Output as ReplacePermissionsForUserV1Output
+from segment_public_api.models.replace_rules_in_tracking_plan200_response import ReplaceRulesInTrackingPlan200Response as ReplaceRulesInTrackingPlan200Response
+from segment_public_api.models.replace_rules_in_tracking_plan_v1_input import ReplaceRulesInTrackingPlanV1Input as ReplaceRulesInTrackingPlanV1Input
+from segment_public_api.models.replace_rules_in_tracking_plan_v1_output import ReplaceRulesInTrackingPlanV1Output as ReplaceRulesInTrackingPlanV1Output
+from segment_public_api.models.replace_users_in_user_group200_response import ReplaceUsersInUserGroup200Response as ReplaceUsersInUserGroup200Response
+from segment_public_api.models.replace_users_in_user_group_v1_input import ReplaceUsersInUserGroupV1Input as ReplaceUsersInUserGroupV1Input
+from segment_public_api.models.replace_users_in_user_group_v1_output import ReplaceUsersInUserGroupV1Output as ReplaceUsersInUserGroupV1Output
+from segment_public_api.models.request_error import RequestError as RequestError
+from segment_public_api.models.request_error_envelope import RequestErrorEnvelope as RequestErrorEnvelope
+from segment_public_api.models.resource_v1 import ResourceV1 as ResourceV1
+from segment_public_api.models.restore_function_version200_response import RestoreFunctionVersion200Response as RestoreFunctionVersion200Response
+from segment_public_api.models.restore_function_version_alpha_input import RestoreFunctionVersionAlphaInput as RestoreFunctionVersionAlphaInput
+from segment_public_api.models.restore_function_version_alpha_output import RestoreFunctionVersionAlphaOutput as RestoreFunctionVersionAlphaOutput
+from segment_public_api.models.reverse_etl_manual_sync_job_output import ReverseETLManualSyncJobOutput as ReverseETLManualSyncJobOutput
+from segment_public_api.models.reverse_etl_sync_status import ReverseETLSyncStatus as ReverseETLSyncStatus
+from segment_public_api.models.reverse_etl_cron_schedule_config import ReverseEtlCronScheduleConfig as ReverseEtlCronScheduleConfig
+from segment_public_api.models.reverse_etl_dbt_cloud_schedule_config import ReverseEtlDbtCloudScheduleConfig as ReverseEtlDbtCloudScheduleConfig
+from segment_public_api.models.reverse_etl_model import ReverseEtlModel as ReverseEtlModel
+from segment_public_api.models.reverse_etl_periodic_schedule_config import ReverseEtlPeriodicScheduleConfig as ReverseEtlPeriodicScheduleConfig
+from segment_public_api.models.reverse_etl_schedule_config import ReverseEtlScheduleConfig as ReverseEtlScheduleConfig
+from segment_public_api.models.reverse_etl_schedule_definition import ReverseEtlScheduleDefinition as ReverseEtlScheduleDefinition
+from segment_public_api.models.reverse_etl_specific_time_schedule_config import ReverseEtlSpecificTimeScheduleConfig as ReverseEtlSpecificTimeScheduleConfig
+from segment_public_api.models.role_v1 import RoleV1 as RoleV1
+from segment_public_api.models.rule_input_v1 import RuleInputV1 as RuleInputV1
+from segment_public_api.models.rule_v1 import RuleV1 as RuleV1
+from segment_public_api.models.simple_destination import SimpleDestination as SimpleDestination
+from segment_public_api.models.source_api_call_snapshot_v1 import SourceAPICallSnapshotV1 as SourceAPICallSnapshotV1
+from segment_public_api.models.source_alpha import SourceAlpha as SourceAlpha
+from segment_public_api.models.source_event_volume_datapoint_v1 import SourceEventVolumeDatapointV1 as SourceEventVolumeDatapointV1
+from segment_public_api.models.source_event_volume_v1 import SourceEventVolumeV1 as SourceEventVolumeV1
+from segment_public_api.models.source_metadata_v1 import SourceMetadataV1 as SourceMetadataV1
+from segment_public_api.models.source_settings_output_v1 import SourceSettingsOutputV1 as SourceSettingsOutputV1
+from segment_public_api.models.source_v1 import SourceV1 as SourceV1
+from segment_public_api.models.space import Space as Space
+from segment_public_api.models.space_warehouse_schema_override import SpaceWarehouseSchemaOverride as SpaceWarehouseSchemaOverride
+from segment_public_api.models.space_warehouse_selective_sync_item_alpha import SpaceWarehouseSelectiveSyncItemAlpha as SpaceWarehouseSelectiveSyncItemAlpha
+from segment_public_api.models.specific_days_config import SpecificDaysConfig as SpecificDaysConfig
+from segment_public_api.models.stream_status_v1 import StreamStatusV1 as StreamStatusV1
+from segment_public_api.models.suppressed_inner import SuppressedInner as SuppressedInner
+from segment_public_api.models.sync_extract_phase import SyncExtractPhase as SyncExtractPhase
+from segment_public_api.models.sync_load_phase import SyncLoadPhase as SyncLoadPhase
+from segment_public_api.models.sync_notice_v1 import SyncNoticeV1 as SyncNoticeV1
+from segment_public_api.models.sync_v1 import SyncV1 as SyncV1
+from segment_public_api.models.track_source_settings_v1 import TrackSourceSettingsV1 as TrackSourceSettingsV1
+from segment_public_api.models.tracking_plan_v1 import TrackingPlanV1 as TrackingPlanV1
+from segment_public_api.models.trait_definition import TraitDefinition as TraitDefinition
+from segment_public_api.models.trait_options import TraitOptions as TraitOptions
+from segment_public_api.models.transformation_beta import TransformationBeta as TransformationBeta
+from segment_public_api.models.transformation_v1 import TransformationV1 as TransformationV1
+from segment_public_api.models.update_activation_for_audience200_response import UpdateActivationForAudience200Response as UpdateActivationForAudience200Response
+from segment_public_api.models.update_activation_for_audience_alpha_input import UpdateActivationForAudienceAlphaInput as UpdateActivationForAudienceAlphaInput
+from segment_public_api.models.update_activation_for_audience_output import UpdateActivationForAudienceOutput as UpdateActivationForAudienceOutput
+from segment_public_api.models.update_audience_for_space200_response import UpdateAudienceForSpace200Response as UpdateAudienceForSpace200Response
+from segment_public_api.models.update_audience_for_space200_response1 import UpdateAudienceForSpace200Response1 as UpdateAudienceForSpace200Response1
+from segment_public_api.models.update_audience_for_space200_response2 import UpdateAudienceForSpace200Response2 as UpdateAudienceForSpace200Response2
+from segment_public_api.models.update_audience_for_space_alpha_input import UpdateAudienceForSpaceAlphaInput as UpdateAudienceForSpaceAlphaInput
+from segment_public_api.models.update_audience_for_space_alpha_output import UpdateAudienceForSpaceAlphaOutput as UpdateAudienceForSpaceAlphaOutput
+from segment_public_api.models.update_audience_for_space_beta_input import UpdateAudienceForSpaceBetaInput as UpdateAudienceForSpaceBetaInput
+from segment_public_api.models.update_audience_for_space_beta_output import UpdateAudienceForSpaceBetaOutput as UpdateAudienceForSpaceBetaOutput
+from segment_public_api.models.update_audience_for_space_input import UpdateAudienceForSpaceInput as UpdateAudienceForSpaceInput
+from segment_public_api.models.update_audience_for_space_output import UpdateAudienceForSpaceOutput as UpdateAudienceForSpaceOutput
+from segment_public_api.models.update_audience_schedule_for_audience200_response import UpdateAudienceScheduleForAudience200Response as UpdateAudienceScheduleForAudience200Response
+from segment_public_api.models.update_audience_schedule_for_audience200_response1 import UpdateAudienceScheduleForAudience200Response1 as UpdateAudienceScheduleForAudience200Response1
+from segment_public_api.models.update_audience_schedule_for_audience_alpha_input import UpdateAudienceScheduleForAudienceAlphaInput as UpdateAudienceScheduleForAudienceAlphaInput
+from segment_public_api.models.update_audience_schedule_for_audience_alpha_output import UpdateAudienceScheduleForAudienceAlphaOutput as UpdateAudienceScheduleForAudienceAlphaOutput
+from segment_public_api.models.update_audience_schedule_for_audience_input import UpdateAudienceScheduleForAudienceInput as UpdateAudienceScheduleForAudienceInput
+from segment_public_api.models.update_audience_schedule_for_audience_output import UpdateAudienceScheduleForAudienceOutput as UpdateAudienceScheduleForAudienceOutput
+from segment_public_api.models.update_computed_trait_for_space200_response import UpdateComputedTraitForSpace200Response as UpdateComputedTraitForSpace200Response
+from segment_public_api.models.update_computed_trait_for_space_alpha_input import UpdateComputedTraitForSpaceAlphaInput as UpdateComputedTraitForSpaceAlphaInput
+from segment_public_api.models.update_computed_trait_for_space_alpha_output import UpdateComputedTraitForSpaceAlphaOutput as UpdateComputedTraitForSpaceAlphaOutput
+from segment_public_api.models.update_destination200_response import UpdateDestination200Response as UpdateDestination200Response
+from segment_public_api.models.update_destination_for_audience200_response import UpdateDestinationForAudience200Response as UpdateDestinationForAudience200Response
+from segment_public_api.models.update_destination_for_audience_alpha_input import UpdateDestinationForAudienceAlphaInput as UpdateDestinationForAudienceAlphaInput
+from segment_public_api.models.update_destination_for_audience_alpha_output import UpdateDestinationForAudienceAlphaOutput as UpdateDestinationForAudienceAlphaOutput
+from segment_public_api.models.update_destination_v1_input import UpdateDestinationV1Input as UpdateDestinationV1Input
+from segment_public_api.models.update_destination_v1_output import UpdateDestinationV1Output as UpdateDestinationV1Output
+from segment_public_api.models.update_filter_by_id200_response import UpdateFilterById200Response as UpdateFilterById200Response
+from segment_public_api.models.update_filter_by_id_input import UpdateFilterByIdInput as UpdateFilterByIdInput
+from segment_public_api.models.update_filter_by_id_output import UpdateFilterByIdOutput as UpdateFilterByIdOutput
+from segment_public_api.models.update_filter_for_destination200_response import UpdateFilterForDestination200Response as UpdateFilterForDestination200Response
+from segment_public_api.models.update_filter_for_destination_v1_input import UpdateFilterForDestinationV1Input as UpdateFilterForDestinationV1Input
+from segment_public_api.models.update_filter_for_destination_v1_output import UpdateFilterForDestinationV1Output as UpdateFilterForDestinationV1Output
+from segment_public_api.models.update_function200_response import UpdateFunction200Response as UpdateFunction200Response
+from segment_public_api.models.update_function_v1_input import UpdateFunctionV1Input as UpdateFunctionV1Input
+from segment_public_api.models.update_function_v1_output import UpdateFunctionV1Output as UpdateFunctionV1Output
+from segment_public_api.models.update_group_subscription_status_response import UpdateGroupSubscriptionStatusResponse as UpdateGroupSubscriptionStatusResponse
+from segment_public_api.models.update_insert_function_instance200_response import UpdateInsertFunctionInstance200Response as UpdateInsertFunctionInstance200Response
+from segment_public_api.models.update_insert_function_instance_alpha_input import UpdateInsertFunctionInstanceAlphaInput as UpdateInsertFunctionInstanceAlphaInput
+from segment_public_api.models.update_insert_function_instance_alpha_output import UpdateInsertFunctionInstanceAlphaOutput as UpdateInsertFunctionInstanceAlphaOutput
+from segment_public_api.models.update_profiles_warehouse_for_space_warehouse200_response import UpdateProfilesWarehouseForSpaceWarehouse200Response as UpdateProfilesWarehouseForSpaceWarehouse200Response
+from segment_public_api.models.update_profiles_warehouse_for_space_warehouse_alpha_input import UpdateProfilesWarehouseForSpaceWarehouseAlphaInput as UpdateProfilesWarehouseForSpaceWarehouseAlphaInput
+from segment_public_api.models.update_profiles_warehouse_for_space_warehouse_alpha_output import UpdateProfilesWarehouseForSpaceWarehouseAlphaOutput as UpdateProfilesWarehouseForSpaceWarehouseAlphaOutput
+from segment_public_api.models.update_reverse_etl_model200_response import UpdateReverseEtlModel200Response as UpdateReverseEtlModel200Response
+from segment_public_api.models.update_reverse_etl_model_input import UpdateReverseEtlModelInput as UpdateReverseEtlModelInput
+from segment_public_api.models.update_reverse_etl_model_output import UpdateReverseEtlModelOutput as UpdateReverseEtlModelOutput
+from segment_public_api.models.update_rules_in_tracking_plan200_response import UpdateRulesInTrackingPlan200Response as UpdateRulesInTrackingPlan200Response
+from segment_public_api.models.update_rules_in_tracking_plan_v1_input import UpdateRulesInTrackingPlanV1Input as UpdateRulesInTrackingPlanV1Input
+from segment_public_api.models.update_rules_in_tracking_plan_v1_output import UpdateRulesInTrackingPlanV1Output as UpdateRulesInTrackingPlanV1Output
+from segment_public_api.models.update_schema_settings_in_source200_response import UpdateSchemaSettingsInSource200Response as UpdateSchemaSettingsInSource200Response
+from segment_public_api.models.update_schema_settings_in_source_v1_input import UpdateSchemaSettingsInSourceV1Input as UpdateSchemaSettingsInSourceV1Input
+from segment_public_api.models.update_schema_settings_in_source_v1_output import UpdateSchemaSettingsInSourceV1Output as UpdateSchemaSettingsInSourceV1Output
+from segment_public_api.models.update_selective_sync_for_warehouse200_response import UpdateSelectiveSyncForWarehouse200Response as UpdateSelectiveSyncForWarehouse200Response
+from segment_public_api.models.update_selective_sync_for_warehouse_and_space200_response import UpdateSelectiveSyncForWarehouseAndSpace200Response as UpdateSelectiveSyncForWarehouseAndSpace200Response
+from segment_public_api.models.update_selective_sync_for_warehouse_and_space_alpha_input import UpdateSelectiveSyncForWarehouseAndSpaceAlphaInput as UpdateSelectiveSyncForWarehouseAndSpaceAlphaInput
+from segment_public_api.models.update_selective_sync_for_warehouse_and_space_alpha_output import UpdateSelectiveSyncForWarehouseAndSpaceAlphaOutput as UpdateSelectiveSyncForWarehouseAndSpaceAlphaOutput
+from segment_public_api.models.update_selective_sync_for_warehouse_v1_input import UpdateSelectiveSyncForWarehouseV1Input as UpdateSelectiveSyncForWarehouseV1Input
+from segment_public_api.models.update_selective_sync_for_warehouse_v1_output import UpdateSelectiveSyncForWarehouseV1Output as UpdateSelectiveSyncForWarehouseV1Output
+from segment_public_api.models.update_source200_response import UpdateSource200Response as UpdateSource200Response
+from segment_public_api.models.update_source200_response1 import UpdateSource200Response1 as UpdateSource200Response1
+from segment_public_api.models.update_source_alpha_input import UpdateSourceAlphaInput as UpdateSourceAlphaInput
+from segment_public_api.models.update_source_alpha_output import UpdateSourceAlphaOutput as UpdateSourceAlphaOutput
+from segment_public_api.models.update_source_v1_input import UpdateSourceV1Input as UpdateSourceV1Input
+from segment_public_api.models.update_source_v1_output import UpdateSourceV1Output as UpdateSourceV1Output
+from segment_public_api.models.update_subscription_for_destination200_response import UpdateSubscriptionForDestination200Response as UpdateSubscriptionForDestination200Response
+from segment_public_api.models.update_subscription_for_destination_alpha_input import UpdateSubscriptionForDestinationAlphaInput as UpdateSubscriptionForDestinationAlphaInput
+from segment_public_api.models.update_subscription_for_destination_alpha_output import UpdateSubscriptionForDestinationAlphaOutput as UpdateSubscriptionForDestinationAlphaOutput
+from segment_public_api.models.update_tracking_plan200_response import UpdateTrackingPlan200Response as UpdateTrackingPlan200Response
+from segment_public_api.models.update_tracking_plan_v1_input import UpdateTrackingPlanV1Input as UpdateTrackingPlanV1Input
+from segment_public_api.models.update_tracking_plan_v1_output import UpdateTrackingPlanV1Output as UpdateTrackingPlanV1Output
+from segment_public_api.models.update_transformation200_response import UpdateTransformation200Response as UpdateTransformation200Response
+from segment_public_api.models.update_transformation_beta_input import UpdateTransformationBetaInput as UpdateTransformationBetaInput
+from segment_public_api.models.update_transformation_beta_output import UpdateTransformationBetaOutput as UpdateTransformationBetaOutput
+from segment_public_api.models.update_transformation_v1_input import UpdateTransformationV1Input as UpdateTransformationV1Input
+from segment_public_api.models.update_transformation_v1_output import UpdateTransformationV1Output as UpdateTransformationV1Output
+from segment_public_api.models.update_user_group200_response import UpdateUserGroup200Response as UpdateUserGroup200Response
+from segment_public_api.models.update_user_group_v1_input import UpdateUserGroupV1Input as UpdateUserGroupV1Input
+from segment_public_api.models.update_user_group_v1_output import UpdateUserGroupV1Output as UpdateUserGroupV1Output
+from segment_public_api.models.update_warehouse200_response import UpdateWarehouse200Response as UpdateWarehouse200Response
+from segment_public_api.models.update_warehouse_v1_input import UpdateWarehouseV1Input as UpdateWarehouseV1Input
+from segment_public_api.models.update_warehouse_v1_output import UpdateWarehouseV1Output as UpdateWarehouseV1Output
+from segment_public_api.models.upsert_rule_v1 import UpsertRuleV1 as UpsertRuleV1
+from segment_public_api.models.user_group_v1 import UserGroupV1 as UserGroupV1
+from segment_public_api.models.user_v1 import UserV1 as UserV1
+from segment_public_api.models.users_per_source_snapshot_v1 import UsersPerSourceSnapshotV1 as UsersPerSourceSnapshotV1
+from segment_public_api.models.version import Version as Version
+from segment_public_api.models.warehouse_advanced_sync_v1 import WarehouseAdvancedSyncV1 as WarehouseAdvancedSyncV1
+from segment_public_api.models.warehouse_metadata_v1 import WarehouseMetadataV1 as WarehouseMetadataV1
+from segment_public_api.models.warehouse_selective_sync_item_v1 import WarehouseSelectiveSyncItemV1 as WarehouseSelectiveSyncItemV1
+from segment_public_api.models.warehouse_sync_override_v1 import WarehouseSyncOverrideV1 as WarehouseSyncOverrideV1
+from segment_public_api.models.warehouse_v1 import WarehouseV1 as WarehouseV1
+from segment_public_api.models.workspace_v1 import WorkspaceV1 as WorkspaceV1
+

@@ -18,72 +18,89 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-from typing import Optional
-from pydantic import BaseModel, Field, StrictStr, validator
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional
 from segment_public_api.models.config import Config
+from typing import Optional, Set
+from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class AddAudienceScheduleToAudienceAlphaInput(BaseModel):
     """
-    Defines an input for creating an audience schedule.  # noqa: E501
-    """
-    strategy: StrictStr = Field(..., description="Strategy of the audience schedule (periodic or specific days).")
-    config: Optional[Config] = Field(...)
-    __properties = ["strategy", "config"]
+    Defines an input for creating an audience schedule.
+    """ # noqa: E501
+    strategy: StrictStr = Field(description="Strategy of the audience schedule (periodic or specific days).")
+    config: Optional[Config]
+    __properties: ClassVar[List[str]] = ["strategy", "config"]
 
-    @validator('strategy')
+    @field_validator('strategy')
     def strategy_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in ('PERIODIC', 'SPECIFIC_DAYS'):
+        if value not in set(['PERIODIC', 'SPECIFIC_DAYS']):
             raise ValueError("must be one of enum values ('PERIODIC', 'SPECIFIC_DAYS')")
         return value
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        validate_by_name=True,
+        validate_by_alias=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
-    def from_json(cls, json_str: str) -> AddAudienceScheduleToAudienceAlphaInput:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of AddAudienceScheduleToAudienceAlphaInput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         # override the default output from pydantic by calling `to_dict()` of config
         if self.config:
             _dict['config'] = self.config.to_dict()
         # set to None if config (nullable) is None
-        # and __fields_set__ contains the field
-        if self.config is None and "config" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.config is None and "config" in self.model_fields_set:
             _dict['config'] = None
 
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> AddAudienceScheduleToAudienceAlphaInput:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of AddAudienceScheduleToAudienceAlphaInput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return AddAudienceScheduleToAudienceAlphaInput.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = AddAudienceScheduleToAudienceAlphaInput.parse_obj({
+        _obj = cls.model_validate({
             "strategy": obj.get("strategy"),
-            "config": Config.from_dict(obj.get("config")) if obj.get("config") is not None else None
+            "config": Config.from_dict(obj["config"]) if obj.get("config") is not None else None
         })
         return _obj
 

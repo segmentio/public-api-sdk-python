@@ -18,60 +18,77 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-from typing import List, Optional
-from pydantic import BaseModel, Field, StrictStr, conlist
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
+from typing import Optional, Set
+from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class DeliveryOverviewSourceFilterBy(BaseModel):
     """
-    The `DeliveryOverviewSourceFilterBy` object is a map of the filterable fields and their values.  # noqa: E501
-    """
-    discard_reason: Optional[conlist(StrictStr)] = Field(None, alias="discardReason", description="A list of strings of discard reasons.  See [Discard Record Documentation](https://segment.com/docs/connections/delivery-overview/#troubleshooting) for valid error codes.")
-    event_name: Optional[conlist(StrictStr)] = Field(None, alias="eventName", description="A list of strings of event names.")
-    event_type: Optional[conlist(StrictStr)] = Field(None, alias="eventType", description="A list of strings of event types. Valid options are: `alias`, `group`, `identify`, `page`, `screen`, and `track`.")
-    app_version: Optional[conlist(StrictStr)] = Field(None, alias="appVersion", description="A list of strings of app versions.")
-    __properties = ["discardReason", "eventName", "eventType", "appVersion"]
+    The `DeliveryOverviewSourceFilterBy` object is a map of the filterable fields and their values.
+    """ # noqa: E501
+    discard_reason: Optional[List[StrictStr]] = Field(default=None, description="A list of strings of discard reasons.  See [Discard Record Documentation](https://segment.com/docs/connections/delivery-overview/#troubleshooting) for valid error codes.", alias="discardReason")
+    event_name: Optional[List[StrictStr]] = Field(default=None, description="A list of strings of event names.", alias="eventName")
+    event_type: Optional[List[StrictStr]] = Field(default=None, description="A list of strings of event types. Valid options are: `alias`, `group`, `identify`, `page`, `screen`, and `track`.", alias="eventType")
+    app_version: Optional[List[StrictStr]] = Field(default=None, description="A list of strings of app versions.", alias="appVersion")
+    __properties: ClassVar[List[str]] = ["discardReason", "eventName", "eventType", "appVersion"]
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        validate_by_name=True,
+        validate_by_alias=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
-    def from_json(cls, json_str: str) -> DeliveryOverviewSourceFilterBy:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of DeliveryOverviewSourceFilterBy from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> DeliveryOverviewSourceFilterBy:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of DeliveryOverviewSourceFilterBy from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return DeliveryOverviewSourceFilterBy.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = DeliveryOverviewSourceFilterBy.parse_obj({
-            "discard_reason": obj.get("discardReason"),
-            "event_name": obj.get("eventName"),
-            "event_type": obj.get("eventType"),
-            "app_version": obj.get("appVersion")
+        _obj = cls.model_validate({
+            "discardReason": obj.get("discardReason"),
+            "eventName": obj.get("eventName"),
+            "eventType": obj.get("eventType"),
+            "appVersion": obj.get("appVersion")
         })
         return _obj
 

@@ -18,76 +18,93 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-from typing import Any, Dict, Optional
-from pydantic import BaseModel, Field, StrictBool, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from segment_public_api.models.reverse_etl_schedule_definition import ReverseEtlScheduleDefinition
+from typing import Optional, Set
+from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class DestinationSubscription(BaseModel):
     """
     DestinationSubscription
-    """
-    id: StrictStr = Field(..., description="The unique identifier for the subscription.")
-    name: StrictStr = Field(..., description="The name of the subscription.")
-    action_id: StrictStr = Field(..., alias="actionId", description="The unique identifier for the Destination action to trigger.")
-    action_slug: StrictStr = Field(..., alias="actionSlug", description="The URL-friendly key for the associated Destination action.")
-    destination_id: StrictStr = Field(..., alias="destinationId", description="The associated Destination instance id.")
-    enabled: StrictBool = Field(..., description="Is the subscription enabled.")
-    settings: Dict[str, Any] = Field(..., description="Represents settings used to configure an action subscription.")
-    trigger: StrictStr = Field(..., description="FQL string that describes what events should trigger a Destination action.")
-    model_id: Optional[StrictStr] = Field(None, alias="modelId", description="The unique identifier for the linked ReverseETLModel, if this part of a Reverse ETL connection.")
-    reverse_etl_schedule: Optional[ReverseEtlScheduleDefinition] = Field(None, alias="reverseETLSchedule")
-    __properties = ["id", "name", "actionId", "actionSlug", "destinationId", "enabled", "settings", "trigger", "modelId", "reverseETLSchedule"]
+    """ # noqa: E501
+    id: StrictStr = Field(description="The unique identifier for the subscription.")
+    name: StrictStr = Field(description="The name of the subscription.")
+    action_id: StrictStr = Field(description="The unique identifier for the Destination action to trigger.", alias="actionId")
+    action_slug: StrictStr = Field(description="The URL-friendly key for the associated Destination action.", alias="actionSlug")
+    destination_id: StrictStr = Field(description="The associated Destination instance id.", alias="destinationId")
+    enabled: StrictBool = Field(description="Is the subscription enabled.")
+    settings: Dict[str, Any] = Field(description="The customer settings for action fields.")
+    trigger: StrictStr = Field(description="FQL string that describes what events should trigger a Destination action.")
+    model_id: Optional[StrictStr] = Field(default=None, description="The unique identifier for the linked ReverseETLModel, if this part of a Reverse ETL connection.", alias="modelId")
+    reverse_etl_schedule: Optional[ReverseEtlScheduleDefinition] = Field(default=None, description="The schedule for the Reverse ETL subscription.", alias="reverseETLSchedule")
+    __properties: ClassVar[List[str]] = ["id", "name", "actionId", "actionSlug", "destinationId", "enabled", "settings", "trigger", "modelId", "reverseETLSchedule"]
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        validate_by_name=True,
+        validate_by_alias=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
-    def from_json(cls, json_str: str) -> DestinationSubscription:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of DestinationSubscription from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         # override the default output from pydantic by calling `to_dict()` of reverse_etl_schedule
         if self.reverse_etl_schedule:
             _dict['reverseETLSchedule'] = self.reverse_etl_schedule.to_dict()
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> DestinationSubscription:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of DestinationSubscription from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return DestinationSubscription.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = DestinationSubscription.parse_obj({
+        _obj = cls.model_validate({
             "id": obj.get("id"),
             "name": obj.get("name"),
-            "action_id": obj.get("actionId"),
-            "action_slug": obj.get("actionSlug"),
-            "destination_id": obj.get("destinationId"),
+            "actionId": obj.get("actionId"),
+            "actionSlug": obj.get("actionSlug"),
+            "destinationId": obj.get("destinationId"),
             "enabled": obj.get("enabled"),
             "settings": obj.get("settings"),
             "trigger": obj.get("trigger"),
-            "model_id": obj.get("modelId"),
-            "reverse_etl_schedule": ReverseEtlScheduleDefinition.from_dict(obj.get("reverseETLSchedule")) if obj.get("reverseETLSchedule") is not None else None
+            "modelId": obj.get("modelId"),
+            "reverseETLSchedule": ReverseEtlScheduleDefinition.from_dict(obj["reverseETLSchedule"]) if obj.get("reverseETLSchedule") is not None else None
         })
         return _obj
 

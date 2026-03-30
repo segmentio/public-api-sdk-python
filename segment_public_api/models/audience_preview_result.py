@@ -18,14 +18,14 @@ from inspect import getfullargspec
 import json
 import pprint
 import re  # noqa: F401
-
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, ValidationError, field_validator
 from typing import Optional
-from pydantic import BaseModel, Field, StrictStr, ValidationError, validator
 from segment_public_api.models.audience_preview_account_result import AudiencePreviewAccountResult
 from segment_public_api.models.audience_preview_entities_result import AudiencePreviewEntitiesResult
 from segment_public_api.models.audience_preview_profile_result import AudiencePreviewProfileResult
-from typing import Union, Any, List, TYPE_CHECKING
-from pydantic import StrictStr, Field
+from typing import Union, Any, List, Set, TYPE_CHECKING, Optional, Dict
+from typing_extensions import Literal, Self
+from pydantic import Field
 
 AUDIENCEPREVIEWRESULT_ANY_OF_SCHEMAS = ["AudiencePreviewAccountResult", "AudiencePreviewEntitiesResult", "AudiencePreviewProfileResult"]
 
@@ -41,13 +41,15 @@ class AudiencePreviewResult(BaseModel):
     # data type: AudiencePreviewEntitiesResult
     anyof_schema_3_validator: Optional[AudiencePreviewEntitiesResult] = None
     if TYPE_CHECKING:
-        actual_instance: Union[AudiencePreviewAccountResult, AudiencePreviewEntitiesResult, AudiencePreviewProfileResult]
+        actual_instance: Optional[Union[AudiencePreviewAccountResult, AudiencePreviewEntitiesResult, AudiencePreviewProfileResult]] = None
     else:
-        actual_instance: Any
-    any_of_schemas: List[str] = Field(AUDIENCEPREVIEWRESULT_ANY_OF_SCHEMAS, const=True)
+        actual_instance: Any = None
+    any_of_schemas: Set[str] = { "AudiencePreviewAccountResult", "AudiencePreviewEntitiesResult", "AudiencePreviewProfileResult" }
 
-    class Config:
-        validate_assignment = True
+    model_config = {
+        "validate_assignment": True,
+        "protected_namespaces": (),
+    }
 
     def __init__(self, *args, **kwargs) -> None:
         if args:
@@ -59,9 +61,9 @@ class AudiencePreviewResult(BaseModel):
         else:
             super().__init__(**kwargs)
 
-    @validator('actual_instance')
+    @field_validator('actual_instance')
     def actual_instance_must_validate_anyof(cls, v):
-        instance = AudiencePreviewResult.construct()
+        instance = AudiencePreviewResult.model_construct()
         error_messages = []
         # validate data type: AudiencePreviewProfileResult
         if not isinstance(v, AudiencePreviewProfileResult):
@@ -88,13 +90,13 @@ class AudiencePreviewResult(BaseModel):
             return v
 
     @classmethod
-    def from_dict(cls, obj: dict) -> AudiencePreviewResult:
+    def from_dict(cls, obj: Dict[str, Any]) -> Self:
         return cls.from_json(json.dumps(obj))
 
     @classmethod
-    def from_json(cls, json_str: str) -> AudiencePreviewResult:
+    def from_json(cls, json_str: str) -> Self:
         """Returns the object represented by the json string"""
-        instance = AudiencePreviewResult.construct()
+        instance = cls.model_construct()
         error_messages = []
         # anyof_schema_1_validator: Optional[AudiencePreviewProfileResult] = None
         try:
@@ -126,25 +128,23 @@ class AudiencePreviewResult(BaseModel):
         if self.actual_instance is None:
             return "null"
 
-        to_json = getattr(self.actual_instance, "to_json", None)
-        if callable(to_json):
+        if hasattr(self.actual_instance, "to_json") and callable(self.actual_instance.to_json):
             return self.actual_instance.to_json()
         else:
             return json.dumps(self.actual_instance)
 
-    def to_dict(self) -> dict:
+    def to_dict(self) -> Optional[Union[Dict[str, Any], AudiencePreviewAccountResult, AudiencePreviewEntitiesResult, AudiencePreviewProfileResult]]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:
-            return "null"
+            return None
 
-        to_json = getattr(self.actual_instance, "to_json", None)
-        if callable(to_json):
+        if hasattr(self.actual_instance, "to_dict") and callable(self.actual_instance.to_dict):
             return self.actual_instance.to_dict()
         else:
-            return json.dumps(self.actual_instance)
+            return self.actual_instance
 
     def to_str(self) -> str:
         """Returns the string representation of the actual instance"""
-        return pprint.pformat(self.dict())
+        return pprint.pformat(self.model_dump())
 
 

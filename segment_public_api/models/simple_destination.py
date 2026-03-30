@@ -18,91 +18,108 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-from typing import Any, Dict, List, Optional
-from pydantic import BaseModel, Field, StrictBool, StrictStr, conlist
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from segment_public_api.models.id_sync_configuration_input import IDSyncConfigurationInput
 from segment_public_api.models.metadata import Metadata
+from typing import Optional, Set
+from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class SimpleDestination(BaseModel):
     """
     SimpleDestination
-    """
-    id: StrictStr = Field(..., description="The id of the Integration.")
-    name: Optional[StrictStr] = Field(None, description="The name of the Destination.")
-    source_id: StrictStr = Field(..., alias="sourceId", description="The Source of the Destination.")
-    enabled: StrictBool = Field(..., description="Whether the Integration is enabled or not.")
-    created_at: StrictStr = Field(..., alias="createdAt", description="When the Integration connection was created.")
-    updated_at: StrictStr = Field(..., alias="updatedAt", description="When the Integration connection was last updated.")
-    settings: Dict[str, Any] = Field(..., description="The Destination settings.")
-    destination_id: StrictStr = Field(..., alias="destinationId", description="The Destination id.")
+    """ # noqa: E501
+    id: StrictStr = Field(description="The id of the Integration.")
+    name: Optional[StrictStr] = Field(default=None, description="The name of the Destination.")
+    source_id: StrictStr = Field(description="The Source of the Destination.", alias="sourceId")
+    enabled: StrictBool = Field(description="Whether the Integration is enabled or not.")
+    created_at: StrictStr = Field(description="When the Integration connection was created.", alias="createdAt")
+    updated_at: StrictStr = Field(description="When the Integration connection was last updated.", alias="updatedAt")
+    settings: Dict[str, Any] = Field(description="The Destination settings.")
+    destination_id: StrictStr = Field(description="The Destination id.", alias="destinationId")
     metadata: Optional[Metadata] = None
-    id_sync_configuration: Optional[conlist(IDSyncConfigurationInput)] = Field(None, alias="idSyncConfiguration", description="Identifier sync configuration. Defines which external ids to sync and their selection strategies. Maximum 5 items allowed. If omitted, the default will be last email and last user_id, or all email and all user_id depending on the Destination.")
-    connection_settings: Optional[Any] = Field(None, alias="connectionSettings", description="The settings that a Destination requires to create audiences on a third-party platform. These settings are Destination-specific. Use the List Supported Destinations from Audience endpoint to find the required connection settings.")
-    __properties = ["id", "name", "sourceId", "enabled", "createdAt", "updatedAt", "settings", "destinationId", "metadata", "idSyncConfiguration", "connectionSettings"]
+    id_sync_configuration: Optional[List[IDSyncConfigurationInput]] = Field(default=None, description="Identifier sync configuration. Defines which external ids to sync and their selection strategies. Maximum 5 items allowed. If omitted, the default will be last email and last user_id, or all email and all user_id depending on the Destination.", alias="idSyncConfiguration")
+    connection_settings: Optional[Any] = Field(default=None, description="The settings that a Destination requires to create audiences on a third-party platform. These settings are Destination-specific. Use the List Supported Destinations from Audience endpoint to find the required connection settings.", alias="connectionSettings")
+    __properties: ClassVar[List[str]] = ["id", "name", "sourceId", "enabled", "createdAt", "updatedAt", "settings", "destinationId", "metadata", "idSyncConfiguration", "connectionSettings"]
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        validate_by_name=True,
+        validate_by_alias=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
-    def from_json(cls, json_str: str) -> SimpleDestination:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of SimpleDestination from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         # override the default output from pydantic by calling `to_dict()` of metadata
         if self.metadata:
             _dict['metadata'] = self.metadata.to_dict()
         # override the default output from pydantic by calling `to_dict()` of each item in id_sync_configuration (list)
         _items = []
         if self.id_sync_configuration:
-            for _item in self.id_sync_configuration:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_id_sync_configuration in self.id_sync_configuration:
+                if _item_id_sync_configuration:
+                    _items.append(_item_id_sync_configuration.to_dict())
             _dict['idSyncConfiguration'] = _items
         # set to None if connection_settings (nullable) is None
-        # and __fields_set__ contains the field
-        if self.connection_settings is None and "connection_settings" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.connection_settings is None and "connection_settings" in self.model_fields_set:
             _dict['connectionSettings'] = None
 
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> SimpleDestination:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of SimpleDestination from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return SimpleDestination.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = SimpleDestination.parse_obj({
+        _obj = cls.model_validate({
             "id": obj.get("id"),
             "name": obj.get("name"),
-            "source_id": obj.get("sourceId"),
+            "sourceId": obj.get("sourceId"),
             "enabled": obj.get("enabled"),
-            "created_at": obj.get("createdAt"),
-            "updated_at": obj.get("updatedAt"),
+            "createdAt": obj.get("createdAt"),
+            "updatedAt": obj.get("updatedAt"),
             "settings": obj.get("settings"),
-            "destination_id": obj.get("destinationId"),
-            "metadata": Metadata.from_dict(obj.get("metadata")) if obj.get("metadata") is not None else None,
-            "id_sync_configuration": [IDSyncConfigurationInput.from_dict(_item) for _item in obj.get("idSyncConfiguration")] if obj.get("idSyncConfiguration") is not None else None,
-            "connection_settings": obj.get("connectionSettings")
+            "destinationId": obj.get("destinationId"),
+            "metadata": Metadata.from_dict(obj["metadata"]) if obj.get("metadata") is not None else None,
+            "idSyncConfiguration": [IDSyncConfigurationInput.from_dict(_item) for _item in obj["idSyncConfiguration"]] if obj.get("idSyncConfiguration") is not None else None,
+            "connectionSettings": obj.get("connectionSettings")
         })
         return _obj
 
