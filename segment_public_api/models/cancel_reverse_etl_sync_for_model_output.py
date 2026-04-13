@@ -18,61 +18,78 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-from typing import Optional
-from pydantic import BaseModel, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
+from typing import Optional, Set
+from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class CancelReverseETLSyncForModelOutput(BaseModel):
     """
-    CancelReverseETLSyncForModelOutput either will return an error or a \"CANCELLING\" status.  # noqa: E501
-    """
-    model_id: StrictStr = Field(..., alias="modelId", description="The id of the Model.")
-    sync_id: StrictStr = Field(..., alias="syncId", description="The id of the Sync.")
-    error_code: Optional[StrictStr] = Field(None, alias="errorCode", description="A place holder for a machine-friendly category for an error, if applicable. - \"SyncAlreadyCanceled\" - \"SyncFinishedCannotCancel\"")
-    error_message: Optional[StrictStr] = Field(None, alias="errorMessage", description="A place holder for a human-readable description of the error, if applicable. - \"sync already canceled\" - \"sync already finished\".")
-    status: Optional[StrictStr] = Field(None, description="If no error, status will be CANCELLING, as the extract/load might take some time to cancel.")
-    __properties = ["modelId", "syncId", "errorCode", "errorMessage", "status"]
+    CancelReverseETLSyncForModelOutput either will return an error or a \"CANCELLING\" status.
+    """ # noqa: E501
+    model_id: StrictStr = Field(description="The id of the Model.", alias="modelId")
+    sync_id: StrictStr = Field(description="The id of the Sync.", alias="syncId")
+    error_code: Optional[StrictStr] = Field(default=None, description="A place holder for a machine-friendly category for an error, if applicable. - \"SyncAlreadyCanceled\" - \"SyncFinishedCannotCancel\"", alias="errorCode")
+    error_message: Optional[StrictStr] = Field(default=None, description="A place holder for a human-readable description of the error, if applicable. - \"sync already canceled\" - \"sync already finished\".", alias="errorMessage")
+    status: Optional[StrictStr] = Field(default=None, description="If no error, status will be CANCELLING, as the extract/load might take some time to cancel.")
+    __properties: ClassVar[List[str]] = ["modelId", "syncId", "errorCode", "errorMessage", "status"]
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        validate_by_name=True,
+        validate_by_alias=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
-    def from_json(cls, json_str: str) -> CancelReverseETLSyncForModelOutput:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of CancelReverseETLSyncForModelOutput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> CancelReverseETLSyncForModelOutput:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of CancelReverseETLSyncForModelOutput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return CancelReverseETLSyncForModelOutput.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = CancelReverseETLSyncForModelOutput.parse_obj({
-            "model_id": obj.get("modelId"),
-            "sync_id": obj.get("syncId"),
-            "error_code": obj.get("errorCode"),
-            "error_message": obj.get("errorMessage"),
+        _obj = cls.model_validate({
+            "modelId": obj.get("modelId"),
+            "syncId": obj.get("syncId"),
+            "errorCode": obj.get("errorCode"),
+            "errorMessage": obj.get("errorMessage"),
             "status": obj.get("status")
         })
         return _obj

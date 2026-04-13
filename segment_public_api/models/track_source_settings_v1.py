@@ -18,72 +18,89 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-from typing import Optional
-from pydantic import BaseModel, Field, StrictBool, StrictStr, validator
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional
+from typing import Optional, Set
+from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class TrackSourceSettingsV1(BaseModel):
     """
     TrackSourceSettingsV1
-    """
-    allow_unplanned_events: Optional[StrictBool] = Field(None, alias="allowUnplannedEvents", description="Enable to allow unplanned track events.  Config API note: equal to `allowUnplannedTrackEvents`.")
-    allow_unplanned_event_properties: Optional[StrictBool] = Field(None, alias="allowUnplannedEventProperties", description="Enable to allow unplanned track event properties.  Config API note: equal to `allowUnplannedTrackEventProperties`.")
-    allow_event_on_violations: Optional[StrictBool] = Field(None, alias="allowEventOnViolations", description="Allow track event on violations.  Config API note: equal to `allowTrackEventOnViolations`.")
-    allow_properties_on_violations: Optional[StrictBool] = Field(None, alias="allowPropertiesOnViolations", description="Enable to allow track properties on violations.  Config API note: equal to `allowTrackEventPropertiesOnViolations`.")
-    common_event_on_violations: Optional[StrictStr] = Field(None, alias="commonEventOnViolations", description="The common track event on violations.  Config API note: equal to `commonTrackEventOnViolations`.")
-    __properties = ["allowUnplannedEvents", "allowUnplannedEventProperties", "allowEventOnViolations", "allowPropertiesOnViolations", "commonEventOnViolations"]
+    """ # noqa: E501
+    allow_unplanned_events: Optional[StrictBool] = Field(default=None, description="Enable to allow unplanned track events.  Config API note: equal to `allowUnplannedTrackEvents`.", alias="allowUnplannedEvents")
+    allow_unplanned_event_properties: Optional[StrictBool] = Field(default=None, description="Enable to allow unplanned track event properties.  Config API note: equal to `allowUnplannedTrackEventProperties`.", alias="allowUnplannedEventProperties")
+    allow_event_on_violations: Optional[StrictBool] = Field(default=None, description="Allow track event on violations.  Config API note: equal to `allowTrackEventOnViolations`.", alias="allowEventOnViolations")
+    allow_properties_on_violations: Optional[StrictBool] = Field(default=None, description="Enable to allow track properties on violations.  Config API note: equal to `allowTrackEventPropertiesOnViolations`.", alias="allowPropertiesOnViolations")
+    common_event_on_violations: Optional[StrictStr] = Field(default=None, description="The common track event on violations.  Config API note: equal to `commonTrackEventOnViolations`.", alias="commonEventOnViolations")
+    __properties: ClassVar[List[str]] = ["allowUnplannedEvents", "allowUnplannedEventProperties", "allowEventOnViolations", "allowPropertiesOnViolations", "commonEventOnViolations"]
 
-    @validator('common_event_on_violations')
+    @field_validator('common_event_on_violations')
     def common_event_on_violations_validate_enum(cls, value):
         """Validates the enum"""
         if value is None:
             return value
 
-        if value not in ('ALLOW', 'BLOCK', 'OMIT_PROPERTIES'):
+        if value not in set(['ALLOW', 'BLOCK', 'OMIT_PROPERTIES']):
             raise ValueError("must be one of enum values ('ALLOW', 'BLOCK', 'OMIT_PROPERTIES')")
         return value
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        validate_by_name=True,
+        validate_by_alias=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
-    def from_json(cls, json_str: str) -> TrackSourceSettingsV1:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of TrackSourceSettingsV1 from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> TrackSourceSettingsV1:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of TrackSourceSettingsV1 from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return TrackSourceSettingsV1.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = TrackSourceSettingsV1.parse_obj({
-            "allow_unplanned_events": obj.get("allowUnplannedEvents"),
-            "allow_unplanned_event_properties": obj.get("allowUnplannedEventProperties"),
-            "allow_event_on_violations": obj.get("allowEventOnViolations"),
-            "allow_properties_on_violations": obj.get("allowPropertiesOnViolations"),
-            "common_event_on_violations": obj.get("commonEventOnViolations")
+        _obj = cls.model_validate({
+            "allowUnplannedEvents": obj.get("allowUnplannedEvents"),
+            "allowUnplannedEventProperties": obj.get("allowUnplannedEventProperties"),
+            "allowEventOnViolations": obj.get("allowEventOnViolations"),
+            "allowPropertiesOnViolations": obj.get("allowPropertiesOnViolations"),
+            "commonEventOnViolations": obj.get("commonEventOnViolations")
         })
         return _obj
 

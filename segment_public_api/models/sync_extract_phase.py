@@ -18,66 +18,83 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-
-from pydantic import BaseModel, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List
+from typing import Optional, Set
+from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class SyncExtractPhase(BaseModel):
     """
-    Object representing the extract phase + details.  # noqa: E501
-    """
-    added_count: StrictStr = Field(..., alias="addedCount", description="Counts the subset of records with status=new, which indicates records that were created/inserted/added.")
-    updated_count: StrictStr = Field(..., alias="updatedCount", description="Counts the subset of records with status=updated, which indicates records that were modified/updated.")
-    deleted_count: StrictStr = Field(..., alias="deletedCount", description="Counts the subset of records with status=deleted, which indicates records that were deleted/removed.")
-    extract_count: StrictStr = Field(..., alias="extractCount", description="Counts the total number of records/rows handled by extract, across all statuses.")
-    error_code: StrictStr = Field(..., alias="errorCode", description="Error code indicates a fatal sync error code, if applicable.")
-    started_at: StrictStr = Field(..., alias="startedAt", description="Time that the extract phase started.")
-    finished_at: StrictStr = Field(..., alias="finishedAt", description="Time that the extract phase finished.")
-    __properties = ["addedCount", "updatedCount", "deletedCount", "extractCount", "errorCode", "startedAt", "finishedAt"]
+    Object representing the extract phase + details.
+    """ # noqa: E501
+    added_count: StrictStr = Field(description="Counts the subset of records with status=new, which indicates records that were created/inserted/added.", alias="addedCount")
+    updated_count: StrictStr = Field(description="Counts the subset of records with status=updated, which indicates records that were modified/updated.", alias="updatedCount")
+    deleted_count: StrictStr = Field(description="Counts the subset of records with status=deleted, which indicates records that were deleted/removed.", alias="deletedCount")
+    extract_count: StrictStr = Field(description="Counts the total number of records/rows handled by extract, across all statuses.", alias="extractCount")
+    error_code: StrictStr = Field(description="Error code indicates a fatal sync error code, if applicable.", alias="errorCode")
+    started_at: StrictStr = Field(description="Time that the extract phase started.", alias="startedAt")
+    finished_at: StrictStr = Field(description="Time that the extract phase finished.", alias="finishedAt")
+    __properties: ClassVar[List[str]] = ["addedCount", "updatedCount", "deletedCount", "extractCount", "errorCode", "startedAt", "finishedAt"]
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        validate_by_name=True,
+        validate_by_alias=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
-    def from_json(cls, json_str: str) -> SyncExtractPhase:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of SyncExtractPhase from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> SyncExtractPhase:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of SyncExtractPhase from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return SyncExtractPhase.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = SyncExtractPhase.parse_obj({
-            "added_count": obj.get("addedCount"),
-            "updated_count": obj.get("updatedCount"),
-            "deleted_count": obj.get("deletedCount"),
-            "extract_count": obj.get("extractCount"),
-            "error_code": obj.get("errorCode"),
-            "started_at": obj.get("startedAt"),
-            "finished_at": obj.get("finishedAt")
+        _obj = cls.model_validate({
+            "addedCount": obj.get("addedCount"),
+            "updatedCount": obj.get("updatedCount"),
+            "deletedCount": obj.get("deletedCount"),
+            "extractCount": obj.get("extractCount"),
+            "errorCode": obj.get("errorCode"),
+            "startedAt": obj.get("startedAt"),
+            "finishedAt": obj.get("finishedAt")
         })
         return _obj
 

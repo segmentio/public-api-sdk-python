@@ -18,82 +18,99 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-from typing import Optional
-from pydantic import BaseModel, Field, StrictBool, StrictStr, validator
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional
+from typing import Optional, Set
+from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class DestinationMetadataFeaturesV1(BaseModel):
     """
-    Represents features that a given Destination supports.  # noqa: E501
-    """
-    cloud_mode_instances: Optional[StrictStr] = Field(None, alias="cloudModeInstances", description="This Destination's support level for cloud mode instances. The values '0' and 'NONE', and '1' and 'SINGLE' are equivalent.")
-    device_mode_instances: Optional[StrictStr] = Field(None, alias="deviceModeInstances", description="This Destination's support level for device mode instances. Support for multiple device mode instances is currently not planned. The values '0' and 'NONE', and '1' and 'SINGLE' are equivalent.")
-    replay: Optional[StrictBool] = Field(None, description="Whether this Destination supports replays.")
-    browser_unbundling: Optional[StrictBool] = Field(None, alias="browserUnbundling", description="Whether this Destination supports browser unbundling.")
-    browser_unbundling_public: Optional[StrictBool] = Field(None, alias="browserUnbundlingPublic", description="Whether this Destination supports public browser unbundling.")
-    __properties = ["cloudModeInstances", "deviceModeInstances", "replay", "browserUnbundling", "browserUnbundlingPublic"]
+    Represents features that a given Destination supports.
+    """ # noqa: E501
+    cloud_mode_instances: Optional[StrictStr] = Field(default=None, description="This Destination's support level for cloud mode instances. The values '0' and 'NONE', and '1' and 'SINGLE' are equivalent.", alias="cloudModeInstances")
+    device_mode_instances: Optional[StrictStr] = Field(default=None, description="This Destination's support level for device mode instances. Support for multiple device mode instances is currently not planned. The values '0' and 'NONE', and '1' and 'SINGLE' are equivalent.", alias="deviceModeInstances")
+    replay: Optional[StrictBool] = Field(default=None, description="Whether this Destination supports replays.")
+    browser_unbundling: Optional[StrictBool] = Field(default=None, description="Whether this Destination supports browser unbundling.", alias="browserUnbundling")
+    browser_unbundling_public: Optional[StrictBool] = Field(default=None, description="Whether this Destination supports public browser unbundling.", alias="browserUnbundlingPublic")
+    __properties: ClassVar[List[str]] = ["cloudModeInstances", "deviceModeInstances", "replay", "browserUnbundling", "browserUnbundlingPublic"]
 
-    @validator('cloud_mode_instances')
+    @field_validator('cloud_mode_instances')
     def cloud_mode_instances_validate_enum(cls, value):
         """Validates the enum"""
         if value is None:
             return value
 
-        if value not in ('0', '1', 'MULTIPLE', 'NONE', 'SINGLE'):
+        if value not in set(['0', '1', 'MULTIPLE', 'NONE', 'SINGLE']):
             raise ValueError("must be one of enum values ('0', '1', 'MULTIPLE', 'NONE', 'SINGLE')")
         return value
 
-    @validator('device_mode_instances')
+    @field_validator('device_mode_instances')
     def device_mode_instances_validate_enum(cls, value):
         """Validates the enum"""
         if value is None:
             return value
 
-        if value not in ('0', '1', 'NONE', 'SINGLE'):
+        if value not in set(['0', '1', 'NONE', 'SINGLE']):
             raise ValueError("must be one of enum values ('0', '1', 'NONE', 'SINGLE')")
         return value
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        validate_by_name=True,
+        validate_by_alias=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
-    def from_json(cls, json_str: str) -> DestinationMetadataFeaturesV1:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of DestinationMetadataFeaturesV1 from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> DestinationMetadataFeaturesV1:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of DestinationMetadataFeaturesV1 from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return DestinationMetadataFeaturesV1.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = DestinationMetadataFeaturesV1.parse_obj({
-            "cloud_mode_instances": obj.get("cloudModeInstances"),
-            "device_mode_instances": obj.get("deviceModeInstances"),
+        _obj = cls.model_validate({
+            "cloudModeInstances": obj.get("cloudModeInstances"),
+            "deviceModeInstances": obj.get("deviceModeInstances"),
             "replay": obj.get("replay"),
-            "browser_unbundling": obj.get("browserUnbundling"),
-            "browser_unbundling_public": obj.get("browserUnbundlingPublic")
+            "browserUnbundling": obj.get("browserUnbundling"),
+            "browserUnbundlingPublic": obj.get("browserUnbundlingPublic")
         })
         return _obj
 

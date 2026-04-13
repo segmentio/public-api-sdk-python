@@ -18,96 +18,113 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-from typing import Any, Optional, Union
-from pydantic import BaseModel, Field, StrictBool, StrictFloat, StrictInt, StrictStr, validator
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional, Union
+from typing import Optional, Set
+from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class DestinationMetadataActionFieldV1(BaseModel):
     """
-    Represents a field used in configuring an action.  # noqa: E501
-    """
-    id: StrictStr = Field(..., description="The primary key of the field.")
-    sort_order: Union[StrictFloat, StrictInt] = Field(..., alias="sortOrder", description="The order this particular field is (used in the UI for displaying the fields in a specified order).")
-    field_key: StrictStr = Field(..., alias="fieldKey", description="A unique machine-readable key for the field. Should ideally match the expected key in the action\\'s API request.")
-    label: StrictStr = Field(..., description="A human-readable label for this value.")
-    type: StrictStr = Field(..., description="The data type for this value.")
-    description: StrictStr = Field(..., description="A human-readable description of this value. You can use Markdown.")
-    placeholder: Optional[StrictStr] = Field(None, description="An example value displayed but not saved.")
-    default_value: Optional[Any] = Field(None, alias="defaultValue", description="A default value that is saved the first time an action is created.")
-    required: StrictBool = Field(..., description="Whether this field is required.")
-    multiple: StrictBool = Field(..., description="Whether a user can provide multiples of this field.")
-    choices: Optional[Any] = Field(None, description="A list of machine-readable value/label pairs to populate a static dropdown.")
-    dynamic: StrictBool = Field(..., description="Whether this field should execute a dynamic request to fetch choices to populate a dropdown. When true, `choices` is ignored.")
-    allow_null: StrictBool = Field(..., alias="allowNull", description="Whether this field allows null values.")
-    hidden: Optional[StrictBool] = Field(None, description="Whether the action field should be hidden or not.")
-    __properties = ["id", "sortOrder", "fieldKey", "label", "type", "description", "placeholder", "defaultValue", "required", "multiple", "choices", "dynamic", "allowNull", "hidden"]
+    Represents a field used in configuring an action.
+    """ # noqa: E501
+    id: StrictStr = Field(description="The primary key of the field.")
+    sort_order: Union[StrictFloat, StrictInt] = Field(description="The order this particular field is (used in the UI for displaying the fields in a specified order).", alias="sortOrder")
+    field_key: StrictStr = Field(description="A unique machine-readable key for the field. Should ideally match the expected key in the action\\'s API request.", alias="fieldKey")
+    label: StrictStr = Field(description="A human-readable label for this value.")
+    type: StrictStr = Field(description="The data type for this value.")
+    description: StrictStr = Field(description="A human-readable description of this value. You can use Markdown.")
+    placeholder: Optional[StrictStr] = Field(default=None, description="An example value displayed but not saved.")
+    default_value: Optional[Any] = Field(default=None, description="A default value that is saved the first time an action is created.", alias="defaultValue")
+    required: StrictBool = Field(description="Whether this field is required.")
+    multiple: StrictBool = Field(description="Whether a user can provide multiples of this field.")
+    choices: Optional[Any] = Field(default=None, description="A list of machine-readable value/label pairs to populate a static dropdown.")
+    dynamic: StrictBool = Field(description="Whether this field should execute a dynamic request to fetch choices to populate a dropdown. When true, `choices` is ignored.")
+    allow_null: StrictBool = Field(description="Whether this field allows null values.", alias="allowNull")
+    hidden: Optional[StrictBool] = Field(default=None, description="Whether the action field should be hidden or not.")
+    __properties: ClassVar[List[str]] = ["id", "sortOrder", "fieldKey", "label", "type", "description", "placeholder", "defaultValue", "required", "multiple", "choices", "dynamic", "allowNull", "hidden"]
 
-    @validator('type')
+    @field_validator('type')
     def type_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in ('BOOLEAN', 'DATETIME', 'HIDDEN', 'INTEGER', 'NUMBER', 'OBJECT', 'PASSWORD', 'STRING', 'TEXT'):
+        if value not in set(['BOOLEAN', 'DATETIME', 'HIDDEN', 'INTEGER', 'NUMBER', 'OBJECT', 'PASSWORD', 'STRING', 'TEXT']):
             raise ValueError("must be one of enum values ('BOOLEAN', 'DATETIME', 'HIDDEN', 'INTEGER', 'NUMBER', 'OBJECT', 'PASSWORD', 'STRING', 'TEXT')")
         return value
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        validate_by_name=True,
+        validate_by_alias=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
-    def from_json(cls, json_str: str) -> DestinationMetadataActionFieldV1:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of DestinationMetadataActionFieldV1 from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         # set to None if default_value (nullable) is None
-        # and __fields_set__ contains the field
-        if self.default_value is None and "default_value" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.default_value is None and "default_value" in self.model_fields_set:
             _dict['defaultValue'] = None
 
         # set to None if choices (nullable) is None
-        # and __fields_set__ contains the field
-        if self.choices is None and "choices" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.choices is None and "choices" in self.model_fields_set:
             _dict['choices'] = None
 
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> DestinationMetadataActionFieldV1:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of DestinationMetadataActionFieldV1 from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return DestinationMetadataActionFieldV1.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = DestinationMetadataActionFieldV1.parse_obj({
+        _obj = cls.model_validate({
             "id": obj.get("id"),
-            "sort_order": obj.get("sortOrder"),
-            "field_key": obj.get("fieldKey"),
+            "sortOrder": obj.get("sortOrder"),
+            "fieldKey": obj.get("fieldKey"),
             "label": obj.get("label"),
             "type": obj.get("type"),
             "description": obj.get("description"),
             "placeholder": obj.get("placeholder"),
-            "default_value": obj.get("defaultValue"),
+            "defaultValue": obj.get("defaultValue"),
             "required": obj.get("required"),
             "multiple": obj.get("multiple"),
             "choices": obj.get("choices"),
             "dynamic": obj.get("dynamic"),
-            "allow_null": obj.get("allowNull"),
+            "allowNull": obj.get("allowNull"),
             "hidden": obj.get("hidden")
         })
         return _obj

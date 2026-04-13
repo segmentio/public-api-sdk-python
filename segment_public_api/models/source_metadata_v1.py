@@ -18,91 +18,108 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-from typing import List, Optional
-from pydantic import BaseModel, Field, StrictBool, StrictStr, conlist, validator
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional
 from segment_public_api.models.integration_option_beta import IntegrationOptionBeta
 from segment_public_api.models.logos_beta import LogosBeta
+from typing import Optional, Set
+from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class SourceMetadataV1(BaseModel):
     """
-    A website, server library, mobile SDK, or cloud application which can send data into Segment.  # noqa: E501
-    """
-    id: StrictStr = Field(..., description="The id for this Source metadata in the Segment catalog.  Config API note: analogous to `name`.")
-    name: StrictStr = Field(..., description="The user-friendly name of this Source.  Config API note: equal to `displayName`.")
-    slug: StrictStr = Field(..., description="The slug that identifies this Source in the Segment app.  Config API note: equal to `name`.")
-    description: StrictStr = Field(..., description="The description of this Source.")
-    logos: LogosBeta = Field(...)
-    options: conlist(IntegrationOptionBeta) = Field(..., description="Options for this Source.")
-    categories: conlist(StrictStr) = Field(..., description="A list of categories this Source belongs to.")
-    is_cloud_event_source: StrictBool = Field(..., alias="isCloudEventSource", description="True if this is a Cloud Event Source.")
-    status: StrictStr = Field(..., description="Support status of the Source.")
-    partner_owned: Optional[StrictBool] = Field(None, alias="partnerOwned", description="Partner Owned flag.")
-    __properties = ["id", "name", "slug", "description", "logos", "options", "categories", "isCloudEventSource", "status", "partnerOwned"]
+    A website, server library, mobile SDK, or cloud application which can send data into Segment.
+    """ # noqa: E501
+    id: StrictStr = Field(description="The id for this Source metadata in the Segment catalog.  Config API note: analogous to `name`.")
+    name: StrictStr = Field(description="The user-friendly name of this Source.  Config API note: equal to `displayName`.")
+    slug: StrictStr = Field(description="The slug that identifies this Source in the Segment app.  Config API note: equal to `name`.")
+    description: StrictStr = Field(description="The description of this Source.")
+    logos: LogosBeta = Field(description="The logos for this Source.")
+    options: List[IntegrationOptionBeta] = Field(description="Options for this Source.")
+    categories: List[StrictStr] = Field(description="A list of categories this Source belongs to.")
+    is_cloud_event_source: StrictBool = Field(description="True if this is a Cloud Event Source.", alias="isCloudEventSource")
+    status: StrictStr = Field(description="Support status of the Source.")
+    partner_owned: Optional[StrictBool] = Field(default=None, description="Partner Owned flag.", alias="partnerOwned")
+    __properties: ClassVar[List[str]] = ["id", "name", "slug", "description", "logos", "options", "categories", "isCloudEventSource", "status", "partnerOwned"]
 
-    @validator('status')
+    @field_validator('status')
     def status_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in ('DEPRECATED', 'PRIVATE_BETA', 'PRIVATE_BUILDING', 'PRIVATE_SUBMITTED', 'PUBLIC', 'PUBLIC_BETA', 'UNAVAILABLE'):
+        if value not in set(['DEPRECATED', 'PRIVATE_BETA', 'PRIVATE_BUILDING', 'PRIVATE_SUBMITTED', 'PUBLIC', 'PUBLIC_BETA', 'UNAVAILABLE']):
             raise ValueError("must be one of enum values ('DEPRECATED', 'PRIVATE_BETA', 'PRIVATE_BUILDING', 'PRIVATE_SUBMITTED', 'PUBLIC', 'PUBLIC_BETA', 'UNAVAILABLE')")
         return value
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        validate_by_name=True,
+        validate_by_alias=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
-    def from_json(cls, json_str: str) -> SourceMetadataV1:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of SourceMetadataV1 from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         # override the default output from pydantic by calling `to_dict()` of logos
         if self.logos:
             _dict['logos'] = self.logos.to_dict()
         # override the default output from pydantic by calling `to_dict()` of each item in options (list)
         _items = []
         if self.options:
-            for _item in self.options:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_options in self.options:
+                if _item_options:
+                    _items.append(_item_options.to_dict())
             _dict['options'] = _items
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> SourceMetadataV1:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of SourceMetadataV1 from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return SourceMetadataV1.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = SourceMetadataV1.parse_obj({
+        _obj = cls.model_validate({
             "id": obj.get("id"),
             "name": obj.get("name"),
             "slug": obj.get("slug"),
             "description": obj.get("description"),
-            "logos": LogosBeta.from_dict(obj.get("logos")) if obj.get("logos") is not None else None,
-            "options": [IntegrationOptionBeta.from_dict(_item) for _item in obj.get("options")] if obj.get("options") is not None else None,
+            "logos": LogosBeta.from_dict(obj["logos"]) if obj.get("logos") is not None else None,
+            "options": [IntegrationOptionBeta.from_dict(_item) for _item in obj["options"]] if obj.get("options") is not None else None,
             "categories": obj.get("categories"),
-            "is_cloud_event_source": obj.get("isCloudEventSource"),
+            "isCloudEventSource": obj.get("isCloudEventSource"),
             "status": obj.get("status"),
-            "partner_owned": obj.get("partnerOwned")
+            "partnerOwned": obj.get("partnerOwned")
         })
         return _obj
 

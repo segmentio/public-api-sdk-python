@@ -18,62 +18,79 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-from typing import Any, Dict, Optional
-from pydantic import BaseModel, Field, StrictBool, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
+from typing import Optional, Set
+from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class CreateProfilesWarehouseAlphaInput(BaseModel):
     """
-    Create a new Profiles Warehouse based on a set of parameters.  # noqa: E501
-    """
-    metadata_id: StrictStr = Field(..., alias="metadataId", description="The Warehouse metadata to use.")
-    name: Optional[StrictStr] = Field(None, description="An optional human-readable name for this Warehouse.")
-    enabled: Optional[StrictBool] = Field(None, description="Enable to allow this Warehouse to receive data. Defaults to true.")
-    settings: Dict[str, Any] = Field(..., description="A key-value object that contains instance-specific Warehouse settings.")
-    schema_name: Optional[StrictStr] = Field(None, alias="schemaName", description="The custom schema name that Segment uses on the Warehouse side. The space slug value is default otherwise. The schema name cannot be an existing schema name in the Warehouse. To use an existing schema name, please create a profiles Warehouse through the Segment app UI.")
-    __properties = ["metadataId", "name", "enabled", "settings", "schemaName"]
+    Create a new Profiles Warehouse based on a set of parameters.
+    """ # noqa: E501
+    metadata_id: StrictStr = Field(description="The Warehouse metadata to use.", alias="metadataId")
+    name: Optional[StrictStr] = Field(default=None, description="An optional human-readable name for this Warehouse.")
+    enabled: Optional[StrictBool] = Field(default=None, description="Enable to allow this Warehouse to receive data. Defaults to true.")
+    settings: Dict[str, Any] = Field(description="A key-value object that contains instance-specific settings for a Warehouse.  Different kinds of Warehouses require different settings. The required and optional settings for a Warehouse are described in the `options` object of the associated Warehouse metadata.  You can find the full list of Warehouse metadata and related settings information in the `/catalog/warehouses` endpoint.")
+    schema_name: Optional[StrictStr] = Field(default=None, description="The custom schema name that Segment uses on the Warehouse side. The space slug value is default otherwise. The schema name cannot be an existing schema name in the Warehouse. To use an existing schema name, please create a profiles Warehouse through the Segment app UI.", alias="schemaName")
+    __properties: ClassVar[List[str]] = ["metadataId", "name", "enabled", "settings", "schemaName"]
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        validate_by_name=True,
+        validate_by_alias=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
-    def from_json(cls, json_str: str) -> CreateProfilesWarehouseAlphaInput:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of CreateProfilesWarehouseAlphaInput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> CreateProfilesWarehouseAlphaInput:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of CreateProfilesWarehouseAlphaInput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return CreateProfilesWarehouseAlphaInput.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = CreateProfilesWarehouseAlphaInput.parse_obj({
-            "metadata_id": obj.get("metadataId"),
+        _obj = cls.model_validate({
+            "metadataId": obj.get("metadataId"),
             "name": obj.get("name"),
             "enabled": obj.get("enabled"),
             "settings": obj.get("settings"),
-            "schema_name": obj.get("schemaName")
+            "schemaName": obj.get("schemaName")
         })
         return _obj
 

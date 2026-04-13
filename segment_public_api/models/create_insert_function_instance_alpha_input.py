@@ -18,59 +18,76 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-from typing import Any, Dict, Optional
-from pydantic import BaseModel, Field, StrictBool, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
+from typing import Optional, Set
+from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class CreateInsertFunctionInstanceAlphaInput(BaseModel):
     """
-    Creates an insert Function instance.  # noqa: E501
-    """
-    function_id: StrictStr = Field(..., alias="functionId", description="Insert Function id to which this instance is associated.  Note: Remove the ifnd_/ifns_ prefix from the id.")
-    integration_id: StrictStr = Field(..., alias="integrationId", description="The Source or Destination id to be connected.")
-    enabled: Optional[StrictBool] = Field(None, description="Whether this insert Function instance should be enabled for the Destination.")
-    name: StrictStr = Field(..., description="Defines the display name of the insert Function instance.")
-    settings: Dict[str, Any] = Field(..., description="An object that contains settings for this insert Function instance based on the settings present in the insert Function class.")
-    __properties = ["functionId", "integrationId", "enabled", "name", "settings"]
+    Creates an insert Function instance.
+    """ # noqa: E501
+    function_id: StrictStr = Field(description="Insert Function id to which this instance is associated.  Note: Remove the ifnd_/ifns_ prefix from the id.", alias="functionId")
+    integration_id: StrictStr = Field(description="The Source or Destination id to be connected.", alias="integrationId")
+    enabled: Optional[StrictBool] = Field(default=None, description="Whether this insert Function instance should be enabled for the Destination.")
+    name: StrictStr = Field(description="Defines the display name of the insert Function instance.")
+    settings: Dict[str, Any] = Field(description="An object that contains settings for this insert Function instance based on the settings present in the insert Function class.")
+    __properties: ClassVar[List[str]] = ["functionId", "integrationId", "enabled", "name", "settings"]
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        validate_by_name=True,
+        validate_by_alias=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
-    def from_json(cls, json_str: str) -> CreateInsertFunctionInstanceAlphaInput:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of CreateInsertFunctionInstanceAlphaInput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> CreateInsertFunctionInstanceAlphaInput:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of CreateInsertFunctionInstanceAlphaInput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return CreateInsertFunctionInstanceAlphaInput.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = CreateInsertFunctionInstanceAlphaInput.parse_obj({
-            "function_id": obj.get("functionId"),
-            "integration_id": obj.get("integrationId"),
+        _obj = cls.model_validate({
+            "functionId": obj.get("functionId"),
+            "integrationId": obj.get("integrationId"),
             "enabled": obj.get("enabled"),
             "name": obj.get("name"),
             "settings": obj.get("settings")

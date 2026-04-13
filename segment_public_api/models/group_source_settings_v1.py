@@ -18,68 +18,85 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-from typing import Optional
-from pydantic import BaseModel, Field, StrictBool, StrictStr, validator
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional
+from typing import Optional, Set
+from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class GroupSourceSettingsV1(BaseModel):
     """
     GroupSourceSettingsV1
-    """
-    allow_unplanned_traits: Optional[StrictBool] = Field(None, alias="allowUnplannedTraits", description="Enable to allow unplanned group traits.  Config API note: equal to `allowUnplannedGroupTraits`.")
-    allow_traits_on_violations: Optional[StrictBool] = Field(None, alias="allowTraitsOnViolations", description="Enable to allow group traits on violations.  Config API note: equal to `allowGroupTraitsOnViolations`.")
-    common_event_on_violations: Optional[StrictStr] = Field(None, alias="commonEventOnViolations", description="The common group event on violations.  Config API note: equal to `commonGroupEventOnViolations`.")
-    __properties = ["allowUnplannedTraits", "allowTraitsOnViolations", "commonEventOnViolations"]
+    """ # noqa: E501
+    allow_unplanned_traits: Optional[StrictBool] = Field(default=None, description="Enable to allow unplanned group traits.  Config API note: equal to `allowUnplannedGroupTraits`.", alias="allowUnplannedTraits")
+    allow_traits_on_violations: Optional[StrictBool] = Field(default=None, description="Enable to allow group traits on violations.  Config API note: equal to `allowGroupTraitsOnViolations`.", alias="allowTraitsOnViolations")
+    common_event_on_violations: Optional[StrictStr] = Field(default=None, description="The common group event on violations.  Config API note: equal to `commonGroupEventOnViolations`.", alias="commonEventOnViolations")
+    __properties: ClassVar[List[str]] = ["allowUnplannedTraits", "allowTraitsOnViolations", "commonEventOnViolations"]
 
-    @validator('common_event_on_violations')
+    @field_validator('common_event_on_violations')
     def common_event_on_violations_validate_enum(cls, value):
         """Validates the enum"""
         if value is None:
             return value
 
-        if value not in ('ALLOW', 'BLOCK', 'OMIT_TRAITS'):
+        if value not in set(['ALLOW', 'BLOCK', 'OMIT_TRAITS']):
             raise ValueError("must be one of enum values ('ALLOW', 'BLOCK', 'OMIT_TRAITS')")
         return value
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        validate_by_name=True,
+        validate_by_alias=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
-    def from_json(cls, json_str: str) -> GroupSourceSettingsV1:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of GroupSourceSettingsV1 from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> GroupSourceSettingsV1:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of GroupSourceSettingsV1 from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return GroupSourceSettingsV1.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = GroupSourceSettingsV1.parse_obj({
-            "allow_unplanned_traits": obj.get("allowUnplannedTraits"),
-            "allow_traits_on_violations": obj.get("allowTraitsOnViolations"),
-            "common_event_on_violations": obj.get("commonEventOnViolations")
+        _obj = cls.model_validate({
+            "allowUnplannedTraits": obj.get("allowUnplannedTraits"),
+            "allowTraitsOnViolations": obj.get("allowTraitsOnViolations"),
+            "commonEventOnViolations": obj.get("commonEventOnViolations")
         })
         return _obj
 

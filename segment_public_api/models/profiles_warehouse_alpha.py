@@ -18,70 +18,87 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-from typing import Any, Dict, Optional
-from pydantic import BaseModel, Field, StrictBool, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from segment_public_api.models.warehouse_metadata_v1 import WarehouseMetadataV1
+from typing import Optional, Set
+from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class ProfilesWarehouseAlpha(BaseModel):
     """
-    Defines a Profiles data Warehouse used as a Destination for Segment data.  # noqa: E501
-    """
-    id: StrictStr = Field(..., description="The id of the Warehouse.")
-    space_id: StrictStr = Field(..., alias="spaceId", description="The Space id.")
-    metadata: WarehouseMetadataV1 = Field(...)
-    workspace_id: StrictStr = Field(..., alias="workspaceId", description="The id of the Workspace that owns this Warehouse.")
-    enabled: StrictBool = Field(..., description="When set to true, this Warehouse receives data.")
-    settings: Dict[str, Any] = Field(..., description="A key-value object that contains instance-specific Warehouse settings.")
-    schema_name: Optional[StrictStr] = Field(None, alias="schemaName", description="The custom schema name that Segment uses on the Warehouse side.")
-    __properties = ["id", "spaceId", "metadata", "workspaceId", "enabled", "settings", "schemaName"]
+    Defines a Profiles data Warehouse used as a Destination for Segment data.
+    """ # noqa: E501
+    id: StrictStr = Field(description="The id of the Warehouse.")
+    space_id: StrictStr = Field(description="The Space id.", alias="spaceId")
+    metadata: WarehouseMetadataV1 = Field(description="The metadata for the Warehouse.")
+    workspace_id: StrictStr = Field(description="The id of the Workspace that owns this Warehouse.", alias="workspaceId")
+    enabled: StrictBool = Field(description="When set to true, this Warehouse receives data.")
+    settings: Dict[str, Any] = Field(description="The settings associated with this Warehouse.  Common settings are connection-related configuration used to connect to it, for example host, username, and port.")
+    schema_name: Optional[StrictStr] = Field(default=None, description="The custom schema name that Segment uses on the Warehouse side.", alias="schemaName")
+    __properties: ClassVar[List[str]] = ["id", "spaceId", "metadata", "workspaceId", "enabled", "settings", "schemaName"]
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        validate_by_name=True,
+        validate_by_alias=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
-    def from_json(cls, json_str: str) -> ProfilesWarehouseAlpha:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of ProfilesWarehouseAlpha from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         # override the default output from pydantic by calling `to_dict()` of metadata
         if self.metadata:
             _dict['metadata'] = self.metadata.to_dict()
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> ProfilesWarehouseAlpha:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of ProfilesWarehouseAlpha from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return ProfilesWarehouseAlpha.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = ProfilesWarehouseAlpha.parse_obj({
+        _obj = cls.model_validate({
             "id": obj.get("id"),
-            "space_id": obj.get("spaceId"),
-            "metadata": WarehouseMetadataV1.from_dict(obj.get("metadata")) if obj.get("metadata") is not None else None,
-            "workspace_id": obj.get("workspaceId"),
+            "spaceId": obj.get("spaceId"),
+            "metadata": WarehouseMetadataV1.from_dict(obj["metadata"]) if obj.get("metadata") is not None else None,
+            "workspaceId": obj.get("workspaceId"),
             "enabled": obj.get("enabled"),
             "settings": obj.get("settings"),
-            "schema_name": obj.get("schemaName")
+            "schemaName": obj.get("schemaName")
         })
         return _obj
 

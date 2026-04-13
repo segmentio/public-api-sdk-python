@@ -18,95 +18,112 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-from typing import List, Optional
-from pydantic import BaseModel, Field, StrictStr, conlist, validator
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional
 from segment_public_api.models.message_subscription_response_error import MessageSubscriptionResponseError
 from segment_public_api.models.update_group_subscription_status_response import UpdateGroupSubscriptionStatusResponse
+from typing import Optional, Set
+from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class MessageSubscriptionResponse(BaseModel):
     """
     MessageSubscriptionResponse
-    """
-    key: StrictStr = Field(..., description="Key is the phone number or email.")
-    type: StrictStr = Field(..., description="Type is communication medium used. Either SMS, EMAIL or WHATSAPP.")
-    status: Optional[StrictStr] = Field(None, description="The user subscribed, unsubscribed, or on initial status.")
-    errors: Optional[conlist(MessageSubscriptionResponseError)] = Field(None, description="Error messages.")
-    groups: Optional[conlist(UpdateGroupSubscriptionStatusResponse)] = Field(None, description="Optional subscription groups.")
-    __properties = ["key", "type", "status", "errors", "groups"]
+    """ # noqa: E501
+    key: StrictStr = Field(description="Key is the phone number or email.")
+    type: StrictStr = Field(description="Type is communication medium used. Either SMS, EMAIL or WHATSAPP.")
+    status: Optional[StrictStr] = Field(default=None, description="The user subscribed, unsubscribed, or on initial status.")
+    errors: Optional[List[MessageSubscriptionResponseError]] = Field(default=None, description="Error messages.")
+    groups: Optional[List[UpdateGroupSubscriptionStatusResponse]] = Field(default=None, description="Optional subscription groups.")
+    __properties: ClassVar[List[str]] = ["key", "type", "status", "errors", "groups"]
 
-    @validator('type')
+    @field_validator('type')
     def type_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in ('ANDROID_PUSH', 'EMAIL', 'IOS_PUSH', 'SMS', 'WHATSAPP'):
+        if value not in set(['ANDROID_PUSH', 'EMAIL', 'IOS_PUSH', 'SMS', 'WHATSAPP']):
             raise ValueError("must be one of enum values ('ANDROID_PUSH', 'EMAIL', 'IOS_PUSH', 'SMS', 'WHATSAPP')")
         return value
 
-    @validator('status')
+    @field_validator('status')
     def status_validate_enum(cls, value):
         """Validates the enum"""
         if value is None:
             return value
 
-        if value not in ('DID_NOT_SUBSCRIBE', 'SUBSCRIBED', 'UNSUBSCRIBED'):
+        if value not in set(['DID_NOT_SUBSCRIBE', 'SUBSCRIBED', 'UNSUBSCRIBED']):
             raise ValueError("must be one of enum values ('DID_NOT_SUBSCRIBE', 'SUBSCRIBED', 'UNSUBSCRIBED')")
         return value
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        validate_by_name=True,
+        validate_by_alias=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
-    def from_json(cls, json_str: str) -> MessageSubscriptionResponse:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of MessageSubscriptionResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         # override the default output from pydantic by calling `to_dict()` of each item in errors (list)
         _items = []
         if self.errors:
-            for _item in self.errors:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_errors in self.errors:
+                if _item_errors:
+                    _items.append(_item_errors.to_dict())
             _dict['errors'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in groups (list)
         _items = []
         if self.groups:
-            for _item in self.groups:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_groups in self.groups:
+                if _item_groups:
+                    _items.append(_item_groups.to_dict())
             _dict['groups'] = _items
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> MessageSubscriptionResponse:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of MessageSubscriptionResponse from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return MessageSubscriptionResponse.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = MessageSubscriptionResponse.parse_obj({
+        _obj = cls.model_validate({
             "key": obj.get("key"),
             "type": obj.get("type"),
             "status": obj.get("status"),
-            "errors": [MessageSubscriptionResponseError.from_dict(_item) for _item in obj.get("errors")] if obj.get("errors") is not None else None,
-            "groups": [UpdateGroupSubscriptionStatusResponse.from_dict(_item) for _item in obj.get("groups")] if obj.get("groups") is not None else None
+            "errors": [MessageSubscriptionResponseError.from_dict(_item) for _item in obj["errors"]] if obj.get("errors") is not None else None,
+            "groups": [UpdateGroupSubscriptionStatusResponse.from_dict(_item) for _item in obj["groups"]] if obj.get("groups") is not None else None
         })
         return _obj
 

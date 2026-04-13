@@ -18,68 +18,85 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-from typing import Any, Optional
-from pydantic import BaseModel, Field, StrictBool, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
+from typing import Optional, Set
+from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class IntegrationOptionBeta(BaseModel):
     """
-    Describes an Integration option field required to set up a Segment Integration such as Sources, Destinations, or warehouses.  # noqa: E501
-    """
-    name: StrictStr = Field(..., description="The name identifying this option in the context of a Segment Integration.")
-    type: StrictStr = Field(..., description="Defines the type for this option in the schema. Types are most commonly strings, but may also represent other primitive types, such as booleans, and numbers, as well as complex types, such as objects and arrays.")
-    required: StrictBool = Field(..., description="Whether this is a required option when setting up the Integration.")
-    description: Optional[StrictStr] = Field(None, description="An optional short text description of the field.")
-    default_value: Optional[Any] = Field(None, alias="defaultValue", description="An optional default value for the field.")
-    label: Optional[StrictStr] = Field(None, description="An optional label for this field.")
-    __properties = ["name", "type", "required", "description", "defaultValue", "label"]
+    Describes an Integration option field required to set up a Segment Integration such as Sources, Destinations, or warehouses.
+    """ # noqa: E501
+    name: StrictStr = Field(description="The name identifying this option in the context of a Segment Integration.")
+    type: StrictStr = Field(description="Defines the type for this option in the schema. Types are most commonly strings, but may also represent other primitive types, such as booleans, and numbers, as well as complex types, such as objects and arrays.")
+    required: StrictBool = Field(description="Whether this is a required option when setting up the Integration.")
+    description: Optional[StrictStr] = Field(default=None, description="An optional short text description of the field.")
+    default_value: Optional[Any] = Field(default=None, description="An optional default value for the field.", alias="defaultValue")
+    label: Optional[StrictStr] = Field(default=None, description="An optional label for this field.")
+    __properties: ClassVar[List[str]] = ["name", "type", "required", "description", "defaultValue", "label"]
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        validate_by_name=True,
+        validate_by_alias=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
-    def from_json(cls, json_str: str) -> IntegrationOptionBeta:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of IntegrationOptionBeta from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         # set to None if default_value (nullable) is None
-        # and __fields_set__ contains the field
-        if self.default_value is None and "default_value" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.default_value is None and "default_value" in self.model_fields_set:
             _dict['defaultValue'] = None
 
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> IntegrationOptionBeta:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of IntegrationOptionBeta from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return IntegrationOptionBeta.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = IntegrationOptionBeta.parse_obj({
+        _obj = cls.model_validate({
             "name": obj.get("name"),
             "type": obj.get("type"),
             "required": obj.get("required"),
             "description": obj.get("description"),
-            "default_value": obj.get("defaultValue"),
+            "defaultValue": obj.get("defaultValue"),
             "label": obj.get("label")
         })
         return _obj
