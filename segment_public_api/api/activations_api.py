@@ -1,5 +1,3 @@
-# coding: utf-8
-
 """
     Segment Public API
 
@@ -13,17 +11,14 @@
 """  # noqa: E501
 
 
-import re  # noqa: F401
-import io
 import warnings
-
-from pydantic import validate_arguments, ValidationError
-
+from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
+from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
-from pydantic import Field, StrictStr, constr
 
+from pydantic import Field, StrictStr
 from typing import Optional
-
+from typing_extensions import Annotated
 from segment_public_api.models.add_activation_to_audience200_response import AddActivationToAudience200Response
 from segment_public_api.models.add_activation_to_audience_alpha_input import AddActivationToAudienceAlphaInput
 from segment_public_api.models.add_destination_to_audience200_response import AddDestinationToAudience200Response
@@ -40,12 +35,9 @@ from segment_public_api.models.update_activation_for_audience_alpha_input import
 from segment_public_api.models.update_destination_for_audience200_response import UpdateDestinationForAudience200Response
 from segment_public_api.models.update_destination_for_audience_alpha_input import UpdateDestinationForAudienceAlphaInput
 
-from segment_public_api.api_client import ApiClient
+from segment_public_api.api_client import ApiClient, RequestSerialized
 from segment_public_api.api_response import ApiResponse
-from segment_public_api.exceptions import (  # noqa: F401
-    ApiTypeError,
-    ApiValueError
-)
+from segment_public_api.rest import RESTResponseType
 
 
 class ActivationsApi:
@@ -60,52 +52,30 @@ class ActivationsApi:
             api_client = ApiClient.get_default()
         self.api_client = api_client
 
-    @validate_arguments
-    def add_activation_to_audience(self, space_id : constr(strict=True), audience_id : constr(strict=True), connection_id : constr(strict=True), add_activation_to_audience_alpha_input : AddActivationToAudienceAlphaInput, **kwargs) -> AddActivationToAudience200Response:  # noqa: E501
-        """Add Activation to Audience  # noqa: E501
 
-        Defines how audience data is sent to a Destination. This step enables the data sync. You must establish a connection (Add Destination to Audience) for this audience before an Activation can be created.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Activation Created` event in the [audit trail](/tag/Audit-Trail).   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
+    @validate_call
+    def add_activation_to_audience(
+        self,
+        space_id: Annotated[str, Field(strict=True)],
+        audience_id: Annotated[str, Field(strict=True)],
+        connection_id: Annotated[str, Field(strict=True)],
+        add_activation_to_audience_alpha_input: AddActivationToAudienceAlphaInput,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> AddActivationToAudience200Response:
+        """Add Activation to Audience
 
-        >>> thread = api.add_activation_to_audience(space_id, audience_id, connection_id, add_activation_to_audience_alpha_input, async_req=True)
-        >>> result = thread.get()
-
-        :param space_id: (required)
-        :type space_id: str
-        :param audience_id: (required)
-        :type audience_id: str
-        :param connection_id: (required)
-        :type connection_id: str
-        :param add_activation_to_audience_alpha_input: (required)
-        :type add_activation_to_audience_alpha_input: AddActivationToAudienceAlphaInput
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
-        :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: AddActivationToAudience200Response
-        """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
-            message = "Error! Please call the add_activation_to_audience_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
-            raise ValueError(message)
-        return self.add_activation_to_audience_with_http_info(space_id, audience_id, connection_id, add_activation_to_audience_alpha_input, **kwargs)  # noqa: E501
-
-    @validate_arguments
-    def add_activation_to_audience_with_http_info(self, space_id : constr(strict=True), audience_id : constr(strict=True), connection_id : constr(strict=True), add_activation_to_audience_alpha_input : AddActivationToAudienceAlphaInput, **kwargs) -> ApiResponse:  # noqa: E501
-        """Add Activation to Audience  # noqa: E501
-
-        Defines how audience data is sent to a Destination. This step enables the data sync. You must establish a connection (Add Destination to Audience) for this audience before an Activation can be created.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Activation Created` event in the [audit trail](/tag/Audit-Trail).   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-
-        >>> thread = api.add_activation_to_audience_with_http_info(space_id, audience_id, connection_id, add_activation_to_audience_alpha_input, async_req=True)
-        >>> result = thread.get()
+        Defines how audience data is sent to a Destination. This step enables the data sync. You must establish a connection (Add Destination to Audience) for this audience before an Activation can be created.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Activation Created` event in the [audit trail](/tag/Audit-Trail).   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
 
         :param space_id: (required)
         :type space_id: str
@@ -115,653 +85,1018 @@ class ActivationsApi:
         :type connection_id: str
         :param add_activation_to_audience_alpha_input: (required)
         :type add_activation_to_audience_alpha_input: AddActivationToAudienceAlphaInput
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _preload_content: if False, the ApiResponse.data will
-                                 be set to none and raw_data will store the
-                                 HTTP response body without reading/decoding.
-                                 Default is True.
-        :type _preload_content: bool, optional
-        :param _return_http_data_only: response data instead of ApiResponse
-                                       object with status code, headers, etc
-        :type _return_http_data_only: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the authentication
-                              in the spec for a single request.
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
         :type _request_auth: dict, optional
-        :type _content_type: string, optional: force content-type for the request
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
         :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: tuple(AddActivationToAudience200Response, status_code(int), headers(HTTPHeaderDict))
-        """
+        """ # noqa: E501
 
-        _params = locals()
-
-        _all_params = [
-            'space_id',
-            'audience_id',
-            'connection_id',
-            'add_activation_to_audience_alpha_input'
-        ]
-        _all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
-            ]
+        _param = self._add_activation_to_audience_serialize(
+            space_id=space_id,
+            audience_id=audience_id,
+            connection_id=connection_id,
+            add_activation_to_audience_alpha_input=add_activation_to_audience_alpha_input,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
         )
 
-        # validate the arguments
-        for _key, _val in _params['kwargs'].items():
-            if _key not in _all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method add_activation_to_audience" % _key
-                )
-            _params[_key] = _val
-        del _params['kwargs']
-
-        _collection_formats = {}
-
-        # process the path parameters
-        _path_params = {}
-        if _params['space_id']:
-            _path_params['spaceId'] = _params['space_id']
-
-        if _params['audience_id']:
-            _path_params['audienceId'] = _params['audience_id']
-
-        if _params['connection_id']:
-            _path_params['connectionId'] = _params['connection_id']
-
-
-        # process the query parameters
-        _query_params = []
-        # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
-        # process the form parameters
-        _form_params = []
-        _files = {}
-        # process the body parameter
-        _body_params = None
-        if _params['add_activation_to_audience_alpha_input'] is not None:
-            _body_params = _params['add_activation_to_audience_alpha_input']
-
-        # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/vnd.segment.v1alpha+json', 'application/json'])  # noqa: E501
-
-        # set the HTTP header `Content-Type`
-        _content_types_list = _params.get('_content_type',
-            self.api_client.select_header_content_type(
-                ['application/vnd.segment.v1alpha+json']))
-        if _content_types_list:
-                _header_params['Content-Type'] = _content_types_list
-
-        # authentication setting
-        _auth_settings = ['token']  # noqa: E501
-
-        _response_types_map = {
+        _response_types_map: Dict[str, Optional[str]] = {
             '200': "AddActivationToAudience200Response",
             '404': "RequestErrorEnvelope",
             '422': "RequestErrorEnvelope",
             '429': "RequestErrorEnvelope",
         }
-
-        return self.api_client.call_api(
-            '/spaces/{spaceId}/audiences/{audienceId}/destination-connections/{connectionId}/activations', 'POST',
-            _path_params,
-            _query_params,
-            _header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
             response_types_map=_response_types_map,
-            auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
-            collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+        ).data
 
-    @validate_arguments
-    def add_destination_to_audience(self, space_id : constr(strict=True), audience_id : constr(strict=True), add_destination_to_audience_alpha_input : AddDestinationToAudienceAlphaInput, **kwargs) -> AddDestinationToAudience200Response:  # noqa: E501
-        """Add Destination to Audience  # noqa: E501
 
-        Establishes a connection between an audience and a Destination. To start syncing data, you must create an Activation for the connection created here.  Note that the Destination must be added to Engage through the Engage Settings page within the App before creating the connection through the API.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Destination Added into Audience` event in the [audit trail](/tag/Audit-Trail).   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
+    @validate_call
+    def add_activation_to_audience_with_http_info(
+        self,
+        space_id: Annotated[str, Field(strict=True)],
+        audience_id: Annotated[str, Field(strict=True)],
+        connection_id: Annotated[str, Field(strict=True)],
+        add_activation_to_audience_alpha_input: AddActivationToAudienceAlphaInput,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[AddActivationToAudience200Response]:
+        """Add Activation to Audience
 
-        >>> thread = api.add_destination_to_audience(space_id, audience_id, add_destination_to_audience_alpha_input, async_req=True)
-        >>> result = thread.get()
-
-        :param space_id: (required)
-        :type space_id: str
-        :param audience_id: (required)
-        :type audience_id: str
-        :param add_destination_to_audience_alpha_input: (required)
-        :type add_destination_to_audience_alpha_input: AddDestinationToAudienceAlphaInput
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
-        :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: AddDestinationToAudience200Response
-        """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
-            message = "Error! Please call the add_destination_to_audience_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
-            raise ValueError(message)
-        return self.add_destination_to_audience_with_http_info(space_id, audience_id, add_destination_to_audience_alpha_input, **kwargs)  # noqa: E501
-
-    @validate_arguments
-    def add_destination_to_audience_with_http_info(self, space_id : constr(strict=True), audience_id : constr(strict=True), add_destination_to_audience_alpha_input : AddDestinationToAudienceAlphaInput, **kwargs) -> ApiResponse:  # noqa: E501
-        """Add Destination to Audience  # noqa: E501
-
-        Establishes a connection between an audience and a Destination. To start syncing data, you must create an Activation for the connection created here.  Note that the Destination must be added to Engage through the Engage Settings page within the App before creating the connection through the API.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Destination Added into Audience` event in the [audit trail](/tag/Audit-Trail).   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-
-        >>> thread = api.add_destination_to_audience_with_http_info(space_id, audience_id, add_destination_to_audience_alpha_input, async_req=True)
-        >>> result = thread.get()
+        Defines how audience data is sent to a Destination. This step enables the data sync. You must establish a connection (Add Destination to Audience) for this audience before an Activation can be created.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Activation Created` event in the [audit trail](/tag/Audit-Trail).   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
 
         :param space_id: (required)
         :type space_id: str
         :param audience_id: (required)
         :type audience_id: str
-        :param add_destination_to_audience_alpha_input: (required)
-        :type add_destination_to_audience_alpha_input: AddDestinationToAudienceAlphaInput
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _preload_content: if False, the ApiResponse.data will
-                                 be set to none and raw_data will store the
-                                 HTTP response body without reading/decoding.
-                                 Default is True.
-        :type _preload_content: bool, optional
-        :param _return_http_data_only: response data instead of ApiResponse
-                                       object with status code, headers, etc
-        :type _return_http_data_only: bool, optional
+        :param connection_id: (required)
+        :type connection_id: str
+        :param add_activation_to_audience_alpha_input: (required)
+        :type add_activation_to_audience_alpha_input: AddActivationToAudienceAlphaInput
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the authentication
-                              in the spec for a single request.
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
         :type _request_auth: dict, optional
-        :type _content_type: string, optional: force content-type for the request
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
         :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: tuple(AddDestinationToAudience200Response, status_code(int), headers(HTTPHeaderDict))
-        """
+        """ # noqa: E501
 
-        _params = locals()
-
-        _all_params = [
-            'space_id',
-            'audience_id',
-            'add_destination_to_audience_alpha_input'
-        ]
-        _all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
-            ]
+        _param = self._add_activation_to_audience_serialize(
+            space_id=space_id,
+            audience_id=audience_id,
+            connection_id=connection_id,
+            add_activation_to_audience_alpha_input=add_activation_to_audience_alpha_input,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
         )
 
-        # validate the arguments
-        for _key, _val in _params['kwargs'].items():
-            if _key not in _all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method add_destination_to_audience" % _key
-                )
-            _params[_key] = _val
-        del _params['kwargs']
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AddActivationToAudience200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
 
-        _collection_formats = {}
+
+    @validate_call
+    def add_activation_to_audience_without_preload_content(
+        self,
+        space_id: Annotated[str, Field(strict=True)],
+        audience_id: Annotated[str, Field(strict=True)],
+        connection_id: Annotated[str, Field(strict=True)],
+        add_activation_to_audience_alpha_input: AddActivationToAudienceAlphaInput,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Add Activation to Audience
+
+        Defines how audience data is sent to a Destination. This step enables the data sync. You must establish a connection (Add Destination to Audience) for this audience before an Activation can be created.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Activation Created` event in the [audit trail](/tag/Audit-Trail).   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
+
+        :param space_id: (required)
+        :type space_id: str
+        :param audience_id: (required)
+        :type audience_id: str
+        :param connection_id: (required)
+        :type connection_id: str
+        :param add_activation_to_audience_alpha_input: (required)
+        :type add_activation_to_audience_alpha_input: AddActivationToAudienceAlphaInput
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._add_activation_to_audience_serialize(
+            space_id=space_id,
+            audience_id=audience_id,
+            connection_id=connection_id,
+            add_activation_to_audience_alpha_input=add_activation_to_audience_alpha_input,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AddActivationToAudience200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _add_activation_to_audience_serialize(
+        self,
+        space_id,
+        audience_id,
+        connection_id,
+        add_activation_to_audience_alpha_input,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
 
         # process the path parameters
-        _path_params = {}
-        if _params['space_id']:
-            _path_params['spaceId'] = _params['space_id']
-
-        if _params['audience_id']:
-            _path_params['audienceId'] = _params['audience_id']
-
-
+        if space_id is not None:
+            _path_params['spaceId'] = space_id
+        if audience_id is not None:
+            _path_params['audienceId'] = audience_id
+        if connection_id is not None:
+            _path_params['connectionId'] = connection_id
         # process the query parameters
-        _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
-        _form_params = []
-        _files = {}
         # process the body parameter
-        _body_params = None
-        if _params['add_destination_to_audience_alpha_input'] is not None:
-            _body_params = _params['add_destination_to_audience_alpha_input']
+        if add_activation_to_audience_alpha_input is not None:
+            _body_params = add_activation_to_audience_alpha_input
+
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/vnd.segment.v1alpha+json', 'application/json'])  # noqa: E501
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/vnd.segment.v1alpha+json', 
+                    'application/json'
+                ]
+            )
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get('_content_type',
-            self.api_client.select_header_content_type(
-                ['application/vnd.segment.v1alpha+json']))
-        if _content_types_list:
-                _header_params['Content-Type'] = _content_types_list
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/vnd.segment.v1alpha+json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
-        _auth_settings = ['token']  # noqa: E501
+        _auth_settings: List[str] = [
+            'token'
+        ]
 
-        _response_types_map = {
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/spaces/{spaceId}/audiences/{audienceId}/destination-connections/{connectionId}/activations',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def add_destination_to_audience(
+        self,
+        space_id: Annotated[str, Field(strict=True)],
+        audience_id: Annotated[str, Field(strict=True)],
+        add_destination_to_audience_alpha_input: AddDestinationToAudienceAlphaInput,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> AddDestinationToAudience200Response:
+        """Add Destination to Audience
+
+        Establishes a connection between an audience and a Destination. To start syncing data, you must create an Activation for the connection created here.  Note that the Destination must be added to Engage through the Engage Settings page within the App before creating the connection through the API.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Destination Added into Audience` event in the [audit trail](/tag/Audit-Trail).   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
+
+        :param space_id: (required)
+        :type space_id: str
+        :param audience_id: (required)
+        :type audience_id: str
+        :param add_destination_to_audience_alpha_input: (required)
+        :type add_destination_to_audience_alpha_input: AddDestinationToAudienceAlphaInput
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._add_destination_to_audience_serialize(
+            space_id=space_id,
+            audience_id=audience_id,
+            add_destination_to_audience_alpha_input=add_destination_to_audience_alpha_input,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
             '200': "AddDestinationToAudience200Response",
             '404': "RequestErrorEnvelope",
             '422': "RequestErrorEnvelope",
             '429': "RequestErrorEnvelope",
         }
-
-        return self.api_client.call_api(
-            '/spaces/{spaceId}/audiences/{audienceId}/destination-connections', 'POST',
-            _path_params,
-            _query_params,
-            _header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
             response_types_map=_response_types_map,
-            auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
-            collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+        ).data
 
-    @validate_arguments
-    def get_activation_from_audience(self, space_id : constr(strict=True), audience_id : constr(strict=True), id : constr(strict=True), **kwargs) -> GetActivationFromAudience200Response:  # noqa: E501
-        """Get Activation from Audience  # noqa: E501
 
-        Gets a single Activation by id.   The rate limit for this endpoint is 60 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
+    @validate_call
+    def add_destination_to_audience_with_http_info(
+        self,
+        space_id: Annotated[str, Field(strict=True)],
+        audience_id: Annotated[str, Field(strict=True)],
+        add_destination_to_audience_alpha_input: AddDestinationToAudienceAlphaInput,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[AddDestinationToAudience200Response]:
+        """Add Destination to Audience
 
-        >>> thread = api.get_activation_from_audience(space_id, audience_id, id, async_req=True)
-        >>> result = thread.get()
-
-        :param space_id: (required)
-        :type space_id: str
-        :param audience_id: (required)
-        :type audience_id: str
-        :param id: (required)
-        :type id: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
-        :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: GetActivationFromAudience200Response
-        """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
-            message = "Error! Please call the get_activation_from_audience_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
-            raise ValueError(message)
-        return self.get_activation_from_audience_with_http_info(space_id, audience_id, id, **kwargs)  # noqa: E501
-
-    @validate_arguments
-    def get_activation_from_audience_with_http_info(self, space_id : constr(strict=True), audience_id : constr(strict=True), id : constr(strict=True), **kwargs) -> ApiResponse:  # noqa: E501
-        """Get Activation from Audience  # noqa: E501
-
-        Gets a single Activation by id.   The rate limit for this endpoint is 60 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-
-        >>> thread = api.get_activation_from_audience_with_http_info(space_id, audience_id, id, async_req=True)
-        >>> result = thread.get()
+        Establishes a connection between an audience and a Destination. To start syncing data, you must create an Activation for the connection created here.  Note that the Destination must be added to Engage through the Engage Settings page within the App before creating the connection through the API.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Destination Added into Audience` event in the [audit trail](/tag/Audit-Trail).   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
 
         :param space_id: (required)
         :type space_id: str
         :param audience_id: (required)
         :type audience_id: str
-        :param id: (required)
-        :type id: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _preload_content: if False, the ApiResponse.data will
-                                 be set to none and raw_data will store the
-                                 HTTP response body without reading/decoding.
-                                 Default is True.
-        :type _preload_content: bool, optional
-        :param _return_http_data_only: response data instead of ApiResponse
-                                       object with status code, headers, etc
-        :type _return_http_data_only: bool, optional
+        :param add_destination_to_audience_alpha_input: (required)
+        :type add_destination_to_audience_alpha_input: AddDestinationToAudienceAlphaInput
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the authentication
-                              in the spec for a single request.
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
         :type _request_auth: dict, optional
-        :type _content_type: string, optional: force content-type for the request
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
         :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: tuple(GetActivationFromAudience200Response, status_code(int), headers(HTTPHeaderDict))
-        """
+        """ # noqa: E501
 
-        _params = locals()
-
-        _all_params = [
-            'space_id',
-            'audience_id',
-            'id'
-        ]
-        _all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
-            ]
+        _param = self._add_destination_to_audience_serialize(
+            space_id=space_id,
+            audience_id=audience_id,
+            add_destination_to_audience_alpha_input=add_destination_to_audience_alpha_input,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
         )
 
-        # validate the arguments
-        for _key, _val in _params['kwargs'].items():
-            if _key not in _all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method get_activation_from_audience" % _key
-                )
-            _params[_key] = _val
-        del _params['kwargs']
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AddDestinationToAudience200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
 
-        _collection_formats = {}
+
+    @validate_call
+    def add_destination_to_audience_without_preload_content(
+        self,
+        space_id: Annotated[str, Field(strict=True)],
+        audience_id: Annotated[str, Field(strict=True)],
+        add_destination_to_audience_alpha_input: AddDestinationToAudienceAlphaInput,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Add Destination to Audience
+
+        Establishes a connection between an audience and a Destination. To start syncing data, you must create an Activation for the connection created here.  Note that the Destination must be added to Engage through the Engage Settings page within the App before creating the connection through the API.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Destination Added into Audience` event in the [audit trail](/tag/Audit-Trail).   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
+
+        :param space_id: (required)
+        :type space_id: str
+        :param audience_id: (required)
+        :type audience_id: str
+        :param add_destination_to_audience_alpha_input: (required)
+        :type add_destination_to_audience_alpha_input: AddDestinationToAudienceAlphaInput
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._add_destination_to_audience_serialize(
+            space_id=space_id,
+            audience_id=audience_id,
+            add_destination_to_audience_alpha_input=add_destination_to_audience_alpha_input,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AddDestinationToAudience200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _add_destination_to_audience_serialize(
+        self,
+        space_id,
+        audience_id,
+        add_destination_to_audience_alpha_input,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
 
         # process the path parameters
-        _path_params = {}
-        if _params['space_id']:
-            _path_params['spaceId'] = _params['space_id']
-
-        if _params['audience_id']:
-            _path_params['audienceId'] = _params['audience_id']
-
-        if _params['id']:
-            _path_params['id'] = _params['id']
-
-
+        if space_id is not None:
+            _path_params['spaceId'] = space_id
+        if audience_id is not None:
+            _path_params['audienceId'] = audience_id
         # process the query parameters
-        _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
-        _form_params = []
-        _files = {}
         # process the body parameter
-        _body_params = None
+        if add_destination_to_audience_alpha_input is not None:
+            _body_params = add_destination_to_audience_alpha_input
+
+
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/vnd.segment.v1alpha+json', 'application/json'])  # noqa: E501
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/vnd.segment.v1alpha+json', 
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/vnd.segment.v1alpha+json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
-        _auth_settings = ['token']  # noqa: E501
+        _auth_settings: List[str] = [
+            'token'
+        ]
 
-        _response_types_map = {
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/spaces/{spaceId}/audiences/{audienceId}/destination-connections',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def get_activation_from_audience(
+        self,
+        space_id: Annotated[str, Field(strict=True)],
+        audience_id: Annotated[str, Field(strict=True)],
+        id: Annotated[str, Field(strict=True)],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> GetActivationFromAudience200Response:
+        """Get Activation from Audience
+
+        Gets a single Activation by id.   The rate limit for this endpoint is 60 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
+
+        :param space_id: (required)
+        :type space_id: str
+        :param audience_id: (required)
+        :type audience_id: str
+        :param id: (required)
+        :type id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_activation_from_audience_serialize(
+            space_id=space_id,
+            audience_id=audience_id,
+            id=id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetActivationFromAudience200Response",
             '404': "RequestErrorEnvelope",
             '422': "RequestErrorEnvelope",
             '429': "RequestErrorEnvelope",
         }
-
-        return self.api_client.call_api(
-            '/spaces/{spaceId}/audiences/{audienceId}/activations/{id}', 'GET',
-            _path_params,
-            _query_params,
-            _header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
             response_types_map=_response_types_map,
-            auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
-            collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+        ).data
 
-    @validate_arguments
-    def list_activations_from_audience(self, space_id : constr(strict=True), audience_id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Optional pagination.  This parameter exists in alpha.")] = None, **kwargs) -> ListActivationsFromAudience200Response:  # noqa: E501
-        """List Activations from Audience  # noqa: E501
 
-        Lists all Activations.   The rate limit for this endpoint is 60 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
+    @validate_call
+    def get_activation_from_audience_with_http_info(
+        self,
+        space_id: Annotated[str, Field(strict=True)],
+        audience_id: Annotated[str, Field(strict=True)],
+        id: Annotated[str, Field(strict=True)],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[GetActivationFromAudience200Response]:
+        """Get Activation from Audience
 
-        >>> thread = api.list_activations_from_audience(space_id, audience_id, pagination, async_req=True)
-        >>> result = thread.get()
-
-        :param space_id: (required)
-        :type space_id: str
-        :param audience_id: (required)
-        :type audience_id: str
-        :param pagination: Optional pagination.  This parameter exists in alpha.
-        :type pagination: PaginationInput
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
-        :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: ListActivationsFromAudience200Response
-        """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
-            message = "Error! Please call the list_activations_from_audience_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
-            raise ValueError(message)
-        return self.list_activations_from_audience_with_http_info(space_id, audience_id, pagination, **kwargs)  # noqa: E501
-
-    @validate_arguments
-    def list_activations_from_audience_with_http_info(self, space_id : constr(strict=True), audience_id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Optional pagination.  This parameter exists in alpha.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """List Activations from Audience  # noqa: E501
-
-        Lists all Activations.   The rate limit for this endpoint is 60 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-
-        >>> thread = api.list_activations_from_audience_with_http_info(space_id, audience_id, pagination, async_req=True)
-        >>> result = thread.get()
+        Gets a single Activation by id.   The rate limit for this endpoint is 60 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
 
         :param space_id: (required)
         :type space_id: str
         :param audience_id: (required)
         :type audience_id: str
-        :param pagination: Optional pagination.  This parameter exists in alpha.
-        :type pagination: PaginationInput
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _preload_content: if False, the ApiResponse.data will
-                                 be set to none and raw_data will store the
-                                 HTTP response body without reading/decoding.
-                                 Default is True.
-        :type _preload_content: bool, optional
-        :param _return_http_data_only: response data instead of ApiResponse
-                                       object with status code, headers, etc
-        :type _return_http_data_only: bool, optional
+        :param id: (required)
+        :type id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the authentication
-                              in the spec for a single request.
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
         :type _request_auth: dict, optional
-        :type _content_type: string, optional: force content-type for the request
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
         :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: tuple(ListActivationsFromAudience200Response, status_code(int), headers(HTTPHeaderDict))
-        """
+        """ # noqa: E501
 
-        _params = locals()
-
-        _all_params = [
-            'space_id',
-            'audience_id',
-            'pagination'
-        ]
-        _all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
-            ]
+        _param = self._get_activation_from_audience_serialize(
+            space_id=space_id,
+            audience_id=audience_id,
+            id=id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
         )
 
-        # validate the arguments
-        for _key, _val in _params['kwargs'].items():
-            if _key not in _all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method list_activations_from_audience" % _key
-                )
-            _params[_key] = _val
-        del _params['kwargs']
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetActivationFromAudience200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
 
-        _collection_formats = {}
+
+    @validate_call
+    def get_activation_from_audience_without_preload_content(
+        self,
+        space_id: Annotated[str, Field(strict=True)],
+        audience_id: Annotated[str, Field(strict=True)],
+        id: Annotated[str, Field(strict=True)],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get Activation from Audience
+
+        Gets a single Activation by id.   The rate limit for this endpoint is 60 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
+
+        :param space_id: (required)
+        :type space_id: str
+        :param audience_id: (required)
+        :type audience_id: str
+        :param id: (required)
+        :type id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_activation_from_audience_serialize(
+            space_id=space_id,
+            audience_id=audience_id,
+            id=id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetActivationFromAudience200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _get_activation_from_audience_serialize(
+        self,
+        space_id,
+        audience_id,
+        id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
 
         # process the path parameters
-        _path_params = {}
-        if _params['space_id']:
-            _path_params['spaceId'] = _params['space_id']
-
-        if _params['audience_id']:
-            _path_params['audienceId'] = _params['audience_id']
-
-
+        if space_id is not None:
+            _path_params['spaceId'] = space_id
+        if audience_id is not None:
+            _path_params['audienceId'] = audience_id
+        if id is not None:
+            _path_params['id'] = id
         # process the query parameters
-        _query_params = []
-        if _params.get('pagination') is not None:  # noqa: E501
-            _query_params.append(('pagination', _params['pagination']))
-
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
-        _form_params = []
-        _files = {}
         # process the body parameter
-        _body_params = None
+
+
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/vnd.segment.v1alpha+json', 'application/json'])  # noqa: E501
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/vnd.segment.v1alpha+json', 
+                    'application/json'
+                ]
+            )
+
 
         # authentication setting
-        _auth_settings = ['token']  # noqa: E501
+        _auth_settings: List[str] = [
+            'token'
+        ]
 
-        _response_types_map = {
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/spaces/{spaceId}/audiences/{audienceId}/activations/{id}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def list_activations_from_audience(
+        self,
+        space_id: Annotated[str, Field(strict=True)],
+        audience_id: Annotated[str, Field(strict=True)],
+        pagination: Annotated[Optional[PaginationInput], Field(description="Optional pagination.  This parameter exists in alpha.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ListActivationsFromAudience200Response:
+        """List Activations from Audience
+
+        Lists all Activations.   The rate limit for this endpoint is 60 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
+
+        :param space_id: (required)
+        :type space_id: str
+        :param audience_id: (required)
+        :type audience_id: str
+        :param pagination: Optional pagination.  This parameter exists in alpha.
+        :type pagination: PaginationInput
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._list_activations_from_audience_serialize(
+            space_id=space_id,
+            audience_id=audience_id,
+            pagination=pagination,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListActivationsFromAudience200Response",
             '404': "RequestErrorEnvelope",
             '422': "RequestErrorEnvelope",
             '429': "RequestErrorEnvelope",
         }
-
-        return self.api_client.call_api(
-            '/spaces/{spaceId}/audiences/{audienceId}/activations', 'GET',
-            _path_params,
-            _query_params,
-            _header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
             response_types_map=_response_types_map,
-            auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
-            collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+        ).data
 
-    @validate_arguments
-    def list_destinations_from_audience(self, space_id : constr(strict=True), audience_id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Optional pagination.  This parameter exists in alpha.")] = None, **kwargs) -> ListDestinationsFromAudience200Response:  # noqa: E501
-        """List Destinations from Audience  # noqa: E501
 
-        Lists all Destinations from an Audience.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Destinations Listed from Audience` event in the [audit trail](/tag/Audit-Trail).   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
+    @validate_call
+    def list_activations_from_audience_with_http_info(
+        self,
+        space_id: Annotated[str, Field(strict=True)],
+        audience_id: Annotated[str, Field(strict=True)],
+        pagination: Annotated[Optional[PaginationInput], Field(description="Optional pagination.  This parameter exists in alpha.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[ListActivationsFromAudience200Response]:
+        """List Activations from Audience
 
-        >>> thread = api.list_destinations_from_audience(space_id, audience_id, pagination, async_req=True)
-        >>> result = thread.get()
-
-        :param space_id: (required)
-        :type space_id: str
-        :param audience_id: (required)
-        :type audience_id: str
-        :param pagination: Optional pagination.  This parameter exists in alpha.
-        :type pagination: PaginationInput
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
-        :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: ListDestinationsFromAudience200Response
-        """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
-            message = "Error! Please call the list_destinations_from_audience_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
-            raise ValueError(message)
-        return self.list_destinations_from_audience_with_http_info(space_id, audience_id, pagination, **kwargs)  # noqa: E501
-
-    @validate_arguments
-    def list_destinations_from_audience_with_http_info(self, space_id : constr(strict=True), audience_id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Optional pagination.  This parameter exists in alpha.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """List Destinations from Audience  # noqa: E501
-
-        Lists all Destinations from an Audience.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Destinations Listed from Audience` event in the [audit trail](/tag/Audit-Trail).   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-
-        >>> thread = api.list_destinations_from_audience_with_http_info(space_id, audience_id, pagination, async_req=True)
-        >>> result = thread.get()
+        Lists all Activations.   The rate limit for this endpoint is 60 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
 
         :param space_id: (required)
         :type space_id: str
@@ -769,943 +1104,2080 @@ class ActivationsApi:
         :type audience_id: str
         :param pagination: Optional pagination.  This parameter exists in alpha.
         :type pagination: PaginationInput
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _preload_content: if False, the ApiResponse.data will
-                                 be set to none and raw_data will store the
-                                 HTTP response body without reading/decoding.
-                                 Default is True.
-        :type _preload_content: bool, optional
-        :param _return_http_data_only: response data instead of ApiResponse
-                                       object with status code, headers, etc
-        :type _return_http_data_only: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the authentication
-                              in the spec for a single request.
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
         :type _request_auth: dict, optional
-        :type _content_type: string, optional: force content-type for the request
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
         :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: tuple(ListDestinationsFromAudience200Response, status_code(int), headers(HTTPHeaderDict))
-        """
+        """ # noqa: E501
 
-        _params = locals()
-
-        _all_params = [
-            'space_id',
-            'audience_id',
-            'pagination'
-        ]
-        _all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
-            ]
+        _param = self._list_activations_from_audience_serialize(
+            space_id=space_id,
+            audience_id=audience_id,
+            pagination=pagination,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
         )
 
-        # validate the arguments
-        for _key, _val in _params['kwargs'].items():
-            if _key not in _all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method list_destinations_from_audience" % _key
-                )
-            _params[_key] = _val
-        del _params['kwargs']
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListActivationsFromAudience200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
 
-        _collection_formats = {}
+
+    @validate_call
+    def list_activations_from_audience_without_preload_content(
+        self,
+        space_id: Annotated[str, Field(strict=True)],
+        audience_id: Annotated[str, Field(strict=True)],
+        pagination: Annotated[Optional[PaginationInput], Field(description="Optional pagination.  This parameter exists in alpha.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """List Activations from Audience
+
+        Lists all Activations.   The rate limit for this endpoint is 60 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
+
+        :param space_id: (required)
+        :type space_id: str
+        :param audience_id: (required)
+        :type audience_id: str
+        :param pagination: Optional pagination.  This parameter exists in alpha.
+        :type pagination: PaginationInput
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._list_activations_from_audience_serialize(
+            space_id=space_id,
+            audience_id=audience_id,
+            pagination=pagination,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListActivationsFromAudience200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _list_activations_from_audience_serialize(
+        self,
+        space_id,
+        audience_id,
+        pagination,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
 
         # process the path parameters
-        _path_params = {}
-        if _params['space_id']:
-            _path_params['spaceId'] = _params['space_id']
-
-        if _params['audience_id']:
-            _path_params['audienceId'] = _params['audience_id']
-
-
+        if space_id is not None:
+            _path_params['spaceId'] = space_id
+        if audience_id is not None:
+            _path_params['audienceId'] = audience_id
         # process the query parameters
-        _query_params = []
-        if _params.get('pagination') is not None:  # noqa: E501
-            _query_params.append(('pagination', _params['pagination']))
-
+        if pagination is not None:
+            
+            _query_params.append(('pagination', pagination))
+            
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
-        _form_params = []
-        _files = {}
         # process the body parameter
-        _body_params = None
+
+
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/vnd.segment.v1alpha+json', 'application/json'])  # noqa: E501
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/vnd.segment.v1alpha+json', 
+                    'application/json'
+                ]
+            )
+
 
         # authentication setting
-        _auth_settings = ['token']  # noqa: E501
+        _auth_settings: List[str] = [
+            'token'
+        ]
 
-        _response_types_map = {
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/spaces/{spaceId}/audiences/{audienceId}/activations',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def list_destinations_from_audience(
+        self,
+        space_id: Annotated[str, Field(strict=True)],
+        audience_id: Annotated[str, Field(strict=True)],
+        pagination: Annotated[Optional[PaginationInput], Field(description="Optional pagination.  This parameter exists in alpha.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ListDestinationsFromAudience200Response:
+        """List Destinations from Audience
+
+        Lists all Destinations from an Audience.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Destinations Listed from Audience` event in the [audit trail](/tag/Audit-Trail).   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
+
+        :param space_id: (required)
+        :type space_id: str
+        :param audience_id: (required)
+        :type audience_id: str
+        :param pagination: Optional pagination.  This parameter exists in alpha.
+        :type pagination: PaginationInput
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._list_destinations_from_audience_serialize(
+            space_id=space_id,
+            audience_id=audience_id,
+            pagination=pagination,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListDestinationsFromAudience200Response",
             '404': "RequestErrorEnvelope",
             '422': "RequestErrorEnvelope",
             '429': "RequestErrorEnvelope",
         }
-
-        return self.api_client.call_api(
-            '/spaces/{spaceId}/audiences/{audienceId}/destination-connections', 'GET',
-            _path_params,
-            _query_params,
-            _header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
             response_types_map=_response_types_map,
-            auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
-            collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+        ).data
 
-    @validate_arguments
-    def list_supported_destinations_from_audience(self, space_id : constr(strict=True), audience_type : constr(strict=True), slug : Annotated[Optional[StrictStr], Field(description="Optional destination slug to filter results.  This parameter exists in alpha.")] = None, action_id : Annotated[Optional[StrictStr], Field(description="Optional destination action id to filter results.  This parameter exists in alpha.")] = None, **kwargs) -> ListSupportedDestinationsFromAudience200Response:  # noqa: E501
-        """List Supported Destinations from Audience  # noqa: E501
 
-        Lists all Supported Destinations for this audience type that can be activated.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Supported Destinations Listed For Audience` event in the [audit trail](/tag/Audit-Trail).   The rate limit for this endpoint is 60 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
+    @validate_call
+    def list_destinations_from_audience_with_http_info(
+        self,
+        space_id: Annotated[str, Field(strict=True)],
+        audience_id: Annotated[str, Field(strict=True)],
+        pagination: Annotated[Optional[PaginationInput], Field(description="Optional pagination.  This parameter exists in alpha.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[ListDestinationsFromAudience200Response]:
+        """List Destinations from Audience
 
-        >>> thread = api.list_supported_destinations_from_audience(space_id, audience_type, slug, action_id, async_req=True)
-        >>> result = thread.get()
-
-        :param space_id: (required)
-        :type space_id: str
-        :param audience_type: (required)
-        :type audience_type: str
-        :param slug: Optional destination slug to filter results.  This parameter exists in alpha.
-        :type slug: str
-        :param action_id: Optional destination action id to filter results.  This parameter exists in alpha.
-        :type action_id: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
-        :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: ListSupportedDestinationsFromAudience200Response
-        """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
-            message = "Error! Please call the list_supported_destinations_from_audience_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
-            raise ValueError(message)
-        return self.list_supported_destinations_from_audience_with_http_info(space_id, audience_type, slug, action_id, **kwargs)  # noqa: E501
-
-    @validate_arguments
-    def list_supported_destinations_from_audience_with_http_info(self, space_id : constr(strict=True), audience_type : constr(strict=True), slug : Annotated[Optional[StrictStr], Field(description="Optional destination slug to filter results.  This parameter exists in alpha.")] = None, action_id : Annotated[Optional[StrictStr], Field(description="Optional destination action id to filter results.  This parameter exists in alpha.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """List Supported Destinations from Audience  # noqa: E501
-
-        Lists all Supported Destinations for this audience type that can be activated.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Supported Destinations Listed For Audience` event in the [audit trail](/tag/Audit-Trail).   The rate limit for this endpoint is 60 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-
-        >>> thread = api.list_supported_destinations_from_audience_with_http_info(space_id, audience_type, slug, action_id, async_req=True)
-        >>> result = thread.get()
+        Lists all Destinations from an Audience.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Destinations Listed from Audience` event in the [audit trail](/tag/Audit-Trail).   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
 
         :param space_id: (required)
         :type space_id: str
-        :param audience_type: (required)
-        :type audience_type: str
-        :param slug: Optional destination slug to filter results.  This parameter exists in alpha.
-        :type slug: str
-        :param action_id: Optional destination action id to filter results.  This parameter exists in alpha.
-        :type action_id: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _preload_content: if False, the ApiResponse.data will
-                                 be set to none and raw_data will store the
-                                 HTTP response body without reading/decoding.
-                                 Default is True.
-        :type _preload_content: bool, optional
-        :param _return_http_data_only: response data instead of ApiResponse
-                                       object with status code, headers, etc
-        :type _return_http_data_only: bool, optional
+        :param audience_id: (required)
+        :type audience_id: str
+        :param pagination: Optional pagination.  This parameter exists in alpha.
+        :type pagination: PaginationInput
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the authentication
-                              in the spec for a single request.
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
         :type _request_auth: dict, optional
-        :type _content_type: string, optional: force content-type for the request
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
         :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: tuple(ListSupportedDestinationsFromAudience200Response, status_code(int), headers(HTTPHeaderDict))
-        """
+        """ # noqa: E501
 
-        _params = locals()
-
-        _all_params = [
-            'space_id',
-            'audience_type',
-            'slug',
-            'action_id'
-        ]
-        _all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
-            ]
+        _param = self._list_destinations_from_audience_serialize(
+            space_id=space_id,
+            audience_id=audience_id,
+            pagination=pagination,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
         )
 
-        # validate the arguments
-        for _key, _val in _params['kwargs'].items():
-            if _key not in _all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method list_supported_destinations_from_audience" % _key
-                )
-            _params[_key] = _val
-        del _params['kwargs']
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListDestinationsFromAudience200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
 
-        _collection_formats = {}
+
+    @validate_call
+    def list_destinations_from_audience_without_preload_content(
+        self,
+        space_id: Annotated[str, Field(strict=True)],
+        audience_id: Annotated[str, Field(strict=True)],
+        pagination: Annotated[Optional[PaginationInput], Field(description="Optional pagination.  This parameter exists in alpha.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """List Destinations from Audience
+
+        Lists all Destinations from an Audience.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Destinations Listed from Audience` event in the [audit trail](/tag/Audit-Trail).   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
+
+        :param space_id: (required)
+        :type space_id: str
+        :param audience_id: (required)
+        :type audience_id: str
+        :param pagination: Optional pagination.  This parameter exists in alpha.
+        :type pagination: PaginationInput
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._list_destinations_from_audience_serialize(
+            space_id=space_id,
+            audience_id=audience_id,
+            pagination=pagination,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListDestinationsFromAudience200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _list_destinations_from_audience_serialize(
+        self,
+        space_id,
+        audience_id,
+        pagination,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
 
         # process the path parameters
-        _path_params = {}
-        if _params['space_id']:
-            _path_params['spaceId'] = _params['space_id']
-
-        if _params['audience_type']:
-            _path_params['audienceType'] = _params['audience_type']
-
-
+        if space_id is not None:
+            _path_params['spaceId'] = space_id
+        if audience_id is not None:
+            _path_params['audienceId'] = audience_id
         # process the query parameters
-        _query_params = []
-        if _params.get('slug') is not None:  # noqa: E501
-            _query_params.append(('slug', _params['slug']))
-
-        if _params.get('action_id') is not None:  # noqa: E501
-            _query_params.append(('actionId', _params['action_id']))
-
+        if pagination is not None:
+            
+            _query_params.append(('pagination', pagination))
+            
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
-        _form_params = []
-        _files = {}
         # process the body parameter
-        _body_params = None
+
+
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/vnd.segment.v1alpha+json', 'application/json'])  # noqa: E501
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/vnd.segment.v1alpha+json', 
+                    'application/json'
+                ]
+            )
+
 
         # authentication setting
-        _auth_settings = ['token']  # noqa: E501
+        _auth_settings: List[str] = [
+            'token'
+        ]
 
-        _response_types_map = {
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/spaces/{spaceId}/audiences/{audienceId}/destination-connections',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def list_supported_destinations_from_audience(
+        self,
+        space_id: Annotated[str, Field(strict=True)],
+        audience_type: Annotated[str, Field(strict=True)],
+        slug: Annotated[Optional[StrictStr], Field(description="Optional destination slug to filter results.  This parameter exists in alpha.")] = None,
+        action_id: Annotated[Optional[StrictStr], Field(description="Optional destination action id to filter results.  This parameter exists in alpha.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ListSupportedDestinationsFromAudience200Response:
+        """List Supported Destinations from Audience
+
+        Lists all Supported Destinations for this audience type that can be activated.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Supported Destinations Listed For Audience` event in the [audit trail](/tag/Audit-Trail).   The rate limit for this endpoint is 60 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
+
+        :param space_id: (required)
+        :type space_id: str
+        :param audience_type: (required)
+        :type audience_type: str
+        :param slug: Optional destination slug to filter results.  This parameter exists in alpha.
+        :type slug: str
+        :param action_id: Optional destination action id to filter results.  This parameter exists in alpha.
+        :type action_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._list_supported_destinations_from_audience_serialize(
+            space_id=space_id,
+            audience_type=audience_type,
+            slug=slug,
+            action_id=action_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListSupportedDestinationsFromAudience200Response",
             '404': "RequestErrorEnvelope",
             '422': "RequestErrorEnvelope",
             '429': "RequestErrorEnvelope",
         }
-
-        return self.api_client.call_api(
-            '/spaces/{spaceId}/audienceType/{audienceType}/supported-destinations', 'GET',
-            _path_params,
-            _query_params,
-            _header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
             response_types_map=_response_types_map,
-            auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
-            collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+        ).data
 
-    @validate_arguments
-    def remove_activation_from_audience(self, space_id : constr(strict=True), audience_id : constr(strict=True), id : constr(strict=True), **kwargs) -> RemoveActivationFromAudience200Response:  # noqa: E501
-        """Remove Activation from Audience  # noqa: E501
 
-        Deletes an Activation.   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
+    @validate_call
+    def list_supported_destinations_from_audience_with_http_info(
+        self,
+        space_id: Annotated[str, Field(strict=True)],
+        audience_type: Annotated[str, Field(strict=True)],
+        slug: Annotated[Optional[StrictStr], Field(description="Optional destination slug to filter results.  This parameter exists in alpha.")] = None,
+        action_id: Annotated[Optional[StrictStr], Field(description="Optional destination action id to filter results.  This parameter exists in alpha.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[ListSupportedDestinationsFromAudience200Response]:
+        """List Supported Destinations from Audience
 
-        >>> thread = api.remove_activation_from_audience(space_id, audience_id, id, async_req=True)
-        >>> result = thread.get()
-
-        :param space_id: (required)
-        :type space_id: str
-        :param audience_id: (required)
-        :type audience_id: str
-        :param id: (required)
-        :type id: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
-        :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: RemoveActivationFromAudience200Response
-        """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
-            message = "Error! Please call the remove_activation_from_audience_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
-            raise ValueError(message)
-        return self.remove_activation_from_audience_with_http_info(space_id, audience_id, id, **kwargs)  # noqa: E501
-
-    @validate_arguments
-    def remove_activation_from_audience_with_http_info(self, space_id : constr(strict=True), audience_id : constr(strict=True), id : constr(strict=True), **kwargs) -> ApiResponse:  # noqa: E501
-        """Remove Activation from Audience  # noqa: E501
-
-        Deletes an Activation.   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-
-        >>> thread = api.remove_activation_from_audience_with_http_info(space_id, audience_id, id, async_req=True)
-        >>> result = thread.get()
+        Lists all Supported Destinations for this audience type that can be activated.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Supported Destinations Listed For Audience` event in the [audit trail](/tag/Audit-Trail).   The rate limit for this endpoint is 60 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
 
         :param space_id: (required)
         :type space_id: str
-        :param audience_id: (required)
-        :type audience_id: str
-        :param id: (required)
-        :type id: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _preload_content: if False, the ApiResponse.data will
-                                 be set to none and raw_data will store the
-                                 HTTP response body without reading/decoding.
-                                 Default is True.
-        :type _preload_content: bool, optional
-        :param _return_http_data_only: response data instead of ApiResponse
-                                       object with status code, headers, etc
-        :type _return_http_data_only: bool, optional
+        :param audience_type: (required)
+        :type audience_type: str
+        :param slug: Optional destination slug to filter results.  This parameter exists in alpha.
+        :type slug: str
+        :param action_id: Optional destination action id to filter results.  This parameter exists in alpha.
+        :type action_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the authentication
-                              in the spec for a single request.
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
         :type _request_auth: dict, optional
-        :type _content_type: string, optional: force content-type for the request
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
         :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: tuple(RemoveActivationFromAudience200Response, status_code(int), headers(HTTPHeaderDict))
-        """
+        """ # noqa: E501
 
-        _params = locals()
-
-        _all_params = [
-            'space_id',
-            'audience_id',
-            'id'
-        ]
-        _all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
-            ]
+        _param = self._list_supported_destinations_from_audience_serialize(
+            space_id=space_id,
+            audience_type=audience_type,
+            slug=slug,
+            action_id=action_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
         )
 
-        # validate the arguments
-        for _key, _val in _params['kwargs'].items():
-            if _key not in _all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method remove_activation_from_audience" % _key
-                )
-            _params[_key] = _val
-        del _params['kwargs']
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListSupportedDestinationsFromAudience200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
 
-        _collection_formats = {}
+
+    @validate_call
+    def list_supported_destinations_from_audience_without_preload_content(
+        self,
+        space_id: Annotated[str, Field(strict=True)],
+        audience_type: Annotated[str, Field(strict=True)],
+        slug: Annotated[Optional[StrictStr], Field(description="Optional destination slug to filter results.  This parameter exists in alpha.")] = None,
+        action_id: Annotated[Optional[StrictStr], Field(description="Optional destination action id to filter results.  This parameter exists in alpha.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """List Supported Destinations from Audience
+
+        Lists all Supported Destinations for this audience type that can be activated.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Supported Destinations Listed For Audience` event in the [audit trail](/tag/Audit-Trail).   The rate limit for this endpoint is 60 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
+
+        :param space_id: (required)
+        :type space_id: str
+        :param audience_type: (required)
+        :type audience_type: str
+        :param slug: Optional destination slug to filter results.  This parameter exists in alpha.
+        :type slug: str
+        :param action_id: Optional destination action id to filter results.  This parameter exists in alpha.
+        :type action_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._list_supported_destinations_from_audience_serialize(
+            space_id=space_id,
+            audience_type=audience_type,
+            slug=slug,
+            action_id=action_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListSupportedDestinationsFromAudience200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _list_supported_destinations_from_audience_serialize(
+        self,
+        space_id,
+        audience_type,
+        slug,
+        action_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
 
         # process the path parameters
-        _path_params = {}
-        if _params['space_id']:
-            _path_params['spaceId'] = _params['space_id']
-
-        if _params['audience_id']:
-            _path_params['audienceId'] = _params['audience_id']
-
-        if _params['id']:
-            _path_params['id'] = _params['id']
-
-
+        if space_id is not None:
+            _path_params['spaceId'] = space_id
+        if audience_type is not None:
+            _path_params['audienceType'] = audience_type
         # process the query parameters
-        _query_params = []
+        if slug is not None:
+            
+            _query_params.append(('slug', slug))
+            
+        if action_id is not None:
+            
+            _query_params.append(('actionId', action_id))
+            
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
-        _form_params = []
-        _files = {}
         # process the body parameter
-        _body_params = None
+
+
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/vnd.segment.v1alpha+json', 'application/json'])  # noqa: E501
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/vnd.segment.v1alpha+json', 
+                    'application/json'
+                ]
+            )
+
 
         # authentication setting
-        _auth_settings = ['token']  # noqa: E501
+        _auth_settings: List[str] = [
+            'token'
+        ]
 
-        _response_types_map = {
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/spaces/{spaceId}/audienceType/{audienceType}/supported-destinations',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def remove_activation_from_audience(
+        self,
+        space_id: Annotated[str, Field(strict=True)],
+        audience_id: Annotated[str, Field(strict=True)],
+        id: Annotated[str, Field(strict=True)],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RemoveActivationFromAudience200Response:
+        """Remove Activation from Audience
+
+        Deletes an Activation.   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
+
+        :param space_id: (required)
+        :type space_id: str
+        :param audience_id: (required)
+        :type audience_id: str
+        :param id: (required)
+        :type id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._remove_activation_from_audience_serialize(
+            space_id=space_id,
+            audience_id=audience_id,
+            id=id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
             '200': "RemoveActivationFromAudience200Response",
             '404': "RequestErrorEnvelope",
             '422': "RequestErrorEnvelope",
             '429': "RequestErrorEnvelope",
         }
-
-        return self.api_client.call_api(
-            '/spaces/{spaceId}/audiences/{audienceId}/activations/{id}', 'DELETE',
-            _path_params,
-            _query_params,
-            _header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
             response_types_map=_response_types_map,
-            auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
-            collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+        ).data
 
-    @validate_arguments
-    def remove_destination_from_audience(self, space_id : constr(strict=True), audience_id : constr(strict=True), destination_id : constr(strict=True), **kwargs) -> RemoveDestinationFromAudience200Response:  # noqa: E501
-        """Remove Destination from Audience  # noqa: E501
 
-        Removes a Destination from an Audience. If there are activations associated with the Destination, the request will return a 409 Conflict error.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Destination Removed from Audience` event in the [audit trail](/tag/Audit-Trail).  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
+    @validate_call
+    def remove_activation_from_audience_with_http_info(
+        self,
+        space_id: Annotated[str, Field(strict=True)],
+        audience_id: Annotated[str, Field(strict=True)],
+        id: Annotated[str, Field(strict=True)],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[RemoveActivationFromAudience200Response]:
+        """Remove Activation from Audience
 
-        >>> thread = api.remove_destination_from_audience(space_id, audience_id, destination_id, async_req=True)
-        >>> result = thread.get()
-
-        :param space_id: (required)
-        :type space_id: str
-        :param audience_id: (required)
-        :type audience_id: str
-        :param destination_id: (required)
-        :type destination_id: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
-        :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: RemoveDestinationFromAudience200Response
-        """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
-            message = "Error! Please call the remove_destination_from_audience_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
-            raise ValueError(message)
-        return self.remove_destination_from_audience_with_http_info(space_id, audience_id, destination_id, **kwargs)  # noqa: E501
-
-    @validate_arguments
-    def remove_destination_from_audience_with_http_info(self, space_id : constr(strict=True), audience_id : constr(strict=True), destination_id : constr(strict=True), **kwargs) -> ApiResponse:  # noqa: E501
-        """Remove Destination from Audience  # noqa: E501
-
-        Removes a Destination from an Audience. If there are activations associated with the Destination, the request will return a 409 Conflict error.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Destination Removed from Audience` event in the [audit trail](/tag/Audit-Trail).  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-
-        >>> thread = api.remove_destination_from_audience_with_http_info(space_id, audience_id, destination_id, async_req=True)
-        >>> result = thread.get()
+        Deletes an Activation.   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
 
         :param space_id: (required)
         :type space_id: str
         :param audience_id: (required)
         :type audience_id: str
-        :param destination_id: (required)
-        :type destination_id: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _preload_content: if False, the ApiResponse.data will
-                                 be set to none and raw_data will store the
-                                 HTTP response body without reading/decoding.
-                                 Default is True.
-        :type _preload_content: bool, optional
-        :param _return_http_data_only: response data instead of ApiResponse
-                                       object with status code, headers, etc
-        :type _return_http_data_only: bool, optional
+        :param id: (required)
+        :type id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the authentication
-                              in the spec for a single request.
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
         :type _request_auth: dict, optional
-        :type _content_type: string, optional: force content-type for the request
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
         :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: tuple(RemoveDestinationFromAudience200Response, status_code(int), headers(HTTPHeaderDict))
-        """
+        """ # noqa: E501
 
-        _params = locals()
-
-        _all_params = [
-            'space_id',
-            'audience_id',
-            'destination_id'
-        ]
-        _all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
-            ]
+        _param = self._remove_activation_from_audience_serialize(
+            space_id=space_id,
+            audience_id=audience_id,
+            id=id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
         )
 
-        # validate the arguments
-        for _key, _val in _params['kwargs'].items():
-            if _key not in _all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method remove_destination_from_audience" % _key
-                )
-            _params[_key] = _val
-        del _params['kwargs']
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "RemoveActivationFromAudience200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
 
-        _collection_formats = {}
+
+    @validate_call
+    def remove_activation_from_audience_without_preload_content(
+        self,
+        space_id: Annotated[str, Field(strict=True)],
+        audience_id: Annotated[str, Field(strict=True)],
+        id: Annotated[str, Field(strict=True)],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Remove Activation from Audience
+
+        Deletes an Activation.   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
+
+        :param space_id: (required)
+        :type space_id: str
+        :param audience_id: (required)
+        :type audience_id: str
+        :param id: (required)
+        :type id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._remove_activation_from_audience_serialize(
+            space_id=space_id,
+            audience_id=audience_id,
+            id=id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "RemoveActivationFromAudience200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _remove_activation_from_audience_serialize(
+        self,
+        space_id,
+        audience_id,
+        id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
 
         # process the path parameters
-        _path_params = {}
-        if _params['space_id']:
-            _path_params['spaceId'] = _params['space_id']
-
-        if _params['audience_id']:
-            _path_params['audienceId'] = _params['audience_id']
-
-        if _params['destination_id']:
-            _path_params['destinationId'] = _params['destination_id']
-
-
+        if space_id is not None:
+            _path_params['spaceId'] = space_id
+        if audience_id is not None:
+            _path_params['audienceId'] = audience_id
+        if id is not None:
+            _path_params['id'] = id
         # process the query parameters
-        _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
-        _form_params = []
-        _files = {}
         # process the body parameter
-        _body_params = None
+
+
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/vnd.segment.v1alpha+json', 'application/json'])  # noqa: E501
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/vnd.segment.v1alpha+json', 
+                    'application/json'
+                ]
+            )
+
 
         # authentication setting
-        _auth_settings = ['token']  # noqa: E501
+        _auth_settings: List[str] = [
+            'token'
+        ]
 
-        _response_types_map = {
+        return self.api_client.param_serialize(
+            method='DELETE',
+            resource_path='/spaces/{spaceId}/audiences/{audienceId}/activations/{id}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def remove_destination_from_audience(
+        self,
+        space_id: Annotated[str, Field(strict=True)],
+        audience_id: Annotated[str, Field(strict=True)],
+        destination_id: Annotated[str, Field(strict=True)],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RemoveDestinationFromAudience200Response:
+        """Remove Destination from Audience
+
+        Removes a Destination from an Audience. If there are activations associated with the Destination, the request will return a 409 Conflict error.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Destination Removed from Audience` event in the [audit trail](/tag/Audit-Trail).
+
+        :param space_id: (required)
+        :type space_id: str
+        :param audience_id: (required)
+        :type audience_id: str
+        :param destination_id: (required)
+        :type destination_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._remove_destination_from_audience_serialize(
+            space_id=space_id,
+            audience_id=audience_id,
+            destination_id=destination_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
             '200': "RemoveDestinationFromAudience200Response",
             '404': "RequestErrorEnvelope",
             '422': "RequestErrorEnvelope",
             '429': "RequestErrorEnvelope",
         }
-
-        return self.api_client.call_api(
-            '/spaces/{spaceId}/audiences/{audienceId}/destination-connections/{destinationId}', 'DELETE',
-            _path_params,
-            _query_params,
-            _header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
             response_types_map=_response_types_map,
-            auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
-            collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+        ).data
 
-    @validate_arguments
-    def update_activation_for_audience(self, space_id : constr(strict=True), audience_id : constr(strict=True), id : constr(strict=True), update_activation_for_audience_alpha_input : UpdateActivationForAudienceAlphaInput, **kwargs) -> UpdateActivationForAudience200Response:  # noqa: E501
-        """Update Activation for Audience  # noqa: E501
 
-        Updates an Activation.   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
+    @validate_call
+    def remove_destination_from_audience_with_http_info(
+        self,
+        space_id: Annotated[str, Field(strict=True)],
+        audience_id: Annotated[str, Field(strict=True)],
+        destination_id: Annotated[str, Field(strict=True)],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[RemoveDestinationFromAudience200Response]:
+        """Remove Destination from Audience
 
-        >>> thread = api.update_activation_for_audience(space_id, audience_id, id, update_activation_for_audience_alpha_input, async_req=True)
-        >>> result = thread.get()
-
-        :param space_id: (required)
-        :type space_id: str
-        :param audience_id: (required)
-        :type audience_id: str
-        :param id: (required)
-        :type id: str
-        :param update_activation_for_audience_alpha_input: (required)
-        :type update_activation_for_audience_alpha_input: UpdateActivationForAudienceAlphaInput
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
-        :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: UpdateActivationForAudience200Response
-        """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
-            message = "Error! Please call the update_activation_for_audience_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
-            raise ValueError(message)
-        return self.update_activation_for_audience_with_http_info(space_id, audience_id, id, update_activation_for_audience_alpha_input, **kwargs)  # noqa: E501
-
-    @validate_arguments
-    def update_activation_for_audience_with_http_info(self, space_id : constr(strict=True), audience_id : constr(strict=True), id : constr(strict=True), update_activation_for_audience_alpha_input : UpdateActivationForAudienceAlphaInput, **kwargs) -> ApiResponse:  # noqa: E501
-        """Update Activation for Audience  # noqa: E501
-
-        Updates an Activation.   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-
-        >>> thread = api.update_activation_for_audience_with_http_info(space_id, audience_id, id, update_activation_for_audience_alpha_input, async_req=True)
-        >>> result = thread.get()
+        Removes a Destination from an Audience. If there are activations associated with the Destination, the request will return a 409 Conflict error.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Destination Removed from Audience` event in the [audit trail](/tag/Audit-Trail).
 
         :param space_id: (required)
         :type space_id: str
         :param audience_id: (required)
         :type audience_id: str
-        :param id: (required)
-        :type id: str
-        :param update_activation_for_audience_alpha_input: (required)
-        :type update_activation_for_audience_alpha_input: UpdateActivationForAudienceAlphaInput
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _preload_content: if False, the ApiResponse.data will
-                                 be set to none and raw_data will store the
-                                 HTTP response body without reading/decoding.
-                                 Default is True.
-        :type _preload_content: bool, optional
-        :param _return_http_data_only: response data instead of ApiResponse
-                                       object with status code, headers, etc
-        :type _return_http_data_only: bool, optional
+        :param destination_id: (required)
+        :type destination_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the authentication
-                              in the spec for a single request.
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
         :type _request_auth: dict, optional
-        :type _content_type: string, optional: force content-type for the request
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
         :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: tuple(UpdateActivationForAudience200Response, status_code(int), headers(HTTPHeaderDict))
-        """
+        """ # noqa: E501
 
-        _params = locals()
-
-        _all_params = [
-            'space_id',
-            'audience_id',
-            'id',
-            'update_activation_for_audience_alpha_input'
-        ]
-        _all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
-            ]
+        _param = self._remove_destination_from_audience_serialize(
+            space_id=space_id,
+            audience_id=audience_id,
+            destination_id=destination_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
         )
 
-        # validate the arguments
-        for _key, _val in _params['kwargs'].items():
-            if _key not in _all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method update_activation_for_audience" % _key
-                )
-            _params[_key] = _val
-        del _params['kwargs']
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "RemoveDestinationFromAudience200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
 
-        _collection_formats = {}
+
+    @validate_call
+    def remove_destination_from_audience_without_preload_content(
+        self,
+        space_id: Annotated[str, Field(strict=True)],
+        audience_id: Annotated[str, Field(strict=True)],
+        destination_id: Annotated[str, Field(strict=True)],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Remove Destination from Audience
+
+        Removes a Destination from an Audience. If there are activations associated with the Destination, the request will return a 409 Conflict error.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Destination Removed from Audience` event in the [audit trail](/tag/Audit-Trail).
+
+        :param space_id: (required)
+        :type space_id: str
+        :param audience_id: (required)
+        :type audience_id: str
+        :param destination_id: (required)
+        :type destination_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._remove_destination_from_audience_serialize(
+            space_id=space_id,
+            audience_id=audience_id,
+            destination_id=destination_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "RemoveDestinationFromAudience200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _remove_destination_from_audience_serialize(
+        self,
+        space_id,
+        audience_id,
+        destination_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
 
         # process the path parameters
-        _path_params = {}
-        if _params['space_id']:
-            _path_params['spaceId'] = _params['space_id']
-
-        if _params['audience_id']:
-            _path_params['audienceId'] = _params['audience_id']
-
-        if _params['id']:
-            _path_params['id'] = _params['id']
-
-
+        if space_id is not None:
+            _path_params['spaceId'] = space_id
+        if audience_id is not None:
+            _path_params['audienceId'] = audience_id
+        if destination_id is not None:
+            _path_params['destinationId'] = destination_id
         # process the query parameters
-        _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
-        _form_params = []
-        _files = {}
         # process the body parameter
-        _body_params = None
-        if _params['update_activation_for_audience_alpha_input'] is not None:
-            _body_params = _params['update_activation_for_audience_alpha_input']
+
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/vnd.segment.v1alpha+json', 'application/json'])  # noqa: E501
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/vnd.segment.v1alpha+json', 
+                    'application/json'
+                ]
+            )
 
-        # set the HTTP header `Content-Type`
-        _content_types_list = _params.get('_content_type',
-            self.api_client.select_header_content_type(
-                ['application/vnd.segment.v1alpha+json']))
-        if _content_types_list:
-                _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['token']  # noqa: E501
+        _auth_settings: List[str] = [
+            'token'
+        ]
 
-        _response_types_map = {
+        return self.api_client.param_serialize(
+            method='DELETE',
+            resource_path='/spaces/{spaceId}/audiences/{audienceId}/destination-connections/{destinationId}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def update_activation_for_audience(
+        self,
+        space_id: Annotated[str, Field(strict=True)],
+        audience_id: Annotated[str, Field(strict=True)],
+        id: Annotated[str, Field(strict=True)],
+        update_activation_for_audience_alpha_input: UpdateActivationForAudienceAlphaInput,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> UpdateActivationForAudience200Response:
+        """Update Activation for Audience
+
+        Updates an Activation.   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
+
+        :param space_id: (required)
+        :type space_id: str
+        :param audience_id: (required)
+        :type audience_id: str
+        :param id: (required)
+        :type id: str
+        :param update_activation_for_audience_alpha_input: (required)
+        :type update_activation_for_audience_alpha_input: UpdateActivationForAudienceAlphaInput
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._update_activation_for_audience_serialize(
+            space_id=space_id,
+            audience_id=audience_id,
+            id=id,
+            update_activation_for_audience_alpha_input=update_activation_for_audience_alpha_input,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
             '200': "UpdateActivationForAudience200Response",
             '404': "RequestErrorEnvelope",
             '422': "RequestErrorEnvelope",
             '429': "RequestErrorEnvelope",
         }
-
-        return self.api_client.call_api(
-            '/spaces/{spaceId}/audiences/{audienceId}/activations/{id}', 'PATCH',
-            _path_params,
-            _query_params,
-            _header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
             response_types_map=_response_types_map,
-            auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
-            collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+        ).data
 
-    @validate_arguments
-    def update_destination_for_audience(self, space_id : constr(strict=True), audience_id : constr(strict=True), destination_id : constr(strict=True), update_destination_for_audience_alpha_input : UpdateDestinationForAudienceAlphaInput, **kwargs) -> UpdateDestinationForAudience200Response:  # noqa: E501
-        """Update Destination for Audience  # noqa: E501
 
-        Updates a Destination for an Audience.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Destination Updated for Audience` event in the [audit trail](/tag/Audit-Trail).  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
+    @validate_call
+    def update_activation_for_audience_with_http_info(
+        self,
+        space_id: Annotated[str, Field(strict=True)],
+        audience_id: Annotated[str, Field(strict=True)],
+        id: Annotated[str, Field(strict=True)],
+        update_activation_for_audience_alpha_input: UpdateActivationForAudienceAlphaInput,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[UpdateActivationForAudience200Response]:
+        """Update Activation for Audience
 
-        >>> thread = api.update_destination_for_audience(space_id, audience_id, destination_id, update_destination_for_audience_alpha_input, async_req=True)
-        >>> result = thread.get()
-
-        :param space_id: (required)
-        :type space_id: str
-        :param audience_id: (required)
-        :type audience_id: str
-        :param destination_id: (required)
-        :type destination_id: str
-        :param update_destination_for_audience_alpha_input: (required)
-        :type update_destination_for_audience_alpha_input: UpdateDestinationForAudienceAlphaInput
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
-        :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: UpdateDestinationForAudience200Response
-        """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
-            message = "Error! Please call the update_destination_for_audience_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
-            raise ValueError(message)
-        return self.update_destination_for_audience_with_http_info(space_id, audience_id, destination_id, update_destination_for_audience_alpha_input, **kwargs)  # noqa: E501
-
-    @validate_arguments
-    def update_destination_for_audience_with_http_info(self, space_id : constr(strict=True), audience_id : constr(strict=True), destination_id : constr(strict=True), update_destination_for_audience_alpha_input : UpdateDestinationForAudienceAlphaInput, **kwargs) -> ApiResponse:  # noqa: E501
-        """Update Destination for Audience  # noqa: E501
-
-        Updates a Destination for an Audience.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Destination Updated for Audience` event in the [audit trail](/tag/Audit-Trail).  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-
-        >>> thread = api.update_destination_for_audience_with_http_info(space_id, audience_id, destination_id, update_destination_for_audience_alpha_input, async_req=True)
-        >>> result = thread.get()
+        Updates an Activation.   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
 
         :param space_id: (required)
         :type space_id: str
         :param audience_id: (required)
         :type audience_id: str
-        :param destination_id: (required)
-        :type destination_id: str
-        :param update_destination_for_audience_alpha_input: (required)
-        :type update_destination_for_audience_alpha_input: UpdateDestinationForAudienceAlphaInput
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _preload_content: if False, the ApiResponse.data will
-                                 be set to none and raw_data will store the
-                                 HTTP response body without reading/decoding.
-                                 Default is True.
-        :type _preload_content: bool, optional
-        :param _return_http_data_only: response data instead of ApiResponse
-                                       object with status code, headers, etc
-        :type _return_http_data_only: bool, optional
+        :param id: (required)
+        :type id: str
+        :param update_activation_for_audience_alpha_input: (required)
+        :type update_activation_for_audience_alpha_input: UpdateActivationForAudienceAlphaInput
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the authentication
-                              in the spec for a single request.
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
         :type _request_auth: dict, optional
-        :type _content_type: string, optional: force content-type for the request
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
         :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: tuple(UpdateDestinationForAudience200Response, status_code(int), headers(HTTPHeaderDict))
-        """
+        """ # noqa: E501
 
-        _params = locals()
-
-        _all_params = [
-            'space_id',
-            'audience_id',
-            'destination_id',
-            'update_destination_for_audience_alpha_input'
-        ]
-        _all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
-            ]
+        _param = self._update_activation_for_audience_serialize(
+            space_id=space_id,
+            audience_id=audience_id,
+            id=id,
+            update_activation_for_audience_alpha_input=update_activation_for_audience_alpha_input,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
         )
 
-        # validate the arguments
-        for _key, _val in _params['kwargs'].items():
-            if _key not in _all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method update_destination_for_audience" % _key
-                )
-            _params[_key] = _val
-        del _params['kwargs']
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateActivationForAudience200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
 
-        _collection_formats = {}
+
+    @validate_call
+    def update_activation_for_audience_without_preload_content(
+        self,
+        space_id: Annotated[str, Field(strict=True)],
+        audience_id: Annotated[str, Field(strict=True)],
+        id: Annotated[str, Field(strict=True)],
+        update_activation_for_audience_alpha_input: UpdateActivationForAudienceAlphaInput,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Update Activation for Audience
+
+        Updates an Activation.   The rate limit for this endpoint is 50 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
+
+        :param space_id: (required)
+        :type space_id: str
+        :param audience_id: (required)
+        :type audience_id: str
+        :param id: (required)
+        :type id: str
+        :param update_activation_for_audience_alpha_input: (required)
+        :type update_activation_for_audience_alpha_input: UpdateActivationForAudienceAlphaInput
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._update_activation_for_audience_serialize(
+            space_id=space_id,
+            audience_id=audience_id,
+            id=id,
+            update_activation_for_audience_alpha_input=update_activation_for_audience_alpha_input,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateActivationForAudience200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _update_activation_for_audience_serialize(
+        self,
+        space_id,
+        audience_id,
+        id,
+        update_activation_for_audience_alpha_input,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
 
         # process the path parameters
-        _path_params = {}
-        if _params['space_id']:
-            _path_params['spaceId'] = _params['space_id']
-
-        if _params['audience_id']:
-            _path_params['audienceId'] = _params['audience_id']
-
-        if _params['destination_id']:
-            _path_params['destinationId'] = _params['destination_id']
-
-
+        if space_id is not None:
+            _path_params['spaceId'] = space_id
+        if audience_id is not None:
+            _path_params['audienceId'] = audience_id
+        if id is not None:
+            _path_params['id'] = id
         # process the query parameters
-        _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
-        _form_params = []
-        _files = {}
         # process the body parameter
-        _body_params = None
-        if _params['update_destination_for_audience_alpha_input'] is not None:
-            _body_params = _params['update_destination_for_audience_alpha_input']
+        if update_activation_for_audience_alpha_input is not None:
+            _body_params = update_activation_for_audience_alpha_input
+
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/vnd.segment.v1alpha+json', 'application/json'])  # noqa: E501
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/vnd.segment.v1alpha+json', 
+                    'application/json'
+                ]
+            )
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get('_content_type',
-            self.api_client.select_header_content_type(
-                ['application/vnd.segment.v1alpha+json']))
-        if _content_types_list:
-                _header_params['Content-Type'] = _content_types_list
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/vnd.segment.v1alpha+json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
-        _auth_settings = ['token']  # noqa: E501
+        _auth_settings: List[str] = [
+            'token'
+        ]
 
-        _response_types_map = {
+        return self.api_client.param_serialize(
+            method='PATCH',
+            resource_path='/spaces/{spaceId}/audiences/{audienceId}/activations/{id}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def update_destination_for_audience(
+        self,
+        space_id: Annotated[str, Field(strict=True)],
+        audience_id: Annotated[str, Field(strict=True)],
+        destination_id: Annotated[str, Field(strict=True)],
+        update_destination_for_audience_alpha_input: UpdateDestinationForAudienceAlphaInput,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> UpdateDestinationForAudience200Response:
+        """Update Destination for Audience
+
+        Updates a Destination for an Audience.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Destination Updated for Audience` event in the [audit trail](/tag/Audit-Trail).
+
+        :param space_id: (required)
+        :type space_id: str
+        :param audience_id: (required)
+        :type audience_id: str
+        :param destination_id: (required)
+        :type destination_id: str
+        :param update_destination_for_audience_alpha_input: (required)
+        :type update_destination_for_audience_alpha_input: UpdateDestinationForAudienceAlphaInput
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._update_destination_for_audience_serialize(
+            space_id=space_id,
+            audience_id=audience_id,
+            destination_id=destination_id,
+            update_destination_for_audience_alpha_input=update_destination_for_audience_alpha_input,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
             '200': "UpdateDestinationForAudience200Response",
             '404': "RequestErrorEnvelope",
             '422': "RequestErrorEnvelope",
             '429': "RequestErrorEnvelope",
         }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
 
-        return self.api_client.call_api(
-            '/spaces/{spaceId}/audiences/{audienceId}/destination-connections/{destinationId}', 'PATCH',
-            _path_params,
-            _query_params,
-            _header_params,
+
+    @validate_call
+    def update_destination_for_audience_with_http_info(
+        self,
+        space_id: Annotated[str, Field(strict=True)],
+        audience_id: Annotated[str, Field(strict=True)],
+        destination_id: Annotated[str, Field(strict=True)],
+        update_destination_for_audience_alpha_input: UpdateDestinationForAudienceAlphaInput,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[UpdateDestinationForAudience200Response]:
+        """Update Destination for Audience
+
+        Updates a Destination for an Audience.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Destination Updated for Audience` event in the [audit trail](/tag/Audit-Trail).
+
+        :param space_id: (required)
+        :type space_id: str
+        :param audience_id: (required)
+        :type audience_id: str
+        :param destination_id: (required)
+        :type destination_id: str
+        :param update_destination_for_audience_alpha_input: (required)
+        :type update_destination_for_audience_alpha_input: UpdateDestinationForAudienceAlphaInput
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._update_destination_for_audience_serialize(
+            space_id=space_id,
+            audience_id=audience_id,
+            destination_id=destination_id,
+            update_destination_for_audience_alpha_input=update_destination_for_audience_alpha_input,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateDestinationForAudience200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def update_destination_for_audience_without_preload_content(
+        self,
+        space_id: Annotated[str, Field(strict=True)],
+        audience_id: Annotated[str, Field(strict=True)],
+        destination_id: Annotated[str, Field(strict=True)],
+        update_destination_for_audience_alpha_input: UpdateDestinationForAudienceAlphaInput,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Update Destination for Audience
+
+        Updates a Destination for an Audience.  • This endpoint is in **Alpha** testing.  Please submit any feedback by sending an email to friends@segment.com.   • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.  • When called, this endpoint may generate the `Destination Updated for Audience` event in the [audit trail](/tag/Audit-Trail).
+
+        :param space_id: (required)
+        :type space_id: str
+        :param audience_id: (required)
+        :type audience_id: str
+        :param destination_id: (required)
+        :type destination_id: str
+        :param update_destination_for_audience_alpha_input: (required)
+        :type update_destination_for_audience_alpha_input: UpdateDestinationForAudienceAlphaInput
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._update_destination_for_audience_serialize(
+            space_id=space_id,
+            audience_id=audience_id,
+            destination_id=destination_id,
+            update_destination_for_audience_alpha_input=update_destination_for_audience_alpha_input,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateDestinationForAudience200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _update_destination_for_audience_serialize(
+        self,
+        space_id,
+        audience_id,
+        destination_id,
+        update_destination_for_audience_alpha_input,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if space_id is not None:
+            _path_params['spaceId'] = space_id
+        if audience_id is not None:
+            _path_params['audienceId'] = audience_id
+        if destination_id is not None:
+            _path_params['destinationId'] = destination_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if update_destination_for_audience_alpha_input is not None:
+            _body_params = update_destination_for_audience_alpha_input
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/vnd.segment.v1alpha+json', 
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/vnd.segment.v1alpha+json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'token'
+        ]
+
+        return self.api_client.param_serialize(
+            method='PATCH',
+            resource_path='/spaces/{spaceId}/audiences/{audienceId}/destination-connections/{destinationId}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
             body=_body_params,
             post_params=_form_params,
             files=_files,
-            response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+

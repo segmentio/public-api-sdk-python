@@ -18,81 +18,98 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-from typing import List, Optional, Union
-from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr, conlist
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from segment_public_api.models.sync_notice_v1 import SyncNoticeV1
+from typing import Optional, Set
+from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class SyncV1(BaseModel):
     """
-    Represents a sync between a Source and Warehouse.  A sync occurs when data from a Source is loaded into a Warehouse.  # noqa: E501
-    """
-    source_id: StrictStr = Field(..., alias="sourceId", description="The id of the Source loaded in the sync.")
-    start: StrictStr = Field(..., description="The start time of the sync.")
-    end: Optional[StrictStr] = Field(..., description="The time the sync completed. Returns null if unfinished.")
-    status: StrictStr = Field(..., description="The status of the sync.")
-    duration: Union[StrictFloat, StrictInt] = Field(..., description="The duration of the sync in seconds. Returns the partial duration if the sync has not finished yet.")
-    human_duration: StrictStr = Field(..., alias="humanDuration", description="The human-readable counterpart of `duration`.")
-    count: Union[StrictFloat, StrictInt] = Field(..., description="The number of rows synced into the Warehouse.")
-    notices: conlist(SyncNoticeV1) = Field(..., description="Notices that contain the events that occurred during the sync.")
-    __properties = ["sourceId", "start", "end", "status", "duration", "humanDuration", "count", "notices"]
+    Represents a sync between a Source and Warehouse.  A sync occurs when data from a Source is loaded into a Warehouse.
+    """ # noqa: E501
+    source_id: StrictStr = Field(description="The id of the Source loaded in the sync.", alias="sourceId")
+    start: StrictStr = Field(description="The start time of the sync.")
+    end: Optional[StrictStr] = Field(description="The time the sync completed. Returns null if unfinished.")
+    status: StrictStr = Field(description="The status of the sync.")
+    duration: Union[StrictFloat, StrictInt] = Field(description="The duration of the sync in seconds. Returns the partial duration if the sync has not finished yet.")
+    human_duration: StrictStr = Field(description="The human-readable counterpart of `duration`.", alias="humanDuration")
+    count: Union[StrictFloat, StrictInt] = Field(description="The number of rows synced into the Warehouse.")
+    notices: List[SyncNoticeV1] = Field(description="Notices that contain the events that occurred during the sync.")
+    __properties: ClassVar[List[str]] = ["sourceId", "start", "end", "status", "duration", "humanDuration", "count", "notices"]
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        validate_by_name=True,
+        validate_by_alias=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
-    def from_json(cls, json_str: str) -> SyncV1:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of SyncV1 from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         # override the default output from pydantic by calling `to_dict()` of each item in notices (list)
         _items = []
         if self.notices:
-            for _item in self.notices:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_notices in self.notices:
+                if _item_notices:
+                    _items.append(_item_notices.to_dict())
             _dict['notices'] = _items
         # set to None if end (nullable) is None
-        # and __fields_set__ contains the field
-        if self.end is None and "end" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.end is None and "end" in self.model_fields_set:
             _dict['end'] = None
 
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> SyncV1:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of SyncV1 from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return SyncV1.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = SyncV1.parse_obj({
-            "source_id": obj.get("sourceId"),
+        _obj = cls.model_validate({
+            "sourceId": obj.get("sourceId"),
             "start": obj.get("start"),
             "end": obj.get("end"),
             "status": obj.get("status"),
             "duration": obj.get("duration"),
-            "human_duration": obj.get("humanDuration"),
+            "humanDuration": obj.get("humanDuration"),
             "count": obj.get("count"),
-            "notices": [SyncNoticeV1.from_dict(_item) for _item in obj.get("notices")] if obj.get("notices") is not None else None
+            "notices": [SyncNoticeV1.from_dict(_item) for _item in obj["notices"]] if obj.get("notices") is not None else None
         })
         return _obj
 

@@ -38,7 +38,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -53,7 +52,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling SelectiveSyncApi->get_advanced_sync_schedule_from_warehouse: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -112,7 +110,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -129,7 +126,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling SelectiveSyncApi->list_selective_syncs_from_warehouse_and_source: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -190,7 +186,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -206,7 +201,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling SelectiveSyncApi->list_syncs_from_warehouse: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -266,7 +260,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -283,7 +276,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling SelectiveSyncApi->list_syncs_from_warehouse_and_source: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -344,7 +336,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -360,7 +351,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling SelectiveSyncApi->replace_advanced_sync_schedule_for_warehouse: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -420,7 +410,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -436,7 +425,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling SelectiveSyncApi->update_selective_sync_for_warehouse: %s\n" % e)
 ```
-
 
 
 ### Parameters

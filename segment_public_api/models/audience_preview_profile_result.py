@@ -18,64 +18,81 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-from typing import Dict, List, Optional
-from pydantic import BaseModel, Field, StrictStr, conlist
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from segment_public_api.models.entity_details import EntityDetails
+from typing import Optional, Set
+from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class AudiencePreviewProfileResult(BaseModel):
     """
-    Result membership object for an audience preview with `audienceType: USERS` or `audienceType: LINKED`.  # noqa: E501
-    """
-    id: StrictStr = Field(..., description="Segment id.")
-    entities: Optional[Dict[str, conlist(EntityDetails)]] = Field(None, description="Associated entities.")
-    __properties = ["id", "entities"]
+    Result membership object for an audience preview with `audienceType: USERS` or `audienceType: LINKED`.
+    """ # noqa: E501
+    id: StrictStr = Field(description="Segment id.")
+    entities: Optional[Dict[str, List[EntityDetails]]] = Field(default=None, description="The entities associated with the profile. Will only have a value if the audience preview has `audienceType: LINKED` and entities are referenced in the audience preview's definition.")
+    __properties: ClassVar[List[str]] = ["id", "entities"]
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        validate_by_name=True,
+        validate_by_alias=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
-    def from_json(cls, json_str: str) -> AudiencePreviewProfileResult:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of AudiencePreviewProfileResult from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         # override the default output from pydantic by calling `to_dict()` of each value in entities (dict of array)
         _field_dict_of_array = {}
         if self.entities:
-            for _key in self.entities:
-                if self.entities[_key]:
-                    _field_dict_of_array[_key] = [
-                        _item.to_dict() for _item in self.entities[_key]
+            for _key_entities in self.entities:
+                if self.entities[_key_entities] is not None:
+                    _field_dict_of_array[_key_entities] = [
+                        _item.to_dict() for _item in self.entities[_key_entities]
                     ]
             _dict['entities'] = _field_dict_of_array
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> AudiencePreviewProfileResult:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of AudiencePreviewProfileResult from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return AudiencePreviewProfileResult.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = AudiencePreviewProfileResult.parse_obj({
+        _obj = cls.model_validate({
             "id": obj.get("id"),
             "entities": dict(
                 (_k,
@@ -83,7 +100,7 @@ class AudiencePreviewProfileResult(BaseModel):
                         if _v is not None
                         else None
                 )
-                for _k, _v in obj.get("entities").items()
+                for _k, _v in obj.get("entities", {}).items()
             )
         })
         return _obj

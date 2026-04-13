@@ -18,72 +18,89 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-from typing import Optional
-from pydantic import BaseModel, Field, StrictStr, validator
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional
+from typing import Optional, Set
+from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class DestinationMetadataComponentV1(BaseModel):
     """
-    Represents a component this Destination provides.  # noqa: E501
-    """
-    type: StrictStr = Field(..., description="The component type.")
-    code: StrictStr = Field(..., description="Link to the repository hosting the code for this component.")
-    owner: Optional[StrictStr] = Field(None, description="The owner of this component. Either 'SEGMENT' or 'PARTNER'.")
-    __properties = ["type", "code", "owner"]
+    Represents a component this Destination provides.
+    """ # noqa: E501
+    type: StrictStr = Field(description="The component type.")
+    code: StrictStr = Field(description="Link to the repository hosting the code for this component.")
+    owner: Optional[StrictStr] = Field(default=None, description="The owner of this component. Either 'SEGMENT' or 'PARTNER'.")
+    __properties: ClassVar[List[str]] = ["type", "code", "owner"]
 
-    @validator('type')
+    @field_validator('type')
     def type_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in ('ANDROID', 'BROWSER', 'IOS', 'SERVER'):
+        if value not in set(['ANDROID', 'BROWSER', 'IOS', 'SERVER']):
             raise ValueError("must be one of enum values ('ANDROID', 'BROWSER', 'IOS', 'SERVER')")
         return value
 
-    @validator('owner')
+    @field_validator('owner')
     def owner_validate_enum(cls, value):
         """Validates the enum"""
         if value is None:
             return value
 
-        if value not in ('PARTNER', 'SEGMENT'):
+        if value not in set(['PARTNER', 'SEGMENT']):
             raise ValueError("must be one of enum values ('PARTNER', 'SEGMENT')")
         return value
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        validate_by_name=True,
+        validate_by_alias=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
-    def from_json(cls, json_str: str) -> DestinationMetadataComponentV1:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of DestinationMetadataComponentV1 from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> DestinationMetadataComponentV1:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of DestinationMetadataComponentV1 from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return DestinationMetadataComponentV1.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = DestinationMetadataComponentV1.parse_obj({
+        _obj = cls.model_validate({
             "type": obj.get("type"),
             "code": obj.get("code"),
             "owner": obj.get("owner")

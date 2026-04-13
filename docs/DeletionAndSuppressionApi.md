@@ -40,7 +40,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -56,7 +55,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling DeletionAndSuppressionApi->create_cloud_source_regulation: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -116,7 +114,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -132,7 +129,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling DeletionAndSuppressionApi->create_source_regulation: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -192,7 +188,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -207,7 +202,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling DeletionAndSuppressionApi->create_workspace_regulation: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -265,7 +259,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -280,7 +273,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling DeletionAndSuppressionApi->get_regulation: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -339,7 +331,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -357,7 +348,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling DeletionAndSuppressionApi->list_regulations_from_source: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -419,7 +409,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -434,7 +423,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling DeletionAndSuppressionApi->list_suppressions: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -493,7 +481,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -510,7 +497,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling DeletionAndSuppressionApi->list_workspace_regulations: %s\n" % e)
 ```
-
 
 
 ### Parameters

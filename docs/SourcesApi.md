@@ -46,7 +46,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -62,7 +61,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling SourcesApi->add_labels_to_source: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -122,7 +120,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -137,7 +134,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling SourcesApi->create_source: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -195,7 +191,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -210,7 +205,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling SourcesApi->create_write_key_for_source: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -268,7 +262,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -283,7 +276,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling SourcesApi->delete_source: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -341,7 +333,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -356,7 +347,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling SourcesApi->get_source: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -415,7 +405,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -431,7 +420,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling SourcesApi->list_connected_destinations_from_source: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -491,7 +479,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -507,7 +494,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling SourcesApi->list_connected_warehouses_from_source: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -566,7 +552,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -581,7 +566,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling SourcesApi->list_schema_settings_in_source: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -640,7 +624,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -655,7 +638,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling SourcesApi->list_sources: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -713,7 +695,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -729,7 +710,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling SourcesApi->remove_write_key_from_source: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -789,7 +769,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -805,7 +784,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling SourcesApi->replace_labels_in_source: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -865,7 +843,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -881,7 +858,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling SourcesApi->update_schema_settings_in_source: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -941,7 +917,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -957,7 +932,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling SourcesApi->update_source: %s\n" % e)
 ```
-
 
 
 ### Parameters

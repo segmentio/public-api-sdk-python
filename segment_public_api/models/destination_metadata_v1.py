@@ -18,9 +18,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-from typing import List, Optional
-from pydantic import BaseModel, Field, StrictBool, StrictStr, conlist, validator
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional
 from segment_public_api.models.contact import Contact
 from segment_public_api.models.destination_metadata_action_v1 import DestinationMetadataActionV1
 from segment_public_api.models.destination_metadata_component_v1 import DestinationMetadataComponentV1
@@ -30,81 +29,99 @@ from segment_public_api.models.destination_metadata_platforms_v1 import Destinat
 from segment_public_api.models.destination_metadata_subscription_preset_v1 import DestinationMetadataSubscriptionPresetV1
 from segment_public_api.models.integration_option_beta import IntegrationOptionBeta
 from segment_public_api.models.logos_beta import LogosBeta
+from typing import Optional, Set
+from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class DestinationMetadataV1(BaseModel):
     """
-    Represents a Destination within Segment.  A Destination is a target for Segment to forward data to, and represents a tool or storage Destination.  # noqa: E501
-    """
-    id: StrictStr = Field(..., description="The id of the Destination metadata.  Config API note: analogous to `name`.")
-    name: StrictStr = Field(..., description="The user-friendly name of the Destination.  Config API note: equal to `displayName`.")
-    description: StrictStr = Field(..., description="The description of the Destination.")
-    slug: StrictStr = Field(..., description="The slug used to identify the Destination in the Segment app.")
-    logos: LogosBeta = Field(...)
-    options: conlist(IntegrationOptionBeta) = Field(..., description="Options configured for the Destination.")
-    status: StrictStr = Field(..., description="Support status of the Destination.")
-    previous_names: conlist(StrictStr) = Field(..., alias="previousNames", description="A list of names previously used by the Destination.")
-    categories: conlist(StrictStr) = Field(..., description="A list of categories with which the Destination is associated.")
-    website: StrictStr = Field(..., description="A website URL for this Destination.")
-    components: conlist(DestinationMetadataComponentV1) = Field(..., description="A list of components this Destination provides.")
-    supported_features: DestinationMetadataFeaturesV1 = Field(..., alias="supportedFeatures")
-    supported_methods: DestinationMetadataMethodsV1 = Field(..., alias="supportedMethods")
-    supported_platforms: DestinationMetadataPlatformsV1 = Field(..., alias="supportedPlatforms")
-    actions: conlist(DestinationMetadataActionV1) = Field(..., description="Actions available for the Destination.")
-    presets: conlist(DestinationMetadataSubscriptionPresetV1) = Field(..., description="Predefined Destination subscriptions that can optionally be applied when connecting a new instance of the Destination.")
-    contacts: Optional[conlist(Contact)] = Field(None, description="Contact info for Integration Owners.")
-    partner_owned: Optional[StrictBool] = Field(None, alias="partnerOwned", description="Partner Owned flag.")
-    supported_regions: Optional[conlist(StrictStr)] = Field(None, alias="supportedRegions", description="A list of supported regions for this Destination.")
-    region_endpoints: Optional[conlist(StrictStr)] = Field(None, alias="regionEndpoints", description="The list of regional endpoints for this Destination.")
-    multi_instance_supported_version: Optional[StrictStr] = Field(None, alias="multiInstanceSupportedVersion", description="This Destination's support for multiple instance types.")
-    __properties = ["id", "name", "description", "slug", "logos", "options", "status", "previousNames", "categories", "website", "components", "supportedFeatures", "supportedMethods", "supportedPlatforms", "actions", "presets", "contacts", "partnerOwned", "supportedRegions", "regionEndpoints", "multiInstanceSupportedVersion"]
+    Represents a Destination within Segment.  A Destination is a target for Segment to forward data to, and represents a tool or storage Destination.
+    """ # noqa: E501
+    id: StrictStr = Field(description="The id of the Destination metadata.  Config API note: analogous to `name`.")
+    name: StrictStr = Field(description="The user-friendly name of the Destination.  Config API note: equal to `displayName`.")
+    description: StrictStr = Field(description="The description of the Destination.")
+    slug: StrictStr = Field(description="The slug used to identify the Destination in the Segment app.")
+    logos: LogosBeta = Field(description="The Destination's logos.")
+    options: List[IntegrationOptionBeta] = Field(description="Options configured for the Destination.")
+    status: StrictStr = Field(description="Support status of the Destination.")
+    previous_names: List[StrictStr] = Field(description="A list of names previously used by the Destination.", alias="previousNames")
+    categories: List[StrictStr] = Field(description="A list of categories with which the Destination is associated.")
+    website: StrictStr = Field(description="A website URL for this Destination.")
+    components: List[DestinationMetadataComponentV1] = Field(description="A list of components this Destination provides.")
+    supported_features: DestinationMetadataFeaturesV1 = Field(description="Features that this Destination supports.  Config API note: holds `browserUnbundling` fields.", alias="supportedFeatures")
+    supported_methods: DestinationMetadataMethodsV1 = Field(description="Methods that this Destination supports.  Config API note: equal to `methods`.", alias="supportedMethods")
+    supported_platforms: DestinationMetadataPlatformsV1 = Field(description="Platforms from which the Destination receives events.  Config API note: equal to `platforms`.", alias="supportedPlatforms")
+    actions: List[DestinationMetadataActionV1] = Field(description="Actions available for the Destination.")
+    presets: List[DestinationMetadataSubscriptionPresetV1] = Field(description="Predefined Destination subscriptions that can optionally be applied when connecting a new instance of the Destination.")
+    contacts: Optional[List[Contact]] = Field(default=None, description="Contact info for Integration Owners.")
+    partner_owned: Optional[StrictBool] = Field(default=None, description="Partner Owned flag.", alias="partnerOwned")
+    supported_regions: Optional[List[StrictStr]] = Field(default=None, description="A list of supported regions for this Destination.", alias="supportedRegions")
+    region_endpoints: Optional[List[StrictStr]] = Field(default=None, description="The list of regional endpoints for this Destination.", alias="regionEndpoints")
+    multi_instance_supported_version: Optional[StrictStr] = Field(default=None, description="This Destination's support for multiple instance types.", alias="multiInstanceSupportedVersion")
+    __properties: ClassVar[List[str]] = ["id", "name", "description", "slug", "logos", "options", "status", "previousNames", "categories", "website", "components", "supportedFeatures", "supportedMethods", "supportedPlatforms", "actions", "presets", "contacts", "partnerOwned", "supportedRegions", "regionEndpoints", "multiInstanceSupportedVersion"]
 
-    @validator('status')
+    @field_validator('status')
     def status_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in ('DEPRECATED', 'PRIVATE_BETA', 'PRIVATE_BUILDING', 'PRIVATE_SUBMITTED', 'PUBLIC', 'PUBLIC_BETA', 'UNAVAILABLE'):
+        if value not in set(['DEPRECATED', 'PRIVATE_BETA', 'PRIVATE_BUILDING', 'PRIVATE_SUBMITTED', 'PUBLIC', 'PUBLIC_BETA', 'UNAVAILABLE']):
             raise ValueError("must be one of enum values ('DEPRECATED', 'PRIVATE_BETA', 'PRIVATE_BUILDING', 'PRIVATE_SUBMITTED', 'PUBLIC', 'PUBLIC_BETA', 'UNAVAILABLE')")
         return value
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        validate_by_name=True,
+        validate_by_alias=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
-    def from_json(cls, json_str: str) -> DestinationMetadataV1:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of DestinationMetadataV1 from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         # override the default output from pydantic by calling `to_dict()` of logos
         if self.logos:
             _dict['logos'] = self.logos.to_dict()
         # override the default output from pydantic by calling `to_dict()` of each item in options (list)
         _items = []
         if self.options:
-            for _item in self.options:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_options in self.options:
+                if _item_options:
+                    _items.append(_item_options.to_dict())
             _dict['options'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in components (list)
         _items = []
         if self.components:
-            for _item in self.components:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_components in self.components:
+                if _item_components:
+                    _items.append(_item_components.to_dict())
             _dict['components'] = _items
         # override the default output from pydantic by calling `to_dict()` of supported_features
         if self.supported_features:
@@ -118,57 +135,57 @@ class DestinationMetadataV1(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of each item in actions (list)
         _items = []
         if self.actions:
-            for _item in self.actions:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_actions in self.actions:
+                if _item_actions:
+                    _items.append(_item_actions.to_dict())
             _dict['actions'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in presets (list)
         _items = []
         if self.presets:
-            for _item in self.presets:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_presets in self.presets:
+                if _item_presets:
+                    _items.append(_item_presets.to_dict())
             _dict['presets'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in contacts (list)
         _items = []
         if self.contacts:
-            for _item in self.contacts:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_contacts in self.contacts:
+                if _item_contacts:
+                    _items.append(_item_contacts.to_dict())
             _dict['contacts'] = _items
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> DestinationMetadataV1:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of DestinationMetadataV1 from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return DestinationMetadataV1.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = DestinationMetadataV1.parse_obj({
+        _obj = cls.model_validate({
             "id": obj.get("id"),
             "name": obj.get("name"),
             "description": obj.get("description"),
             "slug": obj.get("slug"),
-            "logos": LogosBeta.from_dict(obj.get("logos")) if obj.get("logos") is not None else None,
-            "options": [IntegrationOptionBeta.from_dict(_item) for _item in obj.get("options")] if obj.get("options") is not None else None,
+            "logos": LogosBeta.from_dict(obj["logos"]) if obj.get("logos") is not None else None,
+            "options": [IntegrationOptionBeta.from_dict(_item) for _item in obj["options"]] if obj.get("options") is not None else None,
             "status": obj.get("status"),
-            "previous_names": obj.get("previousNames"),
+            "previousNames": obj.get("previousNames"),
             "categories": obj.get("categories"),
             "website": obj.get("website"),
-            "components": [DestinationMetadataComponentV1.from_dict(_item) for _item in obj.get("components")] if obj.get("components") is not None else None,
-            "supported_features": DestinationMetadataFeaturesV1.from_dict(obj.get("supportedFeatures")) if obj.get("supportedFeatures") is not None else None,
-            "supported_methods": DestinationMetadataMethodsV1.from_dict(obj.get("supportedMethods")) if obj.get("supportedMethods") is not None else None,
-            "supported_platforms": DestinationMetadataPlatformsV1.from_dict(obj.get("supportedPlatforms")) if obj.get("supportedPlatforms") is not None else None,
-            "actions": [DestinationMetadataActionV1.from_dict(_item) for _item in obj.get("actions")] if obj.get("actions") is not None else None,
-            "presets": [DestinationMetadataSubscriptionPresetV1.from_dict(_item) for _item in obj.get("presets")] if obj.get("presets") is not None else None,
-            "contacts": [Contact.from_dict(_item) for _item in obj.get("contacts")] if obj.get("contacts") is not None else None,
-            "partner_owned": obj.get("partnerOwned"),
-            "supported_regions": obj.get("supportedRegions"),
-            "region_endpoints": obj.get("regionEndpoints"),
-            "multi_instance_supported_version": obj.get("multiInstanceSupportedVersion")
+            "components": [DestinationMetadataComponentV1.from_dict(_item) for _item in obj["components"]] if obj.get("components") is not None else None,
+            "supportedFeatures": DestinationMetadataFeaturesV1.from_dict(obj["supportedFeatures"]) if obj.get("supportedFeatures") is not None else None,
+            "supportedMethods": DestinationMetadataMethodsV1.from_dict(obj["supportedMethods"]) if obj.get("supportedMethods") is not None else None,
+            "supportedPlatforms": DestinationMetadataPlatformsV1.from_dict(obj["supportedPlatforms"]) if obj.get("supportedPlatforms") is not None else None,
+            "actions": [DestinationMetadataActionV1.from_dict(_item) for _item in obj["actions"]] if obj.get("actions") is not None else None,
+            "presets": [DestinationMetadataSubscriptionPresetV1.from_dict(_item) for _item in obj["presets"]] if obj.get("presets") is not None else None,
+            "contacts": [Contact.from_dict(_item) for _item in obj["contacts"]] if obj.get("contacts") is not None else None,
+            "partnerOwned": obj.get("partnerOwned"),
+            "supportedRegions": obj.get("supportedRegions"),
+            "regionEndpoints": obj.get("regionEndpoints"),
+            "multiInstanceSupportedVersion": obj.get("multiInstanceSupportedVersion")
         })
         return _obj
 

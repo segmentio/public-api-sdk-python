@@ -13,7 +13,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 # import models into model package
 from segment_public_api.models.api_call_snapshot_v1 import APICallSnapshotV1
 from segment_public_api.models.access_permission_v1 import AccessPermissionV1
@@ -702,3 +701,4 @@ from segment_public_api.models.warehouse_selective_sync_item_v1 import Warehouse
 from segment_public_api.models.warehouse_sync_override_v1 import WarehouseSyncOverrideV1
 from segment_public_api.models.warehouse_v1 import WarehouseV1
 from segment_public_api.models.workspace_v1 import WorkspaceV1
+

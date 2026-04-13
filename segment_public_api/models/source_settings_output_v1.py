@@ -18,48 +18,65 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-from typing import Optional
-from pydantic import BaseModel, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from segment_public_api.models.group_source_settings_v1 import GroupSourceSettingsV1
 from segment_public_api.models.identify_source_settings_v1 import IdentifySourceSettingsV1
 from segment_public_api.models.track_source_settings_v1 import TrackSourceSettingsV1
+from typing import Optional, Set
+from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class SourceSettingsOutputV1(BaseModel):
     """
-    The output of Source settings.  # noqa: E501
-    """
-    track: Optional[TrackSourceSettingsV1] = None
-    identify: Optional[IdentifySourceSettingsV1] = None
-    group: Optional[GroupSourceSettingsV1] = None
-    forwarding_violations_to: Optional[StrictStr] = Field(None, alias="forwardingViolationsTo", description="SourceId to forward violations to.")
-    forwarding_blocked_events_to: Optional[StrictStr] = Field(None, alias="forwardingBlockedEventsTo", description="SourceId to forward blocked events to.")
-    __properties = ["track", "identify", "group", "forwardingViolationsTo", "forwardingBlockedEventsTo"]
+    The output of Source settings.
+    """ # noqa: E501
+    track: Optional[TrackSourceSettingsV1] = Field(default=None, description="Track settings.")
+    identify: Optional[IdentifySourceSettingsV1] = Field(default=None, description="Identify settings.")
+    group: Optional[GroupSourceSettingsV1] = Field(default=None, description="Group settings.")
+    forwarding_violations_to: Optional[StrictStr] = Field(default=None, description="SourceId to forward violations to.", alias="forwardingViolationsTo")
+    forwarding_blocked_events_to: Optional[StrictStr] = Field(default=None, description="SourceId to forward blocked events to.", alias="forwardingBlockedEventsTo")
+    __properties: ClassVar[List[str]] = ["track", "identify", "group", "forwardingViolationsTo", "forwardingBlockedEventsTo"]
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        validate_by_name=True,
+        validate_by_alias=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
-    def from_json(cls, json_str: str) -> SourceSettingsOutputV1:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of SourceSettingsOutputV1 from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         # override the default output from pydantic by calling `to_dict()` of track
         if self.track:
             _dict['track'] = self.track.to_dict()
@@ -72,20 +89,20 @@ class SourceSettingsOutputV1(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> SourceSettingsOutputV1:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of SourceSettingsOutputV1 from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return SourceSettingsOutputV1.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = SourceSettingsOutputV1.parse_obj({
-            "track": TrackSourceSettingsV1.from_dict(obj.get("track")) if obj.get("track") is not None else None,
-            "identify": IdentifySourceSettingsV1.from_dict(obj.get("identify")) if obj.get("identify") is not None else None,
-            "group": GroupSourceSettingsV1.from_dict(obj.get("group")) if obj.get("group") is not None else None,
-            "forwarding_violations_to": obj.get("forwardingViolationsTo"),
-            "forwarding_blocked_events_to": obj.get("forwardingBlockedEventsTo")
+        _obj = cls.model_validate({
+            "track": TrackSourceSettingsV1.from_dict(obj["track"]) if obj.get("track") is not None else None,
+            "identify": IdentifySourceSettingsV1.from_dict(obj["identify"]) if obj.get("identify") is not None else None,
+            "group": GroupSourceSettingsV1.from_dict(obj["group"]) if obj.get("group") is not None else None,
+            "forwardingViolationsTo": obj.get("forwardingViolationsTo"),
+            "forwardingBlockedEventsTo": obj.get("forwardingBlockedEventsTo")
         })
         return _obj
 

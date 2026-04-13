@@ -47,7 +47,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -64,7 +63,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling AudiencesApi->add_audience_schedule_to_audience: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -125,7 +123,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -141,7 +138,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling AudiencesApi->create_audience: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -201,7 +197,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -217,7 +212,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling AudiencesApi->create_audience_preview: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -276,7 +270,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -292,7 +285,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling AudiencesApi->force_execute_audience_run: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -351,7 +343,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -368,7 +359,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling AudiencesApi->get_audience: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -428,7 +418,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -444,7 +433,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling AudiencesApi->get_audience_preview: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -503,7 +491,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -520,7 +507,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling AudiencesApi->get_audience_schedule_from_space_and_audience: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -583,7 +569,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -602,7 +587,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling AudiencesApi->list_audience_consumers_from_space_and_audience: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -664,7 +648,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -680,7 +663,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling AudiencesApi->list_audience_schedules_from_space_and_audience: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -741,7 +723,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -759,7 +740,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling AudiencesApi->list_audiences: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -820,7 +800,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -836,7 +815,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling AudiencesApi->remove_audience_from_space: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -895,7 +873,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -912,7 +889,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling AudiencesApi->remove_audience_schedule_from_audience: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -973,7 +949,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -990,7 +965,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling AudiencesApi->update_audience_for_space: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -1051,7 +1025,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -1069,7 +1042,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling AudiencesApi->update_audience_schedule_for_audience: %s\n" % e)
 ```
-
 
 
 ### Parameters

@@ -18,103 +18,120 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-from typing import List, Optional, Union
-from pydantic import BaseModel, Field, StrictBool, StrictFloat, StrictInt, StrictStr, conlist, validator
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from segment_public_api.models.function_setting_v1 import FunctionSettingV1
+from typing import Optional, Set
+from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class FunctionV1(BaseModel):
     """
-    Represents a Function.  # noqa: E501
-    """
-    id: Optional[StrictStr] = Field(None, description="An identifier for this Function.")
-    resource_type: Optional[StrictStr] = Field(None, alias="resourceType", description="The Function type.  Config API note: equal to `type`.")
-    created_at: Optional[StrictStr] = Field(None, alias="createdAt", description="The time this Function was created.")
-    created_by: Optional[StrictStr] = Field(None, alias="createdBy", description="The id of the user who created this Function.")
-    code: Optional[StrictStr] = Field(None, description="The Function code.")
-    deployed_at: Optional[StrictStr] = Field(None, alias="deployedAt", description="The time of this Function's last deployment.")
-    settings: Optional[conlist(FunctionSettingV1)] = Field(None, description="The list of settings for this Function.")
-    display_name: Optional[StrictStr] = Field(None, alias="displayName", description="A display name for this Function.")
-    description: Optional[StrictStr] = Field(None, description="A description for this Function.")
-    logo_url: Optional[StrictStr] = Field(None, alias="logoUrl", description="The URL of the logo for this Function.")
-    preview_webhook_url: Optional[StrictStr] = Field(None, alias="previewWebhookUrl", description="The preview webhook URL for this Function.")
-    batch_max_count: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="batchMaxCount", description="The max count of the batch for this Function.")
-    catalog_id: Optional[StrictStr] = Field(None, alias="catalogId", description="The catalog id of this Function.")
-    is_latest_version: Optional[StrictBool] = Field(None, alias="isLatestVersion", description="Whether the deployment of this Function is the latest version.")
-    __properties = ["id", "resourceType", "createdAt", "createdBy", "code", "deployedAt", "settings", "displayName", "description", "logoUrl", "previewWebhookUrl", "batchMaxCount", "catalogId", "isLatestVersion"]
+    Represents a Function.
+    """ # noqa: E501
+    id: Optional[StrictStr] = Field(default=None, description="An identifier for this Function.")
+    resource_type: Optional[StrictStr] = Field(default=None, description="The Function type.  Config API note: equal to `type`.", alias="resourceType")
+    created_at: Optional[StrictStr] = Field(default=None, description="The time this Function was created.", alias="createdAt")
+    created_by: Optional[StrictStr] = Field(default=None, description="The id of the user who created this Function.", alias="createdBy")
+    code: Optional[StrictStr] = Field(default=None, description="The Function code.")
+    deployed_at: Optional[StrictStr] = Field(default=None, description="The time of this Function's last deployment.", alias="deployedAt")
+    settings: Optional[List[FunctionSettingV1]] = Field(default=None, description="The list of settings for this Function.")
+    display_name: Optional[StrictStr] = Field(default=None, description="A display name for this Function.", alias="displayName")
+    description: Optional[StrictStr] = Field(default=None, description="A description for this Function.")
+    logo_url: Optional[StrictStr] = Field(default=None, description="The URL of the logo for this Function.", alias="logoUrl")
+    preview_webhook_url: Optional[StrictStr] = Field(default=None, description="The preview webhook URL for this Function.", alias="previewWebhookUrl")
+    batch_max_count: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="The max count of the batch for this Function.", alias="batchMaxCount")
+    catalog_id: Optional[StrictStr] = Field(default=None, description="The catalog id of this Function.", alias="catalogId")
+    is_latest_version: Optional[StrictBool] = Field(default=None, description="Whether the deployment of this Function is the latest version.", alias="isLatestVersion")
+    __properties: ClassVar[List[str]] = ["id", "resourceType", "createdAt", "createdBy", "code", "deployedAt", "settings", "displayName", "description", "logoUrl", "previewWebhookUrl", "batchMaxCount", "catalogId", "isLatestVersion"]
 
-    @validator('resource_type')
+    @field_validator('resource_type')
     def resource_type_validate_enum(cls, value):
         """Validates the enum"""
         if value is None:
             return value
 
-        if value not in ('DESTINATION', 'INSERT_DESTINATION', 'INSERT_SOURCE', 'INSERT_TRANSFORMATION', 'SOURCE'):
+        if value not in set(['DESTINATION', 'INSERT_DESTINATION', 'INSERT_SOURCE', 'INSERT_TRANSFORMATION', 'SOURCE']):
             raise ValueError("must be one of enum values ('DESTINATION', 'INSERT_DESTINATION', 'INSERT_SOURCE', 'INSERT_TRANSFORMATION', 'SOURCE')")
         return value
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        validate_by_name=True,
+        validate_by_alias=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
-    def from_json(cls, json_str: str) -> FunctionV1:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of FunctionV1 from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         # override the default output from pydantic by calling `to_dict()` of each item in settings (list)
         _items = []
         if self.settings:
-            for _item in self.settings:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_settings in self.settings:
+                if _item_settings:
+                    _items.append(_item_settings.to_dict())
             _dict['settings'] = _items
         # set to None if deployed_at (nullable) is None
-        # and __fields_set__ contains the field
-        if self.deployed_at is None and "deployed_at" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.deployed_at is None and "deployed_at" in self.model_fields_set:
             _dict['deployedAt'] = None
 
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> FunctionV1:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of FunctionV1 from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return FunctionV1.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = FunctionV1.parse_obj({
+        _obj = cls.model_validate({
             "id": obj.get("id"),
-            "resource_type": obj.get("resourceType"),
-            "created_at": obj.get("createdAt"),
-            "created_by": obj.get("createdBy"),
+            "resourceType": obj.get("resourceType"),
+            "createdAt": obj.get("createdAt"),
+            "createdBy": obj.get("createdBy"),
             "code": obj.get("code"),
-            "deployed_at": obj.get("deployedAt"),
-            "settings": [FunctionSettingV1.from_dict(_item) for _item in obj.get("settings")] if obj.get("settings") is not None else None,
-            "display_name": obj.get("displayName"),
+            "deployedAt": obj.get("deployedAt"),
+            "settings": [FunctionSettingV1.from_dict(_item) for _item in obj["settings"]] if obj.get("settings") is not None else None,
+            "displayName": obj.get("displayName"),
             "description": obj.get("description"),
-            "logo_url": obj.get("logoUrl"),
-            "preview_webhook_url": obj.get("previewWebhookUrl"),
-            "batch_max_count": obj.get("batchMaxCount"),
-            "catalog_id": obj.get("catalogId"),
-            "is_latest_version": obj.get("isLatestVersion")
+            "logoUrl": obj.get("logoUrl"),
+            "previewWebhookUrl": obj.get("previewWebhookUrl"),
+            "batchMaxCount": obj.get("batchMaxCount"),
+            "catalogId": obj.get("catalogId"),
+            "isLatestVersion": obj.get("isLatestVersion")
         })
         return _obj
 

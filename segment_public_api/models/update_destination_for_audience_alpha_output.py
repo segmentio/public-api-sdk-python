@@ -18,75 +18,92 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-from typing import Any, List, Optional
-from pydantic import BaseModel, Field, conlist
+from pydantic import BaseModel, ConfigDict, Field
+from typing import Any, ClassVar, Dict, List, Optional
 from segment_public_api.models.destination import Destination
 from segment_public_api.models.id_sync_configuration_input import IDSyncConfigurationInput
+from typing import Optional, Set
+from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class UpdateDestinationForAudienceAlphaOutput(BaseModel):
     """
-    Output for updating a Destination for an Audience.  # noqa: E501
-    """
-    destination: Destination = Field(...)
-    id_sync_configuration: Optional[conlist(IDSyncConfigurationInput)] = Field(None, alias="idSyncConfiguration", description="The id sync configuration for the Destination - array of external ids with their strategies.")
-    connection_settings: Optional[Any] = Field(None, alias="connectionSettings", description="The settings that a Destination requires to create audiences on a third-party platform.")
-    __properties = ["destination", "idSyncConfiguration", "connectionSettings"]
+    Output for updating a Destination for an Audience.
+    """ # noqa: E501
+    destination: Destination
+    id_sync_configuration: Optional[List[IDSyncConfigurationInput]] = Field(default=None, description="The id sync configuration for the Destination - array of external ids with their strategies.", alias="idSyncConfiguration")
+    connection_settings: Optional[Any] = Field(default=None, description="The settings that a Destination requires to create audiences on a third-party platform.", alias="connectionSettings")
+    __properties: ClassVar[List[str]] = ["destination", "idSyncConfiguration", "connectionSettings"]
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        validate_by_name=True,
+        validate_by_alias=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
-    def from_json(cls, json_str: str) -> UpdateDestinationForAudienceAlphaOutput:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of UpdateDestinationForAudienceAlphaOutput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         # override the default output from pydantic by calling `to_dict()` of destination
         if self.destination:
             _dict['destination'] = self.destination.to_dict()
         # override the default output from pydantic by calling `to_dict()` of each item in id_sync_configuration (list)
         _items = []
         if self.id_sync_configuration:
-            for _item in self.id_sync_configuration:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_id_sync_configuration in self.id_sync_configuration:
+                if _item_id_sync_configuration:
+                    _items.append(_item_id_sync_configuration.to_dict())
             _dict['idSyncConfiguration'] = _items
         # set to None if connection_settings (nullable) is None
-        # and __fields_set__ contains the field
-        if self.connection_settings is None and "connection_settings" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.connection_settings is None and "connection_settings" in self.model_fields_set:
             _dict['connectionSettings'] = None
 
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> UpdateDestinationForAudienceAlphaOutput:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of UpdateDestinationForAudienceAlphaOutput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return UpdateDestinationForAudienceAlphaOutput.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = UpdateDestinationForAudienceAlphaOutput.parse_obj({
-            "destination": Destination.from_dict(obj.get("destination")) if obj.get("destination") is not None else None,
-            "id_sync_configuration": [IDSyncConfigurationInput.from_dict(_item) for _item in obj.get("idSyncConfiguration")] if obj.get("idSyncConfiguration") is not None else None,
-            "connection_settings": obj.get("connectionSettings")
+        _obj = cls.model_validate({
+            "destination": Destination.from_dict(obj["destination"]) if obj.get("destination") is not None else None,
+            "idSyncConfiguration": [IDSyncConfigurationInput.from_dict(_item) for _item in obj["idSyncConfiguration"]] if obj.get("idSyncConfiguration") is not None else None,
+            "connectionSettings": obj.get("connectionSettings")
         })
         return _obj
 

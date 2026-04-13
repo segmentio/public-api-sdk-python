@@ -39,7 +39,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -55,7 +54,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling DestinationFiltersApi->create_filter_for_destination: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -114,7 +112,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -130,7 +127,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling DestinationFiltersApi->get_filter_in_destination: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -190,7 +186,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -206,7 +201,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling DestinationFiltersApi->list_filters_from_destination: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -266,7 +260,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -281,7 +274,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling DestinationFiltersApi->preview_destination_filter: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -339,7 +331,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -355,7 +346,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling DestinationFiltersApi->remove_filter_from_destination: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -415,7 +405,6 @@ from pprint import pprint
 configuration = segment_public_api.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
-
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -432,7 +421,6 @@ with segment_public_api.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling DestinationFiltersApi->update_filter_for_destination: %s\n" % e)
 ```
-
 
 
 ### Parameters

@@ -18,66 +18,83 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-from typing import List, Optional
-from pydantic import BaseModel, Field, StrictStr, conlist, validator
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional
 from segment_public_api.models.audience_definition import AudienceDefinition
 from segment_public_api.models.audience_preview_result import AudiencePreviewResult
 from segment_public_api.models.audience_size import AudienceSize
 from segment_public_api.models.read_audience_preview_options import ReadAudiencePreviewOptions
+from typing import Optional, Set
+from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class AudiencePreview(BaseModel):
     """
-    An audience preview.  # noqa: E501
-    """
-    id: StrictStr = Field(..., description="Unique identifier for tracking and retrieving results of an audience preview.")
-    audience_type: StrictStr = Field(..., alias="audienceType", description="The audience type of the preview.  Possible values: USERS, ACCOUNTS, LINKED.")
-    definition: AudienceDefinition = Field(...)
-    options: ReadAudiencePreviewOptions = Field(...)
-    status: StrictStr = Field(..., description="Status for the audience preview.")
-    results: Optional[conlist(AudiencePreviewResult)] = Field(None, description="Sampled result membership for the audience preview. Only has a value if the status is 'COMPLETED'.")
-    size: Optional[AudienceSize] = None
-    failure_reason: Optional[StrictStr] = Field(None, alias="failureReason", description="Explanation of why the audience preview failed. Only has a value if status is 'FAILED'.")
-    __properties = ["id", "audienceType", "definition", "options", "status", "results", "size", "failureReason"]
+    An audience preview.
+    """ # noqa: E501
+    id: StrictStr = Field(description="Unique identifier for tracking and retrieving results of an audience preview.")
+    audience_type: StrictStr = Field(description="The audience type of the preview.  Possible values: USERS, ACCOUNTS, LINKED.", alias="audienceType")
+    definition: AudienceDefinition = Field(description="Definition that was used to calculate the audience preview.")
+    options: ReadAudiencePreviewOptions = Field(description="Options that were used to calculate the audience preview.")
+    status: StrictStr = Field(description="Status for the audience preview.")
+    results: Optional[List[AudiencePreviewResult]] = Field(default=None, description="Sampled result membership for the audience preview. Only has a value if the status is 'COMPLETED'.")
+    size: Optional[AudienceSize] = Field(default=None, description="Result membership size for the audience preview. Only has a value if status is 'COMPLETED'.")
+    failure_reason: Optional[StrictStr] = Field(default=None, description="Explanation of why the audience preview failed. Only has a value if status is 'FAILED'.", alias="failureReason")
+    __properties: ClassVar[List[str]] = ["id", "audienceType", "definition", "options", "status", "results", "size", "failureReason"]
 
-    @validator('audience_type')
+    @field_validator('audience_type')
     def audience_type_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in ('ACCOUNTS', 'LINKED', 'USERS'):
+        if value not in set(['ACCOUNTS', 'LINKED', 'USERS']):
             raise ValueError("must be one of enum values ('ACCOUNTS', 'LINKED', 'USERS')")
         return value
 
-    @validator('status')
+    @field_validator('status')
     def status_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in ('COMPLETED', 'FAILED', 'RUNNING'):
+        if value not in set(['COMPLETED', 'FAILED', 'RUNNING']):
             raise ValueError("must be one of enum values ('COMPLETED', 'FAILED', 'RUNNING')")
         return value
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        validate_by_name=True,
+        validate_by_alias=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
-    def from_json(cls, json_str: str) -> AudiencePreview:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of AudiencePreview from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         # override the default output from pydantic by calling `to_dict()` of definition
         if self.definition:
             _dict['definition'] = self.definition.to_dict()
@@ -87,9 +104,9 @@ class AudiencePreview(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of each item in results (list)
         _items = []
         if self.results:
-            for _item in self.results:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_results in self.results:
+                if _item_results:
+                    _items.append(_item_results.to_dict())
             _dict['results'] = _items
         # override the default output from pydantic by calling `to_dict()` of size
         if self.size:
@@ -97,23 +114,23 @@ class AudiencePreview(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> AudiencePreview:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of AudiencePreview from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return AudiencePreview.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = AudiencePreview.parse_obj({
+        _obj = cls.model_validate({
             "id": obj.get("id"),
-            "audience_type": obj.get("audienceType"),
-            "definition": AudienceDefinition.from_dict(obj.get("definition")) if obj.get("definition") is not None else None,
-            "options": ReadAudiencePreviewOptions.from_dict(obj.get("options")) if obj.get("options") is not None else None,
+            "audienceType": obj.get("audienceType"),
+            "definition": AudienceDefinition.from_dict(obj["definition"]) if obj.get("definition") is not None else None,
+            "options": ReadAudiencePreviewOptions.from_dict(obj["options"]) if obj.get("options") is not None else None,
             "status": obj.get("status"),
-            "results": [AudiencePreviewResult.from_dict(_item) for _item in obj.get("results")] if obj.get("results") is not None else None,
-            "size": AudienceSize.from_dict(obj.get("size")) if obj.get("size") is not None else None,
-            "failure_reason": obj.get("failureReason")
+            "results": [AudiencePreviewResult.from_dict(_item) for _item in obj["results"]] if obj.get("results") is not None else None,
+            "size": AudienceSize.from_dict(obj["size"]) if obj.get("size") is not None else None,
+            "failureReason": obj.get("failureReason")
         })
         return _obj
 

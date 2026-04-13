@@ -18,58 +18,75 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-from typing import List, Optional
-from pydantic import BaseModel, Field, conlist
+from pydantic import BaseModel, ConfigDict, Field
+from typing import Any, ClassVar, Dict, List, Optional
 from segment_public_api.models.message_subscription_response import MessageSubscriptionResponse
 from segment_public_api.models.pagination_output import PaginationOutput
+from typing import Optional, Set
+from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class ReplaceMessagingSubscriptionsInSpacesAlphaOutput(BaseModel):
     """
-    Output for the endpoint.  # noqa: E501
-    """
-    successes: conlist(MessageSubscriptionResponse) = Field(..., description="Array of successful subscription status.")
-    failures: conlist(MessageSubscriptionResponse) = Field(..., description="Array of failure subscription status.")
-    pagination: Optional[PaginationOutput] = None
-    __properties = ["successes", "failures", "pagination"]
+    Output for the endpoint.
+    """ # noqa: E501
+    successes: List[MessageSubscriptionResponse] = Field(description="Array of successful subscription status.")
+    failures: List[MessageSubscriptionResponse] = Field(description="Array of failure subscription status.")
+    pagination: Optional[PaginationOutput] = Field(default=None, description="Information about the pagination of this response.")
+    __properties: ClassVar[List[str]] = ["successes", "failures", "pagination"]
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        validate_by_name=True,
+        validate_by_alias=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
-    def from_json(cls, json_str: str) -> ReplaceMessagingSubscriptionsInSpacesAlphaOutput:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of ReplaceMessagingSubscriptionsInSpacesAlphaOutput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         # override the default output from pydantic by calling `to_dict()` of each item in successes (list)
         _items = []
         if self.successes:
-            for _item in self.successes:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_successes in self.successes:
+                if _item_successes:
+                    _items.append(_item_successes.to_dict())
             _dict['successes'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in failures (list)
         _items = []
         if self.failures:
-            for _item in self.failures:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_failures in self.failures:
+                if _item_failures:
+                    _items.append(_item_failures.to_dict())
             _dict['failures'] = _items
         # override the default output from pydantic by calling `to_dict()` of pagination
         if self.pagination:
@@ -77,18 +94,18 @@ class ReplaceMessagingSubscriptionsInSpacesAlphaOutput(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> ReplaceMessagingSubscriptionsInSpacesAlphaOutput:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of ReplaceMessagingSubscriptionsInSpacesAlphaOutput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return ReplaceMessagingSubscriptionsInSpacesAlphaOutput.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = ReplaceMessagingSubscriptionsInSpacesAlphaOutput.parse_obj({
-            "successes": [MessageSubscriptionResponse.from_dict(_item) for _item in obj.get("successes")] if obj.get("successes") is not None else None,
-            "failures": [MessageSubscriptionResponse.from_dict(_item) for _item in obj.get("failures")] if obj.get("failures") is not None else None,
-            "pagination": PaginationOutput.from_dict(obj.get("pagination")) if obj.get("pagination") is not None else None
+        _obj = cls.model_validate({
+            "successes": [MessageSubscriptionResponse.from_dict(_item) for _item in obj["successes"]] if obj.get("successes") is not None else None,
+            "failures": [MessageSubscriptionResponse.from_dict(_item) for _item in obj["failures"]] if obj.get("failures") is not None else None,
+            "pagination": PaginationOutput.from_dict(obj["pagination"]) if obj.get("pagination") is not None else None
         })
         return _obj
 

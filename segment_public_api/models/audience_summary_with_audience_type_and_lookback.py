@@ -18,69 +18,86 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-from typing import List, Optional
-from pydantic import BaseModel, Field, StrictBool, StrictStr, conlist, validator
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional
 from segment_public_api.models.audience_compute_cadence import AudienceComputeCadence
 from segment_public_api.models.audience_definition import AudienceDefinition
 from segment_public_api.models.audience_options_with_lookback import AudienceOptionsWithLookback
 from segment_public_api.models.audience_schedule import AudienceSchedule
 from segment_public_api.models.audience_size import AudienceSize
+from typing import Optional, Set
+from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class AudienceSummaryWithAudienceTypeAndLookback(BaseModel):
     """
     AudienceSummaryWithAudienceTypeAndLookback
-    """
-    compute_cadence: AudienceComputeCadence = Field(..., alias="computeCadence")
-    size: Optional[AudienceSize] = None
-    options: Optional[AudienceOptionsWithLookback] = None
-    schedules: Optional[conlist(AudienceSchedule)] = Field(None, description="List of schedules for the audience.")
-    id: StrictStr = Field(..., description="Audience id.")
-    space_id: StrictStr = Field(..., alias="spaceId", description="Space id for the audience.")
-    name: StrictStr = Field(..., description="Name of the audience.")
-    description: Optional[StrictStr] = Field(None, description="Description of the audience.")
-    key: StrictStr = Field(..., description="Key for the audience.")
-    enabled: StrictBool = Field(..., description="Enabled/disabled status for the audience.")
-    definition: Optional[AudienceDefinition] = Field(...)
-    status: Optional[StrictStr] = Field(None, description="Status for the audience.  Possible values: Backfilling, Computing, Disabled, Error, Failed, Live, Locked, Not Computing, Preparing, Awaiting Destinations.")
-    created_by: StrictStr = Field(..., alias="createdBy", description="User id who created the audience.")
-    updated_by: StrictStr = Field(..., alias="updatedBy", description="User id who last updated the audience.")
-    created_at: StrictStr = Field(..., alias="createdAt", description="Date the audience was created.")
-    updated_at: StrictStr = Field(..., alias="updatedAt", description="Date the audience was last updated.")
-    audience_type: StrictStr = Field(..., alias="audienceType", description="Denotes the type of audience product.")
-    __properties = ["computeCadence", "size", "options", "schedules", "id", "spaceId", "name", "description", "key", "enabled", "definition", "status", "createdBy", "updatedBy", "createdAt", "updatedAt", "audienceType"]
+    """ # noqa: E501
+    compute_cadence: AudienceComputeCadence = Field(description="Details the cadence on which the audience's membership is computed.", alias="computeCadence")
+    size: Optional[AudienceSize] = Field(default=None, description="Object containing details about audience membership size(s).")
+    options: Optional[AudienceOptionsWithLookback] = Field(default=None, description="Options which should be applied when segmenting audiences.")
+    schedules: Optional[List[AudienceSchedule]] = Field(default=None, description="List of schedules for the audience.")
+    id: StrictStr = Field(description="Audience id.")
+    space_id: StrictStr = Field(description="Space id for the audience.", alias="spaceId")
+    name: StrictStr = Field(description="Name of the audience.")
+    description: Optional[StrictStr] = Field(default=None, description="Description of the audience.")
+    key: StrictStr = Field(description="Key for the audience.")
+    enabled: StrictBool = Field(description="Enabled/disabled status for the audience.")
+    definition: Optional[AudienceDefinition]
+    status: Optional[StrictStr] = Field(default=None, description="Status for the audience.  Possible values: Backfilling, Computing, Disabled, Error, Failed, Live, Locked, Not Computing, Preparing, Awaiting Destinations.")
+    created_by: StrictStr = Field(description="User id who created the audience.", alias="createdBy")
+    updated_by: StrictStr = Field(description="User id who last updated the audience.", alias="updatedBy")
+    created_at: StrictStr = Field(description="Date the audience was created.", alias="createdAt")
+    updated_at: StrictStr = Field(description="Date the audience was last updated.", alias="updatedAt")
+    audience_type: StrictStr = Field(description="Denotes the type of audience product.", alias="audienceType")
+    __properties: ClassVar[List[str]] = ["computeCadence", "size", "options", "schedules", "id", "spaceId", "name", "description", "key", "enabled", "definition", "status", "createdBy", "updatedBy", "createdAt", "updatedAt", "audienceType"]
 
-    @validator('audience_type')
+    @field_validator('audience_type')
     def audience_type_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in ('ACCOUNTS', 'LINKED', 'USERS'):
+        if value not in set(['ACCOUNTS', 'LINKED', 'USERS']):
             raise ValueError("must be one of enum values ('ACCOUNTS', 'LINKED', 'USERS')")
         return value
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        validate_by_name=True,
+        validate_by_alias=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
-    def from_json(cls, json_str: str) -> AudienceSummaryWithAudienceTypeAndLookback:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of AudienceSummaryWithAudienceTypeAndLookback from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         # override the default output from pydantic by calling `to_dict()` of compute_cadence
         if self.compute_cadence:
             _dict['computeCadence'] = self.compute_cadence.to_dict()
@@ -93,47 +110,47 @@ class AudienceSummaryWithAudienceTypeAndLookback(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of each item in schedules (list)
         _items = []
         if self.schedules:
-            for _item in self.schedules:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_schedules in self.schedules:
+                if _item_schedules:
+                    _items.append(_item_schedules.to_dict())
             _dict['schedules'] = _items
         # override the default output from pydantic by calling `to_dict()` of definition
         if self.definition:
             _dict['definition'] = self.definition.to_dict()
         # set to None if definition (nullable) is None
-        # and __fields_set__ contains the field
-        if self.definition is None and "definition" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.definition is None and "definition" in self.model_fields_set:
             _dict['definition'] = None
 
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> AudienceSummaryWithAudienceTypeAndLookback:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of AudienceSummaryWithAudienceTypeAndLookback from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return AudienceSummaryWithAudienceTypeAndLookback.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = AudienceSummaryWithAudienceTypeAndLookback.parse_obj({
-            "compute_cadence": AudienceComputeCadence.from_dict(obj.get("computeCadence")) if obj.get("computeCadence") is not None else None,
-            "size": AudienceSize.from_dict(obj.get("size")) if obj.get("size") is not None else None,
-            "options": AudienceOptionsWithLookback.from_dict(obj.get("options")) if obj.get("options") is not None else None,
-            "schedules": [AudienceSchedule.from_dict(_item) for _item in obj.get("schedules")] if obj.get("schedules") is not None else None,
+        _obj = cls.model_validate({
+            "computeCadence": AudienceComputeCadence.from_dict(obj["computeCadence"]) if obj.get("computeCadence") is not None else None,
+            "size": AudienceSize.from_dict(obj["size"]) if obj.get("size") is not None else None,
+            "options": AudienceOptionsWithLookback.from_dict(obj["options"]) if obj.get("options") is not None else None,
+            "schedules": [AudienceSchedule.from_dict(_item) for _item in obj["schedules"]] if obj.get("schedules") is not None else None,
             "id": obj.get("id"),
-            "space_id": obj.get("spaceId"),
+            "spaceId": obj.get("spaceId"),
             "name": obj.get("name"),
             "description": obj.get("description"),
             "key": obj.get("key"),
             "enabled": obj.get("enabled"),
-            "definition": AudienceDefinition.from_dict(obj.get("definition")) if obj.get("definition") is not None else None,
+            "definition": AudienceDefinition.from_dict(obj["definition"]) if obj.get("definition") is not None else None,
             "status": obj.get("status"),
-            "created_by": obj.get("createdBy"),
-            "updated_by": obj.get("updatedBy"),
-            "created_at": obj.get("createdAt"),
-            "updated_at": obj.get("updatedAt"),
-            "audience_type": obj.get("audienceType")
+            "createdBy": obj.get("createdBy"),
+            "updatedBy": obj.get("updatedBy"),
+            "createdAt": obj.get("createdAt"),
+            "updatedAt": obj.get("updatedAt"),
+            "audienceType": obj.get("audienceType")
         })
         return _obj
 

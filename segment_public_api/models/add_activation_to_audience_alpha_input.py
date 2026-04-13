@@ -18,48 +18,65 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-from typing import Optional
-from pydantic import BaseModel, Field, StrictBool, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from segment_public_api.models.destination_subscription_configuration import DestinationSubscriptionConfiguration
 from segment_public_api.models.personalization_input import PersonalizationInput
+from typing import Optional, Set
+from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class AddActivationToAudienceAlphaInput(BaseModel):
     """
-    Input to create an activation.  # noqa: E501
-    """
-    enabled: Optional[StrictBool] = Field(None, description="Determines whether an activation is enabled.")
-    perform_resync: StrictBool = Field(..., alias="performResync", description="Determines whether to perform a full resync upon creation. If true, the entire audience is resent to the Destination from scratch. If false, only future changes will be synced.")
-    activation_type: StrictStr = Field(..., alias="activationType", description="Determines when an event is sent to the Destination.   Possible values: Audience Entered: Sends an event when a profile or entity enters the audience. Audience Exited: Sends an event when a profile or entity exits the audience. Audience Membership Changed: Sends an event for both entries and exits. This does not apply to entities.  Note that events are sent for the profile, unless the audience is a Linked Audience. In that case, events are sent for the target entity defined for that audience.")
-    activation_name: StrictStr = Field(..., alias="activationName", description="Name of the activation.")
-    personalization: PersonalizationInput = Field(...)
-    destination_mapping: Optional[DestinationSubscriptionConfiguration] = Field(None, alias="destinationMapping")
-    __properties = ["enabled", "performResync", "activationType", "activationName", "personalization", "destinationMapping"]
+    Input to create an activation.
+    """ # noqa: E501
+    enabled: Optional[StrictBool] = Field(default=None, description="Determines whether an activation is enabled.")
+    perform_resync: StrictBool = Field(description="Determines whether to perform a full resync upon creation. If true, the entire audience is resent to the Destination from scratch. If false, only future changes will be synced.", alias="performResync")
+    activation_type: StrictStr = Field(description="Determines when an event is sent to the Destination.   Possible values: Audience Entered: Sends an event when a profile or entity enters the audience. Audience Exited: Sends an event when a profile or entity exits the audience. Audience Membership Changed: Sends an event for both entries and exits. This does not apply to entities.  Note that events are sent for the profile, unless the audience is a Linked Audience. In that case, events are sent for the target entity defined for that audience.", alias="activationType")
+    activation_name: StrictStr = Field(description="Name of the activation.", alias="activationName")
+    personalization: PersonalizationInput = Field(description="The data points used to enrich the event. Defines which profile traits and/or entity properties are included in the event sent to the Destination.  For Action Destinations, any traits or properties specified here must also be included in the destinationMapping to define which Destination fields should be populated.")
+    destination_mapping: Optional[DestinationSubscriptionConfiguration] = Field(default=None, description="Defines the specific action and data mapping for the Destination. Only applicable for Action Destinations. Action id: Specifies which action to perform on the Destination (for example: add contact, update list). Settings/Mapping: Defines how event data (including personalization traits) populates specific fields in the Destination.  Use the List Supported Destinations from Audience endpoint to find available action ids and the specific Destination fields you can map.", alias="destinationMapping")
+    __properties: ClassVar[List[str]] = ["enabled", "performResync", "activationType", "activationName", "personalization", "destinationMapping"]
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        validate_by_name=True,
+        validate_by_alias=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
-    def from_json(cls, json_str: str) -> AddActivationToAudienceAlphaInput:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of AddActivationToAudienceAlphaInput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         # override the default output from pydantic by calling `to_dict()` of personalization
         if self.personalization:
             _dict['personalization'] = self.personalization.to_dict()
@@ -69,21 +86,21 @@ class AddActivationToAudienceAlphaInput(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> AddActivationToAudienceAlphaInput:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of AddActivationToAudienceAlphaInput from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return AddActivationToAudienceAlphaInput.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = AddActivationToAudienceAlphaInput.parse_obj({
+        _obj = cls.model_validate({
             "enabled": obj.get("enabled"),
-            "perform_resync": obj.get("performResync"),
-            "activation_type": obj.get("activationType"),
-            "activation_name": obj.get("activationName"),
-            "personalization": PersonalizationInput.from_dict(obj.get("personalization")) if obj.get("personalization") is not None else None,
-            "destination_mapping": DestinationSubscriptionConfiguration.from_dict(obj.get("destinationMapping")) if obj.get("destinationMapping") is not None else None
+            "performResync": obj.get("performResync"),
+            "activationType": obj.get("activationType"),
+            "activationName": obj.get("activationName"),
+            "personalization": PersonalizationInput.from_dict(obj["personalization"]) if obj.get("personalization") is not None else None,
+            "destinationMapping": DestinationSubscriptionConfiguration.from_dict(obj["destinationMapping"]) if obj.get("destinationMapping") is not None else None
         })
         return _obj
 

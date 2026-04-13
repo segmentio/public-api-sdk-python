@@ -18,66 +18,83 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-from typing import List, Optional, Union
-from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr, conlist
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from segment_public_api.models.breakdown_beta import BreakdownBeta
+from typing import Optional, Set
+from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class MetricBeta(BaseModel):
     """
-    The event delivery metric.  # noqa: E501
-    """
-    metric_name: StrictStr = Field(..., alias="metricName", description="The name of the metric.")
-    total: Union[StrictFloat, StrictInt] = Field(..., description="Number of occurrences of the metric.")
-    breakdown: Optional[conlist(BreakdownBeta)] = Field(None, description="Breakdown of metrics within a metric.")
-    __properties = ["metricName", "total", "breakdown"]
+    The event delivery metric.
+    """ # noqa: E501
+    metric_name: StrictStr = Field(description="The name of the metric.", alias="metricName")
+    total: Union[StrictFloat, StrictInt] = Field(description="Number of occurrences of the metric.")
+    breakdown: Optional[List[BreakdownBeta]] = Field(default=None, description="Breakdown of metrics within a metric.")
+    __properties: ClassVar[List[str]] = ["metricName", "total", "breakdown"]
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        validate_by_name=True,
+        validate_by_alias=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
-    def from_json(cls, json_str: str) -> MetricBeta:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of MetricBeta from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         # override the default output from pydantic by calling `to_dict()` of each item in breakdown (list)
         _items = []
         if self.breakdown:
-            for _item in self.breakdown:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_breakdown in self.breakdown:
+                if _item_breakdown:
+                    _items.append(_item_breakdown.to_dict())
             _dict['breakdown'] = _items
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> MetricBeta:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of MetricBeta from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return MetricBeta.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = MetricBeta.parse_obj({
-            "metric_name": obj.get("metricName"),
+        _obj = cls.model_validate({
+            "metricName": obj.get("metricName"),
             "total": obj.get("total"),
-            "breakdown": [BreakdownBeta.from_dict(_item) for _item in obj.get("breakdown")] if obj.get("breakdown") is not None else None
+            "breakdown": [BreakdownBeta.from_dict(_item) for _item in obj["breakdown"]] if obj.get("breakdown") is not None else None
         })
         return _obj
 

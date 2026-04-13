@@ -1,5 +1,3 @@
-# coding: utf-8
-
 """
     Segment Public API
 
@@ -13,17 +11,14 @@
 """  # noqa: E501
 
 
-import re  # noqa: F401
-import io
 import warnings
-
-from pydantic import validate_arguments, ValidationError
-
+from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
+from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
-from pydantic import Field, constr
 
+from pydantic import Field
 from typing import Optional
-
+from typing_extensions import Annotated
 from segment_public_api.models.get_advanced_sync_schedule_from_warehouse200_response import GetAdvancedSyncScheduleFromWarehouse200Response
 from segment_public_api.models.list_selective_syncs_from_warehouse_and_source200_response import ListSelectiveSyncsFromWarehouseAndSource200Response
 from segment_public_api.models.list_syncs_from_warehouse200_response import ListSyncsFromWarehouse200Response
@@ -34,12 +29,9 @@ from segment_public_api.models.replace_advanced_sync_schedule_for_warehouse_v1_i
 from segment_public_api.models.update_selective_sync_for_warehouse200_response import UpdateSelectiveSyncForWarehouse200Response
 from segment_public_api.models.update_selective_sync_for_warehouse_v1_input import UpdateSelectiveSyncForWarehouseV1Input
 
-from segment_public_api.api_client import ApiClient
+from segment_public_api.api_client import ApiClient, RequestSerialized
 from segment_public_api.api_response import ApiResponse
-from segment_public_api.exceptions import (  # noqa: F401
-    ApiTypeError,
-    ApiValueError
-)
+from segment_public_api.rest import RESTResponseType
 
 
 class SelectiveSyncApi:
@@ -54,930 +46,1783 @@ class SelectiveSyncApi:
             api_client = ApiClient.get_default()
         self.api_client = api_client
 
-    @validate_arguments
-    def get_advanced_sync_schedule_from_warehouse(self, warehouse_id : constr(strict=True), **kwargs) -> GetAdvancedSyncScheduleFromWarehouse200Response:  # noqa: E501
-        """Get Advanced Sync Schedule from Warehouse  # noqa: E501
 
-        Returns the advanced sync schedule for a Warehouse.   The rate limit for this endpoint is 2 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
+    @validate_call
+    def get_advanced_sync_schedule_from_warehouse(
+        self,
+        warehouse_id: Annotated[str, Field(strict=True)],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> GetAdvancedSyncScheduleFromWarehouse200Response:
+        """Get Advanced Sync Schedule from Warehouse
 
-        >>> thread = api.get_advanced_sync_schedule_from_warehouse(warehouse_id, async_req=True)
-        >>> result = thread.get()
-
-        :param warehouse_id: (required)
-        :type warehouse_id: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
-        :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: GetAdvancedSyncScheduleFromWarehouse200Response
-        """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
-            message = "Error! Please call the get_advanced_sync_schedule_from_warehouse_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
-            raise ValueError(message)
-        return self.get_advanced_sync_schedule_from_warehouse_with_http_info(warehouse_id, **kwargs)  # noqa: E501
-
-    @validate_arguments
-    def get_advanced_sync_schedule_from_warehouse_with_http_info(self, warehouse_id : constr(strict=True), **kwargs) -> ApiResponse:  # noqa: E501
-        """Get Advanced Sync Schedule from Warehouse  # noqa: E501
-
-        Returns the advanced sync schedule for a Warehouse.   The rate limit for this endpoint is 2 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-
-        >>> thread = api.get_advanced_sync_schedule_from_warehouse_with_http_info(warehouse_id, async_req=True)
-        >>> result = thread.get()
+        Returns the advanced sync schedule for a Warehouse.   The rate limit for this endpoint is 2 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
 
         :param warehouse_id: (required)
         :type warehouse_id: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _preload_content: if False, the ApiResponse.data will
-                                 be set to none and raw_data will store the
-                                 HTTP response body without reading/decoding.
-                                 Default is True.
-        :type _preload_content: bool, optional
-        :param _return_http_data_only: response data instead of ApiResponse
-                                       object with status code, headers, etc
-        :type _return_http_data_only: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the authentication
-                              in the spec for a single request.
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
         :type _request_auth: dict, optional
-        :type _content_type: string, optional: force content-type for the request
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
         :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: tuple(GetAdvancedSyncScheduleFromWarehouse200Response, status_code(int), headers(HTTPHeaderDict))
-        """
+        """ # noqa: E501
 
-        _params = locals()
-
-        _all_params = [
-            'warehouse_id'
-        ]
-        _all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
-            ]
+        _param = self._get_advanced_sync_schedule_from_warehouse_serialize(
+            warehouse_id=warehouse_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
         )
 
-        # validate the arguments
-        for _key, _val in _params['kwargs'].items():
-            if _key not in _all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method get_advanced_sync_schedule_from_warehouse" % _key
-                )
-            _params[_key] = _val
-        del _params['kwargs']
-
-        _collection_formats = {}
-
-        # process the path parameters
-        _path_params = {}
-        if _params['warehouse_id']:
-            _path_params['warehouseId'] = _params['warehouse_id']
-
-
-        # process the query parameters
-        _query_params = []
-        # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
-        # process the form parameters
-        _form_params = []
-        _files = {}
-        # process the body parameter
-        _body_params = None
-        # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/vnd.segment.v1+json', 'application/json', 'application/vnd.segment.v1beta+json', 'application/vnd.segment.v1alpha+json'])  # noqa: E501
-
-        # authentication setting
-        _auth_settings = ['token']  # noqa: E501
-
-        _response_types_map = {
+        _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetAdvancedSyncScheduleFromWarehouse200Response",
             '404': "RequestErrorEnvelope",
             '422': "RequestErrorEnvelope",
             '429': "RequestErrorEnvelope",
         }
-
-        return self.api_client.call_api(
-            '/warehouses/{warehouseId}/advanced-sync-schedule', 'GET',
-            _path_params,
-            _query_params,
-            _header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
             response_types_map=_response_types_map,
-            auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
-            collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+        ).data
 
-    @validate_arguments
-    def list_selective_syncs_from_warehouse_and_source(self, warehouse_id : constr(strict=True), source_id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Defines the pagination parameters.  This parameter exists in v1.")] = None, **kwargs) -> ListSelectiveSyncsFromWarehouseAndSource200Response:  # noqa: E501
-        """List Selective Syncs from Warehouse And Source  # noqa: E501
 
-        Returns the schema for a Warehouse, including Sources, Collections, and Properties.   The rate limit for this endpoint is 2 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
+    @validate_call
+    def get_advanced_sync_schedule_from_warehouse_with_http_info(
+        self,
+        warehouse_id: Annotated[str, Field(strict=True)],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[GetAdvancedSyncScheduleFromWarehouse200Response]:
+        """Get Advanced Sync Schedule from Warehouse
 
-        >>> thread = api.list_selective_syncs_from_warehouse_and_source(warehouse_id, source_id, pagination, async_req=True)
-        >>> result = thread.get()
-
-        :param warehouse_id: (required)
-        :type warehouse_id: str
-        :param source_id: (required)
-        :type source_id: str
-        :param pagination: Defines the pagination parameters.  This parameter exists in v1.
-        :type pagination: PaginationInput
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
-        :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: ListSelectiveSyncsFromWarehouseAndSource200Response
-        """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
-            message = "Error! Please call the list_selective_syncs_from_warehouse_and_source_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
-            raise ValueError(message)
-        return self.list_selective_syncs_from_warehouse_and_source_with_http_info(warehouse_id, source_id, pagination, **kwargs)  # noqa: E501
-
-    @validate_arguments
-    def list_selective_syncs_from_warehouse_and_source_with_http_info(self, warehouse_id : constr(strict=True), source_id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Defines the pagination parameters.  This parameter exists in v1.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """List Selective Syncs from Warehouse And Source  # noqa: E501
-
-        Returns the schema for a Warehouse, including Sources, Collections, and Properties.   The rate limit for this endpoint is 2 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-
-        >>> thread = api.list_selective_syncs_from_warehouse_and_source_with_http_info(warehouse_id, source_id, pagination, async_req=True)
-        >>> result = thread.get()
+        Returns the advanced sync schedule for a Warehouse.   The rate limit for this endpoint is 2 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
 
         :param warehouse_id: (required)
         :type warehouse_id: str
-        :param source_id: (required)
-        :type source_id: str
-        :param pagination: Defines the pagination parameters.  This parameter exists in v1.
-        :type pagination: PaginationInput
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _preload_content: if False, the ApiResponse.data will
-                                 be set to none and raw_data will store the
-                                 HTTP response body without reading/decoding.
-                                 Default is True.
-        :type _preload_content: bool, optional
-        :param _return_http_data_only: response data instead of ApiResponse
-                                       object with status code, headers, etc
-        :type _return_http_data_only: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the authentication
-                              in the spec for a single request.
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
         :type _request_auth: dict, optional
-        :type _content_type: string, optional: force content-type for the request
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
         :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: tuple(ListSelectiveSyncsFromWarehouseAndSource200Response, status_code(int), headers(HTTPHeaderDict))
-        """
+        """ # noqa: E501
 
-        _params = locals()
-
-        _all_params = [
-            'warehouse_id',
-            'source_id',
-            'pagination'
-        ]
-        _all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
-            ]
+        _param = self._get_advanced_sync_schedule_from_warehouse_serialize(
+            warehouse_id=warehouse_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
         )
 
-        # validate the arguments
-        for _key, _val in _params['kwargs'].items():
-            if _key not in _all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method list_selective_syncs_from_warehouse_and_source" % _key
-                )
-            _params[_key] = _val
-        del _params['kwargs']
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetAdvancedSyncScheduleFromWarehouse200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
 
-        _collection_formats = {}
+
+    @validate_call
+    def get_advanced_sync_schedule_from_warehouse_without_preload_content(
+        self,
+        warehouse_id: Annotated[str, Field(strict=True)],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get Advanced Sync Schedule from Warehouse
+
+        Returns the advanced sync schedule for a Warehouse.   The rate limit for this endpoint is 2 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
+
+        :param warehouse_id: (required)
+        :type warehouse_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_advanced_sync_schedule_from_warehouse_serialize(
+            warehouse_id=warehouse_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetAdvancedSyncScheduleFromWarehouse200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _get_advanced_sync_schedule_from_warehouse_serialize(
+        self,
+        warehouse_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
 
         # process the path parameters
-        _path_params = {}
-        if _params['warehouse_id']:
-            _path_params['warehouseId'] = _params['warehouse_id']
-
-        if _params['source_id']:
-            _path_params['sourceId'] = _params['source_id']
-
-
+        if warehouse_id is not None:
+            _path_params['warehouseId'] = warehouse_id
         # process the query parameters
-        _query_params = []
-        if _params.get('pagination') is not None:  # noqa: E501
-            _query_params.append(('pagination', _params['pagination']))
-
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
-        _form_params = []
-        _files = {}
         # process the body parameter
-        _body_params = None
+
+
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/vnd.segment.v1+json', 'application/json', 'application/vnd.segment.v1beta+json', 'application/vnd.segment.v1alpha+json'])  # noqa: E501
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/vnd.segment.v1+json', 
+                    'application/json', 
+                    'application/vnd.segment.v1beta+json', 
+                    'application/vnd.segment.v1alpha+json'
+                ]
+            )
+
 
         # authentication setting
-        _auth_settings = ['token']  # noqa: E501
+        _auth_settings: List[str] = [
+            'token'
+        ]
 
-        _response_types_map = {
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/warehouses/{warehouseId}/advanced-sync-schedule',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def list_selective_syncs_from_warehouse_and_source(
+        self,
+        warehouse_id: Annotated[str, Field(strict=True)],
+        source_id: Annotated[str, Field(strict=True)],
+        pagination: Annotated[Optional[PaginationInput], Field(description="Defines the pagination parameters.  This parameter exists in v1.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ListSelectiveSyncsFromWarehouseAndSource200Response:
+        """List Selective Syncs from Warehouse And Source
+
+        Returns the schema for a Warehouse, including Sources, Collections, and Properties.   The rate limit for this endpoint is 2 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
+
+        :param warehouse_id: (required)
+        :type warehouse_id: str
+        :param source_id: (required)
+        :type source_id: str
+        :param pagination: Defines the pagination parameters.  This parameter exists in v1.
+        :type pagination: PaginationInput
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._list_selective_syncs_from_warehouse_and_source_serialize(
+            warehouse_id=warehouse_id,
+            source_id=source_id,
+            pagination=pagination,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListSelectiveSyncsFromWarehouseAndSource200Response",
             '404': "RequestErrorEnvelope",
             '422': "RequestErrorEnvelope",
             '429': "RequestErrorEnvelope",
         }
-
-        return self.api_client.call_api(
-            '/warehouses/{warehouseId}/connected-sources/{sourceId}/selective-syncs', 'GET',
-            _path_params,
-            _query_params,
-            _header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
             response_types_map=_response_types_map,
-            auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
-            collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+        ).data
 
-    @validate_arguments
-    def list_syncs_from_warehouse(self, warehouse_id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Defines the pagination parameters.  This parameter exists in v1.")] = None, **kwargs) -> ListSyncsFromWarehouse200Response:  # noqa: E501
-        """List Syncs from Warehouse  # noqa: E501
 
-        Returns the overview of syncs for every Source connected to a Warehouse.   The rate limit for this endpoint is 2 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
+    @validate_call
+    def list_selective_syncs_from_warehouse_and_source_with_http_info(
+        self,
+        warehouse_id: Annotated[str, Field(strict=True)],
+        source_id: Annotated[str, Field(strict=True)],
+        pagination: Annotated[Optional[PaginationInput], Field(description="Defines the pagination parameters.  This parameter exists in v1.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[ListSelectiveSyncsFromWarehouseAndSource200Response]:
+        """List Selective Syncs from Warehouse And Source
 
-        >>> thread = api.list_syncs_from_warehouse(warehouse_id, pagination, async_req=True)
-        >>> result = thread.get()
-
-        :param warehouse_id: (required)
-        :type warehouse_id: str
-        :param pagination: Defines the pagination parameters.  This parameter exists in v1.
-        :type pagination: PaginationInput
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
-        :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: ListSyncsFromWarehouse200Response
-        """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
-            message = "Error! Please call the list_syncs_from_warehouse_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
-            raise ValueError(message)
-        return self.list_syncs_from_warehouse_with_http_info(warehouse_id, pagination, **kwargs)  # noqa: E501
-
-    @validate_arguments
-    def list_syncs_from_warehouse_with_http_info(self, warehouse_id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Defines the pagination parameters.  This parameter exists in v1.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """List Syncs from Warehouse  # noqa: E501
-
-        Returns the overview of syncs for every Source connected to a Warehouse.   The rate limit for this endpoint is 2 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-
-        >>> thread = api.list_syncs_from_warehouse_with_http_info(warehouse_id, pagination, async_req=True)
-        >>> result = thread.get()
+        Returns the schema for a Warehouse, including Sources, Collections, and Properties.   The rate limit for this endpoint is 2 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
 
         :param warehouse_id: (required)
         :type warehouse_id: str
+        :param source_id: (required)
+        :type source_id: str
         :param pagination: Defines the pagination parameters.  This parameter exists in v1.
         :type pagination: PaginationInput
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _preload_content: if False, the ApiResponse.data will
-                                 be set to none and raw_data will store the
-                                 HTTP response body without reading/decoding.
-                                 Default is True.
-        :type _preload_content: bool, optional
-        :param _return_http_data_only: response data instead of ApiResponse
-                                       object with status code, headers, etc
-        :type _return_http_data_only: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the authentication
-                              in the spec for a single request.
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
         :type _request_auth: dict, optional
-        :type _content_type: string, optional: force content-type for the request
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
         :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: tuple(ListSyncsFromWarehouse200Response, status_code(int), headers(HTTPHeaderDict))
-        """
+        """ # noqa: E501
 
-        _params = locals()
-
-        _all_params = [
-            'warehouse_id',
-            'pagination'
-        ]
-        _all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
-            ]
+        _param = self._list_selective_syncs_from_warehouse_and_source_serialize(
+            warehouse_id=warehouse_id,
+            source_id=source_id,
+            pagination=pagination,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
         )
 
-        # validate the arguments
-        for _key, _val in _params['kwargs'].items():
-            if _key not in _all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method list_syncs_from_warehouse" % _key
-                )
-            _params[_key] = _val
-        del _params['kwargs']
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListSelectiveSyncsFromWarehouseAndSource200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
 
-        _collection_formats = {}
+
+    @validate_call
+    def list_selective_syncs_from_warehouse_and_source_without_preload_content(
+        self,
+        warehouse_id: Annotated[str, Field(strict=True)],
+        source_id: Annotated[str, Field(strict=True)],
+        pagination: Annotated[Optional[PaginationInput], Field(description="Defines the pagination parameters.  This parameter exists in v1.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """List Selective Syncs from Warehouse And Source
+
+        Returns the schema for a Warehouse, including Sources, Collections, and Properties.   The rate limit for this endpoint is 2 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
+
+        :param warehouse_id: (required)
+        :type warehouse_id: str
+        :param source_id: (required)
+        :type source_id: str
+        :param pagination: Defines the pagination parameters.  This parameter exists in v1.
+        :type pagination: PaginationInput
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._list_selective_syncs_from_warehouse_and_source_serialize(
+            warehouse_id=warehouse_id,
+            source_id=source_id,
+            pagination=pagination,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListSelectiveSyncsFromWarehouseAndSource200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _list_selective_syncs_from_warehouse_and_source_serialize(
+        self,
+        warehouse_id,
+        source_id,
+        pagination,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
 
         # process the path parameters
-        _path_params = {}
-        if _params['warehouse_id']:
-            _path_params['warehouseId'] = _params['warehouse_id']
-
-
+        if warehouse_id is not None:
+            _path_params['warehouseId'] = warehouse_id
+        if source_id is not None:
+            _path_params['sourceId'] = source_id
         # process the query parameters
-        _query_params = []
-        if _params.get('pagination') is not None:  # noqa: E501
-            _query_params.append(('pagination', _params['pagination']))
-
+        if pagination is not None:
+            
+            _query_params.append(('pagination', pagination))
+            
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
-        _form_params = []
-        _files = {}
         # process the body parameter
-        _body_params = None
+
+
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/vnd.segment.v1+json', 'application/json', 'application/vnd.segment.v1beta+json', 'application/vnd.segment.v1alpha+json'])  # noqa: E501
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/vnd.segment.v1+json', 
+                    'application/json', 
+                    'application/vnd.segment.v1beta+json', 
+                    'application/vnd.segment.v1alpha+json'
+                ]
+            )
+
 
         # authentication setting
-        _auth_settings = ['token']  # noqa: E501
+        _auth_settings: List[str] = [
+            'token'
+        ]
 
-        _response_types_map = {
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/warehouses/{warehouseId}/connected-sources/{sourceId}/selective-syncs',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def list_syncs_from_warehouse(
+        self,
+        warehouse_id: Annotated[str, Field(strict=True)],
+        pagination: Annotated[Optional[PaginationInput], Field(description="Defines the pagination parameters.  This parameter exists in v1.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ListSyncsFromWarehouse200Response:
+        """List Syncs from Warehouse
+
+        Returns the overview of syncs for every Source connected to a Warehouse.   The rate limit for this endpoint is 2 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
+
+        :param warehouse_id: (required)
+        :type warehouse_id: str
+        :param pagination: Defines the pagination parameters.  This parameter exists in v1.
+        :type pagination: PaginationInput
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._list_syncs_from_warehouse_serialize(
+            warehouse_id=warehouse_id,
+            pagination=pagination,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListSyncsFromWarehouse200Response",
             '404': "RequestErrorEnvelope",
             '422': "RequestErrorEnvelope",
             '429': "RequestErrorEnvelope",
         }
-
-        return self.api_client.call_api(
-            '/warehouses/{warehouseId}/syncs', 'GET',
-            _path_params,
-            _query_params,
-            _header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
             response_types_map=_response_types_map,
-            auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
-            collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+        ).data
 
-    @validate_arguments
-    def list_syncs_from_warehouse_and_source(self, warehouse_id : constr(strict=True), source_id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Defines the pagination parameters.  This parameter exists in v1.")] = None, **kwargs) -> ListSyncsFromWarehouseAndSource200Response:  # noqa: E501
-        """List Syncs from Warehouse And Source  # noqa: E501
 
-        Returns the overview of syncs for a Source connected to a Warehouse.   The rate limit for this endpoint is 2 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
+    @validate_call
+    def list_syncs_from_warehouse_with_http_info(
+        self,
+        warehouse_id: Annotated[str, Field(strict=True)],
+        pagination: Annotated[Optional[PaginationInput], Field(description="Defines the pagination parameters.  This parameter exists in v1.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[ListSyncsFromWarehouse200Response]:
+        """List Syncs from Warehouse
 
-        >>> thread = api.list_syncs_from_warehouse_and_source(warehouse_id, source_id, pagination, async_req=True)
-        >>> result = thread.get()
-
-        :param warehouse_id: (required)
-        :type warehouse_id: str
-        :param source_id: (required)
-        :type source_id: str
-        :param pagination: Defines the pagination parameters.  This parameter exists in v1.
-        :type pagination: PaginationInput
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
-        :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: ListSyncsFromWarehouseAndSource200Response
-        """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
-            message = "Error! Please call the list_syncs_from_warehouse_and_source_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
-            raise ValueError(message)
-        return self.list_syncs_from_warehouse_and_source_with_http_info(warehouse_id, source_id, pagination, **kwargs)  # noqa: E501
-
-    @validate_arguments
-    def list_syncs_from_warehouse_and_source_with_http_info(self, warehouse_id : constr(strict=True), source_id : constr(strict=True), pagination : Annotated[Optional[PaginationInput], Field(description="Defines the pagination parameters.  This parameter exists in v1.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """List Syncs from Warehouse And Source  # noqa: E501
-
-        Returns the overview of syncs for a Source connected to a Warehouse.   The rate limit for this endpoint is 2 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-
-        >>> thread = api.list_syncs_from_warehouse_and_source_with_http_info(warehouse_id, source_id, pagination, async_req=True)
-        >>> result = thread.get()
+        Returns the overview of syncs for every Source connected to a Warehouse.   The rate limit for this endpoint is 2 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
 
         :param warehouse_id: (required)
         :type warehouse_id: str
-        :param source_id: (required)
-        :type source_id: str
         :param pagination: Defines the pagination parameters.  This parameter exists in v1.
         :type pagination: PaginationInput
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _preload_content: if False, the ApiResponse.data will
-                                 be set to none and raw_data will store the
-                                 HTTP response body without reading/decoding.
-                                 Default is True.
-        :type _preload_content: bool, optional
-        :param _return_http_data_only: response data instead of ApiResponse
-                                       object with status code, headers, etc
-        :type _return_http_data_only: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the authentication
-                              in the spec for a single request.
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
         :type _request_auth: dict, optional
-        :type _content_type: string, optional: force content-type for the request
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
         :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: tuple(ListSyncsFromWarehouseAndSource200Response, status_code(int), headers(HTTPHeaderDict))
-        """
+        """ # noqa: E501
 
-        _params = locals()
-
-        _all_params = [
-            'warehouse_id',
-            'source_id',
-            'pagination'
-        ]
-        _all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
-            ]
+        _param = self._list_syncs_from_warehouse_serialize(
+            warehouse_id=warehouse_id,
+            pagination=pagination,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
         )
 
-        # validate the arguments
-        for _key, _val in _params['kwargs'].items():
-            if _key not in _all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method list_syncs_from_warehouse_and_source" % _key
-                )
-            _params[_key] = _val
-        del _params['kwargs']
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListSyncsFromWarehouse200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
 
-        _collection_formats = {}
+
+    @validate_call
+    def list_syncs_from_warehouse_without_preload_content(
+        self,
+        warehouse_id: Annotated[str, Field(strict=True)],
+        pagination: Annotated[Optional[PaginationInput], Field(description="Defines the pagination parameters.  This parameter exists in v1.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """List Syncs from Warehouse
+
+        Returns the overview of syncs for every Source connected to a Warehouse.   The rate limit for this endpoint is 2 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
+
+        :param warehouse_id: (required)
+        :type warehouse_id: str
+        :param pagination: Defines the pagination parameters.  This parameter exists in v1.
+        :type pagination: PaginationInput
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._list_syncs_from_warehouse_serialize(
+            warehouse_id=warehouse_id,
+            pagination=pagination,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListSyncsFromWarehouse200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _list_syncs_from_warehouse_serialize(
+        self,
+        warehouse_id,
+        pagination,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
 
         # process the path parameters
-        _path_params = {}
-        if _params['warehouse_id']:
-            _path_params['warehouseId'] = _params['warehouse_id']
-
-        if _params['source_id']:
-            _path_params['sourceId'] = _params['source_id']
-
-
+        if warehouse_id is not None:
+            _path_params['warehouseId'] = warehouse_id
         # process the query parameters
-        _query_params = []
-        if _params.get('pagination') is not None:  # noqa: E501
-            _query_params.append(('pagination', _params['pagination']))
-
+        if pagination is not None:
+            
+            _query_params.append(('pagination', pagination))
+            
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
-        _form_params = []
-        _files = {}
         # process the body parameter
-        _body_params = None
+
+
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/vnd.segment.v1+json', 'application/json', 'application/vnd.segment.v1beta+json', 'application/vnd.segment.v1alpha+json'])  # noqa: E501
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/vnd.segment.v1+json', 
+                    'application/json', 
+                    'application/vnd.segment.v1beta+json', 
+                    'application/vnd.segment.v1alpha+json'
+                ]
+            )
+
 
         # authentication setting
-        _auth_settings = ['token']  # noqa: E501
+        _auth_settings: List[str] = [
+            'token'
+        ]
 
-        _response_types_map = {
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/warehouses/{warehouseId}/syncs',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def list_syncs_from_warehouse_and_source(
+        self,
+        warehouse_id: Annotated[str, Field(strict=True)],
+        source_id: Annotated[str, Field(strict=True)],
+        pagination: Annotated[Optional[PaginationInput], Field(description="Defines the pagination parameters.  This parameter exists in v1.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ListSyncsFromWarehouseAndSource200Response:
+        """List Syncs from Warehouse And Source
+
+        Returns the overview of syncs for a Source connected to a Warehouse.   The rate limit for this endpoint is 2 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
+
+        :param warehouse_id: (required)
+        :type warehouse_id: str
+        :param source_id: (required)
+        :type source_id: str
+        :param pagination: Defines the pagination parameters.  This parameter exists in v1.
+        :type pagination: PaginationInput
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._list_syncs_from_warehouse_and_source_serialize(
+            warehouse_id=warehouse_id,
+            source_id=source_id,
+            pagination=pagination,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListSyncsFromWarehouseAndSource200Response",
             '404': "RequestErrorEnvelope",
             '422': "RequestErrorEnvelope",
             '429': "RequestErrorEnvelope",
         }
-
-        return self.api_client.call_api(
-            '/warehouses/{warehouseId}/connected-sources/{sourceId}/syncs', 'GET',
-            _path_params,
-            _query_params,
-            _header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
             response_types_map=_response_types_map,
-            auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
-            collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+        ).data
 
-    @validate_arguments
-    def replace_advanced_sync_schedule_for_warehouse(self, warehouse_id : constr(strict=True), replace_advanced_sync_schedule_for_warehouse_v1_input : ReplaceAdvancedSyncScheduleForWarehouseV1Input, **kwargs) -> ReplaceAdvancedSyncScheduleForWarehouse200Response:  # noqa: E501
-        """Replace Advanced Sync Schedule for Warehouse  # noqa: E501
 
-        Updates the advanced sync schedule for a Warehouse, replacing the sync schedule with a new schedule.   The rate limit for this endpoint is 2 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
+    @validate_call
+    def list_syncs_from_warehouse_and_source_with_http_info(
+        self,
+        warehouse_id: Annotated[str, Field(strict=True)],
+        source_id: Annotated[str, Field(strict=True)],
+        pagination: Annotated[Optional[PaginationInput], Field(description="Defines the pagination parameters.  This parameter exists in v1.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[ListSyncsFromWarehouseAndSource200Response]:
+        """List Syncs from Warehouse And Source
 
-        >>> thread = api.replace_advanced_sync_schedule_for_warehouse(warehouse_id, replace_advanced_sync_schedule_for_warehouse_v1_input, async_req=True)
-        >>> result = thread.get()
-
-        :param warehouse_id: (required)
-        :type warehouse_id: str
-        :param replace_advanced_sync_schedule_for_warehouse_v1_input: (required)
-        :type replace_advanced_sync_schedule_for_warehouse_v1_input: ReplaceAdvancedSyncScheduleForWarehouseV1Input
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
-        :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: ReplaceAdvancedSyncScheduleForWarehouse200Response
-        """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
-            message = "Error! Please call the replace_advanced_sync_schedule_for_warehouse_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
-            raise ValueError(message)
-        return self.replace_advanced_sync_schedule_for_warehouse_with_http_info(warehouse_id, replace_advanced_sync_schedule_for_warehouse_v1_input, **kwargs)  # noqa: E501
-
-    @validate_arguments
-    def replace_advanced_sync_schedule_for_warehouse_with_http_info(self, warehouse_id : constr(strict=True), replace_advanced_sync_schedule_for_warehouse_v1_input : ReplaceAdvancedSyncScheduleForWarehouseV1Input, **kwargs) -> ApiResponse:  # noqa: E501
-        """Replace Advanced Sync Schedule for Warehouse  # noqa: E501
-
-        Updates the advanced sync schedule for a Warehouse, replacing the sync schedule with a new schedule.   The rate limit for this endpoint is 2 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-
-        >>> thread = api.replace_advanced_sync_schedule_for_warehouse_with_http_info(warehouse_id, replace_advanced_sync_schedule_for_warehouse_v1_input, async_req=True)
-        >>> result = thread.get()
+        Returns the overview of syncs for a Source connected to a Warehouse.   The rate limit for this endpoint is 2 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
 
         :param warehouse_id: (required)
         :type warehouse_id: str
-        :param replace_advanced_sync_schedule_for_warehouse_v1_input: (required)
-        :type replace_advanced_sync_schedule_for_warehouse_v1_input: ReplaceAdvancedSyncScheduleForWarehouseV1Input
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _preload_content: if False, the ApiResponse.data will
-                                 be set to none and raw_data will store the
-                                 HTTP response body without reading/decoding.
-                                 Default is True.
-        :type _preload_content: bool, optional
-        :param _return_http_data_only: response data instead of ApiResponse
-                                       object with status code, headers, etc
-        :type _return_http_data_only: bool, optional
+        :param source_id: (required)
+        :type source_id: str
+        :param pagination: Defines the pagination parameters.  This parameter exists in v1.
+        :type pagination: PaginationInput
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the authentication
-                              in the spec for a single request.
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
         :type _request_auth: dict, optional
-        :type _content_type: string, optional: force content-type for the request
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
         :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: tuple(ReplaceAdvancedSyncScheduleForWarehouse200Response, status_code(int), headers(HTTPHeaderDict))
-        """
+        """ # noqa: E501
 
-        _params = locals()
-
-        _all_params = [
-            'warehouse_id',
-            'replace_advanced_sync_schedule_for_warehouse_v1_input'
-        ]
-        _all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
-            ]
+        _param = self._list_syncs_from_warehouse_and_source_serialize(
+            warehouse_id=warehouse_id,
+            source_id=source_id,
+            pagination=pagination,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
         )
 
-        # validate the arguments
-        for _key, _val in _params['kwargs'].items():
-            if _key not in _all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method replace_advanced_sync_schedule_for_warehouse" % _key
-                )
-            _params[_key] = _val
-        del _params['kwargs']
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListSyncsFromWarehouseAndSource200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
 
-        _collection_formats = {}
+
+    @validate_call
+    def list_syncs_from_warehouse_and_source_without_preload_content(
+        self,
+        warehouse_id: Annotated[str, Field(strict=True)],
+        source_id: Annotated[str, Field(strict=True)],
+        pagination: Annotated[Optional[PaginationInput], Field(description="Defines the pagination parameters.  This parameter exists in v1.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """List Syncs from Warehouse And Source
+
+        Returns the overview of syncs for a Source connected to a Warehouse.   The rate limit for this endpoint is 2 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
+
+        :param warehouse_id: (required)
+        :type warehouse_id: str
+        :param source_id: (required)
+        :type source_id: str
+        :param pagination: Defines the pagination parameters.  This parameter exists in v1.
+        :type pagination: PaginationInput
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._list_syncs_from_warehouse_and_source_serialize(
+            warehouse_id=warehouse_id,
+            source_id=source_id,
+            pagination=pagination,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListSyncsFromWarehouseAndSource200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _list_syncs_from_warehouse_and_source_serialize(
+        self,
+        warehouse_id,
+        source_id,
+        pagination,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
 
         # process the path parameters
-        _path_params = {}
-        if _params['warehouse_id']:
-            _path_params['warehouseId'] = _params['warehouse_id']
-
-
+        if warehouse_id is not None:
+            _path_params['warehouseId'] = warehouse_id
+        if source_id is not None:
+            _path_params['sourceId'] = source_id
         # process the query parameters
-        _query_params = []
+        if pagination is not None:
+            
+            _query_params.append(('pagination', pagination))
+            
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
-        _form_params = []
-        _files = {}
         # process the body parameter
-        _body_params = None
-        if _params['replace_advanced_sync_schedule_for_warehouse_v1_input'] is not None:
-            _body_params = _params['replace_advanced_sync_schedule_for_warehouse_v1_input']
+
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/vnd.segment.v1+json', 'application/json', 'application/vnd.segment.v1beta+json', 'application/vnd.segment.v1alpha+json'])  # noqa: E501
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/vnd.segment.v1+json', 
+                    'application/json', 
+                    'application/vnd.segment.v1beta+json', 
+                    'application/vnd.segment.v1alpha+json'
+                ]
+            )
 
-        # set the HTTP header `Content-Type`
-        _content_types_list = _params.get('_content_type',
-            self.api_client.select_header_content_type(
-                ['application/json', 'application/vnd.segment.v1+json', 'application/vnd.segment.v1beta+json', 'application/vnd.segment.v1alpha+json']))
-        if _content_types_list:
-                _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['token']  # noqa: E501
+        _auth_settings: List[str] = [
+            'token'
+        ]
 
-        _response_types_map = {
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/warehouses/{warehouseId}/connected-sources/{sourceId}/syncs',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def replace_advanced_sync_schedule_for_warehouse(
+        self,
+        warehouse_id: Annotated[str, Field(strict=True)],
+        replace_advanced_sync_schedule_for_warehouse_v1_input: ReplaceAdvancedSyncScheduleForWarehouseV1Input,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ReplaceAdvancedSyncScheduleForWarehouse200Response:
+        """Replace Advanced Sync Schedule for Warehouse
+
+        Updates the advanced sync schedule for a Warehouse, replacing the sync schedule with a new schedule.   The rate limit for this endpoint is 2 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
+
+        :param warehouse_id: (required)
+        :type warehouse_id: str
+        :param replace_advanced_sync_schedule_for_warehouse_v1_input: (required)
+        :type replace_advanced_sync_schedule_for_warehouse_v1_input: ReplaceAdvancedSyncScheduleForWarehouseV1Input
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._replace_advanced_sync_schedule_for_warehouse_serialize(
+            warehouse_id=warehouse_id,
+            replace_advanced_sync_schedule_for_warehouse_v1_input=replace_advanced_sync_schedule_for_warehouse_v1_input,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
             '200': "ReplaceAdvancedSyncScheduleForWarehouse200Response",
             '404': "RequestErrorEnvelope",
             '422': "RequestErrorEnvelope",
             '429': "RequestErrorEnvelope",
         }
-
-        return self.api_client.call_api(
-            '/warehouses/{warehouseId}/advanced-sync-schedule', 'PUT',
-            _path_params,
-            _query_params,
-            _header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
             response_types_map=_response_types_map,
-            auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
-            collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+        ).data
 
-    @validate_arguments
-    def update_selective_sync_for_warehouse(self, warehouse_id : constr(strict=True), update_selective_sync_for_warehouse_v1_input : UpdateSelectiveSyncForWarehouseV1Input, **kwargs) -> UpdateSelectiveSyncForWarehouse200Response:  # noqa: E501
-        """Update Selective Sync for Warehouse  # noqa: E501
 
-        Configures the schema for a Warehouse, including Sources, Collections, and Properties.    • When called, this endpoint may generate the `Storage Destination Modified` event in the [audit trail](/tag/Audit-Trail).          The rate limit for this endpoint is 2 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
+    @validate_call
+    def replace_advanced_sync_schedule_for_warehouse_with_http_info(
+        self,
+        warehouse_id: Annotated[str, Field(strict=True)],
+        replace_advanced_sync_schedule_for_warehouse_v1_input: ReplaceAdvancedSyncScheduleForWarehouseV1Input,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[ReplaceAdvancedSyncScheduleForWarehouse200Response]:
+        """Replace Advanced Sync Schedule for Warehouse
 
-        >>> thread = api.update_selective_sync_for_warehouse(warehouse_id, update_selective_sync_for_warehouse_v1_input, async_req=True)
-        >>> result = thread.get()
-
-        :param warehouse_id: (required)
-        :type warehouse_id: str
-        :param update_selective_sync_for_warehouse_v1_input: (required)
-        :type update_selective_sync_for_warehouse_v1_input: UpdateSelectiveSyncForWarehouseV1Input
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
-        :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: UpdateSelectiveSyncForWarehouse200Response
-        """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
-            message = "Error! Please call the update_selective_sync_for_warehouse_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
-            raise ValueError(message)
-        return self.update_selective_sync_for_warehouse_with_http_info(warehouse_id, update_selective_sync_for_warehouse_v1_input, **kwargs)  # noqa: E501
-
-    @validate_arguments
-    def update_selective_sync_for_warehouse_with_http_info(self, warehouse_id : constr(strict=True), update_selective_sync_for_warehouse_v1_input : UpdateSelectiveSyncForWarehouseV1Input, **kwargs) -> ApiResponse:  # noqa: E501
-        """Update Selective Sync for Warehouse  # noqa: E501
-
-        Configures the schema for a Warehouse, including Sources, Collections, and Properties.    • When called, this endpoint may generate the `Storage Destination Modified` event in the [audit trail](/tag/Audit-Trail).          The rate limit for this endpoint is 2 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-
-        >>> thread = api.update_selective_sync_for_warehouse_with_http_info(warehouse_id, update_selective_sync_for_warehouse_v1_input, async_req=True)
-        >>> result = thread.get()
+        Updates the advanced sync schedule for a Warehouse, replacing the sync schedule with a new schedule.   The rate limit for this endpoint is 2 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
 
         :param warehouse_id: (required)
         :type warehouse_id: str
-        :param update_selective_sync_for_warehouse_v1_input: (required)
-        :type update_selective_sync_for_warehouse_v1_input: UpdateSelectiveSyncForWarehouseV1Input
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _preload_content: if False, the ApiResponse.data will
-                                 be set to none and raw_data will store the
-                                 HTTP response body without reading/decoding.
-                                 Default is True.
-        :type _preload_content: bool, optional
-        :param _return_http_data_only: response data instead of ApiResponse
-                                       object with status code, headers, etc
-        :type _return_http_data_only: bool, optional
+        :param replace_advanced_sync_schedule_for_warehouse_v1_input: (required)
+        :type replace_advanced_sync_schedule_for_warehouse_v1_input: ReplaceAdvancedSyncScheduleForWarehouseV1Input
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the authentication
-                              in the spec for a single request.
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
         :type _request_auth: dict, optional
-        :type _content_type: string, optional: force content-type for the request
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
         :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: tuple(UpdateSelectiveSyncForWarehouse200Response, status_code(int), headers(HTTPHeaderDict))
-        """
+        """ # noqa: E501
 
-        _params = locals()
-
-        _all_params = [
-            'warehouse_id',
-            'update_selective_sync_for_warehouse_v1_input'
-        ]
-        _all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
-            ]
+        _param = self._replace_advanced_sync_schedule_for_warehouse_serialize(
+            warehouse_id=warehouse_id,
+            replace_advanced_sync_schedule_for_warehouse_v1_input=replace_advanced_sync_schedule_for_warehouse_v1_input,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
         )
 
-        # validate the arguments
-        for _key, _val in _params['kwargs'].items():
-            if _key not in _all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method update_selective_sync_for_warehouse" % _key
-                )
-            _params[_key] = _val
-        del _params['kwargs']
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ReplaceAdvancedSyncScheduleForWarehouse200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
 
-        _collection_formats = {}
+
+    @validate_call
+    def replace_advanced_sync_schedule_for_warehouse_without_preload_content(
+        self,
+        warehouse_id: Annotated[str, Field(strict=True)],
+        replace_advanced_sync_schedule_for_warehouse_v1_input: ReplaceAdvancedSyncScheduleForWarehouseV1Input,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Replace Advanced Sync Schedule for Warehouse
+
+        Updates the advanced sync schedule for a Warehouse, replacing the sync schedule with a new schedule.   The rate limit for this endpoint is 2 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
+
+        :param warehouse_id: (required)
+        :type warehouse_id: str
+        :param replace_advanced_sync_schedule_for_warehouse_v1_input: (required)
+        :type replace_advanced_sync_schedule_for_warehouse_v1_input: ReplaceAdvancedSyncScheduleForWarehouseV1Input
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._replace_advanced_sync_schedule_for_warehouse_serialize(
+            warehouse_id=warehouse_id,
+            replace_advanced_sync_schedule_for_warehouse_v1_input=replace_advanced_sync_schedule_for_warehouse_v1_input,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ReplaceAdvancedSyncScheduleForWarehouse200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _replace_advanced_sync_schedule_for_warehouse_serialize(
+        self,
+        warehouse_id,
+        replace_advanced_sync_schedule_for_warehouse_v1_input,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
 
         # process the path parameters
-        _path_params = {}
-        if _params['warehouse_id']:
-            _path_params['warehouseId'] = _params['warehouse_id']
-
-
+        if warehouse_id is not None:
+            _path_params['warehouseId'] = warehouse_id
         # process the query parameters
-        _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
-        _form_params = []
-        _files = {}
         # process the body parameter
-        _body_params = None
-        if _params['update_selective_sync_for_warehouse_v1_input'] is not None:
-            _body_params = _params['update_selective_sync_for_warehouse_v1_input']
+        if replace_advanced_sync_schedule_for_warehouse_v1_input is not None:
+            _body_params = replace_advanced_sync_schedule_for_warehouse_v1_input
+
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/vnd.segment.v1+json', 'application/json', 'application/vnd.segment.v1beta+json', 'application/vnd.segment.v1alpha+json'])  # noqa: E501
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/vnd.segment.v1+json', 
+                    'application/json', 
+                    'application/vnd.segment.v1beta+json', 
+                    'application/vnd.segment.v1alpha+json'
+                ]
+            )
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get('_content_type',
-            self.api_client.select_header_content_type(
-                ['application/json', 'application/vnd.segment.v1+json', 'application/vnd.segment.v1beta+json', 'application/vnd.segment.v1alpha+json']))
-        if _content_types_list:
-                _header_params['Content-Type'] = _content_types_list
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json', 
+                        'application/vnd.segment.v1+json', 
+                        'application/vnd.segment.v1beta+json', 
+                        'application/vnd.segment.v1alpha+json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
-        _auth_settings = ['token']  # noqa: E501
+        _auth_settings: List[str] = [
+            'token'
+        ]
 
-        _response_types_map = {
+        return self.api_client.param_serialize(
+            method='PUT',
+            resource_path='/warehouses/{warehouseId}/advanced-sync-schedule',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def update_selective_sync_for_warehouse(
+        self,
+        warehouse_id: Annotated[str, Field(strict=True)],
+        update_selective_sync_for_warehouse_v1_input: UpdateSelectiveSyncForWarehouseV1Input,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> UpdateSelectiveSyncForWarehouse200Response:
+        """Update Selective Sync for Warehouse
+
+        Configures the schema for a Warehouse, including Sources, Collections, and Properties.    • When called, this endpoint may generate the `Storage Destination Modified` event in the [audit trail](/tag/Audit-Trail).          The rate limit for this endpoint is 2 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
+
+        :param warehouse_id: (required)
+        :type warehouse_id: str
+        :param update_selective_sync_for_warehouse_v1_input: (required)
+        :type update_selective_sync_for_warehouse_v1_input: UpdateSelectiveSyncForWarehouseV1Input
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._update_selective_sync_for_warehouse_serialize(
+            warehouse_id=warehouse_id,
+            update_selective_sync_for_warehouse_v1_input=update_selective_sync_for_warehouse_v1_input,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
             '200': "UpdateSelectiveSyncForWarehouse200Response",
             '404': "RequestErrorEnvelope",
             '422': "RequestErrorEnvelope",
             '429': "RequestErrorEnvelope",
         }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
 
-        return self.api_client.call_api(
-            '/warehouses/{warehouseId}/selective-sync', 'PATCH',
-            _path_params,
-            _query_params,
-            _header_params,
+
+    @validate_call
+    def update_selective_sync_for_warehouse_with_http_info(
+        self,
+        warehouse_id: Annotated[str, Field(strict=True)],
+        update_selective_sync_for_warehouse_v1_input: UpdateSelectiveSyncForWarehouseV1Input,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[UpdateSelectiveSyncForWarehouse200Response]:
+        """Update Selective Sync for Warehouse
+
+        Configures the schema for a Warehouse, including Sources, Collections, and Properties.    • When called, this endpoint may generate the `Storage Destination Modified` event in the [audit trail](/tag/Audit-Trail).          The rate limit for this endpoint is 2 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
+
+        :param warehouse_id: (required)
+        :type warehouse_id: str
+        :param update_selective_sync_for_warehouse_v1_input: (required)
+        :type update_selective_sync_for_warehouse_v1_input: UpdateSelectiveSyncForWarehouseV1Input
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._update_selective_sync_for_warehouse_serialize(
+            warehouse_id=warehouse_id,
+            update_selective_sync_for_warehouse_v1_input=update_selective_sync_for_warehouse_v1_input,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateSelectiveSyncForWarehouse200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def update_selective_sync_for_warehouse_without_preload_content(
+        self,
+        warehouse_id: Annotated[str, Field(strict=True)],
+        update_selective_sync_for_warehouse_v1_input: UpdateSelectiveSyncForWarehouseV1Input,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Update Selective Sync for Warehouse
+
+        Configures the schema for a Warehouse, including Sources, Collections, and Properties.    • When called, this endpoint may generate the `Storage Destination Modified` event in the [audit trail](/tag/Audit-Trail).          The rate limit for this endpoint is 2 requests per minute, which is lower than the default due to access pattern restrictions. Once reached, this endpoint will respond with the 429 HTTP status code with headers indicating the limit parameters. See [Rate Limiting](/#tag/Rate-Limits) for more information.
+
+        :param warehouse_id: (required)
+        :type warehouse_id: str
+        :param update_selective_sync_for_warehouse_v1_input: (required)
+        :type update_selective_sync_for_warehouse_v1_input: UpdateSelectiveSyncForWarehouseV1Input
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._update_selective_sync_for_warehouse_serialize(
+            warehouse_id=warehouse_id,
+            update_selective_sync_for_warehouse_v1_input=update_selective_sync_for_warehouse_v1_input,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateSelectiveSyncForWarehouse200Response",
+            '404': "RequestErrorEnvelope",
+            '422': "RequestErrorEnvelope",
+            '429': "RequestErrorEnvelope",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _update_selective_sync_for_warehouse_serialize(
+        self,
+        warehouse_id,
+        update_selective_sync_for_warehouse_v1_input,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if warehouse_id is not None:
+            _path_params['warehouseId'] = warehouse_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if update_selective_sync_for_warehouse_v1_input is not None:
+            _body_params = update_selective_sync_for_warehouse_v1_input
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/vnd.segment.v1+json', 
+                    'application/json', 
+                    'application/vnd.segment.v1beta+json', 
+                    'application/vnd.segment.v1alpha+json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json', 
+                        'application/vnd.segment.v1+json', 
+                        'application/vnd.segment.v1beta+json', 
+                        'application/vnd.segment.v1alpha+json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'token'
+        ]
+
+        return self.api_client.param_serialize(
+            method='PATCH',
+            resource_path='/warehouses/{warehouseId}/selective-sync',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
             body=_body_params,
             post_params=_form_params,
             files=_files,
-            response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
