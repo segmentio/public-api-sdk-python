@@ -31,11 +31,12 @@ class UpdateActivationForAudienceAlphaInput(BaseModel):
     Input to update an activation.
     """ # noqa: E501
     enabled: Optional[StrictBool] = Field(default=None, description="Determines whether an activation is enabled.")
-    activation_name: Optional[StrictStr] = Field(default=None, description="Activation name.", alias="activationName")
-    personalization: Optional[PersonalizationInput] = Field(default=None, description="The data points used to enrich the event. Defines which profile traits and/or entity properties are included in the event sent to the Destination.  For Action Destinations, any traits or properties specified here must also be included in the destinationMapping to define which Destination fields should be populated.")
+    activation_name: Optional[StrictStr] = Field(default=None, description="Activation name. For Warehouse Destinations, this is used as the table name.", alias="activationName")
+    display_name: Optional[StrictStr] = Field(default=None, description="Optional human-readable label for the activation. Only supported for Warehouse Destinations. When omitted, the activationName is used as the label.", alias="displayName")
+    personalization: Optional[PersonalizationInput] = Field(default=None, description="The data points used to enrich the event. Defines which profile traits and/or entity properties are included in the event sent to the Destination. For Action Destinations, any traits or properties specified here must also be included in the destinationMapping to define which Destination fields should be populated.")
     destination_mapping: Optional[DestinationSubscriptionConfiguration] = Field(default=None, description="Defines the specific action and data mapping for the Destination. Only applicable for Action Destinations. Action id: Specifies which action to perform on the Destination (for example: add contact, update list). Settings/Mapping: Defines how event data (including personalization traits) populates specific fields in the Destination.  Use the List Supported Destinations from Audience endpoint to find available action ids and the specific Destination fields you can map.", alias="destinationMapping")
     perform_resync: Optional[StrictBool] = Field(default=None, description="Determines whether to perform a full resync after the update. If true, the entire audience is resent to the Destination using the updated configuration. If false, the update applies only to future syncs.", alias="performResync")
-    __properties: ClassVar[List[str]] = ["enabled", "activationName", "personalization", "destinationMapping", "performResync"]
+    __properties: ClassVar[List[str]] = ["enabled", "activationName", "displayName", "personalization", "destinationMapping", "performResync"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -96,6 +97,7 @@ class UpdateActivationForAudienceAlphaInput(BaseModel):
         _obj = cls.model_validate({
             "enabled": obj.get("enabled"),
             "activationName": obj.get("activationName"),
+            "displayName": obj.get("displayName"),
             "personalization": PersonalizationInput.from_dict(obj["personalization"]) if obj.get("personalization") is not None else None,
             "destinationMapping": DestinationSubscriptionConfiguration.from_dict(obj["destinationMapping"]) if obj.get("destinationMapping") is not None else None,
             "performResync": obj.get("performResync")
