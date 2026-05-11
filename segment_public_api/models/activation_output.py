@@ -36,12 +36,13 @@ class ActivationOutput(BaseModel):
     space_id: StrictStr = Field(description="The space id.", alias="spaceId")
     audience_id: StrictStr = Field(description="The audience id.", alias="audienceId")
     connection_id: StrictStr = Field(description="The connection id.", alias="connectionId")
-    activation_type: StrictStr = Field(description="Determines when an event is sent to the Destination.   Possible values: Audience Entered: Sends an event when a profile or entity enters the audience. Audience Exited: Sends an event when a profile or entity exits the audience. Audience Membership Changed: Sends an event for both entries and exits. This does not apply to entities.  Note that events are sent for the profile, unless the audience is a Linked Audience. In that case, events are sent for the target entity defined for that audience.", alias="activationType")
-    activation_name: StrictStr = Field(description="Name of the activation.", alias="activationName")
-    personalization: PersonalizationInput = Field(description="The data points used to enrich the event. Defines which profile traits and/or entity properties are included in the event sent to the Destination.  For Action Destinations, any traits or properties specified here must also be included in the destinationMapping to define which Destination fields should be populated.")
+    activation_type: StrictStr = Field(description="Determines when an event is sent to the Destination.  Possible values: Audience Entered: Sends an event when a profile or entity enters the audience. Audience Exited: Sends an event when a profile or entity exits the audience. Audience Membership Changed: Sends an event for both entries and exits. This does not apply to entities.  Note that events are sent for the profile, unless the audience is a Linked Audience. In that case, events are sent for the target entity defined for that audience.", alias="activationType")
+    activation_name: StrictStr = Field(description="Activation name. For Warehouse Destinations, this is the table name.", alias="activationName")
+    display_name: Optional[StrictStr] = Field(default=None, description="Human-readable label for the activation. Only present for Warehouse Destinations that have a display name configured. When null, the activationName serves as the label.", alias="displayName")
+    personalization: PersonalizationInput = Field(description="The data points used to enrich the event. Defines which profile traits and/or entity properties are included in the event sent to the Destination. For Action Destinations, any traits or properties specified here must also be included in the destinationMapping to define which Destination fields should be populated.")
     destination_mapping: Optional[DestinationSubscriptionConfiguration] = Field(default=None, description="Configuration settings for the mappings.", alias="destinationMapping")
     perform_resync: Optional[StrictBool] = Field(default=None, description="Indicates if a full resync is currently pending or in progress.", alias="performResync")
-    __properties: ClassVar[List[str]] = ["id", "enabled", "workspaceId", "spaceId", "audienceId", "connectionId", "activationType", "activationName", "personalization", "destinationMapping", "performResync"]
+    __properties: ClassVar[List[str]] = ["id", "enabled", "workspaceId", "spaceId", "audienceId", "connectionId", "activationType", "activationName", "displayName", "personalization", "destinationMapping", "performResync"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -88,6 +89,11 @@ class ActivationOutput(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of destination_mapping
         if self.destination_mapping:
             _dict['destinationMapping'] = self.destination_mapping.to_dict()
+        # set to None if display_name (nullable) is None
+        # and model_fields_set contains the field
+        if self.display_name is None and "display_name" in self.model_fields_set:
+            _dict['displayName'] = None
+
         return _dict
 
     @classmethod
@@ -108,6 +114,7 @@ class ActivationOutput(BaseModel):
             "connectionId": obj.get("connectionId"),
             "activationType": obj.get("activationType"),
             "activationName": obj.get("activationName"),
+            "displayName": obj.get("displayName"),
             "personalization": PersonalizationInput.from_dict(obj["personalization"]) if obj.get("personalization") is not None else None,
             "destinationMapping": DestinationSubscriptionConfiguration.from_dict(obj["destinationMapping"]) if obj.get("destinationMapping") is not None else None,
             "performResync": obj.get("performResync")

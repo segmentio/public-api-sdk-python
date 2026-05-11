@@ -32,11 +32,12 @@ class AddActivationToAudienceAlphaInput(BaseModel):
     """ # noqa: E501
     enabled: Optional[StrictBool] = Field(default=None, description="Determines whether an activation is enabled.")
     perform_resync: StrictBool = Field(description="Determines whether to perform a full resync upon creation. If true, the entire audience is resent to the Destination from scratch. If false, only future changes will be synced.", alias="performResync")
-    activation_type: StrictStr = Field(description="Determines when an event is sent to the Destination.   Possible values: Audience Entered: Sends an event when a profile or entity enters the audience. Audience Exited: Sends an event when a profile or entity exits the audience. Audience Membership Changed: Sends an event for both entries and exits. This does not apply to entities.  Note that events are sent for the profile, unless the audience is a Linked Audience. In that case, events are sent for the target entity defined for that audience.", alias="activationType")
-    activation_name: StrictStr = Field(description="Name of the activation.", alias="activationName")
-    personalization: PersonalizationInput = Field(description="The data points used to enrich the event. Defines which profile traits and/or entity properties are included in the event sent to the Destination.  For Action Destinations, any traits or properties specified here must also be included in the destinationMapping to define which Destination fields should be populated.")
+    activation_type: StrictStr = Field(description="Determines when an event is sent to the Destination.  Possible values: Audience Entered: Sends an event when a profile or entity enters the audience. Audience Exited: Sends an event when a profile or entity exits the audience. Audience Membership Changed: Sends an event for both entries and exits. This does not apply to entities.  Note that events are sent for the profile, unless the audience is a Linked Audience. In that case, events are sent for the target entity defined for that audience.", alias="activationType")
+    activation_name: StrictStr = Field(description="Activation name. For Warehouse Destinations, this is used as the table name.", alias="activationName")
+    display_name: Optional[StrictStr] = Field(default=None, description="Optional human-readable label for the activation. Only supported for Warehouse Destinations. When omitted, the activationName is used as the label.", alias="displayName")
+    personalization: PersonalizationInput = Field(description="The data points used to enrich the event. Defines which profile traits and/or entity properties are included in the event sent to the Destination. For Action Destinations, any traits or properties specified here must also be included in the destinationMapping to define which Destination fields should be populated.")
     destination_mapping: Optional[DestinationSubscriptionConfiguration] = Field(default=None, description="Defines the specific action and data mapping for the Destination. Only applicable for Action Destinations. Action id: Specifies which action to perform on the Destination (for example: add contact, update list). Settings/Mapping: Defines how event data (including personalization traits) populates specific fields in the Destination.  Use the List Supported Destinations from Audience endpoint to find available action ids and the specific Destination fields you can map.", alias="destinationMapping")
-    __properties: ClassVar[List[str]] = ["enabled", "performResync", "activationType", "activationName", "personalization", "destinationMapping"]
+    __properties: ClassVar[List[str]] = ["enabled", "performResync", "activationType", "activationName", "displayName", "personalization", "destinationMapping"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -99,6 +100,7 @@ class AddActivationToAudienceAlphaInput(BaseModel):
             "performResync": obj.get("performResync"),
             "activationType": obj.get("activationType"),
             "activationName": obj.get("activationName"),
+            "displayName": obj.get("displayName"),
             "personalization": PersonalizationInput.from_dict(obj["personalization"]) if obj.get("personalization") is not None else None,
             "destinationMapping": DestinationSubscriptionConfiguration.from_dict(obj["destinationMapping"]) if obj.get("destinationMapping") is not None else None
         })
