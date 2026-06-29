@@ -48,7 +48,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.DestinationsApi(api_client)
-    create_destination_v1_input = {"sourceId":"rh5BDZp6QDHvXFCkibm1pR","metadataId":"54521fd525e721e32a72ee91","name":"my destination v1","settings":{"apiKey":"3cb9b589437d3904f19b2b791c2cdada","retarget":true}} # CreateDestinationV1Input | 
+    create_destination_v1_input = {"sourceId":"rh5BDZp6QDHvXFCkibm1pR","metadataId":"54521fd525e721e32a72eea2","name":"my destination v1","settings":{"siteId":"12345"}} # CreateDestinationV1Input | 
 
     try:
         # Create Destination
