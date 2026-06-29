@@ -19,6 +19,7 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictBool, StrictFloat, StrictInt, StrictStr, field_validator
 from typing import Optional, Union
 from typing_extensions import Annotated
+from segment_public_api.models.event_property_type import EventPropertyType
 from segment_public_api.models.list_entity_paths200_response import ListEntityPaths200Response
 from segment_public_api.models.list_events200_response import ListEvents200Response
 from segment_public_api.models.list_properties_from_entity200_response import ListPropertiesFromEntity200Response
@@ -1723,7 +1724,7 @@ class SpaceSchemaApi:
         space_id: Annotated[str, Field(strict=True)],
         event_name: Annotated[str, Field(strict=True)],
         property_name: Annotated[str, Field(strict=True)],
-        property_type: Annotated[StrictStr, Field(description="The property type.  This parameter exists in alpha.")],
+        property_type: Annotated[EventPropertyType, Field(description="The property type.  This parameter exists in alpha.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1748,7 +1749,7 @@ class SpaceSchemaApi:
         :param property_name: (required)
         :type property_name: str
         :param property_type: The property type.  This parameter exists in alpha. (required)
-        :type property_type: str
+        :type property_type: EventPropertyType
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1805,7 +1806,7 @@ class SpaceSchemaApi:
         space_id: Annotated[str, Field(strict=True)],
         event_name: Annotated[str, Field(strict=True)],
         property_name: Annotated[str, Field(strict=True)],
-        property_type: Annotated[StrictStr, Field(description="The property type.  This parameter exists in alpha.")],
+        property_type: Annotated[EventPropertyType, Field(description="The property type.  This parameter exists in alpha.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1830,7 +1831,7 @@ class SpaceSchemaApi:
         :param property_name: (required)
         :type property_name: str
         :param property_type: The property type.  This parameter exists in alpha. (required)
-        :type property_type: str
+        :type property_type: EventPropertyType
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1887,7 +1888,7 @@ class SpaceSchemaApi:
         space_id: Annotated[str, Field(strict=True)],
         event_name: Annotated[str, Field(strict=True)],
         property_name: Annotated[str, Field(strict=True)],
-        property_type: Annotated[StrictStr, Field(description="The property type.  This parameter exists in alpha.")],
+        property_type: Annotated[EventPropertyType, Field(description="The property type.  This parameter exists in alpha.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1912,7 +1913,7 @@ class SpaceSchemaApi:
         :param property_name: (required)
         :type property_name: str
         :param property_type: The property type.  This parameter exists in alpha. (required)
-        :type property_type: str
+        :type property_type: EventPropertyType
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1995,7 +1996,7 @@ class SpaceSchemaApi:
         # process the query parameters
         if property_type is not None:
             
-            _query_params.append(('propertyType', property_type))
+            _query_params.append(('propertyType', property_type.value))
             
         # process the header parameters
         # process the form parameters

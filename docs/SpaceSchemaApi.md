@@ -427,6 +427,7 @@ Returns sample values for an Event Property in a Space.  • This endpoint is in
 import time
 import os
 import segment_public_api
+from segment_public_api.models.event_property_type import EventPropertyType
 from segment_public_api.models.list_sample_values_from_event_property200_response import ListSampleValuesFromEventProperty200Response
 from segment_public_api.rest import ApiException
 from pprint import pprint
@@ -444,7 +445,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     space_id = 'spaceId' # str | 
     event_name = 'Order Completed' # str | 
     property_name = 'revenue' # str | 
-    property_type = 'property' # str | The property type.  This parameter exists in alpha.
+    property_type = segment_public_api.EventPropertyType() # EventPropertyType | The property type.  This parameter exists in alpha.
 
     try:
         # List Sample Values from Event Property
@@ -463,7 +464,7 @@ Name | Type | Description  | Notes
  **space_id** | **str**|  | 
  **event_name** | **str**|  | 
  **property_name** | **str**|  | 
- **property_type** | **str**| The property type.  This parameter exists in alpha. | 
+ **property_type** | [**EventPropertyType**](.md)| The property type.  This parameter exists in alpha. | 
 
 ### Return type
 
