@@ -28,7 +28,7 @@ from pydantic_core import to_jsonable_python
 
 class AddActivationToAudienceAlphaInput(BaseModel):
     """
-    Input to create an activation.
+    AddActivationToAudienceAlphaInput
     """ # noqa: E501
     enabled: Optional[StrictBool] = Field(default=None, description="Determines whether an activation is enabled.")
     perform_resync: StrictBool = Field(description="Determines whether to perform a full resync upon creation. If true, the entire audience is resent to the Destination from scratch. If false, only future changes will be synced.", alias="performResync")
