@@ -34,6 +34,7 @@ __all__ = [
     "IAMGroupsApi",
     "IAMRolesApi",
     "IAMUsersApi",
+    "JourneysApi",
     "LabelsApi",
     "LivePluginsApi",
     "MonthlyTrackedUsersApi",
@@ -183,6 +184,9 @@ __all__ = [
     "CreateInvites201Response",
     "CreateInvitesV1Input",
     "CreateInvitesV1Output",
+    "CreateJourney200Response",
+    "CreateJourneyAlphaInput",
+    "CreateJourneyAlphaOutput",
     "CreateLabel201Response",
     "CreateLabelV1Input",
     "CreateLabelV1Output",
@@ -417,6 +421,8 @@ __all__ = [
     "IntegrationOptionBeta",
     "InvitePermissionV1",
     "InviteV1",
+    "JourneyDefinition",
+    "JourneySummary",
     "LabelAlpha",
     "LabelV1",
     "ListActivationsAlphaOutput",
@@ -790,6 +796,7 @@ from segment_public_api.api.functions_api import FunctionsApi as FunctionsApi
 from segment_public_api.api.iam_groups_api import IAMGroupsApi as IAMGroupsApi
 from segment_public_api.api.iam_roles_api import IAMRolesApi as IAMRolesApi
 from segment_public_api.api.iam_users_api import IAMUsersApi as IAMUsersApi
+from segment_public_api.api.journeys_api import JourneysApi as JourneysApi
 from segment_public_api.api.labels_api import LabelsApi as LabelsApi
 from segment_public_api.api.live_plugins_api import LivePluginsApi as LivePluginsApi
 from segment_public_api.api.monthly_tracked_users_api import MonthlyTrackedUsersApi as MonthlyTrackedUsersApi
@@ -943,6 +950,9 @@ from segment_public_api.models.create_insert_function_instance_alpha_output impo
 from segment_public_api.models.create_invites201_response import CreateInvites201Response as CreateInvites201Response
 from segment_public_api.models.create_invites_v1_input import CreateInvitesV1Input as CreateInvitesV1Input
 from segment_public_api.models.create_invites_v1_output import CreateInvitesV1Output as CreateInvitesV1Output
+from segment_public_api.models.create_journey200_response import CreateJourney200Response as CreateJourney200Response
+from segment_public_api.models.create_journey_alpha_input import CreateJourneyAlphaInput as CreateJourneyAlphaInput
+from segment_public_api.models.create_journey_alpha_output import CreateJourneyAlphaOutput as CreateJourneyAlphaOutput
 from segment_public_api.models.create_label201_response import CreateLabel201Response as CreateLabel201Response
 from segment_public_api.models.create_label_v1_input import CreateLabelV1Input as CreateLabelV1Input
 from segment_public_api.models.create_label_v1_output import CreateLabelV1Output as CreateLabelV1Output
@@ -1177,6 +1187,8 @@ from segment_public_api.models.insert_function_instance_alpha import InsertFunct
 from segment_public_api.models.integration_option_beta import IntegrationOptionBeta as IntegrationOptionBeta
 from segment_public_api.models.invite_permission_v1 import InvitePermissionV1 as InvitePermissionV1
 from segment_public_api.models.invite_v1 import InviteV1 as InviteV1
+from segment_public_api.models.journey_definition import JourneyDefinition as JourneyDefinition
+from segment_public_api.models.journey_summary import JourneySummary as JourneySummary
 from segment_public_api.models.label_alpha import LabelAlpha as LabelAlpha
 from segment_public_api.models.label_v1 import LabelV1 as LabelV1
 from segment_public_api.models.list_activations_alpha_output import ListActivationsAlphaOutput as ListActivationsAlphaOutput
