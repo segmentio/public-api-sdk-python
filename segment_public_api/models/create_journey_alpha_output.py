@@ -20,16 +20,16 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List
-from segment_public_api.models.journey_summary import JourneySummary
+from segment_public_api.models.event_triggered_journey_summary import EventTriggeredJourneySummary
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
 
 class CreateJourneyAlphaOutput(BaseModel):
     """
-    Output from create journey.
+    Output from create event-triggered journey.
     """ # noqa: E501
-    journey: JourneySummary = Field(description="The created journey summary.")
+    journey: EventTriggeredJourneySummary = Field(description="The created journey draft.")
     __properties: ClassVar[List[str]] = ["journey"]
 
     model_config = ConfigDict(
@@ -86,7 +86,7 @@ class CreateJourneyAlphaOutput(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "journey": JourneySummary.from_dict(obj["journey"]) if obj.get("journey") is not None else None
+            "journey": EventTriggeredJourneySummary.from_dict(obj["journey"]) if obj.get("journey") is not None else None
         })
         return _obj
 

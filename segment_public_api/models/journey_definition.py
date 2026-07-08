@@ -26,7 +26,7 @@ from pydantic_core import to_jsonable_python
 
 class JourneyDefinition(BaseModel):
     """
-    The XState-format definition of a journey. Passed through to personas-service as-is.
+    The XState-format definition of an event-triggered journey. Passed through to personas-service as-is.
     """ # noqa: E501
     initial: StrictStr = Field(description="The key of the initial state.")
     states: Dict[str, Any] = Field(description="Map of state key → state definition.")

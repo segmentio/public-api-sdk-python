@@ -27,7 +27,7 @@ from pydantic_core import to_jsonable_python
 
 class CreateJourneyAlphaInput(BaseModel):
     """
-    Input to create a journey.
+    Input to create an event-triggered journey.
     """ # noqa: E501
     name: StrictStr = Field(description="Display name for the journey.")
     description: Optional[StrictStr] = Field(default=None, description="Optional description.")

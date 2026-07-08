@@ -18,30 +18,19 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
-from typing import Any, ClassVar, Dict, List
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Union
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
 
-class JourneySummary(BaseModel):
+class EventTriggeredJourneySummary(BaseModel):
     """
-    Summary of a created journey.
+    Summary of a created event-triggered journey draft.
     """ # noqa: E501
-    id: StrictStr = Field(description="Journey id.")
-    space_id: StrictStr = Field(description="Space id for the journey.", alias="spaceId")
-    name: StrictStr = Field(description="Display name.")
-    execution_state: StrictStr = Field(description="Execution state of the journey.", alias="executionState")
-    created_at: StrictStr = Field(description="ISO timestamp.", alias="createdAt")
-    updated_at: StrictStr = Field(description="ISO timestamp.", alias="updatedAt")
-    __properties: ClassVar[List[str]] = ["id", "spaceId", "name", "executionState", "createdAt", "updatedAt"]
-
-    @field_validator('execution_state')
-    def execution_state_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in set(['DRAFT', 'PUBLISHED']):
-            raise ValueError("must be one of enum values ('DRAFT', 'PUBLISHED')")
-        return value
+    container_id: StrictStr = Field(description="Container id of the created journey draft.", alias="containerId")
+    version_number: Union[StrictFloat, StrictInt] = Field(description="Version number of the created draft.", alias="versionNumber")
+    __properties: ClassVar[List[str]] = ["containerId", "versionNumber"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -61,7 +50,7 @@ class JourneySummary(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of JourneySummary from a JSON string"""
+        """Create an instance of EventTriggeredJourneySummary from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -86,7 +75,7 @@ class JourneySummary(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of JourneySummary from a dict"""
+        """Create an instance of EventTriggeredJourneySummary from a dict"""
         if obj is None:
             return None
 
@@ -94,12 +83,8 @@ class JourneySummary(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "id": obj.get("id"),
-            "spaceId": obj.get("spaceId"),
-            "name": obj.get("name"),
-            "executionState": obj.get("executionState"),
-            "createdAt": obj.get("createdAt"),
-            "updatedAt": obj.get("updatedAt")
+            "containerId": obj.get("containerId"),
+            "versionNumber": obj.get("versionNumber")
         })
         return _obj
 

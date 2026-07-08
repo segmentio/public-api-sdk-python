@@ -304,6 +304,7 @@ __all__ = [
     "EventPropertyAlpha",
     "EventPropertyType",
     "EventSourceV1",
+    "EventTriggeredJourneySummary",
     "EventType",
     "FQLDefinedPropertyV1",
     "Filter",
@@ -422,7 +423,6 @@ __all__ = [
     "InvitePermissionV1",
     "InviteV1",
     "JourneyDefinition",
-    "JourneySummary",
     "LabelAlpha",
     "LabelV1",
     "ListActivationsAlphaOutput",
@@ -1070,6 +1070,7 @@ from segment_public_api.models.event_alpha import EventAlpha as EventAlpha
 from segment_public_api.models.event_property_alpha import EventPropertyAlpha as EventPropertyAlpha
 from segment_public_api.models.event_property_type import EventPropertyType as EventPropertyType
 from segment_public_api.models.event_source_v1 import EventSourceV1 as EventSourceV1
+from segment_public_api.models.event_triggered_journey_summary import EventTriggeredJourneySummary as EventTriggeredJourneySummary
 from segment_public_api.models.event_type import EventType as EventType
 from segment_public_api.models.fql_defined_property_v1 import FQLDefinedPropertyV1 as FQLDefinedPropertyV1
 from segment_public_api.models.filter import Filter as Filter
@@ -1188,7 +1189,6 @@ from segment_public_api.models.integration_option_beta import IntegrationOptionB
 from segment_public_api.models.invite_permission_v1 import InvitePermissionV1 as InvitePermissionV1
 from segment_public_api.models.invite_v1 import InviteV1 as InviteV1
 from segment_public_api.models.journey_definition import JourneyDefinition as JourneyDefinition
-from segment_public_api.models.journey_summary import JourneySummary as JourneySummary
 from segment_public_api.models.label_alpha import LabelAlpha as LabelAlpha
 from segment_public_api.models.label_v1 import LabelV1 as LabelV1
 from segment_public_api.models.list_activations_alpha_output import ListActivationsAlphaOutput as ListActivationsAlphaOutput
