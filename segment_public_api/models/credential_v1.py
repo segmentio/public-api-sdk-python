@@ -26,7 +26,7 @@ from pydantic_core import to_jsonable_python
 
 class CredentialV1(BaseModel):
     """
-    Defines a reusable Credential that can be used to connect one or more Warehouses to a data warehouse.
+    Defines a reusable Credential that can be used to connect one or more Warehouses to a data Warehouse.
     """ # noqa: E501
     id: StrictStr = Field(description="The id of the Credential.")
     workspace_id: StrictStr = Field(description="The id of the Workspace that owns this Credential.", alias="workspaceId")
