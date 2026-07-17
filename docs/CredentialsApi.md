@@ -39,7 +39,7 @@ configuration = segment_public_api.Configuration(
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.CredentialsApi(api_client)
-    create_credential_v1_input = {"name":"Production Snowflake","settings":{"type":"Snowflake","username":"prod_user","account":"xy12345.us-east-1","warehouse":"COMPUTE_WH","database":"ANALYTICS_DB","authentication":{"type":"keypair","privateKey":"-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgw...\n-----END PRIVATE KEY-----","privateKeyPassphrase":"SecurePassphrase123!"}}} # CreateCredentialV1Input | 
+    create_credential_v1_input = {"name":"Production Snowflake","settings":{"type":"Snowflake","username":"prod_user","account":"xy12345.us-east-1","warehouse":"COMPUTE_WH","database":"ANALYTICS_DB","authentication":{"type":"keypair","privateKey":"<privateKey>","privateKeyPassphrase":"<privateKeyPassphrase>"}}} # CreateCredentialV1Input | 
 
     try:
         # Create Credential

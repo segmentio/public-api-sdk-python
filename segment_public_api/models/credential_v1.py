@@ -30,7 +30,7 @@ class CredentialV1(BaseModel):
     """ # noqa: E501
     id: StrictStr = Field(description="The id of the Credential.")
     workspace_id: StrictStr = Field(description="The id of the Workspace that owns this Credential.", alias="workspaceId")
-    name: StrictStr = Field(description="An optional human-readable name for this Credential.")
+    name: StrictStr = Field(description="A human-readable name for this Credential.")
     settings: Dict[str, Any] = Field(description="The settings associated with this Credential.  `settings.type` determines the Credential type (for example `Snowflake` or `Redshift`) and which other settings fields are expected. Sensitive fields are redacted in responses.")
     created_at: StrictStr = Field(description="The time this Credential was created.", alias="createdAt")
     updated_at: StrictStr = Field(description="The time this Credential was last updated.", alias="updatedAt")
