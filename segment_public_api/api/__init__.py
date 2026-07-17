@@ -7,8 +7,6 @@ from segment_public_api.api.audiences_api import AudiencesApi
 from segment_public_api.api.audit_trail_api import AuditTrailApi
 from segment_public_api.api.catalog_api import CatalogApi
 from segment_public_api.api.computed_traits_api import ComputedTraitsApi
-from segment_public_api.api.credentials_api import CredentialsApi
-from segment_public_api.api.data_graph_schema_api import DataGraphSchemaApi
 from segment_public_api.api.deletion_and_suppression_api import DeletionAndSuppressionApi
 from segment_public_api.api.delivery_overview_api import DeliveryOverviewApi
 from segment_public_api.api.destination_filters_api import DestinationFiltersApi
@@ -18,7 +16,6 @@ from segment_public_api.api.functions_api import FunctionsApi
 from segment_public_api.api.iam_groups_api import IAMGroupsApi
 from segment_public_api.api.iam_roles_api import IAMRolesApi
 from segment_public_api.api.iam_users_api import IAMUsersApi
-from segment_public_api.api.journeys_api import JourneysApi
 from segment_public_api.api.labels_api import LabelsApi
 from segment_public_api.api.live_plugins_api import LivePluginsApi
 from segment_public_api.api.monthly_tracked_users_api import MonthlyTrackedUsersApi
@@ -27,6 +24,7 @@ from segment_public_api.api.reverse_etl_api import ReverseETLApi
 from segment_public_api.api.selective_sync_api import SelectiveSyncApi
 from segment_public_api.api.sources_api import SourcesApi
 from segment_public_api.api.space_filters_api import SpaceFiltersApi
+from segment_public_api.api.space_schema_api import SpaceSchemaApi
 from segment_public_api.api.spaces_api import SpacesApi
 from segment_public_api.api.testing_api import TestingApi
 from segment_public_api.api.tracking_plans_api import TrackingPlansApi

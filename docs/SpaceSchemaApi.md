@@ -1,17 +1,17 @@
-# segment_public_api.DataGraphSchemaApi
+# segment_public_api.SpaceSchemaApi
 
 All URIs are relative to *https://api.segmentapis.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**list_entity_paths**](DataGraphSchemaApi.md#list_entity_paths) | **GET** /spaces/{spaceId}/entity-paths | List Entity Paths
-[**list_events**](DataGraphSchemaApi.md#list_events) | **GET** /spaces/{spaceId}/events | List Events
-[**list_properties_from_entity**](DataGraphSchemaApi.md#list_properties_from_entity) | **GET** /spaces/{spaceId}/entities/{entitySlug}/properties | List Properties from Entity
-[**list_properties_from_event**](DataGraphSchemaApi.md#list_properties_from_event) | **GET** /spaces/{spaceId}/events/{eventName}/properties | List Properties from Event
-[**list_sample_values_from_entity_property**](DataGraphSchemaApi.md#list_sample_values_from_entity_property) | **GET** /spaces/{spaceId}/entities/{entitySlug}/properties/{propertyName}/sample-values | List Sample Values from Entity Property
-[**list_sample_values_from_event_property**](DataGraphSchemaApi.md#list_sample_values_from_event_property) | **GET** /spaces/{spaceId}/events/{eventName}/properties/{propertyName}/sample-values | List Sample Values from Event Property
-[**list_sample_values_from_trait**](DataGraphSchemaApi.md#list_sample_values_from_trait) | **GET** /spaces/{spaceId}/traits/{traitKey}/sample-values | List Sample Values from Trait
-[**list_traits**](DataGraphSchemaApi.md#list_traits) | **GET** /spaces/{spaceId}/traits | List Traits
+[**list_entity_paths**](SpaceSchemaApi.md#list_entity_paths) | **GET** /spaces/{spaceId}/entity-paths | List Entity Paths
+[**list_events**](SpaceSchemaApi.md#list_events) | **GET** /spaces/{spaceId}/events | List Events
+[**list_properties_from_entity**](SpaceSchemaApi.md#list_properties_from_entity) | **GET** /spaces/{spaceId}/entities/{entitySlug}/properties | List Properties from Entity
+[**list_properties_from_event**](SpaceSchemaApi.md#list_properties_from_event) | **GET** /spaces/{spaceId}/events/{eventName}/properties | List Properties from Event
+[**list_sample_values_from_entity_property**](SpaceSchemaApi.md#list_sample_values_from_entity_property) | **GET** /spaces/{spaceId}/entities/{entitySlug}/properties/{propertyName}/sample-values | List Sample Values from Entity Property
+[**list_sample_values_from_event_property**](SpaceSchemaApi.md#list_sample_values_from_event_property) | **GET** /spaces/{spaceId}/events/{eventName}/properties/{propertyName}/sample-values | List Sample Values from Event Property
+[**list_sample_values_from_trait**](SpaceSchemaApi.md#list_sample_values_from_trait) | **GET** /spaces/{spaceId}/traits/{traitKey}/sample-values | List Sample Values from Trait
+[**list_traits**](SpaceSchemaApi.md#list_traits) | **GET** /spaces/{spaceId}/traits | List Traits
 
 
 
@@ -44,7 +44,7 @@ configuration = segment_public_api.Configuration(
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = segment_public_api.DataGraphSchemaApi(api_client)
+    api_instance = segment_public_api.SpaceSchemaApi(api_client)
     space_id = 'spaceId' # str | 
     pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination params. Defaults to count 200.  This parameter exists in alpha. (optional)
     search = 'search_example' # str | Filter paths by entity name or path name.  This parameter exists in alpha. (optional)
@@ -52,10 +52,10 @@ with segment_public_api.ApiClient(configuration) as api_client:
     try:
         # List Entity Paths
         api_response = api_instance.list_entity_paths(space_id, pagination=pagination, search=search)
-        print("The response of DataGraphSchemaApi->list_entity_paths:\n")
+        print("The response of SpaceSchemaApi->list_entity_paths:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling DataGraphSchemaApi->list_entity_paths: %s\n" % e)
+        print("Exception when calling SpaceSchemaApi->list_entity_paths: %s\n" % e)
 ```
 
 
@@ -120,7 +120,7 @@ configuration = segment_public_api.Configuration(
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = segment_public_api.DataGraphSchemaApi(api_client)
+    api_instance = segment_public_api.SpaceSchemaApi(api_client)
     space_id = 'spaceId' # str | 
     pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination params. Defaults to count 200.  This parameter exists in alpha. (optional)
     sort_by = 'lastSeenAt' # str | Field to sort by. Defaults to 'lastSeenAt'.  This parameter exists in alpha. (optional)
@@ -130,10 +130,10 @@ with segment_public_api.ApiClient(configuration) as api_client:
     try:
         # List Events
         api_response = api_instance.list_events(space_id, pagination=pagination, sort_by=sort_by, sort_dir=sort_dir, search=search)
-        print("The response of DataGraphSchemaApi->list_events:\n")
+        print("The response of SpaceSchemaApi->list_events:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling DataGraphSchemaApi->list_events: %s\n" % e)
+        print("Exception when calling SpaceSchemaApi->list_events: %s\n" % e)
 ```
 
 
@@ -200,7 +200,7 @@ configuration = segment_public_api.Configuration(
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = segment_public_api.DataGraphSchemaApi(api_client)
+    api_instance = segment_public_api.SpaceSchemaApi(api_client)
     space_id = 'spaceId' # str | 
     entity_slug = 'my-entity' # str | 
     pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination params. Defaults to count 200.  This parameter exists in alpha. (optional)
@@ -210,10 +210,10 @@ with segment_public_api.ApiClient(configuration) as api_client:
     try:
         # List Properties from Entity
         api_response = api_instance.list_properties_from_entity(space_id, entity_slug, pagination=pagination, include_sample_values=include_sample_values, samples_count=samples_count)
-        print("The response of DataGraphSchemaApi->list_properties_from_entity:\n")
+        print("The response of SpaceSchemaApi->list_properties_from_entity:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling DataGraphSchemaApi->list_properties_from_entity: %s\n" % e)
+        print("Exception when calling SpaceSchemaApi->list_properties_from_entity: %s\n" % e)
 ```
 
 
@@ -280,7 +280,7 @@ configuration = segment_public_api.Configuration(
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = segment_public_api.DataGraphSchemaApi(api_client)
+    api_instance = segment_public_api.SpaceSchemaApi(api_client)
     space_id = 'spaceId' # str | 
     event_name = 'Order Completed' # str | 
     pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination params. Defaults to count 200.  This parameter exists in alpha. (optional)
@@ -293,10 +293,10 @@ with segment_public_api.ApiClient(configuration) as api_client:
     try:
         # List Properties from Event
         api_response = api_instance.list_properties_from_event(space_id, event_name, pagination=pagination, sort_by=sort_by, sort_dir=sort_dir, search=search, include_sample_values=include_sample_values, samples_count=samples_count)
-        print("The response of DataGraphSchemaApi->list_properties_from_event:\n")
+        print("The response of SpaceSchemaApi->list_properties_from_event:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling DataGraphSchemaApi->list_properties_from_event: %s\n" % e)
+        print("Exception when calling SpaceSchemaApi->list_properties_from_event: %s\n" % e)
 ```
 
 
@@ -365,7 +365,7 @@ configuration = segment_public_api.Configuration(
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = segment_public_api.DataGraphSchemaApi(api_client)
+    api_instance = segment_public_api.SpaceSchemaApi(api_client)
     space_id = 'spaceId' # str | 
     entity_slug = 'my-entity' # str | 
     property_name = 'email' # str | 
@@ -373,10 +373,10 @@ with segment_public_api.ApiClient(configuration) as api_client:
     try:
         # List Sample Values from Entity Property
         api_response = api_instance.list_sample_values_from_entity_property(space_id, entity_slug, property_name)
-        print("The response of DataGraphSchemaApi->list_sample_values_from_entity_property:\n")
+        print("The response of SpaceSchemaApi->list_sample_values_from_entity_property:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling DataGraphSchemaApi->list_sample_values_from_entity_property: %s\n" % e)
+        print("Exception when calling SpaceSchemaApi->list_sample_values_from_entity_property: %s\n" % e)
 ```
 
 
@@ -441,7 +441,7 @@ configuration = segment_public_api.Configuration(
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = segment_public_api.DataGraphSchemaApi(api_client)
+    api_instance = segment_public_api.SpaceSchemaApi(api_client)
     space_id = 'spaceId' # str | 
     event_name = 'Order Completed' # str | 
     property_name = 'revenue' # str | 
@@ -450,10 +450,10 @@ with segment_public_api.ApiClient(configuration) as api_client:
     try:
         # List Sample Values from Event Property
         api_response = api_instance.list_sample_values_from_event_property(space_id, event_name, property_name, property_type)
-        print("The response of DataGraphSchemaApi->list_sample_values_from_event_property:\n")
+        print("The response of SpaceSchemaApi->list_sample_values_from_event_property:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling DataGraphSchemaApi->list_sample_values_from_event_property: %s\n" % e)
+        print("Exception when calling SpaceSchemaApi->list_sample_values_from_event_property: %s\n" % e)
 ```
 
 
@@ -518,7 +518,7 @@ configuration = segment_public_api.Configuration(
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = segment_public_api.DataGraphSchemaApi(api_client)
+    api_instance = segment_public_api.SpaceSchemaApi(api_client)
     space_id = 'spaceId' # str | 
     trait_key = 'email' # str | 
     collection = 'collection_example' # str | Collection to get trait values for. Defaults to 'users'.  This parameter exists in alpha. (optional)
@@ -526,10 +526,10 @@ with segment_public_api.ApiClient(configuration) as api_client:
     try:
         # List Sample Values from Trait
         api_response = api_instance.list_sample_values_from_trait(space_id, trait_key, collection=collection)
-        print("The response of DataGraphSchemaApi->list_sample_values_from_trait:\n")
+        print("The response of SpaceSchemaApi->list_sample_values_from_trait:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling DataGraphSchemaApi->list_sample_values_from_trait: %s\n" % e)
+        print("Exception when calling SpaceSchemaApi->list_sample_values_from_trait: %s\n" % e)
 ```
 
 
@@ -594,7 +594,7 @@ configuration = segment_public_api.Configuration(
 # Enter a context with an instance of the API client
 with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = segment_public_api.DataGraphSchemaApi(api_client)
+    api_instance = segment_public_api.SpaceSchemaApi(api_client)
     space_id = 'spaceId' # str | 
     pagination = segment_public_api.PaginationInput(count=10) # PaginationInput | Pagination params. Defaults to count 200.  This parameter exists in alpha. (optional)
     sort_by = 'trait' # str | Field to sort by. Defaults to 'trait'.  This parameter exists in alpha. (optional)
@@ -607,10 +607,10 @@ with segment_public_api.ApiClient(configuration) as api_client:
     try:
         # List Traits
         api_response = api_instance.list_traits(space_id, pagination=pagination, sort_by=sort_by, sort_dir=sort_dir, search=search, collection=collection, include_sample_values=include_sample_values, samples_count=samples_count)
-        print("The response of DataGraphSchemaApi->list_traits:\n")
+        print("The response of SpaceSchemaApi->list_traits:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling DataGraphSchemaApi->list_traits: %s\n" % e)
+        print("Exception when calling SpaceSchemaApi->list_traits: %s\n" % e)
 ```
 
 
