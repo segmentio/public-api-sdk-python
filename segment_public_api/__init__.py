@@ -26,6 +26,7 @@ __all__ = [
     "CatalogApi",
     "ComputedTraitsApi",
     "CredentialsApi",
+    "DataGraphSchemaApi",
     "DeletionAndSuppressionApi",
     "DeliveryOverviewApi",
     "DestinationFiltersApi",
@@ -44,7 +45,6 @@ __all__ = [
     "SelectiveSyncApi",
     "SourcesApi",
     "SpaceFiltersApi",
-    "SpaceSchemaApi",
     "SpacesApi",
     "TestingApi",
     "TrackingPlansApi",
@@ -796,6 +796,7 @@ from segment_public_api.api.audit_trail_api import AuditTrailApi as AuditTrailAp
 from segment_public_api.api.catalog_api import CatalogApi as CatalogApi
 from segment_public_api.api.computed_traits_api import ComputedTraitsApi as ComputedTraitsApi
 from segment_public_api.api.credentials_api import CredentialsApi as CredentialsApi
+from segment_public_api.api.data_graph_schema_api import DataGraphSchemaApi as DataGraphSchemaApi
 from segment_public_api.api.deletion_and_suppression_api import DeletionAndSuppressionApi as DeletionAndSuppressionApi
 from segment_public_api.api.delivery_overview_api import DeliveryOverviewApi as DeliveryOverviewApi
 from segment_public_api.api.destination_filters_api import DestinationFiltersApi as DestinationFiltersApi
@@ -814,7 +815,6 @@ from segment_public_api.api.reverse_etl_api import ReverseETLApi as ReverseETLAp
 from segment_public_api.api.selective_sync_api import SelectiveSyncApi as SelectiveSyncApi
 from segment_public_api.api.sources_api import SourcesApi as SourcesApi
 from segment_public_api.api.space_filters_api import SpaceFiltersApi as SpaceFiltersApi
-from segment_public_api.api.space_schema_api import SpaceSchemaApi as SpaceSchemaApi
 from segment_public_api.api.spaces_api import SpacesApi as SpacesApi
 from segment_public_api.api.testing_api import TestingApi as TestingApi
 from segment_public_api.api.tracking_plans_api import TrackingPlansApi as TrackingPlansApi
