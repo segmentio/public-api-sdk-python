@@ -44,7 +44,7 @@ __all__ = [
     "SelectiveSyncApi",
     "SourcesApi",
     "SpaceFiltersApi",
-    "SpaceSchemaApi",
+    "SpaceSchemaAPIApi",
     "SpacesApi",
     "TestingApi",
     "TrackingPlansApi",
@@ -814,7 +814,7 @@ from segment_public_api.api.reverse_etl_api import ReverseETLApi as ReverseETLAp
 from segment_public_api.api.selective_sync_api import SelectiveSyncApi as SelectiveSyncApi
 from segment_public_api.api.sources_api import SourcesApi as SourcesApi
 from segment_public_api.api.space_filters_api import SpaceFiltersApi as SpaceFiltersApi
-from segment_public_api.api.space_schema_api import SpaceSchemaApi as SpaceSchemaApi
+from segment_public_api.api.space_schema_api_api import SpaceSchemaAPIApi as SpaceSchemaAPIApi
 from segment_public_api.api.spaces_api import SpacesApi as SpacesApi
 from segment_public_api.api.testing_api import TestingApi as TestingApi
 from segment_public_api.api.tracking_plans_api import TrackingPlansApi as TrackingPlansApi
