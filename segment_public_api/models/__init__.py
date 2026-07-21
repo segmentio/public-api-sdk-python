@@ -137,6 +137,9 @@ from segment_public_api.models.create_insert_function_instance_alpha_output impo
 from segment_public_api.models.create_invites201_response import CreateInvites201Response
 from segment_public_api.models.create_invites_v1_input import CreateInvitesV1Input
 from segment_public_api.models.create_invites_v1_output import CreateInvitesV1Output
+from segment_public_api.models.create_journey200_response import CreateJourney200Response
+from segment_public_api.models.create_journey_alpha_input import CreateJourneyAlphaInput
+from segment_public_api.models.create_journey_alpha_output import CreateJourneyAlphaOutput
 from segment_public_api.models.create_label201_response import CreateLabel201Response
 from segment_public_api.models.create_label_v1_input import CreateLabelV1Input
 from segment_public_api.models.create_label_v1_output import CreateLabelV1Output
@@ -254,6 +257,7 @@ from segment_public_api.models.event_alpha import EventAlpha
 from segment_public_api.models.event_property_alpha import EventPropertyAlpha
 from segment_public_api.models.event_property_type import EventPropertyType
 from segment_public_api.models.event_source_v1 import EventSourceV1
+from segment_public_api.models.event_triggered_journey_summary import EventTriggeredJourneySummary
 from segment_public_api.models.event_type import EventType
 from segment_public_api.models.fql_defined_property_v1 import FQLDefinedPropertyV1
 from segment_public_api.models.filter import Filter
@@ -371,6 +375,7 @@ from segment_public_api.models.insert_function_instance_alpha import InsertFunct
 from segment_public_api.models.integration_option_beta import IntegrationOptionBeta
 from segment_public_api.models.invite_permission_v1 import InvitePermissionV1
 from segment_public_api.models.invite_v1 import InviteV1
+from segment_public_api.models.journey_definition import JourneyDefinition
 from segment_public_api.models.label_alpha import LabelAlpha
 from segment_public_api.models.label_v1 import LabelV1
 from segment_public_api.models.list_activations_alpha_output import ListActivationsAlphaOutput
