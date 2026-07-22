@@ -112,7 +112,7 @@ with segment_public_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = segment_public_api.CredentialsApi(api_client)
     credential_id = 'cred_2JzKWb8FGhGVYZ3xVqQGc7NkYPl' # str | 
-    update_credential_v1_input = {"name":"Updated Snowflake Prod","settings":{"username":"new_prod_user","authentication":{"type":"password","password":"new_secure_pass"}}} # UpdateCredentialV1Input | 
+    update_credential_v1_input = {"name":"Updated Snowflake Prod","settings":{"username":"new_prod_user","authentication":{"type":"keypair","privateKey":"<newPrivateKey>","privateKeyPassphrase":"<newPrivateKeyPassphrase>"}}} # UpdateCredentialV1Input | 
 
     try:
         # Update Credential
