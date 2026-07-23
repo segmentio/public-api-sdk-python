@@ -24,7 +24,7 @@ from segment_public_api.api.reverse_etl_api import ReverseETLApi
 from segment_public_api.api.selective_sync_api import SelectiveSyncApi
 from segment_public_api.api.sources_api import SourcesApi
 from segment_public_api.api.space_filters_api import SpaceFiltersApi
-from segment_public_api.api.space_schema_api import SpaceSchemaApi
+from segment_public_api.api.space_schema_api_api import SpaceSchemaAPIApi
 from segment_public_api.api.spaces_api import SpacesApi
 from segment_public_api.api.testing_api import TestingApi
 from segment_public_api.api.tracking_plans_api import TrackingPlansApi
