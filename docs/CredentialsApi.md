@@ -19,7 +19,7 @@ Method | HTTP request | Description
 
 Create Credential
 
-Creates a new Credential.
+Creates a new Credential.    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner  * Warehouse Admin  * Source Admin  * Entities Admin  * Unify and Engage Admin
 
 ### Example
 
@@ -91,7 +91,7 @@ Name | Type | Description  | Notes
 
 Delete Credential
 
-Deletes an existing Credential. Fails if the Credential is still in use by a Warehouse or Source.
+Deletes an existing Credential. Fails if the Credential is still in use by a Warehouse or Source.    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner
 
 ### Example
 
@@ -162,7 +162,7 @@ Name | Type | Description  | Notes
 
 Get Credential
 
-Returns a Credential by its id.
+Returns a Credential by its id.    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner  * Warehouse Admin  * Source Admin  * Entities Admin  * Unify and Engage Admin
 
 ### Example
 
@@ -233,7 +233,7 @@ Name | Type | Description  | Notes
 
 List Credential Consumers
 
-Returns the Warehouses and Sources that use a Credential.
+Returns the Warehouses and Sources that use a Credential.    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner  * Warehouse Admin  * Source Admin  * Entities Admin  * Unify and Engage Admin
 
 ### Example
 
@@ -309,7 +309,7 @@ Name | Type | Description  | Notes
 
 List Credentials
 
-Returns a list of Credentials.
+Returns a list of Credentials.    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner  * Warehouse Admin  * Source Admin  * Entities Admin  * Unify and Engage Admin
 
 ### Example
 
@@ -381,7 +381,7 @@ Name | Type | Description  | Notes
 
 Update Credential
 
-Updates an existing Credential. All Warehouses using this Credential are affected immediately.
+Updates an existing Credential. All Warehouses using this Credential are affected immediately.    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner
 
 ### Example
 

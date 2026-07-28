@@ -66,7 +66,7 @@ class CredentialsApi:
     ) -> CreateCredential201Response:
         """Create Credential
 
-        Creates a new Credential.
+        Creates a new Credential.    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner  * Warehouse Admin  * Source Admin  * Entities Admin  * Unify and Engage Admin
 
         :param create_credential_v1_input: (required)
         :type create_credential_v1_input: CreateCredentialV1Input
@@ -136,7 +136,7 @@ class CredentialsApi:
     ) -> ApiResponse[CreateCredential201Response]:
         """Create Credential
 
-        Creates a new Credential.
+        Creates a new Credential.    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner  * Warehouse Admin  * Source Admin  * Entities Admin  * Unify and Engage Admin
 
         :param create_credential_v1_input: (required)
         :type create_credential_v1_input: CreateCredentialV1Input
@@ -206,7 +206,7 @@ class CredentialsApi:
     ) -> RESTResponseType:
         """Create Credential
 
-        Creates a new Credential.
+        Creates a new Credential.    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner  * Warehouse Admin  * Source Admin  * Entities Admin  * Unify and Engage Admin
 
         :param create_credential_v1_input: (required)
         :type create_credential_v1_input: CreateCredentialV1Input
@@ -351,7 +351,7 @@ class CredentialsApi:
     ) -> DeleteCredential200Response:
         """Delete Credential
 
-        Deletes an existing Credential. Fails if the Credential is still in use by a Warehouse or Source.
+        Deletes an existing Credential. Fails if the Credential is still in use by a Warehouse or Source.    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner
 
         :param credential_id: (required)
         :type credential_id: str
@@ -421,7 +421,7 @@ class CredentialsApi:
     ) -> ApiResponse[DeleteCredential200Response]:
         """Delete Credential
 
-        Deletes an existing Credential. Fails if the Credential is still in use by a Warehouse or Source.
+        Deletes an existing Credential. Fails if the Credential is still in use by a Warehouse or Source.    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner
 
         :param credential_id: (required)
         :type credential_id: str
@@ -491,7 +491,7 @@ class CredentialsApi:
     ) -> RESTResponseType:
         """Delete Credential
 
-        Deletes an existing Credential. Fails if the Credential is still in use by a Warehouse or Source.
+        Deletes an existing Credential. Fails if the Credential is still in use by a Warehouse or Source.    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner
 
         :param credential_id: (required)
         :type credential_id: str
@@ -622,7 +622,7 @@ class CredentialsApi:
     ) -> GetCredential200Response:
         """Get Credential
 
-        Returns a Credential by its id.
+        Returns a Credential by its id.    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner  * Warehouse Admin  * Source Admin  * Entities Admin  * Unify and Engage Admin
 
         :param credential_id: (required)
         :type credential_id: str
@@ -692,7 +692,7 @@ class CredentialsApi:
     ) -> ApiResponse[GetCredential200Response]:
         """Get Credential
 
-        Returns a Credential by its id.
+        Returns a Credential by its id.    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner  * Warehouse Admin  * Source Admin  * Entities Admin  * Unify and Engage Admin
 
         :param credential_id: (required)
         :type credential_id: str
@@ -762,7 +762,7 @@ class CredentialsApi:
     ) -> RESTResponseType:
         """Get Credential
 
-        Returns a Credential by its id.
+        Returns a Credential by its id.    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner  * Warehouse Admin  * Source Admin  * Entities Admin  * Unify and Engage Admin
 
         :param credential_id: (required)
         :type credential_id: str
@@ -895,7 +895,7 @@ class CredentialsApi:
     ) -> ListCredentialConsumers200Response:
         """List Credential Consumers
 
-        Returns the Warehouses and Sources that use a Credential.
+        Returns the Warehouses and Sources that use a Credential.    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner  * Warehouse Admin  * Source Admin  * Entities Admin  * Unify and Engage Admin
 
         :param credential_id: (required)
         :type credential_id: str
@@ -973,7 +973,7 @@ class CredentialsApi:
     ) -> ApiResponse[ListCredentialConsumers200Response]:
         """List Credential Consumers
 
-        Returns the Warehouses and Sources that use a Credential.
+        Returns the Warehouses and Sources that use a Credential.    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner  * Warehouse Admin  * Source Admin  * Entities Admin  * Unify and Engage Admin
 
         :param credential_id: (required)
         :type credential_id: str
@@ -1051,7 +1051,7 @@ class CredentialsApi:
     ) -> RESTResponseType:
         """List Credential Consumers
 
-        Returns the Warehouses and Sources that use a Credential.
+        Returns the Warehouses and Sources that use a Credential.    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner  * Warehouse Admin  * Source Admin  * Entities Admin  * Unify and Engage Admin
 
         :param credential_id: (required)
         :type credential_id: str
@@ -1198,7 +1198,7 @@ class CredentialsApi:
     ) -> ListCredentials200Response:
         """List Credentials
 
-        Returns a list of Credentials.
+        Returns a list of Credentials.    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner  * Warehouse Admin  * Source Admin  * Entities Admin  * Unify and Engage Admin
 
         :param pagination: Defines the pagination parameters.  This parameter exists in v1.
         :type pagination: PaginationInput
@@ -1268,7 +1268,7 @@ class CredentialsApi:
     ) -> ApiResponse[ListCredentials200Response]:
         """List Credentials
 
-        Returns a list of Credentials.
+        Returns a list of Credentials.    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner  * Warehouse Admin  * Source Admin  * Entities Admin  * Unify and Engage Admin
 
         :param pagination: Defines the pagination parameters.  This parameter exists in v1.
         :type pagination: PaginationInput
@@ -1338,7 +1338,7 @@ class CredentialsApi:
     ) -> RESTResponseType:
         """List Credentials
 
-        Returns a list of Credentials.
+        Returns a list of Credentials.    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner  * Warehouse Admin  * Source Admin  * Entities Admin  * Unify and Engage Admin
 
         :param pagination: Defines the pagination parameters.  This parameter exists in v1.
         :type pagination: PaginationInput
@@ -1472,7 +1472,7 @@ class CredentialsApi:
     ) -> UpdateCredential200Response:
         """Update Credential
 
-        Updates an existing Credential. All Warehouses using this Credential are affected immediately.
+        Updates an existing Credential. All Warehouses using this Credential are affected immediately.    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner
 
         :param credential_id: (required)
         :type credential_id: str
@@ -1546,7 +1546,7 @@ class CredentialsApi:
     ) -> ApiResponse[UpdateCredential200Response]:
         """Update Credential
 
-        Updates an existing Credential. All Warehouses using this Credential are affected immediately.
+        Updates an existing Credential. All Warehouses using this Credential are affected immediately.    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner
 
         :param credential_id: (required)
         :type credential_id: str
@@ -1620,7 +1620,7 @@ class CredentialsApi:
     ) -> RESTResponseType:
         """Update Credential
 
-        Updates an existing Credential. All Warehouses using this Credential are affected immediately.
+        Updates an existing Credential. All Warehouses using this Credential are affected immediately.    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner
 
         :param credential_id: (required)
         :type credential_id: str
