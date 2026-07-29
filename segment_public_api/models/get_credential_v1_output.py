@@ -18,8 +18,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, Field
+from typing import Any, ClassVar, Dict, List
 from segment_public_api.models.credential_v1 import CredentialV1
 from typing import Optional, Set
 from typing_extensions import Self
@@ -30,8 +30,7 @@ class GetCredentialV1Output(BaseModel):
     Returns a Credential.
     """ # noqa: E501
     credential: CredentialV1 = Field(description="The returned Credential object.")
-    disabled_fields: Optional[List[StrictStr]] = Field(default=None, description="The list of setting names (in this Credential's public `settings` shape) that cannot be changed after creation, if any.", alias="disabledFields")
-    __properties: ClassVar[List[str]] = ["credential", "disabledFields"]
+    __properties: ClassVar[List[str]] = ["credential"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -87,8 +86,7 @@ class GetCredentialV1Output(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "credential": CredentialV1.from_dict(obj["credential"]) if obj.get("credential") is not None else None,
-            "disabledFields": obj.get("disabledFields")
+            "credential": CredentialV1.from_dict(obj["credential"]) if obj.get("credential") is not None else None
         })
         return _obj
 
