@@ -95,7 +95,7 @@ Name | Type | Description  | Notes
 **200** | OK |  -  |
 **404** | Resource not found |  -  |
 **422** | Validation failure |  -  |
-**429** | Too many requests |  -  |
+**429** | Too many requests |  * Retry-After - Number of whole seconds to wait before retrying. Sent when the request was rejected because the authentication token is rate limited. Prefer this over your own backoff schedule when present. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -182,7 +182,7 @@ Name | Type | Description  | Notes
 **200** | OK |  -  |
 **404** | Resource not found |  -  |
 **422** | Validation failure |  -  |
-**429** | Too many requests |  -  |
+**429** | Too many requests |  * Retry-After - Number of whole seconds to wait before retrying. Sent when the request was rejected because the authentication token is rate limited. Prefer this over your own backoff schedule when present. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -269,7 +269,7 @@ Name | Type | Description  | Notes
 **200** | OK |  -  |
 **404** | Resource not found |  -  |
 **422** | Validation failure |  -  |
-**429** | Too many requests |  -  |
+**429** | Too many requests |  * Retry-After - Number of whole seconds to wait before retrying. Sent when the request was rejected because the authentication token is rate limited. Prefer this over your own backoff schedule when present. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -354,7 +354,7 @@ Name | Type | Description  | Notes
 **200** | OK |  -  |
 **404** | Resource not found |  -  |
 **422** | Validation failure |  -  |
-**429** | Too many requests |  -  |
+**429** | Too many requests |  * Retry-After - Number of whole seconds to wait before retrying. Sent when the request was rejected because the authentication token is rate limited. Prefer this over your own backoff schedule when present. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -439,7 +439,7 @@ Name | Type | Description  | Notes
 **200** | OK |  -  |
 **404** | Resource not found |  -  |
 **422** | Validation failure |  -  |
-**429** | Too many requests |  -  |
+**429** | Too many requests |  * Retry-After - Number of whole seconds to wait before retrying. Sent when the request was rejected because the authentication token is rate limited. Prefer this over your own backoff schedule when present. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -524,7 +524,7 @@ Name | Type | Description  | Notes
 **200** | OK |  -  |
 **404** | Resource not found |  -  |
 **422** | Validation failure |  -  |
-**429** | Too many requests |  -  |
+**429** | Too many requests |  * Retry-After - Number of whole seconds to wait before retrying. Sent when the request was rejected because the authentication token is rate limited. Prefer this over your own backoff schedule when present. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
