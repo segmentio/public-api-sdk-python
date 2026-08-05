@@ -19,7 +19,7 @@ Method | HTTP request | Description
 
 Create Credential
 
-Creates a new Credential.    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner  * Warehouse Admin  * Source Admin  * Entities Admin  * Unify and Engage Admin
+Creates a new Credential.    • When called, this endpoint may generate the `Warehouse Credential Created` event in the [audit trail](/tag/Audit-Trail).    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner  * Warehouse Admin  * Source Admin  * Entities Admin  * Unify and Engage Admin
 
 ### Example
 
@@ -91,7 +91,7 @@ Name | Type | Description  | Notes
 
 Delete Credential
 
-Deletes an existing Credential. Fails if the Credential is still in use by a Warehouse or Source.    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner
+Deletes an existing Credential. Fails with a `409 Conflict` if the Credential is still in use by a Warehouse or Source (including a disabled one). This check isn't atomic with the delete — a Warehouse or Source that attaches to this Credential in between would be orphaned rather than blocking the delete.    • When called, this endpoint may generate the `Warehouse Credential Deleted` event in the [audit trail](/tag/Audit-Trail).    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner
 
 ### Example
 
@@ -381,7 +381,7 @@ Name | Type | Description  | Notes
 
 Update Credential
 
-Updates an existing Credential. All Warehouses using this Credential are affected immediately.    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner
+Updates an existing Credential. All Warehouses using this Credential are affected immediately.    • When called, this endpoint may generate the `Warehouse Credential Modified` event in the [audit trail](/tag/Audit-Trail).    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner
 
 ### Example
 

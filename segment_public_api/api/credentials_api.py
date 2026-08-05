@@ -66,7 +66,7 @@ class CredentialsApi:
     ) -> CreateCredential201Response:
         """Create Credential
 
-        Creates a new Credential.    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner  * Warehouse Admin  * Source Admin  * Entities Admin  * Unify and Engage Admin
+        Creates a new Credential.    • When called, this endpoint may generate the `Warehouse Credential Created` event in the [audit trail](/tag/Audit-Trail).    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner  * Warehouse Admin  * Source Admin  * Entities Admin  * Unify and Engage Admin
 
         :param create_credential_v1_input: (required)
         :type create_credential_v1_input: CreateCredentialV1Input
@@ -136,7 +136,7 @@ class CredentialsApi:
     ) -> ApiResponse[CreateCredential201Response]:
         """Create Credential
 
-        Creates a new Credential.    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner  * Warehouse Admin  * Source Admin  * Entities Admin  * Unify and Engage Admin
+        Creates a new Credential.    • When called, this endpoint may generate the `Warehouse Credential Created` event in the [audit trail](/tag/Audit-Trail).    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner  * Warehouse Admin  * Source Admin  * Entities Admin  * Unify and Engage Admin
 
         :param create_credential_v1_input: (required)
         :type create_credential_v1_input: CreateCredentialV1Input
@@ -206,7 +206,7 @@ class CredentialsApi:
     ) -> RESTResponseType:
         """Create Credential
 
-        Creates a new Credential.    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner  * Warehouse Admin  * Source Admin  * Entities Admin  * Unify and Engage Admin
+        Creates a new Credential.    • When called, this endpoint may generate the `Warehouse Credential Created` event in the [audit trail](/tag/Audit-Trail).    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner  * Warehouse Admin  * Source Admin  * Entities Admin  * Unify and Engage Admin
 
         :param create_credential_v1_input: (required)
         :type create_credential_v1_input: CreateCredentialV1Input
@@ -351,7 +351,7 @@ class CredentialsApi:
     ) -> DeleteCredential200Response:
         """Delete Credential
 
-        Deletes an existing Credential. Fails if the Credential is still in use by a Warehouse or Source.    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner
+        Deletes an existing Credential. Fails with a `409 Conflict` if the Credential is still in use by a Warehouse or Source (including a disabled one). This check isn't atomic with the delete — a Warehouse or Source that attaches to this Credential in between would be orphaned rather than blocking the delete.    • When called, this endpoint may generate the `Warehouse Credential Deleted` event in the [audit trail](/tag/Audit-Trail).    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner
 
         :param credential_id: (required)
         :type credential_id: str
@@ -421,7 +421,7 @@ class CredentialsApi:
     ) -> ApiResponse[DeleteCredential200Response]:
         """Delete Credential
 
-        Deletes an existing Credential. Fails if the Credential is still in use by a Warehouse or Source.    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner
+        Deletes an existing Credential. Fails with a `409 Conflict` if the Credential is still in use by a Warehouse or Source (including a disabled one). This check isn't atomic with the delete — a Warehouse or Source that attaches to this Credential in between would be orphaned rather than blocking the delete.    • When called, this endpoint may generate the `Warehouse Credential Deleted` event in the [audit trail](/tag/Audit-Trail).    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner
 
         :param credential_id: (required)
         :type credential_id: str
@@ -491,7 +491,7 @@ class CredentialsApi:
     ) -> RESTResponseType:
         """Delete Credential
 
-        Deletes an existing Credential. Fails if the Credential is still in use by a Warehouse or Source.    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner
+        Deletes an existing Credential. Fails with a `409 Conflict` if the Credential is still in use by a Warehouse or Source (including a disabled one). This check isn't atomic with the delete — a Warehouse or Source that attaches to this Credential in between would be orphaned rather than blocking the delete.    • When called, this endpoint may generate the `Warehouse Credential Deleted` event in the [audit trail](/tag/Audit-Trail).    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner
 
         :param credential_id: (required)
         :type credential_id: str
@@ -1472,7 +1472,7 @@ class CredentialsApi:
     ) -> UpdateCredential200Response:
         """Update Credential
 
-        Updates an existing Credential. All Warehouses using this Credential are affected immediately.    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner
+        Updates an existing Credential. All Warehouses using this Credential are affected immediately.    • When called, this endpoint may generate the `Warehouse Credential Modified` event in the [audit trail](/tag/Audit-Trail).    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner
 
         :param credential_id: (required)
         :type credential_id: str
@@ -1546,7 +1546,7 @@ class CredentialsApi:
     ) -> ApiResponse[UpdateCredential200Response]:
         """Update Credential
 
-        Updates an existing Credential. All Warehouses using this Credential are affected immediately.    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner
+        Updates an existing Credential. All Warehouses using this Credential are affected immediately.    • When called, this endpoint may generate the `Warehouse Credential Modified` event in the [audit trail](/tag/Audit-Trail).    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner
 
         :param credential_id: (required)
         :type credential_id: str
@@ -1620,7 +1620,7 @@ class CredentialsApi:
     ) -> RESTResponseType:
         """Update Credential
 
-        Updates an existing Credential. All Warehouses using this Credential are affected immediately.    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner
+        Updates an existing Credential. All Warehouses using this Credential are affected immediately.    • When called, this endpoint may generate the `Warehouse Credential Modified` event in the [audit trail](/tag/Audit-Trail).    This endpoint requires the user to have at least the following permission(s):   * Workspace Owner
 
         :param credential_id: (required)
         :type credential_id: str

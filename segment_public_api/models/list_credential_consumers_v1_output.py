@@ -29,7 +29,7 @@ from pydantic_core import to_jsonable_python
 
 class ListCredentialConsumersV1Output(BaseModel):
     """
-    Returns the Warehouses and Sources that consume a Credential, each paginated independently.
+    Returns the Warehouses and Sources that consume a Credential. The two lists are paginated independently, so a caller can page through one without affecting the other.
     """ # noqa: E501
     warehouses: List[WarehouseV1] = Field(description="The Warehouses that use this Credential.")
     warehouses_pagination: PaginationOutput = Field(description="Information about the pagination of the Warehouses list.", alias="warehousesPagination")
