@@ -28,7 +28,7 @@ class PersonalizationInputEntity(BaseModel):
     """
     The Personalization Input Entity.
     """ # noqa: E501
-    properties: List[StrictStr]
+    properties: List[StrictStr] = Field(description="The entity properties to include in the event sent to the Destination.")
     relationship_slug: StrictStr = Field(description="The relationship slug for the entity.", alias="relationshipSlug")
     __properties: ClassVar[List[str]] = ["properties", "relationshipSlug"]
 

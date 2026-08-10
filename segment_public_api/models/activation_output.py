@@ -40,7 +40,7 @@ class ActivationOutput(BaseModel):
     activation_name: StrictStr = Field(description="Activation name. For Warehouse Destinations, this is the table name.", alias="activationName")
     display_name: Optional[StrictStr] = Field(default=None, description="Human-readable label for the activation. Only present for Warehouse Destinations that have a display name configured. When null, the activationName serves as the label.", alias="displayName")
     personalization: PersonalizationInput = Field(description="The data points used to enrich the event. Defines which profile traits and/or entity properties are included in the event sent to the Destination. For Action Destinations, any traits or properties specified here must also be included in the destinationMapping to define which Destination fields should be populated.")
-    destination_mapping: Optional[DestinationSubscriptionConfiguration] = Field(default=None, description="Configuration settings for the mappings.", alias="destinationMapping")
+    destination_mapping: Optional[DestinationSubscriptionConfiguration] = Field(default=None, description="The action and data mapping configured for the Destination. Only present for Action Destinations. Action id: The action performed on the Destination. Settings/Mapping: How event data populates specific fields in the Destination.", alias="destinationMapping")
     perform_resync: Optional[StrictBool] = Field(default=None, description="Indicates if a full resync is currently pending or in progress.", alias="performResync")
     __properties: ClassVar[List[str]] = ["id", "enabled", "workspaceId", "spaceId", "audienceId", "connectionId", "activationType", "activationName", "displayName", "personalization", "destinationMapping", "performResync"]
 

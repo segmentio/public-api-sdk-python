@@ -31,7 +31,7 @@ class PersonalizationInput(BaseModel):
     The Personalization Input Object.
     """ # noqa: E501
     profile: Profile
-    entities: Optional[List[PersonalizationInputEntity]] = Field(default=None, description="Entities V2 Object.")
+    entities: Optional[List[PersonalizationInputEntity]] = Field(default=None, description="The entities, and the properties of each entity, to include in the event sent to the Destination. Only applicable to Linked Audiences. Providing entities for a Classic audience returns a 400 error, as Classic audiences support profile properties only.")
     sync_entity_property_changes: Optional[StrictBool] = Field(default=None, description="Sync entity property changes to the Destination. Only applicable if activationType is \"Audience Membership Changed\".", alias="syncEntityPropertyChanges")
     __properties: ClassVar[List[str]] = ["profile", "entities", "syncEntityPropertyChanges"]
 

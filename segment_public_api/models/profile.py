@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -26,10 +26,10 @@ from pydantic_core import to_jsonable_python
 
 class Profile(BaseModel):
     """
-    Profile Object.
+    The profile traits included in the event sent to the Destination. Applies to both Classic and Linked Audiences. For a Classic audience this is the only form of personalization available, whereas a Linked Audience can also personalize on entities.
     """ # noqa: E501
-    properties: List[StrictStr]
-    mapping: Optional[Dict[str, StrictStr]] = None
+    properties: List[StrictStr] = Field(description="The profile traits to include in the event sent to the Destination.")
+    mapping: Optional[Dict[str, StrictStr]] = Field(default=None, description="Maps a profile trait to the name it should be sent under. Each key is a trait, and each value is the name used in the event.")
     __properties: ClassVar[List[str]] = ["properties", "mapping"]
 
     model_config = ConfigDict(
