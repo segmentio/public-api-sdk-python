@@ -101,6 +101,7 @@ __all__ = [
     "AdvancedWarehouseSyncScheduleV1Output",
     "AllowedLabelBeta",
     "AudienceComputeCadence",
+    "AudienceCsvExport",
     "AudienceDefinition",
     "AudienceDefinitionWithoutTargetEntity",
     "AudienceOptions",
@@ -138,6 +139,8 @@ __all__ = [
     "CreateAudienceAlphaOutput",
     "CreateAudienceBetaInput",
     "CreateAudienceBetaOutput",
+    "CreateAudienceCsvExportForAudience200Response",
+    "CreateAudienceCsvExportForAudienceAlphaOutput",
     "CreateAudienceInput",
     "CreateAudienceOutput",
     "CreateAudiencePreview200Response",
@@ -338,6 +341,8 @@ __all__ = [
     "GetAudience200Response2",
     "GetAudienceAlphaOutput",
     "GetAudienceBetaOutput",
+    "GetAudienceCsvExportFromSpaceAndAudience200Response",
+    "GetAudienceCsvExportFromSpaceAndAudienceAlphaOutput",
     "GetAudienceOutput",
     "GetAudiencePreview200Response",
     "GetAudiencePreview200Response1",
@@ -899,6 +904,7 @@ from segment_public_api.models.advanced_warehouse_sync_schedule_v1_input import 
 from segment_public_api.models.advanced_warehouse_sync_schedule_v1_output import AdvancedWarehouseSyncScheduleV1Output as AdvancedWarehouseSyncScheduleV1Output
 from segment_public_api.models.allowed_label_beta import AllowedLabelBeta as AllowedLabelBeta
 from segment_public_api.models.audience_compute_cadence import AudienceComputeCadence as AudienceComputeCadence
+from segment_public_api.models.audience_csv_export import AudienceCsvExport as AudienceCsvExport
 from segment_public_api.models.audience_definition import AudienceDefinition as AudienceDefinition
 from segment_public_api.models.audience_definition_without_target_entity import AudienceDefinitionWithoutTargetEntity as AudienceDefinitionWithoutTargetEntity
 from segment_public_api.models.audience_options import AudienceOptions as AudienceOptions
@@ -936,6 +942,8 @@ from segment_public_api.models.create_audience_alpha_input import CreateAudience
 from segment_public_api.models.create_audience_alpha_output import CreateAudienceAlphaOutput as CreateAudienceAlphaOutput
 from segment_public_api.models.create_audience_beta_input import CreateAudienceBetaInput as CreateAudienceBetaInput
 from segment_public_api.models.create_audience_beta_output import CreateAudienceBetaOutput as CreateAudienceBetaOutput
+from segment_public_api.models.create_audience_csv_export_for_audience200_response import CreateAudienceCsvExportForAudience200Response as CreateAudienceCsvExportForAudience200Response
+from segment_public_api.models.create_audience_csv_export_for_audience_alpha_output import CreateAudienceCsvExportForAudienceAlphaOutput as CreateAudienceCsvExportForAudienceAlphaOutput
 from segment_public_api.models.create_audience_input import CreateAudienceInput as CreateAudienceInput
 from segment_public_api.models.create_audience_output import CreateAudienceOutput as CreateAudienceOutput
 from segment_public_api.models.create_audience_preview200_response import CreateAudiencePreview200Response as CreateAudiencePreview200Response
@@ -1136,6 +1144,8 @@ from segment_public_api.models.get_audience200_response1 import GetAudience200Re
 from segment_public_api.models.get_audience200_response2 import GetAudience200Response2 as GetAudience200Response2
 from segment_public_api.models.get_audience_alpha_output import GetAudienceAlphaOutput as GetAudienceAlphaOutput
 from segment_public_api.models.get_audience_beta_output import GetAudienceBetaOutput as GetAudienceBetaOutput
+from segment_public_api.models.get_audience_csv_export_from_space_and_audience200_response import GetAudienceCsvExportFromSpaceAndAudience200Response as GetAudienceCsvExportFromSpaceAndAudience200Response
+from segment_public_api.models.get_audience_csv_export_from_space_and_audience_alpha_output import GetAudienceCsvExportFromSpaceAndAudienceAlphaOutput as GetAudienceCsvExportFromSpaceAndAudienceAlphaOutput
 from segment_public_api.models.get_audience_output import GetAudienceOutput as GetAudienceOutput
 from segment_public_api.models.get_audience_preview200_response import GetAudiencePreview200Response as GetAudiencePreview200Response
 from segment_public_api.models.get_audience_preview200_response1 import GetAudiencePreview200Response1 as GetAudiencePreview200Response1

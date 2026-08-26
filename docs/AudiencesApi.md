@@ -6,9 +6,11 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**add_audience_schedule_to_audience**](AudiencesApi.md#add_audience_schedule_to_audience) | **POST** /spaces/{spaceId}/audiences/{id}/schedules | Add Audience Schedule to Audience
 [**create_audience**](AudiencesApi.md#create_audience) | **POST** /spaces/{spaceId}/audiences | Create Audience
+[**create_audience_csv_export_for_audience**](AudiencesApi.md#create_audience_csv_export_for_audience) | **POST** /spaces/{spaceId}/audiences/{id}/csv-exports | Create Audience Csv Export for Audience
 [**create_audience_preview**](AudiencesApi.md#create_audience_preview) | **POST** /spaces/{spaceId}/audiences/previews | Create Audience Preview
 [**force_execute_audience_run**](AudiencesApi.md#force_execute_audience_run) | **POST** /spaces/{spaceId}/audiences/{audienceId}/runs | Force Execute Audience Run
 [**get_audience**](AudiencesApi.md#get_audience) | **GET** /spaces/{spaceId}/audiences/{id} | Get Audience
+[**get_audience_csv_export_from_space_and_audience**](AudiencesApi.md#get_audience_csv_export_from_space_and_audience) | **GET** /spaces/{spaceId}/audiences/{id}/csv-exports/{exportId} | Get Audience Csv Export from Space And Audience
 [**get_audience_preview**](AudiencesApi.md#get_audience_preview) | **GET** /spaces/{spaceId}/audiences/previews/{id} | Get Audience Preview
 [**get_audience_schedule_from_space_and_audience**](AudiencesApi.md#get_audience_schedule_from_space_and_audience) | **GET** /spaces/{spaceId}/audiences/{id}/schedules/{scheduleId} | Get Audience Schedule from Space And Audience
 [**list_audience_consumers_from_space_and_audience**](AudiencesApi.md#list_audience_consumers_from_space_and_audience) | **GET** /spaces/{spaceId}/audiences/{id}/audience-references | List Audience Consumers from Space And Audience
@@ -159,6 +161,79 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: application/json, application/vnd.segment.v1+json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
  - **Accept**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**404** | Resource not found |  -  |
+**422** | Validation failure |  -  |
+**429** | Too many requests |  * Retry-After - Number of whole seconds to wait before retrying. Sent when the request was rejected because the authentication token is rate limited. Prefer this over your own backoff schedule when present. <br>  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## Operation: create_audience_csv_export_for_audience
+
+> CreateAudienceCsvExportForAudience200Response create_audience_csv_export_for_audience(space_id, id)
+
+Create Audience Csv Export for Audience
+
+Starts a CSV export of an Audience's membership. The export runs asynchronously: this returns immediately with an export id, and does not return the CSV itself. Poll `getAudienceCsvExportFromSpaceAndAudience` with that id for status and download URLs.  • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.
+
+### Example
+
+* Bearer Authentication (token):
+```python
+import time
+import os
+import segment_public_api
+from segment_public_api.models.create_audience_csv_export_for_audience200_response import CreateAudienceCsvExportForAudience200Response
+from segment_public_api.rest import ApiException
+from pprint import pprint
+
+
+
+# Configure Bearer authorization: token
+configuration = segment_public_api.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+# Enter a context with an instance of the API client
+with segment_public_api.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = segment_public_api.AudiencesApi(api_client)
+    space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
+    id = 'aud_0ujsszwN8NRY24YaXiTIE2VWDTS' # str | 
+
+    try:
+        # Create Audience Csv Export for Audience
+        api_response = api_instance.create_audience_csv_export_for_audience(space_id, id)
+        print("The response of AudiencesApi->create_audience_csv_export_for_audience:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AudiencesApi->create_audience_csv_export_for_audience: %s\n" % e)
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **space_id** | **str**|  | 
+ **id** | **str**|  | 
+
+### Return type
+
+[**CreateAudienceCsvExportForAudience200Response**](CreateAudienceCsvExportForAudience200Response.md)
+
+### Authorization
+
+[token](../README.md#token)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/vnd.segment.v1alpha+json, application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -381,6 +456,81 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: Not defined
  - **Accept**: application/vnd.segment.v1+json, application/json, application/vnd.segment.v1beta+json, application/vnd.segment.v1alpha+json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**404** | Resource not found |  -  |
+**422** | Validation failure |  -  |
+**429** | Too many requests |  * Retry-After - Number of whole seconds to wait before retrying. Sent when the request was rejected because the authentication token is rate limited. Prefer this over your own backoff schedule when present. <br>  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## Operation: get_audience_csv_export_from_space_and_audience
+
+> GetAudienceCsvExportFromSpaceAndAudience200Response get_audience_csv_export_from_space_and_audience(space_id, id, export_id)
+
+Get Audience Csv Export from Space And Audience
+
+Returns the status of an Audience CSV export. While the export is running, `status` is IN_PROGRESS and no URLs are returned. Once `status` is SUCCESS, `urls` contains presigned download links created when the export completed. Repeated polling returns the same links.  • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.
+
+### Example
+
+* Bearer Authentication (token):
+```python
+import time
+import os
+import segment_public_api
+from segment_public_api.models.get_audience_csv_export_from_space_and_audience200_response import GetAudienceCsvExportFromSpaceAndAudience200Response
+from segment_public_api.rest import ApiException
+from pprint import pprint
+
+
+
+# Configure Bearer authorization: token
+configuration = segment_public_api.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+# Enter a context with an instance of the API client
+with segment_public_api.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = segment_public_api.AudiencesApi(api_client)
+    space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
+    id = 'aud_0ujsszwN8NRY24YaXiTIE2VWDTS' # str | 
+    export_id = 'csv_export_123' # str | 
+
+    try:
+        # Get Audience Csv Export from Space And Audience
+        api_response = api_instance.get_audience_csv_export_from_space_and_audience(space_id, id, export_id)
+        print("The response of AudiencesApi->get_audience_csv_export_from_space_and_audience:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AudiencesApi->get_audience_csv_export_from_space_and_audience: %s\n" % e)
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **space_id** | **str**|  | 
+ **id** | **str**|  | 
+ **export_id** | **str**|  | 
+
+### Return type
+
+[**GetAudienceCsvExportFromSpaceAndAudience200Response**](GetAudienceCsvExportFromSpaceAndAudience200Response.md)
+
+### Authorization
+
+[token](../README.md#token)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/vnd.segment.v1alpha+json, application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
