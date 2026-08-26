@@ -18,19 +18,19 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field
-from typing import Any, ClassVar, Dict, List
-from segment_public_api.models.audience_csv_export import AudienceCsvExport
+from pydantic import BaseModel, ConfigDict
+from typing import Any, ClassVar, Dict, List, Optional
+from segment_public_api.models.add_audience_csv_export_to_audience_alpha_output import AddAudienceCsvExportToAudienceAlphaOutput
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
 
-class CreateAudienceCsvExportForAudienceAlphaOutput(BaseModel):
+class AddAudienceCsvExportToAudience200Response(BaseModel):
     """
-    Output of creating a CSV export of an audience.
+    AddAudienceCsvExportToAudience200Response
     """ # noqa: E501
-    audience_csv_export: AudienceCsvExport = Field(description="The created audience CSV export.", alias="audienceCsvExport")
-    __properties: ClassVar[List[str]] = ["audienceCsvExport"]
+    data: Optional[AddAudienceCsvExportToAudienceAlphaOutput] = None
+    __properties: ClassVar[List[str]] = ["data"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -50,7 +50,7 @@ class CreateAudienceCsvExportForAudienceAlphaOutput(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of CreateAudienceCsvExportForAudienceAlphaOutput from a JSON string"""
+        """Create an instance of AddAudienceCsvExportToAudience200Response from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -71,14 +71,14 @@ class CreateAudienceCsvExportForAudienceAlphaOutput(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of audience_csv_export
-        if self.audience_csv_export:
-            _dict['audienceCsvExport'] = self.audience_csv_export.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of data
+        if self.data:
+            _dict['data'] = self.data.to_dict()
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of CreateAudienceCsvExportForAudienceAlphaOutput from a dict"""
+        """Create an instance of AddAudienceCsvExportToAudience200Response from a dict"""
         if obj is None:
             return None
 
@@ -86,7 +86,7 @@ class CreateAudienceCsvExportForAudienceAlphaOutput(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "audienceCsvExport": AudienceCsvExport.from_dict(obj["audienceCsvExport"]) if obj.get("audienceCsvExport") is not None else None
+            "data": AddAudienceCsvExportToAudienceAlphaOutput.from_dict(obj["data"]) if obj.get("data") is not None else None
         })
         return _obj
 

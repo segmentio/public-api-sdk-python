@@ -68,6 +68,8 @@ __all__ = [
     "AddActivationToAudience200Response",
     "AddActivationToAudienceAlphaInput",
     "AddActivationToAudienceAlphaOutput",
+    "AddAudienceCsvExportToAudience200Response",
+    "AddAudienceCsvExportToAudienceAlphaOutput",
     "AddAudienceScheduleToAudience200Response",
     "AddAudienceScheduleToAudience200Response1",
     "AddAudienceScheduleToAudienceAlphaInput",
@@ -139,8 +141,6 @@ __all__ = [
     "CreateAudienceAlphaOutput",
     "CreateAudienceBetaInput",
     "CreateAudienceBetaOutput",
-    "CreateAudienceCsvExportForAudience200Response",
-    "CreateAudienceCsvExportForAudienceAlphaOutput",
     "CreateAudienceInput",
     "CreateAudienceOutput",
     "CreateAudiencePreview200Response",
@@ -871,6 +871,8 @@ from segment_public_api.models.activation_output import ActivationOutput as Acti
 from segment_public_api.models.add_activation_to_audience200_response import AddActivationToAudience200Response as AddActivationToAudience200Response
 from segment_public_api.models.add_activation_to_audience_alpha_input import AddActivationToAudienceAlphaInput as AddActivationToAudienceAlphaInput
 from segment_public_api.models.add_activation_to_audience_alpha_output import AddActivationToAudienceAlphaOutput as AddActivationToAudienceAlphaOutput
+from segment_public_api.models.add_audience_csv_export_to_audience200_response import AddAudienceCsvExportToAudience200Response as AddAudienceCsvExportToAudience200Response
+from segment_public_api.models.add_audience_csv_export_to_audience_alpha_output import AddAudienceCsvExportToAudienceAlphaOutput as AddAudienceCsvExportToAudienceAlphaOutput
 from segment_public_api.models.add_audience_schedule_to_audience200_response import AddAudienceScheduleToAudience200Response as AddAudienceScheduleToAudience200Response
 from segment_public_api.models.add_audience_schedule_to_audience200_response1 import AddAudienceScheduleToAudience200Response1 as AddAudienceScheduleToAudience200Response1
 from segment_public_api.models.add_audience_schedule_to_audience_alpha_input import AddAudienceScheduleToAudienceAlphaInput as AddAudienceScheduleToAudienceAlphaInput
@@ -942,8 +944,6 @@ from segment_public_api.models.create_audience_alpha_input import CreateAudience
 from segment_public_api.models.create_audience_alpha_output import CreateAudienceAlphaOutput as CreateAudienceAlphaOutput
 from segment_public_api.models.create_audience_beta_input import CreateAudienceBetaInput as CreateAudienceBetaInput
 from segment_public_api.models.create_audience_beta_output import CreateAudienceBetaOutput as CreateAudienceBetaOutput
-from segment_public_api.models.create_audience_csv_export_for_audience200_response import CreateAudienceCsvExportForAudience200Response as CreateAudienceCsvExportForAudience200Response
-from segment_public_api.models.create_audience_csv_export_for_audience_alpha_output import CreateAudienceCsvExportForAudienceAlphaOutput as CreateAudienceCsvExportForAudienceAlphaOutput
 from segment_public_api.models.create_audience_input import CreateAudienceInput as CreateAudienceInput
 from segment_public_api.models.create_audience_output import CreateAudienceOutput as CreateAudienceOutput
 from segment_public_api.models.create_audience_preview200_response import CreateAudiencePreview200Response as CreateAudiencePreview200Response
