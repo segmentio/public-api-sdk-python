@@ -20,6 +20,7 @@ from pydantic import Field, StrictStr, field_validator
 from typing import Optional
 from typing_extensions import Annotated
 from segment_public_api.models.add_audience_csv_export_to_audience200_response import AddAudienceCsvExportToAudience200Response
+from segment_public_api.models.add_audience_csv_export_to_audience_alpha_input import AddAudienceCsvExportToAudienceAlphaInput
 from segment_public_api.models.add_audience_schedule_to_audience200_response import AddAudienceScheduleToAudience200Response
 from segment_public_api.models.add_audience_schedule_to_audience_input import AddAudienceScheduleToAudienceInput
 from segment_public_api.models.create_audience200_response import CreateAudience200Response
@@ -68,6 +69,7 @@ class AudiencesApi:
         self,
         space_id: Annotated[str, Field(strict=True)],
         id: Annotated[str, Field(strict=True)],
+        add_audience_csv_export_to_audience_alpha_input: AddAudienceCsvExportToAudienceAlphaInput,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -83,12 +85,14 @@ class AudiencesApi:
     ) -> AddAudienceCsvExportToAudience200Response:
         """Add Audience Csv Export to Audience
 
-        Starts a CSV export of an Audience's membership. The export runs asynchronously: this returns immediately with an export id, and does not return the CSV itself. Poll `getAudienceCsvExportFromSpaceAndAudience` with that id for status and download URLs.  • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.
+        Starts a CSV export of an Audience's membership. Optional personalization selections add profile traits and Linked Audience entity properties to the export; this endpoint accepts property selections, not raw Liquid or another template language. Entity selections are initially supported only for Linked Audiences. Omitting personalization preserves the default export behavior. The export runs asynchronously: this returns immediately with an export id, and does not return the CSV itself. Poll `getAudienceCsvExportFromSpaceAndAudience` with that id for status and download URLs.  • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.
 
         :param space_id: (required)
         :type space_id: str
         :param id: (required)
         :type id: str
+        :param add_audience_csv_export_to_audience_alpha_input: (required)
+        :type add_audience_csv_export_to_audience_alpha_input: AddAudienceCsvExportToAudienceAlphaInput
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -114,6 +118,7 @@ class AudiencesApi:
         _param = self._add_audience_csv_export_to_audience_serialize(
             space_id=space_id,
             id=id,
+            add_audience_csv_export_to_audience_alpha_input=add_audience_csv_export_to_audience_alpha_input,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -142,6 +147,7 @@ class AudiencesApi:
         self,
         space_id: Annotated[str, Field(strict=True)],
         id: Annotated[str, Field(strict=True)],
+        add_audience_csv_export_to_audience_alpha_input: AddAudienceCsvExportToAudienceAlphaInput,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -157,12 +163,14 @@ class AudiencesApi:
     ) -> ApiResponse[AddAudienceCsvExportToAudience200Response]:
         """Add Audience Csv Export to Audience
 
-        Starts a CSV export of an Audience's membership. The export runs asynchronously: this returns immediately with an export id, and does not return the CSV itself. Poll `getAudienceCsvExportFromSpaceAndAudience` with that id for status and download URLs.  • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.
+        Starts a CSV export of an Audience's membership. Optional personalization selections add profile traits and Linked Audience entity properties to the export; this endpoint accepts property selections, not raw Liquid or another template language. Entity selections are initially supported only for Linked Audiences. Omitting personalization preserves the default export behavior. The export runs asynchronously: this returns immediately with an export id, and does not return the CSV itself. Poll `getAudienceCsvExportFromSpaceAndAudience` with that id for status and download URLs.  • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.
 
         :param space_id: (required)
         :type space_id: str
         :param id: (required)
         :type id: str
+        :param add_audience_csv_export_to_audience_alpha_input: (required)
+        :type add_audience_csv_export_to_audience_alpha_input: AddAudienceCsvExportToAudienceAlphaInput
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -188,6 +196,7 @@ class AudiencesApi:
         _param = self._add_audience_csv_export_to_audience_serialize(
             space_id=space_id,
             id=id,
+            add_audience_csv_export_to_audience_alpha_input=add_audience_csv_export_to_audience_alpha_input,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -216,6 +225,7 @@ class AudiencesApi:
         self,
         space_id: Annotated[str, Field(strict=True)],
         id: Annotated[str, Field(strict=True)],
+        add_audience_csv_export_to_audience_alpha_input: AddAudienceCsvExportToAudienceAlphaInput,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -231,12 +241,14 @@ class AudiencesApi:
     ) -> RESTResponseType:
         """Add Audience Csv Export to Audience
 
-        Starts a CSV export of an Audience's membership. The export runs asynchronously: this returns immediately with an export id, and does not return the CSV itself. Poll `getAudienceCsvExportFromSpaceAndAudience` with that id for status and download URLs.  • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.
+        Starts a CSV export of an Audience's membership. Optional personalization selections add profile traits and Linked Audience entity properties to the export; this endpoint accepts property selections, not raw Liquid or another template language. Entity selections are initially supported only for Linked Audiences. Omitting personalization preserves the default export behavior. The export runs asynchronously: this returns immediately with an export id, and does not return the CSV itself. Poll `getAudienceCsvExportFromSpaceAndAudience` with that id for status and download URLs.  • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.
 
         :param space_id: (required)
         :type space_id: str
         :param id: (required)
         :type id: str
+        :param add_audience_csv_export_to_audience_alpha_input: (required)
+        :type add_audience_csv_export_to_audience_alpha_input: AddAudienceCsvExportToAudienceAlphaInput
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -262,6 +274,7 @@ class AudiencesApi:
         _param = self._add_audience_csv_export_to_audience_serialize(
             space_id=space_id,
             id=id,
+            add_audience_csv_export_to_audience_alpha_input=add_audience_csv_export_to_audience_alpha_input,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -285,6 +298,7 @@ class AudiencesApi:
         self,
         space_id,
         id,
+        add_audience_csv_export_to_audience_alpha_input,
         _request_auth,
         _content_type,
         _headers,
@@ -314,6 +328,8 @@ class AudiencesApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if add_audience_csv_export_to_audience_alpha_input is not None:
+            _body_params = add_audience_csv_export_to_audience_alpha_input
 
 
         # set the HTTP header `Accept`
@@ -325,6 +341,19 @@ class AudiencesApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/vnd.segment.v1alpha+json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [

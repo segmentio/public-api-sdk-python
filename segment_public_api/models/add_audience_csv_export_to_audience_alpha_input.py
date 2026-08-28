@@ -18,19 +18,19 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List, Optional
+from segment_public_api.models.personalization_input import PersonalizationInput
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
 
-class Profile(BaseModel):
+class AddAudienceCsvExportToAudienceAlphaInput(BaseModel):
     """
-    The profile traits included in the event sent to the Destination. Applies to both Classic and Linked Audiences. For a Classic audience this is the only form of personalization available, whereas a Linked Audience can also personalize on entities.
+    Input to create a CSV export of an audience.
     """ # noqa: E501
-    properties: Optional[List[StrictStr]] = Field(default=None, description="The profile traits to include in the event sent to the Destination.")
-    mapping: Optional[Dict[str, StrictStr]] = Field(default=None, description="Maps destination fields to profile traits. Each key is the destination field, and each value is the source trait: `{ destinationField: sourceTrait }`.")
-    __properties: ClassVar[List[str]] = ["properties", "mapping"]
+    personalization: Optional[PersonalizationInput] = Field(default=None, description="Optional profile traits and Linked Audience entity properties to include in the export. Select profile traits with `profile.properties`, using physical Segment trait names. Select entity properties with `entities`, using physical Segment relationship names in `relationshipSlug` and physical entity-property names in `properties`. Entity personalization is initially supported only for Linked Audiences. CSV exports do not support `profile.mapping` or `syncEntityPropertyChanges`. Omit this field to preserve the default Audience CSV export behavior. Public API does not interpret template-friendly names or template languages.")
+    __properties: ClassVar[List[str]] = ["personalization"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -50,7 +50,7 @@ class Profile(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of Profile from a JSON string"""
+        """Create an instance of AddAudienceCsvExportToAudienceAlphaInput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -71,11 +71,14 @@ class Profile(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of personalization
+        if self.personalization:
+            _dict['personalization'] = self.personalization.to_dict()
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of Profile from a dict"""
+        """Create an instance of AddAudienceCsvExportToAudienceAlphaInput from a dict"""
         if obj is None:
             return None
 
@@ -83,8 +86,7 @@ class Profile(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "properties": obj.get("properties"),
-            "mapping": obj.get("mapping")
+            "personalization": PersonalizationInput.from_dict(obj["personalization"]) if obj.get("personalization") is not None else None
         })
         return _obj
 

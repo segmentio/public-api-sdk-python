@@ -29,7 +29,7 @@ class Profile1(BaseModel):
     The profile traits included in the event sent to the Destination. Applies to both Classic and Linked Audiences. For a Classic audience this is the only form of personalization available, whereas a Linked Audience can also personalize on entities.
     """ # noqa: E501
     properties: List[StrictStr] = Field(description="The profile traits included in the event sent to the Destination.")
-    mapping: Optional[Dict[str, StrictStr]] = Field(default=None, description="Maps a profile trait to the name it should be sent under. Each key is a trait, and each value is the name used in the event.")
+    mapping: Optional[Dict[str, StrictStr]] = Field(default=None, description="Maps destination fields to profile traits. Each key is the destination field, and each value is the source trait: `{ destinationField: sourceTrait }`.")
     __properties: ClassVar[List[str]] = ["properties", "mapping"]
 
     model_config = ConfigDict(

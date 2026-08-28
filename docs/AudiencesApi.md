@@ -25,11 +25,11 @@ Method | HTTP request | Description
 
 ## Operation: add_audience_csv_export_to_audience
 
-> AddAudienceCsvExportToAudience200Response add_audience_csv_export_to_audience(space_id, id)
+> AddAudienceCsvExportToAudience200Response add_audience_csv_export_to_audience(space_id, id, add_audience_csv_export_to_audience_alpha_input)
 
 Add Audience Csv Export to Audience
 
-Starts a CSV export of an Audience's membership. The export runs asynchronously: this returns immediately with an export id, and does not return the CSV itself. Poll `getAudienceCsvExportFromSpaceAndAudience` with that id for status and download URLs.  • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.
+Starts a CSV export of an Audience's membership. Optional personalization selections add profile traits and Linked Audience entity properties to the export; this endpoint accepts property selections, not raw Liquid or another template language. Entity selections are initially supported only for Linked Audiences. Omitting personalization preserves the default export behavior. The export runs asynchronously: this returns immediately with an export id, and does not return the CSV itself. Poll `getAudienceCsvExportFromSpaceAndAudience` with that id for status and download URLs.  • In order to successfully call this endpoint, the specified Workspace needs to have the Audience feature enabled. Please reach out to your customer success manager for more information.
 
 ### Example
 
@@ -39,6 +39,7 @@ import time
 import os
 import segment_public_api
 from segment_public_api.models.add_audience_csv_export_to_audience200_response import AddAudienceCsvExportToAudience200Response
+from segment_public_api.models.add_audience_csv_export_to_audience_alpha_input import AddAudienceCsvExportToAudienceAlphaInput
 from segment_public_api.rest import ApiException
 from pprint import pprint
 
@@ -54,10 +55,11 @@ with segment_public_api.ApiClient(configuration) as api_client:
     api_instance = segment_public_api.AudiencesApi(api_client)
     space_id = '9aQ1Lj62S4bomZKLF4DPqW' # str | 
     id = 'aud_0ujsszwN8NRY24YaXiTIE2VWDTS' # str | 
+    add_audience_csv_export_to_audience_alpha_input = {} # AddAudienceCsvExportToAudienceAlphaInput | 
 
     try:
         # Add Audience Csv Export to Audience
-        api_response = api_instance.add_audience_csv_export_to_audience(space_id, id)
+        api_response = api_instance.add_audience_csv_export_to_audience(space_id, id, add_audience_csv_export_to_audience_alpha_input)
         print("The response of AudiencesApi->add_audience_csv_export_to_audience:\n")
         pprint(api_response)
     except Exception as e:
@@ -71,6 +73,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **space_id** | **str**|  | 
  **id** | **str**|  | 
+ **add_audience_csv_export_to_audience_alpha_input** | [**AddAudienceCsvExportToAudienceAlphaInput**](AddAudienceCsvExportToAudienceAlphaInput.md)|  | 
 
 ### Return type
 
@@ -82,7 +85,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/vnd.segment.v1alpha+json
  - **Accept**: application/vnd.segment.v1alpha+json, application/json
 
 ### HTTP response details
