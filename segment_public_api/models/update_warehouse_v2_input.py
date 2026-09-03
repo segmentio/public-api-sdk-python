@@ -30,7 +30,7 @@ class UpdateWarehouseV2Input(BaseModel):
     """ # noqa: E501
     name: Optional[StrictStr] = Field(default=None, description="An optional human-readable name to associate with this Warehouse.")
     enabled: Optional[StrictBool] = Field(default=None, description="Enable to allow this Warehouse to receive data.")
-    credential_id: Optional[StrictStr] = Field(default=None, description="The id of a Credential to connect this Warehouse to. Swapping the Credential re-derives this Warehouse's connection settings and re-validates the connection.", alias="credentialId")
+    credential_id: Optional[StrictStr] = Field(default=None, description="The id of a Credential to connect this Warehouse to. Swapping the Credential re-derives this Warehouse's connection settings and re-validates the connection. The Credential must be the same type as the Warehouse's existing type — a Warehouse's type cannot be changed after creation, so a mismatched Credential is rejected rather than silently ignored.", alias="credentialId")
     __properties: ClassVar[List[str]] = ["name", "enabled", "credentialId"]
 
     model_config = ConfigDict(
